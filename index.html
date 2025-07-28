@@ -23,6 +23,7 @@
         .tab-link {
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
+            white-space: nowrap; /* Prevent text wrapping within the tab */
         }
         .tab-link.active {
             border-bottom-color: #0d9488;
@@ -113,24 +114,28 @@
             color: #475569; /* slate-600 */
         }
 
-        /* Organization section specific styles */
+        /* Organization section specific styles (updated to match image) */
         .org-tab-link {
             padding: 0.75rem 1.25rem;
-            border-radius: 0.5rem;
-            background-color: #e2e8f0; /* slate-200 */
+            border-radius: 0.75rem; /* More rounded corners */
+            background-color: #ffffff; /* White background */
             color: #475569; /* slate-600 */
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             white-space: nowrap; /* Prevent wrapping for tags */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* Subtle shadow */
+            border: 1px solid #e2e8f0; /* Light border */
         }
         .org-tab-link:hover {
-            background-color: #cbd5e1; /* slate-300 */
+            background-color: #f1f5f9; /* slate-100 on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Slightly more prominent shadow on hover */
         }
         .org-tab-link.active {
-            background-color: #0d9488; /* teal-600 */
+            background-color: #0d9488; /* teal-600 for active */
             color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Stronger shadow for active */
+            border-color: #0d9488; /* Border matches active color */
         }
         .org-content-pane {
             display: none;
@@ -162,8 +167,9 @@
                 <button data-tab="solution" class="tab-link py-3 px-4 text-slate-600 font-medium">Giải Pháp</button>
                 <button data-tab="roadmap" class="tab-link py-3 px-4 text-slate-600 font-medium">Lộ Trình</button>
                 <button data-tab="budget" class="tab-link py-3 px-4 text-slate-600 font-medium">Ngân Sách</button>
-                <button data-tab="risks" class="tab-link py-3 px-4 text-slate-600 font-medium">Tổ Chức & Rủi Ro</button>
-                <button data-tab="analysis" class="tab-link py-3 px-4 text-slate-600 font-medium">Phân Tích Chiến Lược</button>
+                <button data-tab="organization" class="tab-link py-3 px-4 text-slate-600 font-medium">Tổ Chức</button>
+                <button data-tab="risks-and-success" class="tab-link py-3 px-4 text-slate-600 font-medium">Rủi Ro</button>
+                <button data-tab="analysis" class="tab-link py-3 px-4 text-slate-600 font-medium">Phân Tích</button>
             </div>
         </nav>
 
@@ -236,8 +242,8 @@
                 </div>
             </div>
 
-            <!-- Risks Pane -->
-            <div id="risks" class="content-pane">
+            <!-- Organization Pane -->
+            <div id="organization" class="content-pane">
                 <div class="space-y-12">
                     <div>
                         <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Cơ Cấu Tổ Chức & Trách Nhiệm</h3>
@@ -248,16 +254,19 @@
                             <!-- Role responsibilities content panes will be rendered here -->
                         </div>
                     </div>
-                    <hr class="border-t-2 border-slate-200 my-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
-                            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
-                            <div class="space-y-6" id="risks-list"></div>
-                        </div>
-                        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
-                            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
-                            <div class="space-y-6" id="success-factors-list"></div>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Risks and Success Factors Pane -->
+            <div id="risks-and-success" class="content-pane">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
+                        <div class="space-y-6" id="risks-list"></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
+                        <div class="space-y-6" id="success-factors-list"></div>
                     </div>
                 </div>
             </div>
@@ -566,7 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Render Organization (New Horizontal Tabs)
+    // Render Organization (Horizontal Tabs)
     const orgTabsContainer = document.getElementById('org-tabs-container');
     const orgContentContainer = document.getElementById('org-content-container');
 
