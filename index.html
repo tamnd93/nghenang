@@ -349,7 +349,7 @@
                                 <li><strong>Quyền thương lượng của Khách hàng:</strong> Đáp ứng yêu cầu cao hơn về thông tin sản phẩm, tăng giá trị cảm nhận.</li>
                                 <li><strong>Quyền thương lượng của Nhà cung cấp:</strong> Hệ thống MES/WMS giúp quản lý nhà cung cấp tốt hơn.</li>
                                 <li><strong>Nguy cơ Sản phẩm/Dịch vụ thay thế:</strong> Tăng cường tính độc đáo của sản phẩm.</li>
-                                <li><strong>Cạnh tranh giữa các Đối thủ hiện có:</strong> Tạo lợi thế cạnh tranh (chống hàng giả, dịch vụ bảo hành tốt hơn).</li>
+                                <li><strong>Cạnh tranh giữa các Đối thủ hiện có:</strong> Tạo lợi thế cạnh tranh (chống hàng giả, dịch vụ bảo hành tốt hơn).'</li>
                             </ul>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="porter-container"></div>
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { 
                 title: 'Nâng cao Dịch vụ', 
                 desc: 'Phản hồi nhanh chóng và chính xác các yêu cầu của khách hàng.', 
-                icon: '😊',
+                icon: '�',
                 detail: 'Với dữ liệu sản phẩm chi tiết từ S/N, đội ngũ hỗ trợ khách hàng có thể cung cấp thông tin chính xác, tư vấn hiệu quả hơn về sản phẩm, phụ tùng, hoặc các vấn đề kỹ thuật. Điều này cải thiện đáng kể trải nghiệm và sự hài lòng của khách hàng.',
                 example: 'Khi khách hàng gọi điện hỗ trợ về một chiếc quạt, chỉ cần S/N, nhân viên có thể biết ngay model, năm sản xuất, các đặc điểm kỹ thuật và thậm chí là các lỗi thường gặp của dòng sản phẩm đó, từ đó đưa ra hướng dẫn hoặc giải pháp nhanh chóng, chính xác hơn.'
             },
@@ -442,12 +442,228 @@ document.addEventListener('DOMContentLoaded', function () {
             { part: 'Checksum', info: 'Một ký tự kiểm tra lỗi, giúp xác minh tính hợp lệ của mã S/N khi quét hoặc nhập liệu.' }
         ],
         timeline: [
-            { phase: 1, title: 'Chuẩn Bị & Lựa Chọn Giải Pháp', duration: 'Tháng 1 - 2', color: 'teal', details: ['Thành lập Ban Dự án', 'Khảo sát chuyên sâu & Phân tích quy trình', 'Lập tài liệu Yêu cầu Nghiệp vụ (BRD)', 'Nghiên cứu, đánh giá và lựa chọn nhà cung cấp MES/WMS', 'Mua sắm phần cứng ban đầu'] },
-            { phase: 2, title: 'Cấu Hình, Tùy Chỉnh & Tích Hợp', duration: 'Tháng 3 - 7', color: 'teal', details: ['Cài đặt & Cấu hình hệ thống MES/WMS', 'Thiết kế & Xây dựng CSDL S/N', 'Tùy chỉnh nghiệp vụ theo đặc thù Nghệ Năng', 'Phát triển tích hợp với MISA AMIS', 'Chuyển đổi dữ liệu gốc'] },
-            { phase: 3, title: 'Kiểm Thử & Thí Điểm', duration: 'Tháng 8 - 9', color: 'cyan', details: ['Kiểm thử nội bộ (Internal Testing)', 'Kiểm thử chấp nhận người dùng (UAT)', 'Triển khai thí điểm (Pilot) cho một dòng sản phẩm', 'Thu thập phản hồi và điều chỉnh cuối cùng'] },
-            { phase: 4, title: 'Đào Tạo & Chuẩn Bị Go-Live', duration: 'Tháng 10', color: 'sky', details: ['Xây dựng tài liệu SOP & Hướng dẫn sử dụng', 'Đào tạo chuyên sâu cho toàn bộ nhân sự liên quan', 'Duyệt vị trí dán tem cuối cùng', 'Lập kế hoạch chi tiết cho ngày Go-Live'] },
-            { phase: 5, title: 'Go-Live & Dán Tem Tồn Kho', duration: 'Tháng 11 - 12', color: 'indigo', details: ['Go-Live chính thức cho sản phẩm mới xuất xưởng', 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)', 'Ưu tiên: Kho xưởng -> Showroom -> Đại lý/NPP'] },
-            { phase: 6, title: 'Đánh Giá & Cải Tiến', duration: 'Từ Tháng 13', color: 'slate', details: ['Giám sát hiệu suất hệ thống', 'Thu thập phản hồi định kỳ từ người dùng', 'Bảo trì & nâng cấp hệ thống', 'Khai thác dữ liệu S/N để phân tích kinh doanh'] }
+            { 
+                phase: 1, 
+                title: 'Chuẩn Bị & Lựa Chọn Giải Pháp', 
+                duration: 'Tháng 1 - 2', 
+                color: 'teal', 
+                details: [
+                    {
+                        item: 'Thành lập Ban Dự án',
+                        subDetails: [
+                            'Thành phần: Đại diện Ban Lãnh đạo, Trưởng Dự án, đại diện các phòng ban liên quan (IT, Sản xuất, Kho, Bảo hành, Bán hàng).',
+                            'Mục tiêu: Đảm bảo sự cam kết từ cấp cao và phối hợp đa phòng ban ngay từ đầu.'
+                        ]
+                    },
+                    {
+                        item: 'Khảo sát chuyên sâu & Phân tích quy trình',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, Đội Sản xuất, Đội Kho, Đội Bảo hành, Đội Bán hàng.',
+                            'Nội dung: Phân tích quy trình hiện tại, xác định điểm nghẽn, nhu cầu cụ thể cho hệ thống S/N và MES/WMS.'
+                        ]
+                    },
+                    {
+                        item: 'Lập tài liệu Yêu cầu Nghiệp vụ (BRD)',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban liên quan.',
+                            'Nội dung: Tổng hợp các yêu cầu đã khảo sát thành tài liệu chính thức, làm cơ sở cho việc lựa chọn giải pháp và tùy chỉnh.'
+                        ]
+                    },
+                    {
+                        item: 'Nghiên cứu, đánh giá và lựa chọn nhà cung cấp MES/WMS',
+                        subDetails: [
+                            'Phòng ban liên quan: Ban Chỉ đạo, Trưởng Dự án, Đội IT, Phòng Kế toán (đánh giá tài chính).',
+                            'Nội dung: Đánh giá năng lực, kinh nghiệm, giải pháp công nghệ và chi phí của các nhà cung cấp tiềm năng.'
+                        ]
+                    },
+                    {
+                        item: 'Mua sắm phần cứng ban đầu',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Phòng Kế toán.',
+                            'Nội dung: Máy chủ (nếu cần on-premise), máy quét mã vạch (cầm tay, cố định), máy in tem nhãn, thiết bị mạng (AP Wi-Fi công nghiệp).'
+                        ]
+                    }
+                ] 
+            },
+            { 
+                phase: 2, 
+                title: 'Cấu Hình, Tùy Chỉnh & Tích Hợp', 
+                duration: 'Tháng 3 - 7', 
+                color: 'teal', 
+                details: [
+                    {
+                        item: 'Cài đặt & Cấu hình hệ thống MES/WMS',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
+                            'Nội dung: Cài đặt phần mềm trên máy chủ, cấu hình các module MES/WMS cơ bản (quản lý sản xuất, kho, chất lượng).'
+                        ]
+                    },
+                    {
+                        item: 'Thiết kế & Xây dựng CSDL S/N',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp, Đội Sản xuất, Đội Kho.',
+                            'Nội dung: Thiết kế cấu trúc bảng dữ liệu cho S/N, đảm bảo khả năng lưu trữ thông tin chi tiết (vật tư, lô sản xuất, lịch sử).'
+                        ]
+                    },
+                    {
+                        item: 'Tùy chỉnh nghiệp vụ theo đặc thù Nghệ Năng',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Đội Sản xuất, Đội KCS, Nhà cung cấp giải pháp.',
+                            'Nội dung: Xây dựng các tính năng đặc thù như liên kết S/N với số lô vật tư, quy trình kiểm soát chất lượng (QC) theo từng S/N.'
+                        ]
+                    },
+                    {
+                        item: 'Phát triển tích hợp với MISA AMIS',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Phòng Kế toán, Phòng Bán hàng, Nhà cung cấp giải pháp.',
+                            'Nội dung: Xây dựng API hoặc cơ chế đồng bộ dữ liệu S/N, tồn kho, thông tin bán hàng từ MES/WMS sang MISA AMIS (Kế toán, Bán hàng, CRM).'
+                        ]
+                    },
+                    {
+                        item: 'Chuyển đổi dữ liệu gốc',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Đội Kho, Phòng Kế toán.',
+                            'Nội dung: Di chuyển dữ liệu tồn kho hiện có, danh mục sản phẩm, thông tin khách hàng từ hệ thống cũ sang MES/WMS.'
+                        ]
+                    }
+                ] 
+            },
+            { 
+                phase: 3, 
+                title: 'Kiểm Thử & Thí Điểm', 
+                duration: 'Tháng 8 - 9', 
+                color: 'cyan', 
+                details: [
+                    {
+                        item: 'Kiểm thử nội bộ (Internal Testing)',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
+                            'Nội dung: Kiểm tra chức năng, hiệu suất, bảo mật của hệ thống theo tài liệu BRD và các kịch bản kiểm thử đã định.'
+                        ]
+                    },
+                    {
+                        item: 'Kiểm thử chấp nhận người dùng (UAT)',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, đại diện người dùng cuối từ các phòng ban (Sản xuất, Kho, Bảo hành, Bán hàng).',
+                            'Nội dung: Người dùng trực tiếp kiểm tra hệ thống trong môi trường giả lập thực tế, xác nhận đáp ứng yêu cầu nghiệp vụ.'
+                        ]
+                    },
+                    {
+                        item: 'Triển khai thí điểm (Pilot) cho một dòng sản phẩm',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội Sản xuất, Đội Kho, Đội Bảo hành, Đội Bán hàng (cho dòng sản phẩm thí điểm).',
+                            'Nội dung: Áp dụng hệ thống S/N và MES/WMS cho một dòng sản phẩm cụ thể (ví dụ: quạt hướng trục IFH) để đánh giá thực tế và thu thập phản hồi.'
+                        ]
+                    },
+                    {
+                        item: 'Thu thập phản hồi và điều chỉnh cuối cùng',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, các phòng ban tham gia thí điểm.',
+                            'Nội dung: Ghi nhận các lỗi, vấn đề phát sinh, và đề xuất cải tiến từ giai đoạn UAT và Pilot để điều chỉnh hệ thống trước Go-Live.'
+                        ]
+                    }
+                ] 
+            },
+            { 
+                phase: 4, 
+                title: 'Đào Tạo & Chuẩn Bị Go-Live', 
+                duration: 'Tháng 10', 
+                color: 'sky', 
+                details: [
+                    {
+                        item: 'Xây dựng tài liệu SOP & Hướng dẫn sử dụng',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, các phòng ban nghiệp vụ.',
+                            'Nội dung: Biên soạn tài liệu hướng dẫn chi tiết cho từng vai trò người dùng, các quy trình vận hành chuẩn (SOP) mới.'
+                        ]
+                    },
+                    {
+                        item: 'Đào tạo chuyên sâu cho toàn bộ nhân sự liên quan',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, toàn bộ nhân sự các phòng ban có liên quan đến S/N và MES/WMS.',
+                            'Nội dung: Tổ chức các buổi đào tạo lý thuyết và thực hành, đảm bảo tất cả người dùng thành thạo hệ thống mới.'
+                        ]
+                    },
+                    {
+                        item: 'Duyệt vị trí dán tem cuối cùng',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội Sản xuất, Đội KCS, Đội Marketing.',
+                            'Nội dung: Quyết định vị trí tối ưu để dán tem S/N trên từng loại sản phẩm, đảm bảo dễ quét và thẩm mỹ.'
+                        ]
+                    },
+                    {
+                        item: 'Lập kế hoạch chi tiết cho ngày Go-Live',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban.',
+                            'Nội dung: Lên kế hoạch từng phút cho ngày Go-Live (thời gian ngưng hệ thống cũ, chuyển đổi, hỗ trợ tại chỗ).'
+                        ]
+                    }
+                ] 
+            },
+            { 
+                phase: 5, 
+                title: 'Go-Live & Dán Tem Tồn Kho', 
+                duration: 'Tháng 11 - 12', 
+                color: 'indigo', 
+                details: [
+                    {
+                        item: 'Go-Live chính thức cho sản phẩm mới xuất xưởng',
+                        subDetails: [
+                            'Phòng ban liên quan: Toàn bộ các phòng ban liên quan đến quy trình sản xuất, kho, bán hàng.',
+                            'Nội dung: Bắt đầu áp dụng hệ thống S/N và MES/WMS cho tất cả sản phẩm mới được sản xuất và xuất xưởng.'
+                        ]
+                    },
+                    {
+                        item: 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội Kho, Đội Bán hàng, Đội Marketing, Đội IT.',
+                            'Nội dung: Lập kế hoạch và thực hiện dán tem S/N cho toàn bộ sản phẩm đang tồn kho tại xưởng, showroom và đại lý/nhà phân phối.'
+                        ]
+                    },
+                    {
+                        item: 'Ưu tiên: Kho xưởng -> Showroom -> Đại lý/NPP',
+                        subDetails: [
+                            'Lý do: Ưu tiên dán tem tại kho xưởng để kiểm soát sản phẩm ngay từ gốc, sau đó đến showroom để phục vụ bán lẻ, cuối cùng là đại lý/NPP để quản lý kênh phân phối.'
+                        ]
+                    }
+                ] 
+            },
+            { 
+                phase: 6, 
+                title: 'Đánh Giá & Cải Tiến', 
+                duration: 'Từ Tháng 13', 
+                color: 'slate', 
+                details: [
+                    {
+                        item: 'Giám sát hiệu suất hệ thống',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Trưởng Dự án.',
+                            'Nội dung: Theo dõi các chỉ số KPI của hệ thống (tốc độ xử lý, thời gian phản hồi, tỷ lệ lỗi), đảm bảo hệ thống hoạt động ổn định.'
+                        ]
+                    },
+                    {
+                        item: 'Thu thập phản hồi định kỳ từ người dùng',
+                        subDetails: [
+                            'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban.',
+                            'Nội dung: Tổ chức các buổi họp, khảo sát định kỳ để thu thập ý kiến, đề xuất cải tiến từ người dùng cuối.'
+                        ]
+                    },
+                    {
+                        item: 'Bảo trì & nâng cấp hệ thống',
+                        subDetails: [
+                            'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
+                            'Nội dung: Thực hiện bảo trì định kỳ, vá lỗi, và lên kế hoạch nâng cấp các tính năng mới dựa trên phản hồi và nhu cầu phát triển.'
+                        ]
+                    },
+                    {
+                        item: 'Khai thác dữ liệu S/N để phân tích kinh doanh',
+                        subDetails: [
+                            'Phòng ban liên quan: Phòng Kinh doanh, Phòng Marketing, Ban Lãnh đạo.',
+                            'Nội dung: Sử dụng dữ liệu S/N để phân tích xu hướng bán hàng, hiệu suất sản phẩm, dự báo nhu cầu, tối ưu hóa chuỗi cung ứng và chiến lược marketing.'
+                        ]
+                    }
+                ] 
+            }
         ],
         organization: [
             { id: 'ban-chi-dao', role: 'Ban Chỉ đạo Dự án', responsibilities: ['Đại diện Ban Lãnh đạo Công ty', 'Đưa ra các quyết định chiến lược', 'Phê duyệt ngân sách và nguồn lực', 'Giải quyết các vướng mắc lớn'] },
@@ -633,6 +849,13 @@ document.addEventListener('DOMContentLoaded', function () {
     data.timeline.forEach(item => {
         const timelineItem = document.createElement('div');
         timelineItem.className = 'timeline-item';
+        let detailsHtml = item.details.map(detail => `
+            <li>
+                ${detail.item}
+                ${detail.subDetails ? `<ul class="list-disc list-inside ml-6 text-sm text-slate-500 mt-1">` + detail.subDetails.map(sub => `<li>${sub}</li>`).join('') + `</ul>` : ''}
+            </li>
+        `).join('');
+
         timelineItem.innerHTML = `
             <div class="flex items-center mb-1 cursor-pointer">
                 <div class="timeline-dot bg-slate-300 w-6 h-6 rounded-full border-4 border-white transition-transform duration-300"></div>
@@ -646,7 +869,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="pl-12">
                 <div class="timeline-item-content bg-slate-50 p-4 rounded-lg border border-slate-200">
                     <ul class="list-disc list-inside space-y-2 text-slate-600">
-                        ${item.details.map(d => `<li>${d}</li>`).join('')}
+                        ${detailsHtml}
                     </ul>
                 </div>
             </div>
@@ -904,3 +1127,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </body>
 </html>
+�
