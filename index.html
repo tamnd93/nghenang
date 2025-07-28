@@ -144,6 +144,24 @@
         .org-content-pane.active {
             display: block;
         }
+
+        /* Analysis explanation toggle styles */
+        .analysis-explanation {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .analysis-explanation.open {
+            max-height: 500px; /* Sufficient height for content */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .toggle-arrow {
+            transition: transform 0.3s ease;
+        }
+        .analysis-header.open .toggle-arrow {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 <body class="antialiased text-slate-700">
@@ -274,17 +292,67 @@
             <!-- Analysis Pane -->
             <div id="analysis" class="content-pane">
                 <div class="space-y-12">
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Phân Tích SWOT</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="swot-container"></div>
+                    <!-- SWOT Analysis -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 text-center">Phân Tích SWOT</h3>
+                        <div class="flex items-center justify-center mb-6 cursor-pointer analysis-header" data-target="swot-explanation">
+                            <span class="text-lg font-medium text-teal-600 mr-2">SWOT là gì?</span>
+                            <svg class="w-5 h-5 text-teal-600 toggle-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div id="swot-explanation" class="analysis-explanation bg-teal-50 p-4 rounded-lg text-teal-800 border border-teal-200">
+                            <p class="mb-2"><strong class="font-semibold">Định nghĩa:</strong> Phân tích SWOT là một công cụ lập kế hoạch chiến lược được sử dụng để đánh giá Bốn yếu tố (Strengths, Weaknesses, Opportunities, Threats) của một dự án hoặc doanh nghiệp. Nó giúp xác định các yếu tố nội bộ và bên ngoài có lợi hoặc bất lợi cho việc đạt được mục tiêu.</p>
+                            <p><strong class="font-semibold">Ví dụ cụ thể cho dự án S/N & MES/WMS:</strong></p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li><strong>Điểm mạnh (Strengths):</strong> Nhu cầu rõ ràng từ thị trường về truy xuất nguồn gốc, sự chủ động của phòng kinh doanh.</li>
+                                <li><strong>Điểm yếu (Weaknesses):</strong> Hạn chế về nguồn lực IT nội bộ, văn hóa công ty truyền thống khó thích nghi.</li>
+                                <li><strong>Cơ hội (Opportunities):</strong> Xu hướng chuyển đổi số, nâng cao khả năng cạnh tranh, tối ưu hóa vận hành.</li>
+                                <li><strong>Thách thức (Threats):</strong> Chi phí phát sinh, rủi ro công nghệ, sự cạnh tranh từ đối thủ.</li>
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6" id="swot-container"></div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Phân Tích PESTEL</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pestel-container"></div>
+
+                    <!-- PESTEL Analysis -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 text-center">Phân Tích PESTEL</h3>
+                        <div class="flex items-center justify-center mb-6 cursor-pointer analysis-header" data-target="pestel-explanation">
+                            <span class="text-lg font-medium text-teal-600 mr-2">PESTEL là gì?</span>
+                            <svg class="w-5 h-5 text-teal-600 toggle-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div id="pestel-explanation" class="analysis-explanation bg-teal-50 p-4 rounded-lg text-teal-800 border border-teal-200">
+                            <p class="mb-2"><strong class="font-semibold">Định nghĩa:</strong> Phân tích PESTEL là một khung phân tích môi trường vĩ mô, giúp doanh nghiệp hiểu các yếu tố bên ngoài (Political, Economic, Social, Technological, Environmental, Legal) có thể ảnh hưởng đến hoạt động và chiến lược của mình.</p>
+                            <p><strong class="font-semibold">Ví dụ cụ thể cho dự án S/N & MES/WMS:</strong></p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li><strong>Chính trị:</strong> Chính sách nhà nước về chống hàng giả, quy định về tem truy xuất nguồn gốc.</li>
+                                <li><strong>Kinh tế:</strong> Tình hình kinh tế vĩ mô ảnh hưởng sức mua, ROI của dự án.</li>
+                                <li><strong>Xã hội:</strong> Xu hướng tiêu dùng ưa chuộng sản phẩm rõ nguồn gốc.</li>
+                                <li><strong>Công nghệ:</strong> Sự phát triển của IoT, AI trong chuỗi cung ứng.</li>
+                                <li><strong>Môi trường:</strong> Quy định về môi trường, sản xuất bền vững.</li>
+                                <li><strong>Pháp lý:</strong> Luật bảo vệ người tiêu dùng, an toàn thông tin.</li>
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="pestel-container"></div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Năm Lực Lượng Cạnh Tranh (Porter's Five Forces)</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="porter-container"></div>
+
+                    <!-- Porter's Five Forces Analysis -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 text-center">Năm Lực Lượng Cạnh Tranh (Porter's Five Forces)</h3>
+                        <div class="flex items-center justify-center mb-6 cursor-pointer analysis-header" data-target="porter-explanation">
+                            <span class="text-lg font-medium text-teal-600 mr-2">Porter's Five Forces là gì?</span>
+                            <svg class="w-5 h-5 text-teal-600 toggle-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div id="porter-explanation" class="analysis-explanation bg-teal-50 p-4 rounded-lg text-teal-800 border border-teal-200">
+                            <p class="mb-2"><strong class="font-semibold">Định nghĩa:</strong> Mô hình Năm Lực Lượng Cạnh Tranh của Porter là một khung phân tích giúp đánh giá cường độ cạnh tranh trong một ngành và lợi nhuận tiềm năng của ngành đó. Năm lực lượng bao gồm: Nguy cơ đối thủ mới, Quyền thương lượng của khách hàng, Quyền thương lượng của nhà cung cấp, Nguy cơ sản phẩm/dịch vụ thay thế, và Cạnh tranh giữa các đối thủ hiện có.</p>
+                            <p><strong class="font-semibold">Ví dụ cụ thể cho dự án S/N & MES/WMS:</strong></p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li><strong>Nguy cơ Đối thủ mới:</strong> Hệ thống S/N toàn diện làm tăng rào cản gia nhập.</li>
+                                <li><strong>Quyền thương lượng của Khách hàng:</strong> Đáp ứng yêu cầu cao hơn về thông tin sản phẩm, tăng giá trị cảm nhận.</li>
+                                <li><strong>Quyền thương lượng của Nhà cung cấp:</strong> Hệ thống MES/WMS giúp quản lý nhà cung cấp tốt hơn.</li>
+                                <li><strong>Nguy cơ Sản phẩm/Dịch vụ thay thế:</strong> Tăng cường tính độc đáo của sản phẩm.</li>
+                                <li><strong>Cạnh tranh giữa các Đối thủ hiện có:</strong> Tạo lợi thế cạnh tranh (chống hàng giả, dịch vụ bảo hành tốt hơn).</li>
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" id="porter-container"></div>
                     </div>
                      <div>
                         <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Case Study: Các Công Ty Đầu Ngành</h3>
@@ -440,6 +508,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 { company: 'Daikin (Điều hòa không khí, máy làm mát công nghiệp)', detail: 'Việc sử dụng S/N và hệ thống MES/WMS giúp Daikin theo dõi chi tiết từng sản phẩm từ khâu sản xuất, lắp ráp, kiểm tra, đến lắp đặt và bảo trì, đảm bảo chất lượng và dịch vụ hậu mãi toàn cầu.' },
                 { company: 'Sharp (Thiết bị điện tử, gia dụng)', detail: 'Hệ thống S/N và quản lý sản xuất giúp họ kiểm soát chặt chẽ quá trình sản xuất, quản lý bảo hành hiệu quả và duy trì niềm tin của khách hàng vào thương hiệu.' }
             ]
+        },
+        analysisDefinitions: {
+            swot: {
+                definition: 'Phân tích SWOT là một công cụ lập kế hoạch chiến lược được sử dụng để đánh giá Bốn yếu tố (Strengths, Weaknesses, Opportunities, Threats) của một dự án hoặc doanh nghiệp. Nó giúp xác định các yếu tố nội bộ và bên ngoài có lợi hoặc bất lợi cho việc đạt được mục tiêu.',
+                example: 'Trong dự án S/N & MES/WMS của Nghệ Năng, SWOT giúp nhận diện: Điểm mạnh (nhu cầu rõ ràng, sự chủ động từ kinh doanh), Điểm yếu (hạn chế IT nội bộ, văn hóa truyền thống), Cơ hội (xu hướng chuyển đổi số, tối ưu vận hành), và Thách thức (chi phí phát sinh, rủi ro công nghệ).'
+            },
+            pestel: {
+                definition: 'Phân tích PESTEL là một khung phân tích môi trường vĩ mô, giúp doanh nghiệp hiểu các yếu tố bên ngoài (Political, Economic, Social, Technological, Environmental, Legal) có thể ảnh hưởng đến hoạt động và chiến lược của mình.',
+                example: 'Đối với dự án S/N & MES/WMS, PESTEL giúp Nghệ Năng đánh giá: Chính sách về chống hàng giả (Political), Tình hình kinh tế vĩ mô (Economic), Xu hướng tiêu dùng (Social), Sự phát triển của IoT/AI (Technological), Quy định môi trường (Environmental), và Luật bảo vệ người tiêu dùng (Legal).'
+            },
+            porter: {
+                definition: 'Mô hình Năm Lực Lượng Cạnh Tranh của Porter là một khung phân tích giúp đánh giá cường độ cạnh tranh trong một ngành và lợi nhuận tiềm năng của ngành đó. Năm lực lượng bao gồm: Nguy cơ đối thủ mới, Quyền thương lượng của khách hàng, Quyền thương lượng của nhà cung cấp, Nguy cơ sản phẩm/dịch vụ thay thế, và Cạnh tranh giữa các đối thủ hiện có.',
+                example: 'Áp dụng Porter\'s Five Forces cho dự án này, Nghệ Năng có thể thấy: Hệ thống S/N tăng rào cản cho đối thủ mới (Threat of New Entrants), nâng cao giá trị cảm nhận cho khách hàng (Bargaining Power of Buyers), quản lý nhà cung cấp tốt hơn (Bargaining Power of Suppliers), tăng tính độc đáo sản phẩm (Threat of Substitute Products or Services), và tạo lợi thế cạnh tranh (Rivalry among Existing Competitors).'
+            }
         }
     };
 
@@ -709,6 +791,16 @@ document.addEventListener('DOMContentLoaded', function () {
             panes.forEach(p => p.classList.remove('active'));
             tab.classList.add('active');
             document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+    });
+
+    // Analysis explanation toggle logic
+    document.querySelectorAll('.analysis-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const targetId = header.dataset.target;
+            const targetElement = document.getElementById(targetId);
+            header.classList.toggle('open');
+            targetElement.classList.toggle('open');
         });
     });
 
