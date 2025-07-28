@@ -6,18 +6,13 @@
     <title>Infographic Kế Hoạch Dự Án S/N & MES/WMS - Nghệ Năng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Datalabels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- 
-        Chosen Palette: Corporate Teal & Slate
-        Application Structure Plan: A tabbed, dashboard-style single-page application. This structure allows non-linear exploration, enabling leaders to quickly access key sections like the Roadmap, Budget, or Strategic Analysis without scrolling through a long document. The main content area dynamically displays the selected tab's content, using interactive components to make data digestible. This design prioritizes usability and quick information retrieval for a leadership audience, transforming a static report into an exploratory tool.
-        Visualization & Content Choices: 
-        - Project Goals -> Goal: Inform -> Viz/Method: Grid of styled cards with Unicode characters -> Interaction: Static -> Justification: Clearly presents key objectives in a scannable format -> Method: HTML/CSS/Tailwind.
-        - Timeline -> Goal: Show Change/Process -> Viz/Method: Interactive vertical timeline -> Interaction: Clicking a phase reveals details -> Justification: More engaging than a static list, simplifies a complex schedule -> Method: HTML/CSS/JS.
-        - Budget Breakdown -> Goal: Compare Proportions -> Viz/Method: Donut Chart -> Interaction: Hover to see details -> Justification: The most effective way to show parts of a whole budget -> Library: Chart.js (Canvas).
-        - S/N Structure -> Goal: Organize/Explain -> Viz/Method: Styled diagram of divs -> Interaction: Clicking a component reveals an explanation -> Justification: Visually deconstructs the complex S/N format -> Method: HTML/CSS/JS.
-        - Strategic Analyses (SWOT, PESTEL, etc.) -> Goal: Organize/Inform -> Viz/Method: Grids of styled cards -> Interaction: Static -> Justification: A structured grid is the best way to present these frameworks clearly -> Method: HTML/CSS/Tailwind.
+        Chosen Palette: Energetic & Playful
         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     -->
     <style>
@@ -45,25 +40,32 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .chart-wrapper {
+            display: flex;
+            flex-direction: column; /* Default to column for mobile */
+            align-items: center;
+            justify-content: center;
+            gap: 1rem; /* Space between chart and legend */
+        }
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 400px;
-            margin: auto;
-            height: 400px;
+            max-width: 300px; /* Smaller max-width for donut chart itself */
+            height: 300px; /* Fixed height for consistent donut size */
+            flex-shrink: 0; /* Prevent shrinking when legend is wide */
         }
-        .timeline-item-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
-        }
-        .timeline-item.open .timeline-item-content {
-            max-height: 500px;
-            padding-top: 1rem;
-        }
-        .timeline-item.open .timeline-dot {
-            transform: scale(1.2);
-            background-color: #0d9488;
+        /* Adjust for larger screens to place legend on the right */
+        @media (min-width: 768px) {
+            .chart-wrapper {
+                flex-direction: row; /* Row for desktop */
+                justify-content: center;
+                align-items: flex-start; /* Align chart and legend at the top */
+                gap: 2rem;
+            }
+            .chart-container {
+                max-width: 350px; /* Slightly larger on desktop */
+                height: 350px;
+            }
         }
     </style>
 </head>
@@ -154,8 +156,10 @@
                 <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                     <h3 class="text-2xl font-bold text-slate-800 mb-2 text-center">Phân Bổ Ngân Sách (Ước Tính)</h3>
                     <p class="text-slate-600 mb-8 text-center">Tổng ngân sách dự kiến dao động từ 500 triệu đến 2 tỷ VNĐ.</p>
-                    <div class="chart-container">
-                        <canvas id="budgetChart"></canvas>
+                    <div class="chart-wrapper">
+                        <div class="chart-container">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,6 +204,9 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Register the datalabels plugin globally
+    Chart.register(ChartDataLabels);
+
     const data = {
         goals: [
             { title: 'Quản lý Tồn kho', desc: 'Theo dõi chính xác từng sản phẩm theo mã S/N.', icon: '📦' },
@@ -220,11 +227,11 @@ document.addEventListener('DOMContentLoaded', function () {
             { title: 'Thiết kế', desc: 'Có logo Nghệ Năng/iFan/eFan, sử dụng mã QR Code để dễ quét và chứa nhiều thông tin. Kích thước tem sẽ được chuẩn hóa.', icon: '🖼️' }
         ],
         snStructure: [
-            { part: '[Mã Dòng SP]', info: 'Mã nội bộ ngắn gọn cho từng dòng sản phẩm (ví dụ: IFH cho iFan Hướng Trục).' },
-            { part: '[Thời Gian SX]', info: 'Định dạng NămThángNgày (YYMMDD) hoặc NămTuần (YYWW) để dễ truy xuất lô sản xuất.' },
-            { part: '[Mã Ngẫu Nhiên/Hash]', info: "Chuỗi ký tự và số (6-10 ký tự) được tạo bằng thuật toán mã hóa (Hash) từ thông tin nội bộ và một 'khóa bí mật', đảm bảo tính duy nhất và không thể đoán ngược." },
-            { part: '[Số Thứ Tự]', info: 'Dãy số tăng dần trong ngày/ca sản xuất (4-6 chữ số).' },
-            { part: '[Checksum]', info: 'Một ký tự kiểm tra lỗi, giúp xác minh tính hợp lệ của mã S/N khi quét hoặc nhập liệu.' }
+            { part: 'Mã Dòng SP', info: 'Mã nội bộ ngắn gọn cho từng dòng sản phẩm (ví dụ: IFH cho iFan Hướng Trục).' },
+            { part: 'Thời Gian SX', info: 'Định dạng NămThángNgày (YYMMDD) hoặc NămTuần (YYWW) để dễ truy xuất lô sản xuất.' },
+            { part: 'Mã Ngẫu Nhiên/Hash', info: "Chuỗi ký tự và số (6-10 ký tự) được tạo bằng thuật toán mã hóa (Hash) từ thông tin nội bộ và một 'khóa bí mật', đảm bảo tính duy nhất và không thể đoán ngược." },
+            { part: 'Số Thứ Tự', info: 'Dãy số tăng dần trong ngày/ca sản xuất (4-6 chữ số).' },
+            { part: 'Checksum', info: 'Một ký tự kiểm tra lỗi, giúp xác minh tính hợp lệ của mã S/N khi quét hoặc nhập liệu.' }
         ],
         timeline: [
             { phase: 1, title: 'Chuẩn Bị & Lựa Chọn Giải Pháp', duration: 'Tháng 1 - 2', color: 'teal', details: ['Thành lập Ban Dự án', 'Khảo sát chuyên sâu & Phân tích quy trình', 'Lập tài liệu Yêu cầu Nghiệp vụ (BRD)', 'Nghiên cứu, đánh giá và lựa chọn nhà cung cấp MES/WMS', 'Mua sắm phần cứng ban đầu'] },
@@ -237,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
         risks: [
             { risk: 'Khó khăn tích hợp với MISA AMIS', mitigation: 'Khảo sát kỹ API từ đầu. Chọn nhà cung cấp có kinh nghiệm tích hợp. Chuẩn bị phương án đồng bộ thay thế (qua file).' },
             { risk: 'Sự phản đối của nhân viên', mitigation: 'Truyền thông mạnh mẽ về lợi ích. Đào tạo chuyên sâu. Có cơ chế khen thưởng và đội ngũ hỗ trợ tại chỗ.' },
-            { risk: 'Sai sót khi dán tem & nhập liệu', mitigation: 'Xây dựng SOP chi tiết. Kiểm tra chéo. Dùng máy quét mã vạch. Kiểm tra chất lượng tem trước khi dán hàng loạt.' },
+            { risk: 'Sai sót khi dán tem & nhập liệu', mitigation: 'Xây dựng SOP chi tiết. Kiểm tra chéo. Dùng máy quét mã vạch. Kiểm tra chất lượng tem và khả năng quét trước khi dán hàng loạt.' },
             { risk: 'Thiếu nguồn lực nội bộ', mitigation: 'Lập kế hoạch phân bổ nguồn lực rõ ràng. Cân nhắc thuê chuyên gia tư vấn hoặc dịch vụ bên ngoài nếu cần.' },
             { risk: 'Vấn đề hạ tầng mạng', mitigation: 'Khảo sát và nâng cấp hạ tầng mạng (Wi-Fi/LAN) để đảm bảo kết nối ổn định cho các thiết bị.' },
             { risk: 'Đội ngũ IT freelance & thiếu IT full-time', mitigation: 'Ngắn hạn: Thuê IT freelance có kinh nghiệm MES/WMS chuyên trách dự án. Dài hạn: Lập kế hoạch tuyển dụng IT full-time cho chuyển đổi số. Đảm bảo chuyển giao kiến thức từ vendor/freelance.' },
@@ -285,6 +292,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 { company: 'Sharp (Thiết bị điện tử, gia dụng)', detail: 'Hệ thống S/N và quản lý sản xuất giúp họ kiểm soát chặt chẽ quá trình sản xuất, quản lý bảo hành hiệu quả và duy trì niềm tin của khách hàng vào thương hiệu.' }
             ]
         }
+    };
+
+    const wrapLabel = (label, maxChars = 16) => {
+        if (typeof label !== 'string' || label.length <= maxChars) {
+            return label;
+        }
+        const words = label.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > maxChars && currentLine !== '') {
+                lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+        lines.push(currentLine.trim());
+        return lines;
     };
 
     // Render Goals
@@ -337,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function () {
         partDiv.className = 'p-2 bg-white rounded shadow-sm cursor-pointer hover:bg-teal-100 transition';
         partDiv.textContent = item.part;
         partDiv.addEventListener('click', () => {
-             if (snInfoBox.textContent === item.info && !snInfoBox.classList.contains('hidden')) {
+             if (snInfoBox.innerHTML.includes(item.info) && !snInfoBox.classList.contains('hidden')) {
                 snInfoBox.classList.add('hidden');
             } else {
                 snInfoBox.innerHTML = `<span class="font-bold">${item.part}:</span> ${item.info}`;
@@ -477,25 +503,47 @@ document.addEventListener('DOMContentLoaded', function () {
     // Budget Chart
     const budgetCtx = document.getElementById('budgetChart');
     if (budgetCtx) {
+        const budgetData = {
+            labels: [
+                wrapLabel('Phần mềm (Bản quyền & Tùy chỉnh)'),
+                wrapLabel('Phần cứng'),
+                wrapLabel('Dịch vụ triển khai'),
+                wrapLabel('Đào tạo & Hỗ trợ'),
+                wrapLabel('Dự phòng')
+            ],
+            datasets: [{
+                label: 'Phân Bổ Ngân Sách',
+                data: [45, 15, 15, 10, 15],
+                backgroundColor: [
+                    '#FF6B6B', // Red
+                    '#4ECDC4', // Turquoise
+                    '#45B7D1', // Light Blue
+                    '#F7B844', // Orange
+                    '#A23B72'  // Purple
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 4,
+                hoverOffset: 10
+            }]
+        };
+
         new Chart(budgetCtx, {
             type: 'doughnut',
-            data: {
-                labels: ['Phần mềm (Bản quyền & Tùy chỉnh)', 'Phần cứng', 'Dịch vụ triển khai', 'Đào tạo & Hỗ trợ', 'Dự phòng'],
-                datasets: [{
-                    label: 'Phân Bổ Ngân Sách',
-                    data: [45, 15, 15, 10, 15],
-                    backgroundColor: ['#0d9488', '#0f766e', '#115e59', '#134e4a', '#ccfbf1'],
-                    borderColor: '#ffffff',
-                    borderWidth: 4
-                }]
-            },
+            data: budgetData,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom',
-                        labels: { padding: 20, font: { family: "'Inter', sans-serif" } }
+                        position: 'right', // Moved to right side
+                        align: 'center', // Align legend items to center
+                        labels: {
+                            padding: 20,
+                            font: { family: "'Inter', sans-serif" },
+                            usePointStyle: true,
+                            boxWidth: 10,
+                            boxHeight: 10
+                        }
                     },
                     tooltip: {
                         callbacks: {
@@ -507,8 +555,42 @@ document.addEventListener('DOMContentLoaded', function () {
                                 } else {
                                   return label;
                                 }
+                            },
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (Array.isArray(label)) {
+                                    label = label.join(' ');
+                                }
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
                             }
                         }
+                    },
+                    datalabels: {
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value * 100 / sum).toFixed(1) + "%";
+                            return percentage;
+                        },
+                        color: '#fff',
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        bottom: 0
                     }
                 }
             }
