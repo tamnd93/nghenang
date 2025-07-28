@@ -112,6 +112,33 @@
             cursor: pointer;
             color: #475569; /* slate-600 */
         }
+
+        /* Organization section specific styles */
+        .org-tab-link {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            background-color: #e2e8f0; /* slate-200 */
+            color: #475569; /* slate-600 */
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap; /* Prevent wrapping for tags */
+        }
+        .org-tab-link:hover {
+            background-color: #cbd5e1; /* slate-300 */
+        }
+        .org-tab-link.active {
+            background-color: #0d9488; /* teal-600 */
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .org-content-pane {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .org-content-pane.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="antialiased text-slate-700">
@@ -211,14 +238,26 @@
 
             <!-- Risks Pane -->
             <div id="risks" class="content-pane">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
-                        <div class="space-y-6" id="risks-list"></div>
+                <div class="space-y-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Cơ Cấu Tổ Chức & Trách Nhiệm</h3>
+                        <div id="org-tabs-container" class="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 mb-6 bg-slate-100 p-2 rounded-lg">
+                            <!-- Role buttons will be rendered here -->
+                        </div>
+                        <div id="org-content-container" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                            <!-- Role responsibilities content panes will be rendered here -->
+                        </div>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
-                        <div class="space-y-6" id="success-factors-list"></div>
+                    <hr class="border-t-2 border-slate-200 my-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
+                            <div class="space-y-6" id="risks-list"></div>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
+                            <div class="space-y-6" id="success-factors-list"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,6 +371,15 @@ document.addEventListener('DOMContentLoaded', function () {
             { phase: 4, title: 'Đào Tạo & Chuẩn Bị Go-Live', duration: 'Tháng 10', color: 'sky', details: ['Xây dựng tài liệu SOP & Hướng dẫn sử dụng', 'Đào tạo chuyên sâu cho toàn bộ nhân sự liên quan', 'Duyệt vị trí dán tem cuối cùng', 'Lập kế hoạch chi tiết cho ngày Go-Live'] },
             { phase: 5, title: 'Go-Live & Dán Tem Tồn Kho', duration: 'Tháng 11 - 12', color: 'indigo', details: ['Go-Live chính thức cho sản phẩm mới xuất xưởng', 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)', 'Ưu tiên: Kho xưởng -> Showroom -> Đại lý/NPP'] },
             { phase: 6, title: 'Đánh Giá & Cải Tiến', duration: 'Từ Tháng 13', color: 'slate', details: ['Giám sát hiệu suất hệ thống', 'Thu thập phản hồi định kỳ từ người dùng', 'Bảo trì & nâng cấp hệ thống', 'Khai thác dữ liệu S/N để phân tích kinh doanh'] }
+        ],
+        organization: [
+            { id: 'ban-chi-dao', role: 'Ban Chỉ đạo Dự án', responsibilities: ['Đại diện Ban Lãnh đạo Công ty', 'Đưa ra các quyết định chiến lược', 'Phê duyệt ngân sách và nguồn lực', 'Giải quyết các vướng mắc lớn'] },
+            { id: 'truong-du-an', role: 'Trưởng Dự án (Project Manager)', responsibilities: ['Chịu trách nhiệm tổng thể về kế hoạch, tiến độ, ngân sách, chất lượng dự án', 'Là đầu mối liên lạc chính'] },
+            { id: 'doi-it', role: 'Đội Dự án IT', responsibilities: ['Chịu trách nhiệm chính về lựa chọn, triển khai, tùy chỉnh, tích hợp hệ thống MES/WMS và đồng bộ với MISA AMIS', 'Quản lý CSDL S/N và hạ tầng công nghệ', 'Hỗ trợ kỹ thuật cho người dùng'] },
+            { id: 'doi-san-xuat-kcs', role: 'Đội Dự án Sản xuất & KCS', responsibilities: ['Chịu trách nhiệm chính về quy trình gán, dán tem S/N cho sản phẩm mới xuất xưởng', 'Đảm bảo việc ghi nhận thông tin lô vật tư đầu vào chính xác', 'Phối hợp trong việc dán tem tồn kho'] },
+            { id: 'doi-kho', role: 'Đội Dự án Kho', responsibilities: ['Chịu trách nhiệm chính về quy trình dán tem S/N cho sản phẩm tồn kho tại xưởng và quản lý tồn kho theo S/N trong hệ thống', 'Đảm bảo quy trình xuất/nhập kho theo S/N'] },
+            { id: 'doi-bao-hanh', role: 'Đội Dự án Bảo hành & Dịch vụ khách hàng', responsibilities: ['Chịu trách nhiệm quản lý thông tin bảo hành theo S/N', 'Sử dụng hệ thống để tra cứu, kích hoạt, và cập nhật lịch sử bảo hành', 'Phát triển cổng thông tin kiểm tra S/N cho khách hàng'] },
+            { id: 'doi-ban-hang', role: 'Đội Dự án Bán hàng & Marketing', responsibilities: ['Phối hợp trong việc thu thập thông tin khách hàng khi bán hàng', 'Phối hợp với đại lý/NPP trong việc dán tem tồn kho và truyền thông về hệ thống S/N mới'] }
         ],
         risks: [
             { risk: 'Khó khăn tích hợp với MISA AMIS', mitigation: 'Khảo sát kỹ API từ đầu. Chọn nhà cung cấp có kinh nghiệm tích hợp. Chuẩn bị phương án đồng bộ thay thế (qua file).' },
@@ -517,6 +565,45 @@ document.addEventListener('DOMContentLoaded', function () {
             timelineItem.classList.toggle('open');
         });
     });
+
+    // Render Organization (New Horizontal Tabs)
+    const orgTabsContainer = document.getElementById('org-tabs-container');
+    const orgContentContainer = document.getElementById('org-content-container');
+
+    data.organization.forEach((item, index) => {
+        // Create tab button
+        const tabButton = document.createElement('button');
+        tabButton.className = `org-tab-link ${index === 0 ? 'active' : ''}`;
+        tabButton.setAttribute('data-org-role', item.id);
+        tabButton.textContent = item.role;
+        orgTabsContainer.appendChild(tabButton);
+
+        // Create content pane
+        const contentPane = document.createElement('div');
+        contentPane.id = `org-content-${item.id}`;
+        contentPane.className = `org-content-pane ${index === 0 ? 'active' : ''}`;
+        contentPane.innerHTML = `
+            <h4 class="font-bold text-xl text-slate-800 mb-4">${item.role}</h4>
+            <ul class="list-disc list-inside space-y-2 text-slate-700">
+                ${item.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+            </ul>
+        `;
+        orgContentContainer.appendChild(contentPane);
+    });
+
+    // Add event listeners for organization tabs
+    document.querySelectorAll('.org-tab-link').forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active from all buttons and content panes
+            document.querySelectorAll('.org-tab-link').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.org-content-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Add active to clicked button and its corresponding content pane
+            button.classList.add('active');
+            document.getElementById(`org-content-${button.dataset.orgRole}`).classList.add('active');
+        });
+    });
+
 
     // Render Risks
     const risksList = document.getElementById('risks-list');
