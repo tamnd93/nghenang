@@ -146,12 +146,12 @@
         }
 
         /* Analysis explanation toggle styles */
-        .analysis-explanation {
+        .analysis-explanation, .governance-explanation {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
         }
-        .analysis-explanation.open {
+        .analysis-explanation.open, .governance-explanation.open {
             max-height: 500px; /* Sufficient height for content */
             padding-top: 1rem;
             padding-bottom: 1rem;
@@ -159,7 +159,7 @@
         .toggle-arrow {
             transition: transform 0.3s ease;
         }
-        .analysis-header.open .toggle-arrow {
+        .analysis-header.open .toggle-arrow, .governance-header.open .toggle-arrow {
             transform: rotate(90deg);
         }
     </style>
@@ -173,8 +173,12 @@
                 <span class="text-2xl mr-3">🚀</span>
                 <h1 class="text-3xl font-extrabold tracking-tight">Kế Hoạch Chuyển Đổi Số: Dự Án S/N & MES/WMS</h1>
             </div>
-            <p class="max-w-3xl mx-auto text-lg text-slate-600">
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-6">
                 Một infographic tương tác trình bày kế hoạch chi tiết, giải pháp và lộ trình triển khai hệ thống quản lý S/N và MES/WMS toàn diện cho Nghệ Năng.
+            </p>
+            <!-- Executive Summary -->
+            <p class="max-w-3xl mx-auto text-xl font-semibold text-teal-700 bg-teal-50 p-4 rounded-lg border border-teal-200">
+                Dự án S/N & MES/WMS sẽ cách mạng hóa quản lý chuỗi cung ứng, nâng cao chất lượng sản phẩm và tối ưu hóa hiệu quả vận hành, đảm bảo tăng trưởng bền vững cho Nghệ Năng.
             </p>
         </header>
 
@@ -226,6 +230,12 @@
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                         <h3 class="text-2xl font-bold text-slate-800 mb-4">Giải Pháp Phần Mềm</h3>
                         <ul class="list-none space-y-4 text-slate-700" id="software-solution-list"></ul>
+                        <p class="text-sm text-slate-600 mt-4">
+                            Việc tích hợp chặt chẽ với MISA AMIS sẽ đảm bảo luồng dữ liệu liền mạch từ sản xuất đến tài chính và bán hàng, loại bỏ nhập liệu thủ công, tăng cường tính chính xác và kịp thời của báo cáo.
+                        </p>
+                        <p class="text-sm text-slate-600 mt-2">
+                            Giải pháp MES/WMS được xây dựng trên nền tảng công nghệ hiện đại, đảm bảo khả năng mở rộng (scalable) và bảo mật dữ liệu cao.
+                        </p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                         <h3 class="text-2xl font-bold text-slate-800 mb-4">Cấu Trúc Mã S/N Chuyên Nghiệp</h3>
@@ -251,7 +261,7 @@
             <div id="budget" class="content-pane">
                 <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                     <h3 class="text-2xl font-bold text-slate-800 mb-2 text-center">Phân Bổ Ngân Sách (Ước Tính)</h3>
-                    <p class="text-slate-600 mb-8 text-center">Tổng ngân sách dự kiến dao động từ 500 triệu đến 2 tỷ VNĐ.</p>
+                    <p class="text-slate-600 mb-4 text-center">Tổng ngân sách dự kiến dao động từ 500 triệu đến 2 tỷ VNĐ. Khoảng ngân sách này phụ thuộc vào mức độ tùy chỉnh sâu, số lượng thiết bị phần cứng thực tế và lựa chọn nhà cung cấp cuối cùng.</p>
                     <div class="chart-wrapper">
                         <div class="chart-container">
                             <canvas id="budgetChart"></canvas>
@@ -272,6 +282,23 @@
                             <!-- Role responsibilities content panes will be rendered here -->
                         </div>
                     </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4 text-center">Cơ Chế Quản Trị Dự Án (Project Governance)</h3>
+                        <div class="flex items-center justify-center mb-6 cursor-pointer governance-header" data-target="governance-explanation">
+                            <span class="text-lg font-medium text-teal-600 mr-2">Cơ chế quản trị là gì?</span>
+                            <svg class="w-5 h-5 text-teal-600 toggle-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div id="governance-explanation" class="governance-explanation bg-teal-50 p-4 rounded-lg text-teal-800 border border-teal-200">
+                            <p class="mb-2"><strong class="font-semibold">Định nghĩa:</strong> Cơ chế quản trị dự án là hệ thống các quy tắc, quy trình và cấu trúc được thiết lập để định hướng, giám sát và kiểm soát một dự án. Nó đảm bảo rằng dự án được thực hiện theo đúng mục tiêu, ngân sách và thời gian, đồng thời giải quyết các vấn đề phát sinh một cách hiệu quả.</p>
+                            <p><strong class="font-semibold">Cơ chế áp dụng cho dự án S/N & MES/WMS:</strong></p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li><strong>Họp Ban Chỉ đạo định kỳ:</strong> Hàng tháng hoặc khi cần thiết để xem xét tiến độ, phê duyệt các thay đổi lớn, và giải quyết các vấn đề cấp cao.</li>
+                                <li><strong>Báo cáo tiến độ:</strong> Trưởng Dự án sẽ báo cáo trực tiếp cho Ban Chỉ đạo về tình hình dự án, các rủi ro và đề xuất giải pháp.</li>
+                                <li><strong>Quy trình phê duyệt:</strong> Mọi thay đổi lớn về phạm vi, ngân sách, hoặc thời gian đều phải qua quy trình phê duyệt rõ ràng từ Ban Chỉ đạo.</li>
+                                <li><strong>Truyền thông nội bộ:</strong> Đảm bảo thông tin dự án được truyền đạt minh bạch đến tất cả các phòng ban liên quan.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -280,10 +307,16 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                         <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
+                        <p class="text-slate-600 mb-4 text-sm italic">
+                            Việc đánh giá mức độ tác động và ưu tiên của từng rủi ro sẽ giúp tập trung nguồn lực hiệu quả hơn.
+                        </p>
                         <div class="space-y-6" id="risks-list"></div>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
                         <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
+                        <p class="text-slate-600 mb-4 text-sm italic">
+                            Để đảm bảo thành công, cần chủ động thúc đẩy và duy trì các yếu tố sau trong suốt quá trình triển khai dự án.
+                        </p>
                         <div class="space-y-6" id="success-factors-list"></div>
                     </div>
                 </div>
@@ -305,7 +338,7 @@
                             <ul class="list-disc list-inside text-sm mt-2">
                                 <li><strong>Điểm mạnh (Strengths):</strong> Nhu cầu rõ ràng từ thị trường về truy xuất nguồn gốc, sự chủ động của phòng kinh doanh.</li>
                                 <li><strong>Điểm yếu (Weaknesses):</strong> Hạn chế về nguồn lực IT nội bộ, văn hóa công ty truyền thống khó thích nghi.</li>
-                                <li><strong>Cơ hội (Opportunities):</strong> Xu hướng chuyển đổi số, nâng cao khả năng cạnh tranh, tối ưu hóa vận hành.</li>
+                                <li><strong>Cơ hội (Opportunities):</strong> Xu hướng chuyển đổi số, nâng cao khả năng cạnh tranh, tối ưu vận hành.</li>
                                 <li><strong>Thách thức (Threats):</strong> Chi phí phát sinh, rủi ro công nghệ, sự cạnh tranh từ đối thủ.</li>
                             </ul>
                         </div>
@@ -385,42 +418,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: 'Quản lý Tồn kho', 
                 desc: 'Theo dõi chính xác từng sản phẩm theo mã S/N.', 
                 icon: '📦',
-                detail: 'Hệ thống S/N cho phép theo dõi chi tiết từng sản phẩm từ khi nhập kho, qua các công đoạn sản xuất, đến khi xuất kho và phân phối. Điều này giúp kiểm soát tồn kho chính xác hơn nhiều so với việc quản lý theo lô thông thường, giảm thiểu thất thoát và sai sót.',
+                detail: 'Hệ thống S/N cho phép theo dõi chi tiết từng sản phẩm từ khi nhập kho, qua các công đoạn sản xuất, đến khi xuất kho và phân phối. Điều này giúp kiểm soát tồn kho chính xác hơn nhiều so với việc quản lý theo lô thông thường, giảm thiểu thất thoát và sai sót. Ước tính giảm thất thoát tồn kho từ 5-10%.',
                 example: 'Khi một lô hàng quạt được sản xuất, mỗi chiếc quạt sẽ được gán một S/N duy nhất. Hệ thống sẽ ghi nhận S/N đó khi quạt được nhập kho thành phẩm, xuất kho cho đại lý, hoặc chuyển đến showroom. Điều này giúp Nghệ Năng biết chính xác số lượng và vị trí của từng chiếc quạt cụ thể.'
             },
             { 
                 title: 'Truy xuất Nguồn gốc', 
                 desc: 'Từ vật tư đầu vào, sản xuất, đến phân phối và bảo hành.', 
                 icon: '🔍',
-                detail: 'Mỗi S/N sẽ là một "hộ chiếu" điện tử của sản phẩm, chứa đựng toàn bộ lịch sử của nó. Từ vật tư cấu thành, dây chuyền sản xuất, người kiểm định, thời gian sản xuất, đến kênh phân phối và lịch sử bảo hành. Điều này cực kỳ quan trọng cho việc đảm bảo chất lượng và an toàn sản phẩm.',
+                detail: 'Mỗi S/N sẽ là một "hộ chiếu" điện tử của sản phẩm, chứa đựng toàn bộ lịch sử của nó. Từ vật tư cấu thành, dây chuyền sản xuất, người kiểm định, thời gian sản xuất, đến kênh phân phối và lịch sử bảo hành. Điều này cực kỳ quan trọng cho việc đảm bảo chất lượng và an toàn sản phẩm, giảm thời gian truy vấn thông tin từ vài giờ xuống còn vài phút.',
                 example: 'Nếu có một vấn đề về chất lượng phát sinh với một chiếc quạt cụ thể, chỉ cần quét S/N của nó, Nghệ Năng có thể truy ngược lại xem chiếc quạt đó được sản xuất khi nào, dùng linh kiện từ lô nào, do ai lắp ráp, và đã được bán cho đại lý nào. Điều này giúp nhanh chóng khoanh vùng vấn đề và xử lý hiệu quả.'
             },
             { 
                 title: 'Chống Hàng giả', 
                 desc: 'Bảo vệ uy tín thương hiệu iFan và eFan.', 
                 icon: '🛡️',
-                detail: 'Với cấu trúc mã S/N phức tạp và tem chống giả đặc biệt, hệ thống giúp xác minh tính chính hãng của sản phẩm. Khách hàng có thể tự kiểm tra S/N qua ứng dụng hoặc website, từ đó tăng cường niềm tin vào thương hiệu và giảm thiểu rủi ro hàng giả, hàng nhái.',
+                detail: 'Với cấu trúc mã S/N phức tạp và tem chống giả đặc biệt, hệ thống giúp xác minh tính chính hãng của sản phẩm. Khách hàng có thể tự kiểm tra S/N qua ứng dụng hoặc website, từ đó tăng cường niềm tin vào thương hiệu và giảm thiểu rủi ro hàng giả, hàng nhái, góp phần bảo vệ doanh thu ước tính 15-20% từ hàng chính hãng.',
                 example: 'Một khách hàng mua quạt iFan có thể dùng điện thoại quét mã QR trên tem S/N. Ứng dụng sẽ hiển thị thông tin sản phẩm chính hãng, ngày sản xuất, và trạng thái bảo hành. Nếu đó là hàng giả, hệ thống sẽ báo ngay lập tức, giúp khách hàng tránh mua phải sản phẩm kém chất lượng và bảo vệ uy tín của iFan/eFan.'
             },
             { 
                 title: 'Tự động hóa Bảo hành', 
                 desc: 'Nâng cao trải nghiệm khách hàng và hiệu quả dịch vụ.', 
                 icon: '⚙️',
-                detail: 'Hệ thống S/N liên kết trực tiếp với thông tin bảo hành. Khi sản phẩm được kích hoạt bảo hành (thông qua S/N), thông tin sẽ tự động cập nhật. Khi có yêu cầu bảo hành, việc tra cứu và xác minh trở nên nhanh chóng, giảm thời gian chờ đợi cho khách hàng và tối ưu hóa quy trình dịch vụ.',
+                detail: 'Hệ thống S/N liên kết trực tiếp với thông tin bảo hành. Khi sản phẩm được kích hoạt bảo hành (thông qua S/N), thông tin sẽ tự động cập nhật. Khi có yêu cầu bảo hành, việc tra cứu và xác minh trở nên nhanh chóng, giảm thời gian chờ đợi cho khách hàng và tối ưu hóa quy trình dịch vụ, giảm 30% thời gian xử lý yêu cầu bảo hành.',
                 example: 'Thay vì phải giữ phiếu bảo hành giấy, khách hàng chỉ cần cung cấp S/N của sản phẩm. Nhân viên bảo hành có thể tra cứu ngay lịch sử mua hàng, thời gian bảo hành còn lại, và các thông tin liên quan, giúp quá trình tiếp nhận và xử lý bảo hành diễn ra nhanh gọn, chuyên nghiệp hơn.'
             },
             { 
                 title: 'Nâng cao Dịch vụ', 
                 desc: 'Phản hồi nhanh chóng và chính xác các yêu cầu của khách hàng.', 
                 icon: '�',
-                detail: 'Với dữ liệu sản phẩm chi tiết từ S/N, đội ngũ hỗ trợ khách hàng có thể cung cấp thông tin chính xác, tư vấn hiệu quả hơn về sản phẩm, phụ tùng, hoặc các vấn đề kỹ thuật. Điều này cải thiện đáng kể trải nghiệm và sự hài lòng của khách hàng.',
+                detail: 'Với dữ liệu sản phẩm chi tiết từ S/N, đội ngũ hỗ trợ khách hàng có thể cung cấp thông tin chính xác, tư vấn hiệu quả hơn về sản phẩm, phụ tùng, hoặc các vấn đề kỹ thuật. Điều này cải thiện đáng kể trải nghiệm và sự hài lòng của khách hàng, tăng chỉ số hài lòng khách hàng (CSAT) lên 10%.',
                 example: 'Khi khách hàng gọi điện hỗ trợ về một chiếc quạt, chỉ cần S/N, nhân viên có thể biết ngay model, năm sản xuất, các đặc điểm kỹ thuật và thậm chí là các lỗi thường gặp của dòng sản phẩm đó, từ đó đưa ra hướng dẫn hoặc giải pháp nhanh chóng, chính xác hơn.'
             },
             { 
                 title: 'Phân tích Dữ liệu', 
                 desc: 'Hỗ trợ ra quyết định kinh doanh và tối ưu hóa vận hành.', 
                 icon: '📊',
-                detail: 'Dữ liệu thu thập từ mỗi S/N (về sản xuất, bán hàng, bảo hành) là nguồn thông tin vô giá. Hệ thống có thể tổng hợp và phân tích dữ liệu này để nhận diện xu hướng, đánh giá hiệu suất sản phẩm, dự báo nhu cầu thị trường, và tối ưu hóa quy trình sản xuất, kho bãi.',
+                detail: 'Dữ liệu thu thập từ mỗi S/N (về sản xuất, bán hàng, bảo hành) là nguồn thông tin vô giá. Hệ thống có thể tổng hợp và phân tích dữ liệu này để nhận diện xu hướng, đánh giá hiệu suất sản phẩm, dự báo nhu cầu thị trường, và tối ưu hóa quy trình sản xuất, kho bãi. Cải thiện độ chính xác dự báo nhu cầu lên 20%.',
                 example: 'Nghệ Năng có thể phân tích dữ liệu S/N để biết dòng quạt nào có tỷ lệ bảo hành cao nhất, linh kiện nào thường xuyên hỏng hóc, hoặc khu vực nào tiêu thụ sản phẩm mạnh nhất. Những thông tin này giúp bộ phận R&D cải tiến sản phẩm, bộ phận sản xuất tối ưu quy trình, và bộ phận kinh doanh đưa ra chiến lược phù hợp.'
             }
         ],
@@ -451,36 +484,41 @@ document.addEventListener('DOMContentLoaded', function () {
                     {
                         item: 'Thành lập Ban Dự án',
                         subDetails: [
-                            'Thành phần: Đại diện Ban Lãnh đạo, Trưởng Dự án, đại diện các phòng ban liên quan (IT, Sản xuất, Kho, Bảo hành, Bán hàng).',
-                            'Mục tiêu: Đảm bảo sự cam kết từ cấp cao và phối hợp đa phòng ban ngay từ đầu.'
+                            'Phòng ban liên quan: Ban Lãnh đạo, Trưởng Dự án, đại diện IT, Sản xuất, Kho, Bảo hành, Bán hàng.',
+                            'Mục tiêu: Đảm bảo sự cam kết từ cấp cao và phối hợp đa phòng ban ngay từ đầu.',
+                            'Sản phẩm bàn giao: Quyết định thành lập Ban Dự án, danh sách thành viên.'
                         ]
                     },
                     {
                         item: 'Khảo sát chuyên sâu & Phân tích quy trình',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, Đội Sản xuất, Đội Kho, Đội Bảo hành, Đội Bán hàng.',
-                            'Nội dung: Phân tích quy trình hiện tại, xác định điểm nghẽn, nhu cầu cụ thể cho hệ thống S/N và MES/WMS.'
+                            'Nội dung: Phân tích quy trình hiện tại, xác định điểm nghẽn, nhu cầu cụ thể cho hệ thống S/N và MES/WMS.',
+                            'Sản phẩm bàn giao: Báo cáo khảo sát hiện trạng, sơ đồ quy trình nghiệp vụ (AS-IS).'
                         ]
                     },
                     {
                         item: 'Lập tài liệu Yêu cầu Nghiệp vụ (BRD)',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban liên quan.',
-                            'Nội dung: Tổng hợp các yêu cầu đã khảo sát thành tài liệu chính thức, làm cơ sở cho việc lựa chọn giải pháp và tùy chỉnh.'
+                            'Nội dung: Tổng hợp các yêu cầu đã khảo sát thành tài liệu chính thức, làm cơ sở cho việc lựa chọn giải pháp và tùy chỉnh.',
+                            'Sản phẩm bàn giao: Tài liệu BRD được phê duyệt.'
                         ]
                     },
                     {
                         item: 'Nghiên cứu, đánh giá và lựa chọn nhà cung cấp MES/WMS',
                         subDetails: [
                             'Phòng ban liên quan: Ban Chỉ đạo, Trưởng Dự án, Đội IT, Phòng Kế toán (đánh giá tài chính).',
-                            'Nội dung: Đánh giá năng lực, kinh nghiệm, giải pháp công nghệ và chi phí của các nhà cung cấp tiềm năng.'
+                            'Nội dung: Đánh giá năng lực, kinh nghiệm, giải pháp công nghệ và chi phí của các nhà cung cấp tiềm năng.',
+                            'Sản phẩm bàn giao: Báo cáo đánh giá nhà cung cấp, Quyết định lựa chọn nhà cung cấp.'
                         ]
                     },
                     {
                         item: 'Mua sắm phần cứng ban đầu',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Phòng Kế toán.',
-                            'Nội dung: Máy chủ (nếu cần on-premise), máy quét mã vạch (cầm tay, cố định), máy in tem nhãn, thiết bị mạng (AP Wi-Fi công nghiệp).'
+                            'Nội dung: Máy chủ (nếu cần on-premise), máy quét mã vạch (cầm tay, cố định), máy in tem nhãn, thiết bị mạng (AP Wi-Fi công nghiệp).',
+                            'Sản phẩm bàn giao: Danh sách thiết bị phần cứng, hợp đồng mua sắm, thiết bị được lắp đặt.'
                         ]
                     }
                 ] 
@@ -495,35 +533,40 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Cài đặt & Cấu hình hệ thống MES/WMS',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
-                            'Nội dung: Cài đặt phần mềm trên máy chủ, cấu hình các module MES/WMS cơ bản (quản lý sản xuất, kho, chất lượng).'
+                            'Nội dung: Cài đặt phần mềm trên máy chủ, cấu hình các module MES/WMS cơ bản (quản lý sản xuất, kho, chất lượng).',
+                            'Sản phẩm bàn giao: Hệ thống MES/WMS được cài đặt và cấu hình cơ bản.'
                         ]
                     },
                     {
                         item: 'Thiết kế & Xây dựng CSDL S/N',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp, Đội Sản xuất, Đội Kho.',
-                            'Nội dung: Thiết kế cấu trúc bảng dữ liệu cho S/N, đảm bảo khả năng lưu trữ thông tin chi tiết (vật tư, lô sản xuất, lịch sử).'
+                            'Nội dung: Thiết kế cấu trúc bảng dữ liệu cho S/N, đảm bảo khả năng lưu trữ thông tin chi tiết (vật tư, lô sản xuất, lịch sử).',
+                            'Sản phẩm bàn giao: Sơ đồ CSDL S/N, CSDL S/N được xây dựng.'
                         ]
                     },
                     {
                         item: 'Tùy chỉnh nghiệp vụ theo đặc thù Nghệ Năng',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Đội Sản xuất, Đội KCS, Nhà cung cấp giải pháp.',
-                            'Nội dung: Xây dựng các tính năng đặc thù như liên kết S/N với số lô vật tư, quy trình kiểm soát chất lượng (QC) theo từng S/N.'
+                            'Nội dung: Xây dựng các tính năng đặc thù như liên kết S/N với số lô vật tư, quy trình kiểm soát chất lượng (QC) theo từng S/N.',
+                            'Sản phẩm bàn giao: Các module tùy chỉnh được phát triển và tích hợp.'
                         ]
                     },
                     {
                         item: 'Phát triển tích hợp với MISA AMIS',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Phòng Kế toán, Phòng Bán hàng, Nhà cung cấp giải pháp.',
-                            'Nội dung: Xây dựng API hoặc cơ chế đồng bộ dữ liệu S/N, tồn kho, thông tin bán hàng từ MES/WMS sang MISA AMIS (Kế toán, Bán hàng, CRM).'
+                            'Nội dung: Xây dựng API hoặc cơ chế đồng bộ dữ liệu S/N, tồn kho, thông tin bán hàng từ MES/WMS sang MISA AMIS (Kế toán, Bán hàng, CRM).',
+                            'Sản phẩm bàn giao: Tài liệu thiết kế tích hợp, các API/cơ chế đồng bộ được phát triển và kiểm thử.'
                         ]
                     },
                     {
                         item: 'Chuyển đổi dữ liệu gốc',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Đội Kho, Phòng Kế toán.',
-                            'Nội dung: Di chuyển dữ liệu tồn kho hiện có, danh mục sản phẩm, thông tin khách hàng từ hệ thống cũ sang MES/WMS.'
+                            'Nội dung: Di chuyển dữ liệu tồn kho hiện có, danh mục sản phẩm, thông tin khách hàng từ hệ thống cũ sang MES/WMS.',
+                            'Sản phẩm bàn giao: Dữ liệu được chuyển đổi thành công, báo cáo đối chiếu dữ liệu.'
                         ]
                     }
                 ] 
@@ -538,28 +581,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Kiểm thử nội bộ (Internal Testing)',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
-                            'Nội dung: Kiểm tra chức năng, hiệu suất, bảo mật của hệ thống theo tài liệu BRD và các kịch bản kiểm thử đã định.'
+                            'Nội dung: Kiểm tra chức năng, hiệu suất, bảo mật của hệ thống theo tài liệu BRD và các kịch bản kiểm thử đã định.',
+                            'Sản phẩm bàn giao: Báo cáo kết quả kiểm thử nội bộ, danh sách lỗi (bug list).'
                         ]
                     },
                     {
                         item: 'Kiểm thử chấp nhận người dùng (UAT)',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, đại diện người dùng cuối từ các phòng ban (Sản xuất, Kho, Bảo hành, Bán hàng).',
-                            'Nội dung: Người dùng trực tiếp kiểm tra hệ thống trong môi trường giả lập thực tế, xác nhận đáp ứng yêu cầu nghiệp vụ.'
+                            'Nội dung: Người dùng trực tiếp kiểm tra hệ thống trong môi trường giả lập thực tế, xác nhận đáp ứng yêu cầu nghiệp vụ.',
+                            'Sản phẩm bàn giao: Biên bản UAT, danh sách các vấn đề cần điều chỉnh.'
                         ]
                     },
                     {
                         item: 'Triển khai thí điểm (Pilot) cho một dòng sản phẩm',
                         subDetails: [
                             'Phòng ban liên quan: Đội Sản xuất, Đội Kho, Đội Bảo hành, Đội Bán hàng (cho dòng sản phẩm thí điểm).',
-                            'Nội dung: Áp dụng hệ thống S/N và MES/WMS cho một dòng sản phẩm cụ thể (ví dụ: quạt hướng trục IFH) để đánh giá thực tế và thu thập phản hồi.'
+                            'Nội dung: Áp dụng hệ thống S/N và MES/WMS cho một dòng sản phẩm cụ thể (ví dụ: quạt hướng trục IFH) để đánh giá thực tế và thu thập phản hồi.',
+                            'Sản phẩm bàn giao: Báo cáo kết quả thí điểm, các bài học kinh nghiệm.'
                         ]
                     },
                     {
                         item: 'Thu thập phản hồi và điều chỉnh cuối cùng',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, các phòng ban tham gia thí điểm.',
-                            'Nội dung: Ghi nhận các lỗi, vấn đề phát sinh, và đề xuất cải tiến từ giai đoạn UAT và Pilot để điều chỉnh hệ thống trước Go-Live.'
+                            'Nội dung: Ghi nhận các lỗi, vấn đề phát sinh, và đề xuất cải tiến từ giai đoạn UAT và Pilot để điều chỉnh hệ thống trước Go-Live.',
+                            'Sản phẩm bàn giao: Danh sách các điều chỉnh đã thực hiện, phiên bản hệ thống cuối cùng trước Go-Live.'
                         ]
                     }
                 ] 
@@ -574,28 +621,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Xây dựng tài liệu SOP & Hướng dẫn sử dụng',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, các phòng ban nghiệp vụ.',
-                            'Nội dung: Biên soạn tài liệu hướng dẫn chi tiết cho từng vai trò người dùng, các quy trình vận hành chuẩn (SOP) mới.'
+                            'Nội dung: Biên soạn tài liệu hướng dẫn chi tiết cho từng vai trò người dùng, các quy trình vận hành chuẩn (SOP) mới.',
+                            'Sản phẩm bàn giao: Bộ tài liệu SOP và hướng dẫn sử dụng hoàn chỉnh.'
                         ]
                     },
                     {
                         item: 'Đào tạo chuyên sâu cho toàn bộ nhân sự liên quan',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, toàn bộ nhân sự các phòng ban có liên quan đến S/N và MES/WMS.',
-                            'Nội dung: Tổ chức các buổi đào tạo lý thuyết và thực hành, đảm bảo tất cả người dùng thành thạo hệ thống mới.'
+                            'Nội dung: Tổ chức các buổi đào tạo lý thuyết và thực hành, đảm bảo tất cả người dùng thành thạo hệ thống mới.',
+                            'Sản phẩm bàn giao: Báo cáo đào tạo, danh sách nhân sự được đào tạo.'
                         ]
                     },
                     {
                         item: 'Duyệt vị trí dán tem cuối cùng',
                         subDetails: [
                             'Phòng ban liên quan: Đội Sản xuất, Đội KCS, Đội Marketing.',
-                            'Nội dung: Quyết định vị trí tối ưu để dán tem S/N trên từng loại sản phẩm, đảm bảo dễ quét và thẩm mỹ.'
+                            'Nội dung: Quyết định vị trí tối ưu để dán tem S/N trên từng loại sản phẩm, đảm bảo dễ quét và thẩm mỹ.',
+                            'Sản phẩm bàn giao: Biên bản phê duyệt vị trí dán tem.'
                         ]
                     },
                     {
                         item: 'Lập kế hoạch chi tiết cho ngày Go-Live',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban.',
-                            'Nội dung: Lên kế hoạch từng phút cho ngày Go-Live (thời gian ngưng hệ thống cũ, chuyển đổi, hỗ trợ tại chỗ).'
+                            'Nội dung: Lên kế hoạch từng phút cho ngày Go-Live (thời gian ngưng hệ thống cũ, chuyển đổi, hỗ trợ tại chỗ).',
+                            'Sản phẩm bàn giao: Kế hoạch Go-Live chi tiết.'
                         ]
                     }
                 ] 
@@ -610,20 +661,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Go-Live chính thức cho sản phẩm mới xuất xưởng',
                         subDetails: [
                             'Phòng ban liên quan: Toàn bộ các phòng ban liên quan đến quy trình sản xuất, kho, bán hàng.',
-                            'Nội dung: Bắt đầu áp dụng hệ thống S/N và MES/WMS cho tất cả sản phẩm mới được sản xuất và xuất xưởng.'
+                            'Nội dung: Bắt đầu áp dụng hệ thống S/N và MES/WMS cho tất cả sản phẩm mới được sản xuất và xuất xưởng.',
+                            'Sản phẩm bàn giao: Hệ thống MES/WMS chính thức hoạt động, sản phẩm mới có S/N.'
                         ]
                     },
                     {
                         item: 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)',
                         subDetails: [
                             'Phòng ban liên quan: Đội Kho, Đội Bán hàng, Đội Marketing, Đội IT.',
-                            'Nội dung: Lập kế hoạch và thực hiện dán tem S/N cho toàn bộ sản phẩm đang tồn kho tại xưởng, showroom và đại lý/nhà phân phối.'
+                            'Nội dung: Lập kế hoạch và thực hiện dán tem S/N cho toàn bộ sản phẩm đang tồn kho tại xưởng, showroom và đại lý/nhà phân phối.',
+                            'Sản phẩm bàn giao: Báo cáo số lượng sản phẩm tồn kho đã dán tem.'
                         ]
                     },
                     {
                         item: 'Ưu tiên: Kho xưởng -> Showroom -> Đại lý/NPP',
                         subDetails: [
-                            'Lý do: Ưu tiên dán tem tại kho xưởng để kiểm soát sản phẩm ngay từ gốc, sau đó đến showroom để phục vụ bán lẻ, cuối cùng là đại lý/NPP để quản lý kênh phân phối.'
+                            'Lý do: Ưu tiên dán tem tại kho xưởng để kiểm soát sản phẩm ngay từ gốc, sau đó đến showroom để phục vụ bán lẻ, cuối cùng là đại lý/NPP để quản lý kênh phân phối.',
+                            'Sản phẩm bàn giao: Kế hoạch và báo cáo dán tem theo từng giai đoạn ưu tiên.'
                         ]
                     }
                 ] 
@@ -638,28 +692,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Giám sát hiệu suất hệ thống',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Trưởng Dự án.',
-                            'Nội dung: Theo dõi các chỉ số KPI của hệ thống (tốc độ xử lý, thời gian phản hồi, tỷ lệ lỗi), đảm bảo hệ thống hoạt động ổn định.'
+                            'Nội dung: Theo dõi các chỉ số KPI của hệ thống (tốc độ xử lý, thời gian phản hồi, tỷ lệ lỗi), đảm bảo hệ thống hoạt động ổn định.',
+                            'Sản phẩm bàn giao: Báo cáo hiệu suất hệ thống định kỳ.'
                         ]
                     },
                     {
                         item: 'Thu thập phản hồi định kỳ từ người dùng',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, các Trưởng phòng ban.',
-                            'Nội dung: Tổ chức các buổi họp, khảo sát định kỳ để thu thập ý kiến, đề xuất cải tiến từ người dùng cuối.'
+                            'Nội dung: Tổ chức các buổi họp, khảo sát định kỳ để thu thập ý kiến, đề xuất cải tiến từ người dùng cuối.',
+                            'Sản phẩm bàn giao: Báo cáo phản hồi người dùng, danh sách đề xuất cải tiến.'
                         ]
                     },
                     {
                         item: 'Bảo trì & nâng cấp hệ thống',
                         subDetails: [
                             'Phòng ban liên quan: Đội IT, Nhà cung cấp giải pháp.',
-                            'Nội dung: Thực hiện bảo trì định kỳ, vá lỗi, và lên kế hoạch nâng cấp các tính năng mới dựa trên phản hồi và nhu cầu phát triển.'
+                            'Nội dung: Thực hiện bảo trì định kỳ, vá lỗi, và lên kế hoạch nâng cấp các tính năng mới dựa trên phản hồi và nhu cầu phát triển.',
+                            'Sản phẩm bàn giao: Kế hoạch bảo trì, báo cáo nâng cấp.'
                         ]
                     },
                     {
                         item: 'Khai thác dữ liệu S/N để phân tích kinh doanh',
                         subDetails: [
                             'Phòng ban liên quan: Phòng Kinh doanh, Phòng Marketing, Ban Lãnh đạo.',
-                            'Nội dung: Sử dụng dữ liệu S/N để phân tích xu hướng bán hàng, hiệu suất sản phẩm, dự báo nhu cầu, tối ưu hóa chuỗi cung ứng và chiến lược marketing.'
+                            'Nội dung: Sử dụng dữ liệu S/N để phân tích xu hướng bán hàng, hiệu suất sản phẩm, dự báo nhu cầu, tối ưu hóa chuỗi cung ứng và chiến lược marketing.',
+                            'Sản phẩm bàn giao: Các báo cáo phân tích kinh doanh, đề xuất chiến lược dựa trên dữ liệu S/N.'
                         ]
                     }
                 ] 
@@ -851,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function () {
         timelineItem.className = 'timeline-item';
         let detailsHtml = item.details.map(detail => `
             <li>
-                ${detail.item}
+                <span class="font-semibold">${detail.item}</span>
                 ${detail.subDetails ? `<ul class="list-disc list-inside ml-6 text-sm text-slate-500 mt-1">` + detail.subDetails.map(sub => `<li>${sub}</li>`).join('') + `</ul>` : ''}
             </li>
         `).join('');
@@ -1005,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
 
-    // Tab Logic
+    // Main Tab Logic
     const tabs = document.querySelectorAll('.tab-link');
     const panes = document.querySelectorAll('.content-pane');
     tabs.forEach(tab => {
@@ -1019,6 +1077,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Analysis explanation toggle logic
     document.querySelectorAll('.analysis-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const targetId = header.dataset.target;
+            const targetElement = document.getElementById(targetId);
+            header.classList.toggle('open');
+            targetElement.classList.toggle('open');
+        });
+    });
+
+    // Governance explanation toggle logic
+    document.querySelectorAll('.governance-header').forEach(header => {
         header.addEventListener('click', () => {
             const targetId = header.dataset.target;
             const targetElement = document.getElementById(targetId);
