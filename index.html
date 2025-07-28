@@ -162,6 +162,30 @@
         .analysis-header.open .toggle-arrow, .governance-header.open .toggle-arrow {
             transform: rotate(90deg);
         }
+
+        /* Responsive Navigation Bar Styling */
+        .main-nav {
+            position: fixed; /* Fixed by default for mobile */
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add shadow for better visibility when fixed */
+        }
+
+        .main-nav.nav-hide {
+            transform: translateY(-100%);
+        }
+
+        /* For desktop, make it static or sticky without hiding */
+        @media (min-width: 768px) {
+            .main-nav {
+                position: sticky; /* Make it sticky on desktop */
+                top: 4px; /* A little space from the top */
+                transform: translateY(0) !important; /* Always visible on desktop */
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* Lighter shadow for sticky */
+            }
+        }
     </style>
 </head>
 <body class="antialiased text-slate-700">
@@ -183,7 +207,7 @@
         </header>
 
         <!-- Tab Navigation -->
-        <nav class="bg-white rounded-xl shadow-sm p-2 sticky top-4 z-10 mb-8 border border-slate-200">
+        <nav class="main-nav bg-white rounded-xl p-2 mb-8 border border-slate-200">
             <div id="tabs-container" class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
                 <button data-tab="overview" class="tab-link py-3 px-4 text-slate-600 font-medium active">Tổng Quan</button>
                 <button data-tab="solution" class="tab-link py-3 px-4 text-slate-600 font-medium">Giải Pháp</button>
@@ -356,7 +380,7 @@
                             <p class="mb-2"><strong class="font-semibold">Định nghĩa:</strong> Phân tích PESTEL là một khung phân tích môi trường vĩ mô, giúp doanh nghiệp hiểu các yếu tố bên ngoài (Political, Economic, Social, Technological, Environmental, Legal) có thể ảnh hưởng đến hoạt động và chiến lược của mình.</p>
                             <p><strong class="font-semibold">Ví dụ cụ thể cho dự án S/N & MES/WMS:</strong></p>
                             <ul class="list-disc list-inside text-sm mt-2">
-                                <li><strong>Chính trị:</strong> Chính sách nhà nước về chống hàng giả, quy định về tem truy xuất nguồn gốc.</li>
+                                <li><strong>Chính trị:</strong> Chính sách nhà nước về chất lượng sản phẩm, chống hàng giả.</li>
                                 <li><strong>Kinh tế:</strong> Tình hình kinh tế vĩ mô ảnh hưởng sức mua, ROI của dự án.</li>
                                 <li><strong>Xã hội:</strong> Xu hướng tiêu dùng ưa chuộng sản phẩm rõ nguồn gốc.</li>
                                 <li><strong>Công nghệ:</strong> Sự phát triển của IoT, AI trong chuỗi cung ứng.</li>
@@ -621,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         item: 'Xây dựng tài liệu SOP & Hướng dẫn sử dụng',
                         subDetails: [
                             'Phòng ban liên quan: Trưởng Dự án, Đội IT, Nhà cung cấp giải pháp, các phòng ban nghiệp vụ.',
-                            'Nội dung: Biên soạn tài liệu hướng dẫn chi tiết cho từng vai trò người dùng, các quy trình vận hành chuẩn (SOP) mới.',
+                            'Nội dung: Biên soạn các tài liệu chi tiết, dễ hiểu, có hình ảnh minh họa cho từng quy trình và từng vai trò người dùng.',
                             'Sản phẩm bàn giao: Bộ tài liệu SOP và hướng dẫn sử dụng hoàn chỉnh.'
                         ]
                     },
@@ -666,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         ]
                     },
                     {
-                        item: 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)',
+                        item: 'Triển khai dán tem cho Sản phẩm tồn kho (Dự án song song)',
                         subDetails: [
                             'Phòng ban liên quan: Đội Kho, Đội Bán hàng, Đội Marketing, Đội IT.',
                             'Nội dung: Lập kế hoạch và thực hiện dán tem S/N cho toàn bộ sản phẩm đang tồn kho tại xưởng, showroom và đại lý/nhà phân phối.',
@@ -1191,8 +1215,35 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Smart sticky navigation for mobile
+    let lastScrollY = 0;
+    const navElement = document.querySelector('.main-nav');
+    const headerElement = document.querySelector('header'); // Get the header element
+
+    function handleScroll() {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (window.innerWidth < 768) { // Apply only on mobile devices
+            // Make header non-sticky by default on mobile (it scrolls with content)
+            // The nav bar will handle its own fixed/hide behavior
+
+            if (currentScrollY > lastScrollY && currentScrollY > 100) { // Scrolling down and past a threshold
+                navElement.classList.add('nav-hide');
+            } else if (currentScrollY < lastScrollY) { // Scrolling up
+                navElement.classList.remove('nav-hide');
+            }
+        } else { // On desktop, ensure nav is always visible and sticky
+            navElement.classList.remove('nav-hide');
+        }
+        lastScrollY = currentScrollY;
+    }
+
+    // Initial check and add scroll listener
+    handleScroll(); // Call once on load to set initial state
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll); // Re-evaluate on resize (e.g., rotating device)
 });
 </script>
 </body>
 </html>
-�
