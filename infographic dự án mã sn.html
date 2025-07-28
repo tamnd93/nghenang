@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic Kế Hoạch Dự Án S/N & MES/WMS - Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 
+        Chosen Palette: Corporate Teal & Slate
+        Application Structure Plan: A tabbed, dashboard-style single-page application. This structure allows non-linear exploration, enabling leaders to quickly access key sections like the Roadmap, Budget, or Strategic Analysis without scrolling through a long document. The main content area dynamically displays the selected tab's content, using interactive components to make data digestible. This design prioritizes usability and quick information retrieval for a leadership audience, transforming a static report into an exploratory tool.
+        Visualization & Content Choices: 
+        - Project Goals -> Goal: Inform -> Viz/Method: Grid of styled cards with Unicode characters -> Interaction: Static -> Justification: Clearly presents key objectives in a scannable format -> Method: HTML/CSS/Tailwind.
+        - Timeline -> Goal: Show Change/Process -> Viz/Method: Interactive vertical timeline -> Interaction: Clicking a phase reveals details -> Justification: More engaging than a static list, simplifies a complex schedule -> Method: HTML/CSS/JS.
+        - Budget Breakdown -> Goal: Compare Proportions -> Viz/Method: Donut Chart -> Interaction: Hover to see details -> Justification: The most effective way to show parts of a whole budget -> Library: Chart.js (Canvas).
+        - S/N Structure -> Goal: Organize/Explain -> Viz/Method: Styled diagram of divs -> Interaction: Clicking a component reveals an explanation -> Justification: Visually deconstructs the complex S/N format -> Method: HTML/CSS/JS.
+        - Strategic Analyses (SWOT, PESTEL, etc.) -> Goal: Organize/Inform -> Viz/Method: Grids of styled cards -> Interaction: Static -> Justification: A structured grid is the best way to present these frameworks clearly -> Method: HTML/CSS/Tailwind.
+        CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-link {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-link.active {
+            border-bottom-color: #0d9488;
+            color: #0d9488;
+            font-weight: 600;
+        }
+        .content-pane {
+            display: none;
+        }
+        .content-pane.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            height: 400px;
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .timeline-item.open .timeline-item-content {
+            max-height: 500px;
+            padding-top: 1rem;
+        }
+        .timeline-item.open .timeline-dot {
+            transform: scale(1.2);
+            background-color: #0d9488;
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-700">
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <div class="inline-flex items-center bg-teal-600 text-white py-2 px-4 rounded-full mb-4">
+                <span class="text-2xl mr-3">🚀</span>
+                <h1 class="text-3xl font-extrabold tracking-tight">Kế Hoạch Chuyển Đổi Số: Dự Án S/N & MES/WMS</h1>
+            </div>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600">
+                Một infographic tương tác trình bày kế hoạch chi tiết, giải pháp và lộ trình triển khai hệ thống quản lý S/N và MES/WMS toàn diện cho Nghệ Năng.
+            </p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="bg-white rounded-xl shadow-sm p-2 sticky top-4 z-10 mb-8 border border-slate-200">
+            <div id="tabs-container" class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
+                <button data-tab="overview" class="tab-link py-3 px-4 text-slate-600 font-medium active">Tổng Quan</button>
+                <button data-tab="solution" class="tab-link py-3 px-4 text-slate-600 font-medium">Giải Pháp</button>
+                <button data-tab="roadmap" class="tab-link py-3 px-4 text-slate-600 font-medium">Lộ Trình</button>
+                <button data-tab="budget" class="tab-link py-3 px-4 text-slate-600 font-medium">Ngân Sách</button>
+                <button data-tab="risks" class="tab-link py-3 px-4 text-slate-600 font-medium">Tổ Chức & Rủi Ro</button>
+                <button data-tab="analysis" class="tab-link py-3 px-4 text-slate-600 font-medium">Phân Tích Chiến Lược</button>
+            </div>
+        </nav>
+
+        <!-- Content Panes -->
+        <main id="content-container">
+            <!-- Overview Pane -->
+            <div id="overview" class="content-pane active">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 mb-8">
+                    <h3 class="text-xl font-bold text-slate-800">Người Đề Xuất</h3>
+                    <p class="text-slate-700 mt-1 text-lg"><strong>Nguyễn Đức Tâm</strong> - Trưởng Phòng Kinh Doanh iFan</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                        <div class="text-teal-600 text-4xl mb-2">🗓️</div>
+                        <h3 class="font-bold text-lg text-slate-800">Thời Gian Dự Kiến</h3>
+                        <p class="text-4xl font-bold text-teal-600 mt-2">12 Tháng</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                        <div class="text-teal-600 text-4xl mb-2">💰</div>
+                        <h3 class="font-bold text-lg text-slate-800">Ngân Sách Tham Khảo</h3>
+                        <p class="text-4xl font-bold text-teal-600 mt-2">0.5 - 2 Tỷ</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 text-center">
+                        <div class="text-teal-600 text-4xl mb-2">⚙️</div>
+                        <h3 class="font-bold text-lg text-slate-800">Giải Pháp Công Nghệ</h3>
+                        <p class="text-4xl font-bold text-teal-600 mt-2">MES/WMS</p>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Mục Tiêu Chính Yếu Của Dự Án</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="goals-container"></div>
+            </div>
+
+            <!-- Solution Pane -->
+            <div id="solution" class="content-pane">
+                <div class="space-y-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Giải Pháp Phần Mềm</h3>
+                        <ul class="list-none space-y-4 text-slate-700" id="software-solution-list"></ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Cấu Trúc Mã S/N Chuyên Nghiệp</h3>
+                        <div id="sn-structure-container" class="flex flex-wrap justify-center items-center gap-2 p-4 bg-slate-100 rounded-lg font-mono text-sm text-slate-700"></div>
+                        <div id="sn-info-box" class="mt-4 p-4 bg-teal-50 text-teal-800 rounded-lg border border-teal-200 text-center hidden"></div>
+                        <p class="mt-4 font-mono text-center text-slate-800 bg-gray-200 p-3 rounded-lg text-lg">Ví dụ: <span class="font-bold">IFH-240726-AF7K2P9Q-00123-X</span></p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Chất Liệu & Thiết Kế Tem Dán</h3>
+                        <ul class="list-none space-y-4 text-slate-700" id="sticker-solution-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roadmap Pane -->
+            <div id="roadmap" class="content-pane">
+                 <div class="relative pl-8 border-l-4 border-slate-200">
+                    <div id="timeline-container-single" class="space-y-12"></div>
+                </div>
+            </div>
+
+            <!-- Budget Pane -->
+            <div id="budget" class="content-pane">
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2 text-center">Phân Bổ Ngân Sách (Ước Tính)</h3>
+                    <p class="text-slate-600 mb-8 text-center">Tổng ngân sách dự kiến dao động từ 500 triệu đến 2 tỷ VNĐ.</p>
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risks Pane -->
+            <div id="risks" class="content-pane">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-red-600">Rủi Ro Tiềm Ẩn & Biện Pháp Giảm Thiểu</h3>
+                        <div class="space-y-6" id="risks-list"></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6 text-green-600">Yếu Tố Thành Công Quan Trọng</h3>
+                        <div class="space-y-6" id="success-factors-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Pane -->
+            <div id="analysis" class="content-pane">
+                <div class="space-y-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Phân Tích SWOT</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="swot-container"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Phân Tích PESTEL</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pestel-container"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Năm Lực Lượng Cạnh Tranh (Porter's Five Forces)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="porter-container"></div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 text-center">Case Study: Các Công Ty Đầu Ngành</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="case-studies-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const data = {
+        goals: [
+            { title: 'Quản lý Tồn kho', desc: 'Theo dõi chính xác từng sản phẩm theo mã S/N.', icon: '📦' },
+            { title: 'Truy xuất Nguồn gốc', desc: 'Từ vật tư đầu vào, sản xuất, đến phân phối và bảo hành.', icon: '🔍' },
+            { title: 'Chống Hàng giả', desc: 'Bảo vệ uy tín thương hiệu iFan và eFan.', icon: '🛡️' },
+            { title: 'Tự động hóa Bảo hành', desc: 'Nâng cao trải nghiệm khách hàng và hiệu quả dịch vụ.', icon: '⚙️' },
+            { title: 'Nâng cao Dịch vụ', desc: 'Phản hồi nhanh chóng và chính xác các yêu cầu của khách hàng.', icon: '😊' },
+            { title: 'Phân tích Dữ liệu', desc: 'Hỗ trợ ra quyết định kinh doanh và tối ưu hóa vận hành.', icon: '📊' }
+        ],
+        softwareSolutions: [
+            { title: 'Hệ thống cốt lõi', desc: 'Triển khai hệ thống MES/WMS có sẵn, là trung tâm quản lý toàn bộ dữ liệu S/N.', icon: '🖥️' },
+            { title: 'Tùy chỉnh', desc: 'Hệ thống sẽ được tùy chỉnh để phù hợp với quy trình đặc thù của Nghệ Năng (QC, liên kết lô vật tư).', icon: '🎨' },
+            { title: 'Tích hợp', desc: 'Xây dựng cầu nối tích hợp chặt chẽ với MISA AMIS (Kế toán, Bán hàng, CRM) để đảm bảo đồng bộ dữ liệu.', icon: '🔗' }
+        ],
+        stickerSolutions: [
+            { title: 'Chất liệu', desc: 'Decal Xi Bạc Tamper-evident (tự vỡ ngầm/để lại dấu vết khi bóc), đảm bảo độ bền cao và chống giả mạo.', icon: '💎' },
+            { title: 'Mực in', desc: 'Mực in Resin cao cấp, chống phai màu, chống trầy xước và chịu được hóa chất.', icon: '✒️' },
+            { title: 'Thiết kế', desc: 'Có logo Nghệ Năng/iFan/eFan, sử dụng mã QR Code để dễ quét và chứa nhiều thông tin. Kích thước tem sẽ được chuẩn hóa.', icon: '🖼️' }
+        ],
+        snStructure: [
+            { part: '[Mã Dòng SP]', info: 'Mã nội bộ ngắn gọn cho từng dòng sản phẩm (ví dụ: IFH cho iFan Hướng Trục).' },
+            { part: '[Thời Gian SX]', info: 'Định dạng NămThángNgày (YYMMDD) hoặc NămTuần (YYWW) để dễ truy xuất lô sản xuất.' },
+            { part: '[Mã Ngẫu Nhiên/Hash]', info: "Chuỗi ký tự và số (6-10 ký tự) được tạo bằng thuật toán mã hóa (Hash) từ thông tin nội bộ và một 'khóa bí mật', đảm bảo tính duy nhất và không thể đoán ngược." },
+            { part: '[Số Thứ Tự]', info: 'Dãy số tăng dần trong ngày/ca sản xuất (4-6 chữ số).' },
+            { part: '[Checksum]', info: 'Một ký tự kiểm tra lỗi, giúp xác minh tính hợp lệ của mã S/N khi quét hoặc nhập liệu.' }
+        ],
+        timeline: [
+            { phase: 1, title: 'Chuẩn Bị & Lựa Chọn Giải Pháp', duration: 'Tháng 1 - 2', color: 'teal', details: ['Thành lập Ban Dự án', 'Khảo sát chuyên sâu & Phân tích quy trình', 'Lập tài liệu Yêu cầu Nghiệp vụ (BRD)', 'Nghiên cứu, đánh giá và lựa chọn nhà cung cấp MES/WMS', 'Mua sắm phần cứng ban đầu'] },
+            { phase: 2, title: 'Cấu Hình, Tùy Chỉnh & Tích Hợp', duration: 'Tháng 3 - 7', color: 'teal', details: ['Cài đặt & Cấu hình hệ thống MES/WMS', 'Thiết kế & Xây dựng CSDL S/N', 'Tùy chỉnh nghiệp vụ theo đặc thù Nghệ Năng', 'Phát triển tích hợp với MISA AMIS', 'Chuyển đổi dữ liệu gốc'] },
+            { phase: 3, title: 'Kiểm Thử & Thí Điểm', duration: 'Tháng 8 - 9', color: 'cyan', details: ['Kiểm thử nội bộ (Internal Testing)', 'Kiểm thử chấp nhận người dùng (UAT)', 'Triển khai thí điểm (Pilot) cho một dòng sản phẩm', 'Thu thập phản hồi và điều chỉnh cuối cùng'] },
+            { phase: 4, title: 'Đào Tạo & Chuẩn Bị Go-Live', duration: 'Tháng 10', color: 'sky', details: ['Xây dựng tài liệu SOP & Hướng dẫn sử dụng', 'Đào tạo chuyên sâu cho toàn bộ nhân sự liên quan', 'Duyệt vị trí dán tem cuối cùng', 'Lập kế hoạch chi tiết cho ngày Go-Live'] },
+            { phase: 5, title: 'Go-Live & Dán Tem Tồn Kho', duration: 'Tháng 11 - 12', color: 'indigo', details: ['Go-Live chính thức cho sản phẩm mới xuất xưởng', 'Triển khai dán tem cho sản phẩm tồn kho (Dự án song song)', 'Ưu tiên: Kho xưởng -> Showroom -> Đại lý/NPP'] },
+            { phase: 6, title: 'Đánh Giá & Cải Tiến', duration: 'Từ Tháng 13', color: 'slate', details: ['Giám sát hiệu suất hệ thống', 'Thu thập phản hồi định kỳ từ người dùng', 'Bảo trì & nâng cấp hệ thống', 'Khai thác dữ liệu S/N để phân tích kinh doanh'] }
+        ],
+        risks: [
+            { risk: 'Khó khăn tích hợp với MISA AMIS', mitigation: 'Khảo sát kỹ API từ đầu. Chọn nhà cung cấp có kinh nghiệm tích hợp. Chuẩn bị phương án đồng bộ thay thế (qua file).' },
+            { risk: 'Sự phản đối của nhân viên', mitigation: 'Truyền thông mạnh mẽ về lợi ích. Đào tạo chuyên sâu. Có cơ chế khen thưởng và đội ngũ hỗ trợ tại chỗ.' },
+            { risk: 'Sai sót khi dán tem & nhập liệu', mitigation: 'Xây dựng SOP chi tiết. Kiểm tra chéo. Dùng máy quét mã vạch. Kiểm tra chất lượng tem trước khi dán hàng loạt.' },
+            { risk: 'Thiếu nguồn lực nội bộ', mitigation: 'Lập kế hoạch phân bổ nguồn lực rõ ràng. Cân nhắc thuê chuyên gia tư vấn hoặc dịch vụ bên ngoài nếu cần.' },
+            { risk: 'Vấn đề hạ tầng mạng', mitigation: 'Khảo sát và nâng cấp hạ tầng mạng (Wi-Fi/LAN) để đảm bảo kết nối ổn định cho các thiết bị.' },
+            { risk: 'Đội ngũ IT freelance & thiếu IT full-time', mitigation: 'Ngắn hạn: Thuê IT freelance có kinh nghiệm MES/WMS chuyên trách dự án. Dài hạn: Lập kế hoạch tuyển dụng IT full-time cho chuyển đổi số. Đảm bảo chuyển giao kiến thức từ vendor/freelance.' },
+            { risk: 'Công ty truyền thống & khó khăn chuyển đổi số', mitigation: 'Triển khai chương trình quản lý thay đổi bài bản. Đảm bảo sự ủng hộ mạnh mẽ từ lãnh đạo. Tập trung vào các thành công nhỏ để tạo động lực. Ưu tiên UI/UX thân thiện người dùng.' }
+        ],
+        successFactors: [
+            'Sự cam kết và hỗ trợ từ Ban Lãnh đạo',
+            'Quản lý dự án chuyên nghiệp, đúng tiến độ và ngân sách',
+            'Quản lý thay đổi hiệu quả, đào tạo kỹ lưỡng',
+            'Phối hợp chặt chẽ giữa các phòng ban',
+            'Lựa chọn đối tác công nghệ phù hợp và uy tín',
+            'Kiểm thử kỹ lưỡng trước khi Go-Live',
+            'Xây dựng năng lực IT nội bộ (dù là freelance chuyên trách ban đầu) để quản lý và vận hành hệ thống'
+        ],
+        swot: [
+            { type: 'Điểm Mạnh', color: 'green', items: ['Nhu cầu rõ ràng: Giải quyết vấn đề cấp bách.', 'Tiềm năng tăng trưởng: Nâng cao uy tín và hiệu quả.', 'Sự chủ động từ kinh doanh: Hiểu rõ giá trị thị trường.', 'Khả năng tài chính: Đã có sự chuẩn bị nhất định.'] },
+            { type: 'Điểm Yếu', color: 'amber', items: ['Hạn chế về IT nội bộ: Thiếu IT full-time chuyên trách.', 'Văn hóa công ty truyền thống: Khó khăn trong việc thích nghi.', 'Phụ thuộc vào đối tác: Thành công phụ thuộc vào nhà cung cấp.', 'Dữ liệu hiện có: Thiếu hoặc không chuẩn hóa.'] },
+            { type: 'Cơ Hội', color: 'blue', items: ['Xu hướng thị trường: Nhu cầu cao về truy xuất nguồn gốc.', 'Nâng cao cạnh tranh: Tạo lợi thế bền vững.', 'Tối ưu hóa vận hành: Giảm thiểu thất thoát, sai sót.', 'Cải thiện dịch vụ khách hàng: Tự động hóa bảo hành.', 'Dữ liệu quý giá: Khai thác để phân tích kinh doanh.'] },
+            { type: 'Thách Thức', color: 'red', items: ['Chi phí phát sinh: Nguy cơ vượt ngân sách.', 'Sự cạnh tranh từ đối thủ: Đòi hỏi phải nhanh chóng, hiệu quả.', 'Rủi ro công nghệ: Lỗi hệ thống, bảo mật dữ liệu.', 'Biến động nhân sự: Có thể ảnh hưởng tiến độ.', 'Thay đổi quy định: Yêu cầu mới từ cơ quan nhà nước.'] }
+        ],
+        pestel: [
+            { factor: 'Chính trị', items: ['Chính sách nhà nước về chất lượng sản phẩm, chống hàng giả.', 'Quy định về tem truy xuất nguồn gốc sản phẩm điện tử.'] },
+            { factor: 'Kinh tế', items: ['Tình hình kinh tế vĩ mô, sức mua của người tiêu dùng.', 'Lợi tức đầu tư (ROI) dài hạn của dự án.'] },
+            { factor: 'Xã hội', items: ['Xu hướng tiêu dùng ưa chuộng sản phẩm rõ nguồn gốc.', 'Hành vi sử dụng công nghệ của khách hàng và nhân viên.'] },
+            { factor: 'Công nghệ', items: ['Sự phát triển của IoT, AI, Blockchain trong chuỗi cung ứng.', 'Khả năng tiếp cận các giải pháp MES/WMS tiên tiến.'] },
+            { factor: 'Môi trường', items: ['Các quy định về môi trường, trách nhiệm xã hội.', 'Ảnh hưởng đến quy trình sản xuất bền vững.'] },
+            { factor: 'Pháp lý', items: ['Luật bảo vệ người tiêu dùng, sở hữu trí tuệ.', 'Quy định về an toàn thông tin và dữ liệu.'] }
+        ],
+        porter: [
+            { force: 'Nguy cơ Đối thủ mới', impact: 'Hệ thống S/N toàn diện làm tăng rào cản gia nhập cho đối thủ mới.' },
+            { force: 'Quyền thương lượng của Khách hàng', impact: 'Đáp ứng yêu cầu cao hơn về thông tin sản phẩm, tăng giá trị cảm nhận.' },
+            { force: 'Quyền thương lượng của Nhà cung cấp', impact: 'Hệ thống MES/WMS giúp quản lý nhà cung cấp tốt hơn, giảm sự phụ thuộc.' },
+            { force: 'Nguy cơ Sản phẩm/Dịch vụ thay thế', impact: 'Tăng cường tính độc đáo của sản phẩm, giảm nguy cơ bị thay thế.' },
+            { force: 'Cạnh tranh giữa các Đối thủ hiện có', impact: 'Tạo lợi thế cạnh tranh (chống hàng giả, dịch vụ bảo hành tốt hơn).' }
+        ],
+        caseStudies: {
+            vietnam: [
+                { company: 'Sunhouse (Đồ gia dụng)', detail: 'Là một trong những nhà sản xuất đồ gia dụng hàng đầu Việt Nam. Với số lượng sản phẩm lớn, Sunhouse áp dụng hệ thống quản lý S/N và MES để kiểm soát chất lượng, quản lý bảo hành điện tử, và chống hàng giả, bảo vệ thương hiệu.' },
+                { company: 'Kangaroo (Thiết bị gia dụng, máy lọc nước)', detail: 'Việc quản lý S/N là cực kỳ quan trọng với các sản phẩm có linh kiện thay thế và cần bảo trì định kỳ, giúp họ theo dõi lịch sử sản phẩm và cung cấp dịch vụ sau bán hàng hiệu quả.' },
+                { company: 'Điện Quang (Thiết bị chiếu sáng, điện dân dụng)', detail: 'Là một thương hiệu lâu đời, việc áp dụng S/N giúp họ quản lý chất lượng sản phẩm từ khâu sản xuất, kiểm soát hàng hóa trên thị trường, và cung cấp dịch vụ bảo hành minh bạch cho người tiêu dùng.' }
+            ],
+            japan: [
+                { company: 'Panasonic (Điện tử, gia dụng)', detail: 'Hệ thống MES/WMS và quản lý S/N là cốt lõi để họ đảm bảo chất lượng toàn cầu, truy xuất nguồn gốc từng lô sản phẩm, quản lý chuỗi cung ứng phức tạp và hỗ trợ bảo hành trên quy mô lớn.' },
+                { company: 'Daikin (Điều hòa không khí, máy làm mát công nghiệp)', detail: 'Việc sử dụng S/N và hệ thống MES/WMS giúp Daikin theo dõi chi tiết từng sản phẩm từ khâu sản xuất, lắp ráp, kiểm tra, đến lắp đặt và bảo trì, đảm bảo chất lượng và dịch vụ hậu mãi toàn cầu.' },
+                { company: 'Sharp (Thiết bị điện tử, gia dụng)', detail: 'Hệ thống S/N và quản lý sản xuất giúp họ kiểm soát chặt chẽ quá trình sản xuất, quản lý bảo hành hiệu quả và duy trì niềm tin của khách hàng vào thương hiệu.' }
+            ]
+        }
+    };
+
+    // Render Goals
+    const goalsContainer = document.getElementById('goals-container');
+    data.goals.forEach(goal => {
+        goalsContainer.innerHTML += `
+            <div class="bg-white p-6 rounded-xl border border-slate-200 flex items-start shadow-lg">
+                <div class="text-3xl mr-4">${goal.icon}</div>
+                <div>
+                    <h4 class="font-semibold text-slate-800">${goal.title}</h4>
+                    <p class="text-sm text-slate-600 mt-1">${goal.desc}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    // Render Software Solutions
+    const softwareSolutionList = document.getElementById('software-solution-list');
+    data.softwareSolutions.forEach(sol => {
+        softwareSolutionList.innerHTML += `
+            <li class="flex items-start">
+                <span class="text-2xl mr-4">${sol.icon}</span>
+                <div>
+                    <h4 class="font-semibold text-slate-800">${sol.title}</h4>
+                    <p class="text-slate-600">${sol.desc}</p>
+                </div>
+            </li>
+        `;
+    });
+
+    // Render Sticker Solutions
+    const stickerSolutionList = document.getElementById('sticker-solution-list');
+    data.stickerSolutions.forEach(sol => {
+        stickerSolutionList.innerHTML += `
+            <li class="flex items-start">
+                <span class="text-2xl mr-4">${sol.icon}</span>
+                <div>
+                    <h4 class="font-semibold text-slate-800">${sol.title}</h4>
+                    <p class="text-slate-600">${sol.desc}</p>
+                </div>
+            </li>
+        `;
+    });
+
+    // Render S/N Structure
+    const snStructureContainer = document.getElementById('sn-structure-container');
+    const snInfoBox = document.getElementById('sn-info-box');
+    data.snStructure.forEach(item => {
+        const partDiv = document.createElement('div');
+        partDiv.className = 'p-2 bg-white rounded shadow-sm cursor-pointer hover:bg-teal-100 transition';
+        partDiv.textContent = item.part;
+        partDiv.addEventListener('click', () => {
+             if (snInfoBox.textContent === item.info && !snInfoBox.classList.contains('hidden')) {
+                snInfoBox.classList.add('hidden');
+            } else {
+                snInfoBox.innerHTML = `<span class="font-bold">${item.part}:</span> ${item.info}`;
+                snInfoBox.classList.remove('hidden');
+            }
+        });
+        snStructureContainer.appendChild(partDiv);
+    });
+
+    // Render Timeline
+    const timelineContainer = document.getElementById('timeline-container-single');
+    data.timeline.forEach(item => {
+        const timelineItem = document.createElement('div');
+        timelineItem.className = 'timeline-item';
+        timelineItem.innerHTML = `
+            <div class="flex items-center mb-1 cursor-pointer">
+                <div class="timeline-dot bg-slate-300 w-6 h-6 rounded-full border-4 border-white transition-transform duration-300"></div>
+                <div class="ml-4 p-4 rounded-lg bg-white shadow-lg border border-slate-200 w-full">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-lg text-slate-800">Giai đoạn ${item.phase}: ${item.title}</h4>
+                        <span class="text-sm font-semibold text-teal-600">${item.duration}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pl-12">
+                <div class="timeline-item-content bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                        ${item.details.map(d => `<li>${d}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+        timelineContainer.appendChild(timelineItem);
+        timelineItem.querySelector('.flex.items-center').addEventListener('click', () => {
+            timelineItem.classList.toggle('open');
+        });
+    });
+
+    // Render Risks
+    const risksList = document.getElementById('risks-list');
+    data.risks.forEach(item => {
+        risksList.innerHTML += `
+            <div class="bg-white p-4 rounded-lg border border-slate-200">
+                <h4 class="font-semibold text-slate-800">${item.risk}</h4>
+                <p class="text-sm text-slate-600 mt-1">${item.mitigation}</p>
+            </div>
+        `;
+    });
+
+    // Render Success Factors
+    const successFactorsList = document.getElementById('success-factors-list');
+    data.successFactors.forEach(item => {
+        successFactorsList.innerHTML += `
+            <div class="bg-white p-4 rounded-lg border border-slate-200 flex items-center">
+                <div class="bg-green-100 text-green-700 p-2 rounded-full mr-3">✔</div>
+                <p class="text-slate-700 font-medium">${item}</p>
+            </div>
+        `;
+    });
+
+    // Render SWOT
+    const swotContainer = document.getElementById('swot-container');
+    data.swot.forEach(item => {
+        swotContainer.innerHTML += `
+            <div class="bg-white p-6 rounded-xl border border-slate-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4 text-${item.color}-700">${item.type}</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700">
+                    ${item.items.map(i => `<li>${i}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    });
+    
+    // Render PESTEL
+    const pestelContainer = document.getElementById('pestel-container');
+    data.pestel.forEach(item => {
+        pestelContainer.innerHTML += `
+            <div class="bg-white p-6 rounded-xl border border-slate-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">${item.factor}</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                    ${item.items.map(i => `<li>${i}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    });
+    
+    // Render Porter
+    const porterContainer = document.getElementById('porter-container');
+    data.porter.forEach(item => {
+        porterContainer.innerHTML += `
+            <div class="bg-white p-6 rounded-xl border border-slate-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">${item.force}</h3>
+                <p class="text-slate-700">${item.impact}</p>
+            </div>
+        `;
+    });
+
+    // Render Case Studies
+    const caseStudiesContainer = document.getElementById('case-studies-container');
+    caseStudiesContainer.innerHTML = `
+        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Công Ty Việt Nam Tiêu Biểu</h3>
+            <div class="space-y-6">
+                ${data.caseStudies.vietnam.map(cs => `
+                    <div>
+                        <h4 class="font-semibold text-lg text-teal-700">${cs.company}</h4>
+                        <p class="text-slate-600 mt-1">${cs.detail}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Công Ty Nhật Bản Tiêu Biểu</h3>
+            <div class="space-y-6">
+                ${data.caseStudies.japan.map(cs => `
+                    <div>
+                        <h4 class="font-semibold text-lg text-teal-700">${cs.company}</h4>
+                        <p class="text-slate-600 mt-1">${cs.detail}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+
+    // Tab Logic
+    const tabs = document.querySelectorAll('.tab-link');
+    const panes = document.querySelectorAll('.content-pane');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            panes.forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+    });
+
+    // Budget Chart
+    const budgetCtx = document.getElementById('budgetChart');
+    if (budgetCtx) {
+        new Chart(budgetCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Phần mềm (Bản quyền & Tùy chỉnh)', 'Phần cứng', 'Dịch vụ triển khai', 'Đào tạo & Hỗ trợ', 'Dự phòng'],
+                datasets: [{
+                    label: 'Phân Bổ Ngân Sách',
+                    data: [45, 15, 15, 10, 15],
+                    backgroundColor: ['#0d9488', '#0f766e', '#115e59', '#134e4a', '#ccfbf1'],
+                    borderColor: '#ffffff',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, font: { family: "'Inter', sans-serif" } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
