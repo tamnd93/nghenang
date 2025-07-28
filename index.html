@@ -67,6 +67,51 @@
                 height: 350px;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #475569; /* slate-600 */
+        }
     </style>
 </head>
 <body class="antialiased text-slate-700">
@@ -202,6 +247,17 @@
         </main>
     </div>
 
+    <!-- Modal Structure -->
+    <div id="goal-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" id="close-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-slate-800 mb-4" id="modal-title"></h3>
+            <p class="text-slate-700 mb-4" id="modal-description"></p>
+            <h4 class="font-semibold text-slate-800 mb-2">Ví dụ:</h4>
+            <p class="text-slate-600 italic" id="modal-example"></p>
+        </div>
+    </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Register the datalabels plugin globally
@@ -209,12 +265,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const data = {
         goals: [
-            { title: 'Quản lý Tồn kho', desc: 'Theo dõi chính xác từng sản phẩm theo mã S/N.', icon: '📦' },
-            { title: 'Truy xuất Nguồn gốc', desc: 'Từ vật tư đầu vào, sản xuất, đến phân phối và bảo hành.', icon: '🔍' },
-            { title: 'Chống Hàng giả', desc: 'Bảo vệ uy tín thương hiệu iFan và eFan.', icon: '🛡️' },
-            { title: 'Tự động hóa Bảo hành', desc: 'Nâng cao trải nghiệm khách hàng và hiệu quả dịch vụ.', icon: '⚙️' },
-            { title: 'Nâng cao Dịch vụ', desc: 'Phản hồi nhanh chóng và chính xác các yêu cầu của khách hàng.', icon: '😊' },
-            { title: 'Phân tích Dữ liệu', desc: 'Hỗ trợ ra quyết định kinh doanh và tối ưu hóa vận hành.', icon: '📊' }
+            { 
+                title: 'Quản lý Tồn kho', 
+                desc: 'Theo dõi chính xác từng sản phẩm theo mã S/N.', 
+                icon: '📦',
+                detail: 'Hệ thống S/N cho phép theo dõi chi tiết từng sản phẩm từ khi nhập kho, qua các công đoạn sản xuất, đến khi xuất kho và phân phối. Điều này giúp kiểm soát tồn kho chính xác hơn nhiều so với việc quản lý theo lô thông thường, giảm thiểu thất thoát và sai sót.',
+                example: 'Khi một lô hàng quạt được sản xuất, mỗi chiếc quạt sẽ được gán một S/N duy nhất. Hệ thống sẽ ghi nhận S/N đó khi quạt được nhập kho thành phẩm, xuất kho cho đại lý, hoặc chuyển đến showroom. Điều này giúp Nghệ Năng biết chính xác số lượng và vị trí của từng chiếc quạt cụ thể.'
+            },
+            { 
+                title: 'Truy xuất Nguồn gốc', 
+                desc: 'Từ vật tư đầu vào, sản xuất, đến phân phối và bảo hành.', 
+                icon: '🔍',
+                detail: 'Mỗi S/N sẽ là một "hộ chiếu" điện tử của sản phẩm, chứa đựng toàn bộ lịch sử của nó. Từ vật tư cấu thành, dây chuyền sản xuất, người kiểm định, thời gian sản xuất, đến kênh phân phối và lịch sử bảo hành. Điều này cực kỳ quan trọng cho việc đảm bảo chất lượng và an toàn sản phẩm.',
+                example: 'Nếu có một vấn đề về chất lượng phát sinh với một chiếc quạt cụ thể, chỉ cần quét S/N của nó, Nghệ Năng có thể truy ngược lại xem chiếc quạt đó được sản xuất khi nào, dùng linh kiện từ lô nào, do ai lắp ráp, và đã được bán cho đại lý nào. Điều này giúp nhanh chóng khoanh vùng vấn đề và xử lý hiệu quả.'
+            },
+            { 
+                title: 'Chống Hàng giả', 
+                desc: 'Bảo vệ uy tín thương hiệu iFan và eFan.', 
+                icon: '🛡️',
+                detail: 'Với cấu trúc mã S/N phức tạp và tem chống giả đặc biệt, hệ thống giúp xác minh tính chính hãng của sản phẩm. Khách hàng có thể tự kiểm tra S/N qua ứng dụng hoặc website, từ đó tăng cường niềm tin vào thương hiệu và giảm thiểu rủi ro hàng giả, hàng nhái.',
+                example: 'Một khách hàng mua quạt iFan có thể dùng điện thoại quét mã QR trên tem S/N. Ứng dụng sẽ hiển thị thông tin sản phẩm chính hãng, ngày sản xuất, và trạng thái bảo hành. Nếu đó là hàng giả, hệ thống sẽ báo ngay lập tức, giúp khách hàng tránh mua phải sản phẩm kém chất lượng và bảo vệ uy tín của iFan/eFan.'
+            },
+            { 
+                title: 'Tự động hóa Bảo hành', 
+                desc: 'Nâng cao trải nghiệm khách hàng và hiệu quả dịch vụ.', 
+                icon: '⚙️',
+                detail: 'Hệ thống S/N liên kết trực tiếp với thông tin bảo hành. Khi sản phẩm được kích hoạt bảo hành (thông qua S/N), thông tin sẽ tự động cập nhật. Khi có yêu cầu bảo hành, việc tra cứu và xác minh trở nên nhanh chóng, giảm thời gian chờ đợi cho khách hàng và tối ưu hóa quy trình dịch vụ.',
+                example: 'Thay vì phải giữ phiếu bảo hành giấy, khách hàng chỉ cần cung cấp S/N của sản phẩm. Nhân viên bảo hành có thể tra cứu ngay lịch sử mua hàng, thời gian bảo hành còn lại, và các thông tin liên quan, giúp quá trình tiếp nhận và xử lý bảo hành diễn ra nhanh gọn, chuyên nghiệp hơn.'
+            },
+            { 
+                title: 'Nâng cao Dịch vụ', 
+                desc: 'Phản hồi nhanh chóng và chính xác các yêu cầu của khách hàng.', 
+                icon: '😊',
+                detail: 'Với dữ liệu sản phẩm chi tiết từ S/N, đội ngũ hỗ trợ khách hàng có thể cung cấp thông tin chính xác, tư vấn hiệu quả hơn về sản phẩm, phụ tùng, hoặc các vấn đề kỹ thuật. Điều này cải thiện đáng kể trải nghiệm và sự hài lòng của khách hàng.',
+                example: 'Khi khách hàng gọi điện hỗ trợ về một chiếc quạt, chỉ cần S/N, nhân viên có thể biết ngay model, năm sản xuất, các đặc điểm kỹ thuật và thậm chí là các lỗi thường gặp của dòng sản phẩm đó, từ đó đưa ra hướng dẫn hoặc giải pháp nhanh chóng, chính xác hơn.'
+            },
+            { 
+                title: 'Phân tích Dữ liệu', 
+                desc: 'Hỗ trợ ra quyết định kinh doanh và tối ưu hóa vận hành.', 
+                icon: '📊',
+                detail: 'Dữ liệu thu thập từ mỗi S/N (về sản xuất, bán hàng, bảo hành) là nguồn thông tin vô giá. Hệ thống có thể tổng hợp và phân tích dữ liệu này để nhận diện xu hướng, đánh giá hiệu suất sản phẩm, dự báo nhu cầu thị trường, và tối ưu hóa quy trình sản xuất, kho bãi.',
+                example: 'Nghệ Năng có thể phân tích dữ liệu S/N để biết dòng quạt nào có tỷ lệ bảo hành cao nhất, linh kiện nào thường xuyên hỏng hóc, hoặc khu vực nào tiêu thụ sản phẩm mạnh nhất. Những thông tin này giúp bộ phận R&D cải tiến sản phẩm, bộ phận sản xuất tối ưu quy trình, và bộ phận kinh doanh đưa ra chiến lược phù hợp.'
+            }
         ],
         softwareSolutions: [
             { title: 'Hệ thống cốt lõi', desc: 'Triển khai hệ thống MES/WMS có sẵn, là trung tâm quản lý toàn bộ dữ liệu S/N.', icon: '🖥️' },
@@ -315,17 +407,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Render Goals
     const goalsContainer = document.getElementById('goals-container');
-    data.goals.forEach(goal => {
-        goalsContainer.innerHTML += `
-            <div class="bg-white p-6 rounded-xl border border-slate-200 flex items-start shadow-lg">
-                <div class="text-3xl mr-4">${goal.icon}</div>
-                <div>
-                    <h4 class="font-semibold text-slate-800">${goal.title}</h4>
-                    <p class="text-sm text-slate-600 mt-1">${goal.desc}</p>
-                </div>
+    const modal = document.getElementById('goal-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalExample = document.getElementById('modal-example');
+
+    data.goals.forEach((goal, index) => {
+        const goalDiv = document.createElement('div');
+        goalDiv.className = 'bg-white p-6 rounded-xl border border-slate-200 flex items-start shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300';
+        goalDiv.innerHTML = `
+            <div class="text-3xl mr-4">${goal.icon}</div>
+            <div>
+                <h4 class="font-semibold text-slate-800">${goal.title}</h4>
+                <p class="text-sm text-slate-600 mt-1">${goal.desc}</p>
             </div>
         `;
+        goalDiv.addEventListener('click', () => {
+            modalTitle.textContent = goal.title;
+            modalDescription.textContent = goal.detail;
+            modalExample.textContent = goal.example;
+            modal.classList.add('show');
+        });
+        goalsContainer.appendChild(goalDiv);
     });
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
 
     // Render Software Solutions
     const softwareSolutionList = document.getElementById('software-solution-list');
