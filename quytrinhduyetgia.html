@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Quy trình Duyệt giá Linh hoạt - Nghệ Năng (Chi tiết)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2f6; /* Slightly lighter background */
+            line-height: 1.6;
+        }
+        strong {
+            font-weight: 800; /* Ensure bolding is applied and prominent */
+            color: #0052B4; /* Make bold text a distinct color */
+        }
+        .header-gradient {
+            background: linear-gradient(to right, #0052B4, #00A1E4); /* Vibrant blue gradient */
+        }
+        .section-title {
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 800; /* Extra bold */
+            color: #0052B4;
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #00A1E4; /* Accent line */
+            border-radius: 2px;
+        }
+        .flowchart-step {
+            border: 2px solid #96DFFF;
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Softer shadow */
+        }
+        .flowchart-step:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+            border-color: #00A1E4; /* Highlight border on hover */
+        }
+        .flowchart-arrow {
+            color: #00A1E4;
+            font-weight: bold;
+            font-size: 3rem; /* Larger arrows */
+        }
+        .kpi-card {
+            background-color: white;
+            border-left: 6px solid #0052B4; /* Thicker border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+        .data-table {
+            border-collapse: separate; /* For rounded corners */
+            border-spacing: 0;
+            border-radius: 0.75rem; /* Rounded corners for table */
+            overflow: hidden; /* Ensures rounded corners are visible */
+        }
+        .data-table thead th:first-child { border-top-left-radius: 0.75rem; }
+        .data-table thead th:last-child { border-top-right-radius: 0.75rem; }
+        .data-table tbody tr:last-child td:first-child { border-bottom-left-radius: 0.75rem; }
+        .data-table tbody tr:last-child td:last-child { border-bottom-right-radius: 0.75rem; }
+
+        .data-table th, .data-table td {
+            padding: 1rem 1.25rem; /* More padding */
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .data-table th {
+            background-color: #f0f4f8; /* Lighter header background */
+            font-weight: 700; /* Bolder header text */
+            color: #334155; /* Darker text for contrast */
+        }
+        .data-table tbody tr {
+            background-color: #ffffff;
+            transition: background-color 0.2s ease;
+        }
+        .data-table tbody tr:hover {
+            background-color: #f8fafc; /* Subtle hover effect */
+        }
+        .definition-item {
+            margin-bottom: 1.25rem; /* More spacing */
+        }
+        .definition-term {
+            font-weight: 700; /* Bolder term */
+            color: #0052B4;
+            font-size: 1.125rem; /* Slightly larger */
+        }
+        .definition-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        .detail-section {
+            background-color: white;
+            padding: 2rem; /* More padding */
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Stronger, softer shadow */
+            margin-bottom: 2.5rem; /* More space between sections */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .detail-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -8px rgba(0, 0, 0, 0.15), 0 6px 8px -4px rgba(0, 0, 0, 0.08);
+        }
+        .detail-section h3 {
+            font-size: 1.75rem; /* Larger sub-headings */
+            font-weight: 800;
+            color: #0052B4;
+            margin-bottom: 1.25rem;
+        }
+        .detail-section h4 {
+            font-size: 1.375rem; /* Slightly larger sub-sub-headings */
+            font-weight: 700;
+            color: #00A1E4;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .detail-section ul, .detail-section ol {
+            padding-left: 1.5rem; /* More indentation */
+        }
+        .detail-section li {
+            margin-bottom: 0.75rem; /* More space between list items */
+            line-height: 1.7;
+        }
+        .note-box {
+            background-color: #e0f7fa; /* Lighter blue for notes */
+            border-left: 5px solid #00A1E4;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-radius: 0.5rem;
+            color: #0052B4;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .note-box strong {
+            color: #0052B4;
+        }
+        .icon-list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .icon-list-item .icon {
+            font-size: 2.5rem; /* Larger icon */
+            margin-right: 1rem;
+            line-height: 1;
+        }
+        .icon-list-item h4 {
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0052B4;
+        }
+        .icon-list-item p {
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="header-gradient shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-6 text-white">
+            <h1 class="text-3xl md:text-4xl font-extrabold">Quy trình Duyệt giá Linh hoạt</h1>
+            <p class="text-lg opacity-90">Công ty TNHH Công nghiệp Nghệ Năng</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-10">
+
+        <section id="purpose_scope" class="detail-section">
+            <h2 class="section-title text-center">Mục Đích & Phạm Vi Áp Dụng</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-[#00A1E4]">Mục Đích</h3>
+                    <p class="text-gray-700">Quy trình này nhằm thiết lập một hệ thống quản lý và phê duyệt giá bán sản phẩm/dịch vụ một cách linh hoạt, minh bạch, hiệu quả, đảm bảo tối ưu hóa lợi nhuận, duy trì năng lực cạnh tranh và kiểm soát rủi ro cho Công ty TNHH Công nghiệp Nghệ Năng.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-[#00A1E4]">Phạm Vi Áp Dụng</h3>
+                    <p class="text-gray-700">Quy trình này áp dụng cho toàn bộ các hoạt động báo giá và duyệt giá bán sản phẩm/dịch vụ của Công ty TNHH Công nghiệp Nghệ Năng, bao gồm nhưng không giới hạn ở các kênh phân phối (Showroom, OEM, GT, Dự án) và các vùng địa lý khác nhau. Mọi cá nhân và bộ phận liên quan đến việc đề xuất, kiểm tra và phê duyệt giá đều phải tuân thủ nghiêm ngặt quy trình này.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="detail-section">
+            <h2 class="section-title text-center">Nguyên Tắc Cốt Lõi</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Quy trình này được xây dựng để cân bằng giữa sự linh hoạt trong kinh doanh và sự kiểm soát chặt chẽ, đảm bảo mọi quyết định về giá đều dựa trên cơ sở vững chắc.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4 text-[#00A1E4]">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Minh Bạch & Bắt Buộc</h3>
+                    <p class="text-gray-700">Mọi báo giá vượt khung hoặc dưới giá sàn đều phải được phê duyệt theo đúng quy trình.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4 text-[#00A1E4]">📊</div>
+                    <h3 class="text-xl font-bold mb-2">Phân Cấp Rõ Ràng</h3>
+                    <p class="text-gray-700">Thẩm quyền duyệt giá được phân cấp cụ thể theo Kênh bán hàng và Vùng địa lý.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+                    <div class="text-5xl mb-4 text-[#00A1E4]">📈</div>
+                    <h3 class="text-xl font-bold mb-2">Dựa Trên Dữ Liệu</h3>
+                    <p class="text-gray-700">Mọi đề xuất vượt khung phải có căn cứ tài chính hoặc chiến lược, loại bỏ quyết định cảm tính.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="definitions" class="detail-section">
+            <h2 class="section-title text-center">Khái Niệm & Quy Ước</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Hiểu rõ các thuật ngữ sau để đảm bảo tính nhất quán trong giao tiếp và thực hiện quy trình.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div class="definition-item">
+                    <div class="definition-term">Giá niêm yết:</div>
+                    <div class="definition-description">Giá công bố chính thức đã bao gồm VAT của sản phẩm/dịch vụ.</div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-term">Giá sàn:</div>
+                    <div class="definition-description">Mức giá thấp nhất được phép bán ra, tính theo tỷ lệ phần trăm (%) của giá niêm yết.</div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-term">Chiết khấu (CK):</div>
+                    <div class="definition-description">Phần giảm giá trực tiếp trên giá niêm yết, không bao gồm các chương trình khuyến mãi hiện vật hoặc các ưu đãi khác.</div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-term">Vùng:</div>
+                    <div class="definition-description">Phân loại địa lý dựa trên đặc thù chi phí giao hàng, mức độ cạnh tranh thị trường và đặc điểm khách hàng.</div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-term">Kênh bán hàng:</div>
+                    <div class="definition-description">Hình thức phân phối sản phẩm/dịch vụ: Showroom, OEM, GT, Dự án công trình.</div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-term">BOM (Bill of Materials):</div>
+                    <div class="definition-description">Danh sách đầy đủ các nguyên vật liệu, linh kiện, và chi phí cần thiết để sản xuất một sản phẩm.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="matrix" class="detail-section">
+            <h2 class="section-title text-center">Ma Trận Phân Quyền Duyệt Chiết Khấu</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Bảng dưới đây cung cấp cái nhìn tổng quan về các mức chiết khấu và thẩm quyền duyệt giá theo từng kênh bán hàng và vùng địa lý.</p>
+            <div class="bg-white p-6 rounded-lg shadow-lg overflow-x-auto">
+                <table class="w-full data-table">
+                    <thead>
+                        <tr>
+                            <th>Kênh</th>
+                            <th>Vùng</th>
+                            <th>Giá sàn (% niêm yết)</th>
+                            <th>NVKD được tự quyết (CK ≤)</th>
+                            <th>Trưởng phòng KD được duyệt (CK ≤)</th>
+                            <th>Phải trình BGĐ nếu</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Showroom</td>
+                            <td>TP.HCM, Bình Dương</td>
+                            <td>95%</td>
+                            <td>3%</td>
+                            <td>5%</td>
+                            <td>CK > 5% hoặc giá < giá sàn</td>
+                            <td>Giữ mặt bằng giá, bảo vệ hình ảnh</td>
+                        </tr>
+                        <tr>
+                            <td>Showroom</td>
+                            <td>Tỉnh / khác</td>
+                            <td>93%</td>
+                            <td>4%</td>
+                            <td>6%</td>
+                            <td>CK > 6% hoặc giá < giá sàn</td>
+                            <td>Có thể linh hoạt hơn do giao hàng</td>
+                        </tr>
+                        <tr>
+                            <td>OEM</td>
+                            <td>Toàn quốc</td>
+                            <td>85%</td>
+                            <td>5%</td>
+                            <td>10%</td>
+                            <td>CK > 10% hoặc giá < giá sàn</td>
+                            <td>Giá sàn phải xác định theo BOM (xem chi tiết bên dưới)</td>
+                        </tr>
+                        <tr>
+                            <td>GT (NPP, đại lý)</td>
+                            <td>TP.HCM, Bình Dương</td>
+                            <td>88%</td>
+                            <td>6%</td>
+                            <td>10%</td>
+                            <td>CK > 10% hoặc giá < giá sàn</td>
+                            <td>Áp dụng theo cấp đại lý</td>
+                        </tr>
+                        <tr>
+                            <td>GT</td>
+                            <td>Miền Trung, Tây Nguyên</td>
+                            <td>85%</td>
+                            <td>7%</td>
+                            <td>12%</td>
+                            <td>CK > 12% hoặc giá < giá sàn</td>
+                            <td>Có thể hỗ trợ chi phí giao hàng</td>
+                        </tr>
+                        <tr>
+                            <td>GT</td>
+                            <td>Miền Bắc</td>
+                            <td>90%</td>
+                            <td>5%</td>
+                            <td>8%</td>
+                            <td>CK > 8% hoặc giá < giá sàn</td>
+                            <td>Ưu tiên lợi nhuận cao</td>
+                        </tr>
+                        <tr>
+                            <td>Dự án</td>
+                            <td>Toàn quốc</td>
+                            <td>82%</td>
+                            <td>7%</td>
+                            <td>12%</td>
+                            <td>CK > 12%, giá < giá sàn hoặc deal > 500 triệu</td>
+                            <td>Phải có phân tích lợi nhuận & điều kiện thanh toán (xem chi tiết bên dưới)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note-box mt-6">
+                <h4 class="font-bold text-lg mb-2">Quy định chi tiết về "Giá sàn phải xác định theo BOM" (Kênh OEM):</h4>
+                <ul class="list-disc list-inside text-sm">
+                    <li><strong>Yêu cầu:</strong> Phòng Kế hoạch Sản xuất và Phòng Kế toán có trách nhiệm xây dựng và ban hành một <strong>phương pháp luận chuẩn hóa, có tài liệu hóa và có thể kiểm toán</strong> để xác định Giá sàn dựa trên BOM cho từng sản phẩm/nhóm sản phẩm OEM.</li>
+                    <li><strong>Chi tiết:</strong> Phương pháp này phải bao gồm các bước tính toán rõ ràng, các yếu tố cấu thành BOM (chi phí nguyên vật liệu trực tiếp, chi phí nhân công trực tiếp, chi phí sản xuất chung), tỷ lệ chi phí cố định/biến đổi, và biên lợi nhuận tối thiểu bắt buộc trên BOM. Giá sàn OEM phải được tính toán và cập nhật định kỳ, hoặc khi có sự thay đổi đáng kể về chi phí đầu vào.</li>
+                    <li><strong>Mục đích:</strong> Đảm bảo tính nhất quán, công bằng và tránh sai sót trong việc định giá sản phẩm OEM, đồng thời bảo vệ biên lợi nhuận cốt lõi của Công ty.</li>
+                </ul>
+            </div>
+            <div class="note-box mt-4">
+                 <h4 class="font-bold text-lg mb-2">Ghi chú chi tiết cho Kênh Dự án:</h4>
+                 <ul class="list-disc list-inside text-sm">
+                     <li><strong>Đối với deal > 500 triệu:</strong> Yêu cầu <strong>phân tích lợi nhuận và rủi ro toàn diện</strong>, bao gồm phân tích dòng tiền dự kiến, phân tích rủi ro thanh toán, tác động dài hạn đến thị phần và thương hiệu của Công ty. Phân tích này phải được đính kèm trên hệ thống và là cơ sở duy nhất để BGĐ xem xét.</li>
+                 </ul>
+             </div>
+        </section>
+
+        <section id="workflow" class="detail-section">
+            <h2 class="section-title text-center">Quy Trình Xử Lý Duyệt Giá</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Quy trình này <strong>bắt buộc phải được tự động hóa hoàn toàn</strong> trên một hệ thống nội bộ (ví dụ: ERP, CRM, hoặc một module chuyên biệt). Mọi thao tác và dữ liệu phải được thực hiện và lưu trữ trên hệ thống.</p>
+
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6 mb-8">
+                <div class="flowchart-step p-5 rounded-lg w-full md:w-1/5 text-center">
+                    <div class="text-3xl font-bold text-[#00A1E4] mb-2">1</div>
+                    <h4 class="font-semibold text-lg my-1">Gửi Đề Xuất</h4>
+                    <p class="text-sm text-gray-600">NVKD gửi mẫu đề xuất chuẩn</p>
+                    <p class="font-bold text-base text-[#0052B4] mt-2">Trong ngày</p>
+                </div>
+                <div class="text-4xl flowchart-arrow transform rotate-90 md:rotate-0">→</div>
+                <div class="flowchart-step p-5 rounded-lg w-full md:w-1/5 text-center">
+                    <div class="text-3xl font-bold text-[#00A1E4] mb-2">2</div>
+                    <h4 class="font-semibold text-lg my-1">Kiểm Tra Sơ Bộ</h4>
+                    <p class="text-sm text-gray-600">Trưởng phòng KD đánh giá</p>
+                    <p class="font-bold text-base text-[#0052B4] mt-2">≤ 24 giờ</p>
+                </div>
+                <div class="text-4xl flowchart-arrow transform rotate-90 md:rotate-0">→</div>
+                <div class="flowchart-step p-5 rounded-lg w-full md:w-1/5 text-center">
+                    <div class="text-3xl font-bold text-[#00A1E4] mb-2">3</div>
+                    <h4 class="font-semibold text-lg my-1">Trình BGĐ (Nếu cần)</h4>
+                    <p class="text-sm text-gray-600">Với các trường hợp vượt khung</p>
+                    <p class="font-bold text-base text-[#0052B4] mt-2">24-48 giờ</p>
+                </div>
+                <div class="text-4xl flowchart-arrow transform rotate-90 md:rotate-0">→</div>
+                <div class="flowchart-step p-5 rounded-lg w-full md:w-1/5 text-center">
+                    <div class="text-3xl font-bold text-[#00A1E4] mb-2">4</div>
+                    <h4 class="font-semibold text-lg my-1">Phản Hồi Kết Quả</h4>
+                    <p class="text-sm text-gray-600">Cập nhật giá duyệt chính thức</p>
+                    <p class="font-bold text-base text-[#0052B4] mt-2">Ngay sau duyệt</p>
+                </div>
+            </div>
+
+            <div class="note-box mt-8">
+                <h4 class="font-bold text-xl mb-3">Chi tiết các bước trong Quy trình Xử lý Duyệt giá:</h4>
+                <ol class="list-decimal list-inside text-base space-y-4">
+                    <li>
+                        <strong>Bước 1: Khởi tạo Đề xuất</strong>
+                        <ul class="list-disc list-inside ml-6 mt-2">
+                            <li><strong>Thực hiện:</strong> Nhân viên Kinh doanh (NVKD) nhập liệu đầy đủ và chính xác vào biểu mẫu đề xuất duyệt giá linh hoạt <strong>trên hệ thống</strong>.</li>
+                            <li><strong>Thời gian:</strong> Trong ngày làm việc phát sinh nhu cầu.</li>
+                            <li><strong>Ghi chú:</strong> Hệ thống sẽ tự động kiểm tra tính hợp lệ của dữ liệu đầu vào (ví dụ: định dạng, trường bắt buộc, tính toán tự động). NVKD chịu trách nhiệm về tính chính xác của thông tin cung cấp.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Bước 2: Kiểm tra Sơ bộ & Định tuyến Tự động</strong>
+                        <ul class="list-disc list-inside ml-6 mt-2">
+                            <li><strong>Thực hiện:</strong> Hệ thống tự động kiểm tra đề xuất dựa trên các quy tắc đã định trong Bảng Chiết khấu – Giá sàn – Phân quyền Duyệt giá. Hệ thống tự động định tuyến đề xuất đến đúng cấp duyệt theo thẩm quyền.</li>
+                            <li><strong>Thời gian:</strong> Ngay lập tức (do hệ thống tự động xử lý).</li>
+                            <li><strong>Ghi chú:</strong> Hệ thống sẽ ghi lại toàn bộ lịch sử kiểm tra và định tuyến của từng đề xuất.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Bước 3: Phê duyệt Cấp Quản lý (nếu cần)</strong>
+                        <ul class="list-disc list-inside ml-6 mt-2">
+                            <li><strong>Thực hiện:</strong>
+                                <ul class="list-circle list-inside ml-6 mt-2">
+                                    <li><strong>Trưởng phòng KD:</strong> Truy cập hệ thống để đánh giá, phê duyệt hoặc từ chối đề xuất. Nếu từ chối, <strong>bắt buộc</strong> phải nêu rõ lý do cụ thể và có tính xây dựng trên hệ thống. Trưởng phòng KD phải đánh giá dựa trên các tiêu chí lợi nhuận định lượng và điều kiện hợp đồng.</li>
+                                    <li><strong>BGĐ (nếu cần):</strong> Truy cập hệ thống để đánh giá, phê duyệt hoặc từ chối đề xuất. Quyết định của BGĐ là cuối cùng.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Thời gian:</strong> Trưởng phòng KD: <strong>Tối đa 24 giờ làm việc</strong>. BGĐ: <strong>Tối đa 48 giờ làm việc</strong>.</li>
+                            <li><strong>Ghi chú:</strong>
+                                <ul class="list-circle list-inside ml-6 mt-2">
+                                    <li><strong>Đối với các trường hợp vượt khung (CK > khung cho phép, hoặc Giá < Giá sàn):</strong> <strong>Bắt buộc</strong> phải đính kèm phân tích tài chính chi tiết (ví dụ: ROI dự kiến, tác động đến dòng tiền, phân tích điểm hòa vốn, phân tích độ nhạy) hoặc văn bản xác nhận chiến lược từ cấp cao hơn có thẩm quyền. Các tài liệu này phải được tải lên hệ thống cùng với đề xuất.</li>
+                                    <li><strong>Đối với deal > 500 triệu (Kênh Dự án):</strong> Yêu cầu <strong>phân tích lợi nhuận và rủi ro toàn diện</strong>, bao gồm phân tích dòng tiền dự kiến, phân tích rủi ro thanh toán, tác động dài hạn đến thị phần và thương hiệu. Phân tích này phải được đính kèm trên hệ thống và là cơ sở duy nhất để BGĐ xem xét.</li>
+                                    <li>Hệ thống sẽ tự động gửi nhắc nhở đến người duyệt nếu quá thời hạn quy định.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Bước 4: Phản hồi Kết quả & Cập nhật Giá chính thức</strong>
+                        <ul class="list-disc list-inside ml-6 mt-2">
+                            <li><strong>Thực hiện:</strong> Hệ thống tự động thông báo kết quả duyệt (phê duyệt/từ chối) đến NVKD và các bên liên quan ngay lập tức sau khi có quyết định cuối cùng. Hệ thống tự động cập nhật giá duyệt chính thức vào cơ sở dữ liệu sản phẩm/khách hàng.</li>
+                            <li><strong>Thời gian:</strong> Ngay lập tức sau khi có quyết định duyệt/từ chối.</li>
+                            <li><strong>Ghi chú:</strong> Mọi thông báo và cập nhật đều được thực hiện tự động bởi hệ thống, loại bỏ mọi sự can thiệp thủ công và sai sót.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="proposal_form" class="detail-section">
+            <h2 class="section-title text-center">Biểu Mẫu Đề Xuất Duyệt Giá Linh hoạt</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Mẫu đề xuất <strong>bắt buộc</strong> phải là một form điện tử trên hệ thống nội bộ, bao gồm các trường dữ liệu sau. Các trường có dấu (*) là bắt buộc:</p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>Mã sản phẩm (*) – Số lượng (*) – Đơn giá đề xuất (*)</li>
+                <li>Giá niêm yết (*) – Giá sau CK (*) – % CK (*) (Hệ thống tự động tính toán dựa trên giá niêm yết và đơn giá đề xuất)</li>
+                <li>Vùng áp dụng (*) + Kênh áp dụng (*)</li>
+                <li>Biên lợi nhuận ước tính (*) (Hệ thống tự động tính toán dựa trên giá vốn được cập nhật trong hệ thống ERP)</li>
+                <li>Lý do đề xuất (*) (Bắt buộc nhập liệu chi tiết, rõ ràng, có thể đính kèm tài liệu hỗ trợ như báo giá đối thủ, yêu cầu đặc biệt của khách hàng, v.v.)</li>
+                <li>Cam kết đi kèm (nếu có): ví dụ: cam kết thanh toán nhanh, cam kết doanh số, cam kết mở thị trường mới…</li>
+                <li><strong>Trường bắt buộc cho phê duyệt vượt khung:</strong> Căn cứ tài chính định lượng (tải lên file phân tích) hoặc mã số/tên tài liệu chiến lược được phê duyệt (nhập mã số/tên tài liệu tham chiếu).</li>
+            </ul>
+        </section>
+
+        <section id="control_reporting" class="detail-section">
+            <h2 class="section-title text-center">Quy Định Kiểm Soát & Báo Cáo</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Những quy định kiểm soát và báo cáo này là bắt buộc để đảm bảo tính tuân thủ và minh bạch của toàn hệ thống.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div class="icon-list-item">
+                    <span class="icon text-red-500">🚫</span>
+                    <div>
+                        <h4>VIII.1. Không dung thứ cho việc bán dưới giá sàn:</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li><strong>Quy định:</strong> Không ai được phép bán dưới giá sàn đã quy định, <strong>trừ khi có văn bản phê duyệt chính thức từ Giám đốc điều hành (CEO)</strong>. Văn bản này phải nêu rõ lý do đặc biệt, phân tích rủi ro/lợi ích toàn diện, và được lưu trữ trên hệ thống.</li>
+                            <li><strong>Hệ thống:</strong> Hệ thống phải có cơ chế <strong>chặn giao dịch</strong> nếu giá đề xuất thấp hơn giá sàn mà không có phê duyệt đặc biệt từ CEO được ghi nhận trên hệ thống. Mọi nỗ lực vượt qua cơ chế này sẽ được ghi log và báo cáo ngay lập tức.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icon-list-item">
+                    <span class="icon text-blue-500">💾</span>
+                    <div>
+                        <h4>VIII.2. Lưu trữ và Kiểm toán:</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Tất cả các giao dịch duyệt giá (bao gồm đề xuất, lý do, phân tích, quyết định phê duyệt/từ chối, người duyệt, thời gian duyệt, và mọi tài liệu đính kèm) <strong>bắt buộc phải được lưu trữ điện tử</strong> trên hệ thống nội bộ (ERP/CRM) một cách có cấu trúc và có thể truy xuất dễ dàng cho mục đích kiểm toán nội bộ và bên ngoài.</li>
+                            <li>Mọi thay đổi trong quy trình, bảng chiết khấu, hoặc phương pháp tính giá sàn phải được <strong>lưu trữ phiên bản và có lịch sử thay đổi rõ ràng</strong> trên hệ thống tài liệu quản lý của Công ty.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icon-list-item">
+                    <span class="icon text-yellow-500">⚠️</span>
+                    <div>
+                        <h4>VIII.3. Hệ thống Cảnh báo & Giám sát:</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Hệ thống <strong>phải có chức năng cảnh báo tự động</strong> nếu giá đề xuất thấp hơn giá vốn + 5% (hoặc bất kỳ ngưỡng lợi nhuận tối thiểu nào được quy định). Cảnh báo này phải được gửi đến Trưởng phòng KD và BGĐ ngay lập tức qua email/thông báo trên hệ thống.</li>
+                            <li>Hệ thống phải cung cấp <strong>bảng điều khiển (dashboard) thời gian thực</strong> cho BGĐ và Trưởng phòng KD để giám sát tổng quan các đề xuất duyệt giá, trạng thái duyệt, các trường hợp vượt khung, và các chỉ số hiệu suất liên quan.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icon-list-item">
+                    <span class="icon text-green-500">📄</span>
+                    <div>
+                        <h4>VIII.4. Báo cáo Định kỳ (Tự động hóa):</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Hệ thống phải tự động tạo và gửi các báo cáo tổng hợp toàn bộ giao dịch duyệt giá vượt khung (theo tuần/tháng) cho BGĐ và bộ phận Kiểm soát nội bộ.</li>
+                            <li>Báo cáo này phải bao gồm các chỉ số hiệu suất (KPIs) liên quan đến quy trình duyệt giá, ví dụ: Tỷ lệ đề xuất vượt khung trên tổng số đề xuất; Thời gian trung bình duyệt đề xuất theo từng cấp; Tỷ lệ phê duyệt/từ chối của các đề xuất vượt khung; Tác động lợi nhuận ước tính của các deal vượt khung đã được phê duyệt; Số lượng và giá trị các giao dịch bán dưới giá sàn (nếu có phê duyệt CEO).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="training_communication" class="detail-section">
+            <h2 class="section-title text-center">Đào Tạo & Truyền Thông</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li><strong>Đào tạo định kỳ:</strong> Phòng Hành chính – Nhân sự phối hợp với Phòng Kinh doanh và Phòng Công nghệ thông tin có trách nhiệm tổ chức các buổi đào tạo <strong>bắt buộc và định kỳ</strong> (ít nhất 01 lần/năm hoặc khi có thay đổi lớn trong quy trình) cho toàn bộ NVKD, Trưởng phòng KD và các cấp quản lý liên quan về quy trình duyệt giá, các khái niệm, và cách sử dụng hệ thống.</li>
+                <li><strong>Tài liệu hóa:</strong> Cung cấp tài liệu quy trình <strong>phiên bản hóa, dễ tiếp cận và rõ ràng</strong> cho tất cả nhân viên thông qua cổng thông tin nội bộ hoặc hệ thống quản lý tài liệu. Mọi thay đổi quy trình phải được cập nhật và thông báo chính thức đến toàn bộ nhân viên liên quan.</li>
+            </ul>
+        </section>
+
+        <section id="evaluation_improvement" class="detail-section">
+            <h2 class="section-title text-center">Đánh Giá & Cải Tiến Liên Tục</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li><strong>Đánh giá định kỳ:</strong> Quy trình duyệt giá phải được <strong>đánh giá chính thức ít nhất mỗi quý</strong> bởi một nhóm liên chức năng bao gồm đại diện từ Phòng Kinh doanh, Phòng Tài chính, Phòng Kế toán và bộ phận Kiểm soát nội bộ. Mục đích là để đảm bảo tính phù hợp với chiến lược kinh doanh, điều kiện thị trường, hiệu quả hoạt động và sự tuân thủ.</li>
+                <li><strong>Vòng lặp cải tiến:</strong> Các phát hiện từ việc đánh giá phải dẫn đến các hành động cải tiến cụ thể, được ghi lại, phân công trách nhiệm và theo dõi cho đến khi hoàn thành.</li>
+            </ul>
+        </section>
+
+        <section id="effectiveness" class="detail-section">
+            <h2 class="section-title text-center">Hiệu Lực Thi Hành</h2>
+            <p class="text-center text-gray-700">Quy trình này có hiệu lực kể từ ngày ký ban hành. Mọi quy định trước đây trái với quy định này đều bãi bỏ.</p>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-12 py-6 border-t border-gray-200">
+        <div class="container mx-auto text-center text-gray-500">
+            <p>&copy; 2025 Công ty TNHH Công nghiệp Nghệ Năng. Mọi quyền được bảo lưu.</p>
+            <p class="text-sm">Infographic được tạo để trực quan hóa quy trình nội bộ.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
