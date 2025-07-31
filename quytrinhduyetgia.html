@@ -13,6 +13,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #eef2f6; /* Slightly lighter background */
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
         }
         strong {
             font-weight: 800; /* Ensure bolding is applied and prominent */
@@ -89,10 +90,11 @@
         }
         .data-table tbody tr {
             background-color: #ffffff;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Add transition for shadow */
         }
         .data-table tbody tr:hover {
-            background-color: #f8fafc; /* Subtle hover effect */
+            background-color: #e0f7fa; /* More noticeable light blue hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Subtle shadow on hover */
         }
         .definition-item {
             margin-bottom: 1.25rem; /* More spacing */
@@ -443,7 +445,7 @@
                 <li>Giá niêm yết (*) – Giá sau CK (*) – % CK (*) (Hệ thống tự động tính toán dựa trên giá niêm yết và đơn giá đề xuất)</li>
                 <li>Vùng áp dụng (*) + Kênh áp dụng (*)</li>
                 <li>Biên lợi nhuận ước tính (*) (Hệ thống tự động tính toán dựa trên giá vốn được cập nhật trong hệ thống ERP)</li>
-                <li>Lý do đề xuất (*) (Bắt buộc nhập liệu chi tiết, rõ ràng, có thể đính kèm tài liệu hỗ trợ như báo giá đối thủ, yêu cầu đặc biệt của khách hàng, v.v.)</li>
+                <li>Lý do đề xuất (*) (Bắt buộc nhập liệu chi tiết, rõ ràng, có thể đính kèm tài liệu hỗ trợ như báo giá đối thủ, yêu cầu đặc biệt của khách hàng, v..v.)</li>
                 <li>Cam kết đi kèm (nếu có): ví dụ: cam kết thanh toán nhanh, cam kết doanh số, cam kết mở thị trường mới…</li>
                 <li><strong>Trường bắt buộc cho phê duyệt vượt khung:</strong> Căn cứ tài chính định lượng (tải lên file phân tích) hoặc mã số/tên tài liệu chiến lược được phê duyệt (nhập mã số/tên tài liệu tham chiếu).</li>
             </ul>
