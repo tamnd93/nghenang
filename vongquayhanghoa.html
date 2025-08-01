@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Vòng Quay Hàng Hóa - Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Lightest gray background */
+            line-height: 1.6;
+            color: #334155; /* Darker text for better readability */
+        }
+        .header-gradient {
+            background: linear-gradient(to right, #1a56db, #3b82f6); /* Stronger blue gradient */
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a56db;
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background-color: #3b82f6; /* Accent line */
+            border-radius: 3px;
+        }
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Ensure cards in a grid have equal height */
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .formula-box {
+            background-color: #e0f2fe; /* Light blue background for formulas */
+            border-left: 5px solid #3b82f6;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e40af; /* Darker blue text */
+            text-align: center; /* Center the text within the box */
+        }
+        .formula-box .formula-text {
+            display: block;
+            margin: 0.75rem 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .example-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .example-step-number {
+            background-color: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .table-container {
+            overflow-x: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 600px; /* Ensure table doesn't get too narrow on small screens */
+        }
+        .data-table th, .data-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .data-table th {
+            background-color: #f0f4f8;
+            font-weight: 700;
+            color: #475569;
+        }
+        .data-table tbody tr {
+            background-color: #ffffff;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .data-table tbody tr:hover {
+            background-color: #e0f2fe; /* Light blue hover for table rows */
+            box-shadow: inset 0 0 0 2px #3b82f6; /* Subtle border on hover */
+        }
+        .pro-con-card {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        .pro-con-card.pro {
+            background-color: #ecfdf5; /* Light green */
+            border-left: 5px solid #10b981; /* Green border */
+        }
+        .pro-con-card.con {
+            background-color: #fef2f2; /* Light red */
+            border-left: 5px solid #ef4444; /* Red border */
+        }
+        .pro-con-card h4 {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .pro-con-card ul {
+            list-style: disc;
+            padding-left: 1.25rem;
+        }
+        .pro-con-card li {
+            margin-bottom: 0.5rem;
+        }
+        .icon-text-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .icon-text-item .icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .icon-text-item p {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-gradient text-white py-8 shadow-lg">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-2">Vòng Quay Hàng Hóa</h1>
+            <p class="text-xl opacity-90">Chỉ số then chốt đánh giá hiệu quả quản lý tồn kho</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+
+        <section id="introduction" class="mb-12 text-center max-w-4xl mx-auto">
+            <p class="text-lg text-gray-700 leading-relaxed">
+                <strong class="text-[#1a56db]">Vòng Quay Hàng Hóa (Inventory Turnover)</strong> là một chỉ số tài chính quan trọng, đo lường số lần một công ty bán và thay thế hàng tồn kho của mình trong một khoảng thời gian nhất định (thường là một năm). Chỉ số này phản ánh hiệu quả quản lý hàng tồn kho của doanh nghiệp.
+            </p>
+        </section>
+
+        <section id="formulas" class="mb-16">
+            <h2 class="section-title">I. Công Thức Tính Vòng Quay Hàng Hóa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#1a56db] mb-4">1. Sử dụng Giá vốn hàng bán (COGS)</h3>
+                    <div class="formula-box">
+                        <span class="formula-text">Vòng Quay Hàng Hóa = Giá vốn hàng bán / Hàng tồn kho bình quân</span>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        Giá vốn hàng bán (COGS) là tổng chi phí trực tiếp để sản xuất hàng hóa hoặc dịch vụ đã bán. Đây là chỉ số được ưu tiên hơn vì nó phản ánh chi phí thực tế của hàng hóa đã bán.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-[#1a56db] mb-4">2. Sử dụng Doanh thu thuần (Net Sales)</h3>
+                    <div class="formula-box">
+                        <span class="formula-text">Vòng Quay Hàng Hóa = Doanh thu thuần / Hàng tồn kho bình quân</span>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        Doanh thu thuần (Net Sales) là tổng doanh thu từ việc bán hàng sau khi trừ đi các khoản giảm trừ doanh thu.
+                    </p>
+                </div>
+            </div>
+            <div class="card mt-8">
+                <h3 class="text-xl font-bold text-[#1a56db] mb-4">Cách tính Hàng tồn kho bình quân</h3>
+                <div class="formula-box">
+                    <span class="formula-text">Hàng tồn kho bình quân = (Hàng tồn kho đầu kỳ + Hàng tồn kho cuối kỳ) / 2</span>
+                </div>
+                <div class="mt-4 text-sm text-gray-600">
+                    <p><strong>Hàng tồn kho đầu kỳ:</strong> Là giá trị hàng hóa tồn kho tại thời điểm bắt đầu một kỳ kế toán (ví dụ: ngày 1 tháng 1 của năm tài chính).</p>
+                    <p><strong>Hàng tồn kho cuối kỳ:</strong> Là giá trị hàng hóa tồn kho tại thời điểm kết thúc một kỳ kế toán (ví dụ: ngày 31 tháng 12 của năm tài chính).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="example" class="mb-16">
+            <h2 class="section-title">Ví dụ minh họa: Công ty TNHH Công nghiệp Nghệ Năng</h2>
+            <div class="card">
+                <p class="mb-4 text-gray-700">Giả sử Công ty TNHH Công nghiệp Nghệ Năng có các số liệu sau trong năm 2024:</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6">
+                    <li>Giá vốn hàng bán (COGS): <strong>15.000.000.000 VNĐ</strong> (tổng chi phí sản xuất trực tiếp của các sản phẩm đã bán ra trong năm)</li>
+                    <li>Hàng tồn kho đầu kỳ: <strong>2.500.000.000 VNĐ</strong> (giá trị hàng hóa còn lại trong kho vào ngày 01/01/2024)</li>
+                    <li>Hàng tồn kho cuối kỳ: <strong>3.500.000.000 VNĐ</strong> (giá trị hàng hóa còn lại trong kho vào ngày 31/12/2024)</li>
+                </ul>
+
+                <div class="example-step">
+                    <span class="example-step-number">1</span>
+                    <div>
+                        <h4 class="font-semibold text-lg text-[#1a56db]">Tính Hàng tồn kho bình quân</h4>
+                        <div class="formula-box">
+                            <span class="formula-text">Hàng tồn kho bình quân = (2.5 tỷ + 3.5 tỷ) / 2 = 3.0 tỷ VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-step">
+                    <span class="example-step-number">2</span>
+                    <div>
+                        <h4 class="font-semibold text-lg text-[#1a56db]">Tính Vòng Quay Hàng Hóa</h4>
+                        <div class="formula-box">
+                            <span class="formula-text">Vòng Quay Hàng Hóa = 15 tỷ / 3 tỷ = 5 lần</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800">
+                    <p class="font-semibold"><strong>Kết luận:</strong> Trong năm 2024, Nghệ Năng đã bán và thay thế toàn bộ lượng hàng tồn kho của mình 5 lần. Một vòng quay 5 lần cho thấy Nghệ Năng đang quản lý hàng tồn kho khá hiệu quả, có khả năng chuyển đổi hàng tồn kho thành doanh thu trong khoảng thời gian tương đối ngắn. Tuy nhiên, để đánh giá chính xác hơn, cần so sánh chỉ số này với các doanh nghiệp cùng ngành hoặc với dữ liệu lịch sử của chính Nghệ Năng.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="meaning" class="mb-16">
+            <h2 class="section-title">II. Ý Nghĩa của Vòng Quay Hàng Hóa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div class="text-4xl text-[#3b82f6] mb-3">📈</div>
+                    <h3 class="font-bold text-lg mb-2">Hiệu quả quản lý tồn kho</h3>
+                    <p class="text-sm text-gray-600">Phản ánh mức độ hiệu quả trong việc quản lý hàng tồn kho.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="text-4xl text-[#3b82f6] mb-3">💸</div>
+                    <h3 class="font-bold text-lg mb-2">Thanh khoản</h3>
+                    <p class="text-sm text-gray-600">Khả năng chuyển đổi hàng tồn kho thành tiền mặt nhanh chóng.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="text-4xl text-[#3b82f6] mb-3">⚠️</div>
+                    <h3 class="font-bold text-lg mb-2">Rủi ro lỗi thời/hư hỏng</h3>
+                    <p class="text-sm text-gray-600">Vòng quay thấp báo hiệu rủi ro hàng tồn kho bị lỗi thời.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="text-4xl text-[#3b82f6] mb-3">🚀</div>
+                    <h3 class="font-bold text-lg mb-2">Hiệu suất bán hàng</h3>
+                    <p class="text-sm text-gray-600">Gián tiếp phản ánh tốc độ bán hàng của doanh nghiệp.</p>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-[#1a56db] text-center mb-6">Ý nghĩa đối với Công ty TNHH Công nghiệp Nghệ Năng</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <h4 class="font-bold text-xl text-[#3b82f6] mb-3">1. Đánh giá hiệu quả hoạt động từng kênh</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li><strong>Showroom & GT:</strong> Vòng quay cao = sản phẩm bán chạy, chiến lược hiệu quả. Vòng quay thấp = cần điều chỉnh giá, marketing.</li>
+                            <li><strong>OEM & Dự án:</strong> Theo dõi vòng quay nguyên vật liệu/bán thành phẩm để tránh ứ đọng linh kiện chuyên biệt.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-bold text-xl text-[#3b82f6] mb-3">2. Tối ưu hóa chính sách giá và chiết khấu</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li><strong>Vòng quay cao:</strong> Tự tin áp dụng chiết khấu linh hoạt để đẩy mạnh doanh số.</li>
+                            <li><strong>Vòng quay thấp:</strong> Cần xem xét lại chiến lược giá, khuyến mãi sâu hơn hoặc điều chỉnh danh mục sản phẩm.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-bold text-xl text-[#3b82f6] mb-3">3. Quản lý dòng tiền và vốn lưu động</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li><strong>Vòng quay nhanh:</strong> Thu hồi vốn nhanh, giảm nhu cầu vốn lưu động, cải thiện dòng tiền.</li>
+                            <li><strong>Vòng quay chậm:</strong> "Chôn vốn" vào tồn kho, ảnh hưởng đến dòng tiền và khả năng đầu tư.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-bold text-xl text-[#3b82f6] mb-3">4. Kiểm soát rủi ro và chi phí</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Nhận diện sớm sản phẩm lỗi thời, hư hỏng, từ đó thanh lý hoặc điều chỉnh sản xuất kịp thời.</li>
+                            <li>Giảm chi phí lưu kho, bảo quản, bảo hiểm hàng hóa.</li>
+                        </ul>
+                    </div>
+                    <div class="card md:col-span-2">
+                        <h4 class="font-bold text-xl text-[#3b82f6] mb-3">5. Cải thiện dự báo và lập kế hoạch sản xuất</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Phân tích vòng quay theo thời gian/sản phẩm giúp cải thiện độ chính xác dự báo nhu cầu.</li>
+                            <li>Lập kế hoạch sản xuất và mua hàng hiệu quả hơn, tránh thừa/thiếu hàng.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interpretation" class="mb-16">
+            <h2 class="section-title">III. Cách Diễn Giải Chỉ Số Vòng Quay Hàng Hóa</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+                Việc diễn giải vòng quay hàng hóa cần dựa trên ngữ cảnh ngành và chiến lược của doanh nghiệp.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="pro-con-card pro">
+                    <h4 class="text-green-700">Vòng quay cao: Tín hiệu tốt</h4>
+                    <ul class="text-gray-700 text-sm">
+                        <li>Hàng hóa bán ra nhanh chóng, giảm chi phí lưu kho.</li>
+                        <li>Giảm rủi ro lỗi thời, hư hỏng.</li>
+                        <li>Dấu hiệu của hoạt động bán hàng mạnh mẽ.</li>
+                    </ul>
+                    <h4 class="text-red-700 mt-4">Nhược điểm tiềm ẩn:</h4>
+                    <ul class="text-gray-700 text-sm">
+                        <li>Có thể giữ quá ít hàng tồn kho, nguy cơ hết hàng (stock-out).</li>
+                        <li>Bỏ lỡ cơ hội bán hàng, không đáp ứng được nhu cầu tăng đột biến.</li>
+                    </ul>
+                </div>
+                <div class="pro-con-card con">
+                    <h4 class="text-red-700">Vòng quay thấp: Tín hiệu cần xem xét</h4>
+                    <ul class="text-gray-700 text-sm">
+                        <li>Hàng hóa bán ra chậm, tăng chi phí lưu kho.</li>
+                        <li>Tăng rủi ro lỗi thời, hư hỏng.</li>
+                        <li>Dấu hiệu của nhu cầu thị trường yếu hoặc quản lý tồn kho kém hiệu quả.</li>
+                    </ul>
+                    <h4 class="text-green-700 mt-4">Ưu điểm tiềm ẩn (ít phổ biến):</h4>
+                    <ul class="text-gray-700 text-sm">
+                        <li>Trong ngành đặc thù (hàng xa xỉ, sản phẩm chuyên biệt), giữ tồn kho lớn có thể là chiến lược.</li>
+                        <li>Chuẩn bị cho mùa cao điểm hoặc nhu cầu tăng đột biến dự kiến.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 p-4 rounded-lg bg-yellow-50 border border-yellow-200 text-yellow-800">
+                <p class="font-semibold text-sm">
+                    <strong class="text-yellow-800">Lưu ý quan trọng:</strong> Chỉ số vòng quay hàng hóa cần được so sánh trong cùng ngành hoặc với các đối thủ cạnh tranh để có đánh giá chính xác nhất, vì mỗi ngành có đặc thù tồn kho khác nhau (ví dụ: ngành thực phẩm có vòng quay rất nhanh, trong khi ngành sản xuất máy bay có vòng quay rất chậm).
+                </p>
+            </div>
+        </section>
+
+        <section id="factors" class="mb-16">
+            <h2 class="section-title">IV. Các Yếu Tố Ảnh Hưởng Đến Vòng Quay Hàng Hóa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">1. Đặc thù ngành</h3>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">🛒</span>
+                        <p><strong>Ngành bán lẻ, thực phẩm:</strong> Vòng quay cao do sản phẩm có hạn sử dụng ngắn hoặc nhu cầu tiêu dùng nhanh.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">⚙️</span>
+                        <p><strong>Ngành sản xuất hàng hóa giá trị cao, chuyên biệt:</strong> Vòng quay thấp hơn do chu kỳ sản xuất dài, giá trị lớn.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">2. Chiến lược kinh doanh</h3>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">🏷️</span>
+                        <p><strong>Giá thấp, khối lượng lớn:</strong> Thường đi kèm với vòng quay cao.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">💎</span>
+                        <p><strong>Sản phẩm độc đáo, cao cấp:</strong> Có thể chấp nhận vòng quay thấp hơn.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">3. Hiệu quả hoạt động</h3>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">🔗</span>
+                        <p><strong>Quản lý chuỗi cung ứng:</strong> Hiệu quả giúp giảm thời gian tồn kho.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">🔮</span>
+                        <p><strong>Dự báo nhu cầu:</strong> Chính xác giúp tối ưu hóa lượng hàng tồn kho.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">📣</span>
+                        <p><strong>Marketing và bán hàng:</strong> Hoạt động mạnh mẽ thúc đẩy vòng quay.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">4. Điều kiện thị trường</h3>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">📊</span>
+                        <p><strong>Nhu cầu thị trường:</strong> Tăng cao làm tăng vòng quay.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">⚔️</span>
+                        <p><strong>Cạnh tranh:</strong> Gay gắt có thể buộc giảm giá, đẩy hàng nhanh.</p>
+                    </div>
+                    <div class="icon-text-item">
+                        <span class="icon text-[#3b82f6]">📉</span>
+                        <p><strong>Tình hình kinh tế:</strong> Suy thoái có thể làm giảm nhu cầu và vòng quay.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dio" class="mb-16">
+            <h2 class="section-title">V. Số Ngày Tồn Kho Bình Quân (Days Inventory Outstanding - DIO)</h2>
+            <div class="card text-center max-w-2xl mx-auto">
+                <p class="mb-4 text-gray-700">
+                    Ngoài vòng quay hàng hóa, một chỉ số liên quan và cũng rất hữu ích là <strong>Số Ngày Tồn Kho Bình Quân (DIO)</strong>, cho biết trung bình mất bao nhiêu ngày để công ty bán hết hàng tồn kho của mình.
+                </p>
+                <div class="formula-box">
+                    <span class="formula-text">DIO = 365 ngày / Vòng Quay Hàng Hóa</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-4">
+                    Chỉ số này giúp nhà quản lý dễ hình dung hơn về thời gian hàng hóa nằm trong kho, từ đó đưa ra các quyết định tối ưu hóa.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-100 py-8 text-center text-gray-600">
+        <div class="container mx-auto px-6">
+            <p><strong>Người đề xuất:</strong> Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
+            <p>&copy; 2025 Công ty TNHH Công nghiệp Nghệ Năng. Mọi quyền được bảo lưu.</p>
+            <p class="text-sm mt-2">Infographic được tạo để trực quan hóa các khái niệm tài chính.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
