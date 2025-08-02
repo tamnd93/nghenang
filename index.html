@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Animated, multi-color background gradient */
+        /* Hiệu ứng nền gradient chuyển động */
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f172a, #1e3a8a, #4f46e5, #8b5cf6, #ec4899);
@@ -18,17 +18,17 @@
             animation: gradientAnimation 20s ease infinite;
         }
 
-        /* Keyframes for the animated wave background */
+        /* Keyframes cho hiệu ứng nền */
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Main card container styling with subtle animation */
+        /* Thiết kế chính cho khung menu */
         .container-card {
             background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(15px); /* Stronger blur effect */
+            backdrop-filter: blur(15px);
             border-radius: 2rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -38,6 +38,13 @@
         @keyframes cardFadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hiệu ứng làm mờ các nút không được di chuột vào */
+        .blur-active .menu-link:not(:hover) {
+            filter: blur(2px);
+            opacity: 0.7;
+            transform: scale(0.98);
         }
 
         /* Hiệu ứng khi di chuột vào nút */
@@ -51,17 +58,13 @@
             z-index: 10;
         }
         
-        /* Hiệu ứng làm mờ và phóng to */
+        /* Hiệu ứng phóng to khi di chuột vào */
         .menu-link:hover {
-            transform: scale(1.05); /* Phóng to nút */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+                        0 0 20px rgba(255, 255, 255, 0.2);
             z-index: 20;
-        }
-
-        .blur-effect .menu-link:not(:hover) {
-            filter: blur(2px); /* Làm mờ các nút không được hover */
-            opacity: 0.7;
-            transform: scale(0.98);
+            background-color: #3b82f6; /* Màu nền khi di chuột */
         }
     </style>
 </head>
@@ -77,36 +80,58 @@
         </p>
 
         <div class="space-y-4">
-            <a href="vongquayhanghoa.html" class="menu-link block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl">
+            <!-- Các nút menu với màu sắc đồng nhất -->
+            <a href="vongquayhanghoa.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
                 Vòng Quay Hàng Hóa
             </a>
-            <a href="kehoachsn.html" class="menu-link block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl">
+            <a href="kehoachsn.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
                 Kế Hoạch S/N
             </a>
-            <a href="quytrinhduyetgia.html" class="menu-link block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl">
+            <a href="quytrinhduyetgia.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
                 Quy Trình Duyệt Giá
             </a>
-            <a href="xaydungquytrinh.html" class="menu-link block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl">
+            <a href="xaydungquytrinh.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
                 Xây Dựng Quy Trình
             </a>
         </div>
         
         <div class="mt-12 text-gray-400 border-t border-gray-600 pt-6">
-            <p class="text-sm font-light"> Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
+            <p class="text-sm font-light"><strong>Người tạo:</strong> Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
         </div>
     </div>
 
     <script>
         const menuContainer = document.getElementById('menu-container');
+        const menuLinks = document.querySelectorAll('.menu-link');
 
-        // Thêm class 'blur-effect' khi di chuột vào container
+        // Thêm/xóa class để kích hoạt/tắt hiệu ứng làm mờ
         menuContainer.addEventListener('mouseenter', () => {
-            menuContainer.classList.add('blur-effect');
+            menuContainer.classList.add('blur-active');
         });
 
-        // Xóa class 'blur-effect' khi chuột rời khỏi container
         menuContainer.addEventListener('mouseleave', () => {
-            menuContainer.classList.remove('blur-effect');
+            menuContainer.classList.remove('blur-active');
+            // Đảm bảo không còn hiệu ứng đèn sân khấu nào còn lại
+            menuLinks.forEach(link => {
+                link.style.background = '';
+                link.style.backgroundColor = '';
+            });
+        });
+
+        // Thêm hiệu ứng đèn sân khấu cho từng nút
+        menuLinks.forEach(link => {
+            link.addEventListener('mousemove', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Sử dụng radial-gradient để tạo hiệu ứng đèn sân khấu
+                link.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)`;
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                link.style.background = ''; // Xóa hiệu ứng gradient khi chuột rời đi
+            });
         });
     </script>
 
