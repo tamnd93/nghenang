@@ -126,7 +126,7 @@
         }
         .pro-con-card.con {
             background-color: #fef2f2; /* Light red */
-            border-left: 5px solid #ef4444; /* Red border */
+            border-left: 5-px solid #ef4444; /* Red border */
         }
         .pro-con-card h4 {
             font-weight: 700;
@@ -154,6 +154,196 @@
         .icon-text-item p {
             font-size: 0.95rem;
         }
+        /* Custom styles for the calculator section */
+        .calculator-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 900px; /* Increased max-width for a larger frame */
+        }
+        .calculator-input-group {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .calculator-input-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #475569;
+            text-align: left; /* Align label text to the left */
+        }
+        .calculator-input-group input {
+            width: 100%;
+            height: 48px; /* Fixed height for uniform inputs */
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-size: 1rem;
+            text-align: center; /* Center the input text */
+        }
+        .calculator-input-group input:focus {
+            border-color: #3b82f6;
+        }
+        .calculator-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: white;
+            background-color: #3b82f6;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .calculator-button:hover {
+            background-color: #1a56db;
+            transform: translateY(-2px);
+        }
+        .calculator-button:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .history-button {
+            background-color: #64748b;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .history-button:hover {
+            background-color: #475569;
+        }
+        #result-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background-color: #eef2ff;
+            border: 1px solid #c7d2fe;
+            display: none; /* Hide by default */
+        }
+        #result-display h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #4338ca;
+            margin-bottom: 1rem;
+        }
+        #result-display p {
+            margin-bottom: 0.5rem;
+            color: #4f46e5;
+        }
+        #analysis-text {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #c7d2fe;
+            color: #3730a3;
+        }
+        #analysis-text ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #analysis-text li {
+            margin-bottom: 5px;
+        }
+        #loading-indicator {
+            display: none;
+            text-align: center;
+            font-style: italic;
+            color: #64748b;
+        }
+        #save-button {
+            display: none; /* Hide until a result is generated */
+            background-color: #22c55e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #save-button:hover {
+            background-color: #16a34a;
+            transform: translateY(-2px);
+        }
+        #save-status {
+            display: none;
+            margin-left: 1rem;
+            font-style: italic;
+            color: #16a34a;
+        }
+        #history-section {
+            display: none;
+            margin-top: 2rem;
+        }
+        .history-item {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease;
+        }
+        .history-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .history-item details > summary {
+            list-style: none; /* Hide default arrow */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            font-weight: 600;
+            color: #1a56db;
+        }
+        .history-item details > summary::-webkit-details-marker {
+            display: none; /* For Chrome/Safari */
+        }
+        .history-item details > summary::before {
+            content: '▶';
+            margin-right: 0.75rem;
+            transition: transform 0.2s ease;
+            color: #3b82f6;
+        }
+        .history-item details[open] > summary::before {
+            content: '▼';
+            transform: rotate(90deg);
+        }
+        .history-details-content {
+            padding-left: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+        .comparison-analysis {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            background-color: #d1fae5; /* Light green */
+            border: 1px solid #34d399; /* Green border */
+            color: #065f46;
+        }
+        .comparison-analysis.decline {
+            background-color: #fee2e2; /* Light red */
+            border: 1px solid #f87171; /* Red border */
+            color: #991b1b;
+        }
+        .comparison-analysis h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .comparison-analysis p {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -172,7 +362,7 @@
                 <strong class="text-[#1a56db]">Vòng Quay Hàng Hóa (Inventory Turnover)</strong> là một chỉ số tài chính quan trọng, đo lường số lần một công ty bán và thay thế hàng tồn kho của mình trong một khoảng thời gian nhất định (thường là một năm). Chỉ số này phản ánh hiệu quả quản lý hàng tồn kho của doanh nghiệp.
             </p>
         </section>
-
+        
         <section id="formulas" class="mb-16">
             <h2 class="section-title">I. Công Thức Tính Vòng Quay Hàng Hóa</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -310,104 +500,6 @@
             </div>
         </section>
 
-        <section id="interpretation" class="mb-16">
-            <h2 class="section-title">III. Cách Diễn Giải Chỉ Số Vòng Quay Hàng Hóa</h2>
-            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
-                Việc diễn giải vòng quay hàng hóa cần dựa trên ngữ cảnh ngành và chiến lược của doanh nghiệp.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="pro-con-card pro">
-                    <h4 class="text-green-700">Vòng quay cao: Tín hiệu tốt</h4>
-                    <ul class="text-gray-700 text-sm">
-                        <li>Hàng hóa bán ra nhanh chóng, giảm chi phí lưu kho.</li>
-                        <li>Giảm rủi ro lỗi thời, hư hỏng.</li>
-                        <li>Dấu hiệu của hoạt động bán hàng mạnh mẽ.</li>
-                    </ul>
-                    <h4 class="text-red-700 mt-4">Nhược điểm tiềm ẩn:</h4>
-                    <ul class="text-gray-700 text-sm">
-                        <li>Có thể giữ quá ít hàng tồn kho, nguy cơ hết hàng (stock-out).</li>
-                        <li>Bỏ lỡ cơ hội bán hàng, không đáp ứng được nhu cầu tăng đột biến.</li>
-                    </ul>
-                </div>
-                <div class="pro-con-card con">
-                    <h4 class="text-red-700">Vòng quay thấp: Tín hiệu cần xem xét</h4>
-                    <ul class="text-gray-700 text-sm">
-                        <li>Hàng hóa bán ra chậm, tăng chi phí lưu kho.</li>
-                        <li>Tăng rủi ro lỗi thời, hư hỏng.</li>
-                        <li>Dấu hiệu của nhu cầu thị trường yếu hoặc quản lý tồn kho kém hiệu quả.</li>
-                    </ul>
-                    <h4 class="text-green-700 mt-4">Ưu điểm tiềm ẩn (ít phổ biến):</h4>
-                    <ul class="text-gray-700 text-sm">
-                        <li>Trong ngành đặc thù (hàng xa xỉ, sản phẩm chuyên biệt), giữ tồn kho lớn có thể là chiến lược.</li>
-                        <li>Chuẩn bị cho mùa cao điểm hoặc nhu cầu tăng đột biến dự kiến.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-8 p-4 rounded-lg bg-yellow-50 border border-yellow-200 text-yellow-800">
-                <p class="font-semibold text-sm">
-                    <strong class="text-yellow-800">Lưu ý quan trọng:</strong> Chỉ số vòng quay hàng hóa cần được so sánh trong cùng ngành hoặc với các đối thủ cạnh tranh để có đánh giá chính xác nhất, vì mỗi ngành có đặc thù tồn kho khác nhau (ví dụ: ngành thực phẩm có vòng quay rất nhanh, trong khi ngành sản xuất máy bay có vòng quay rất chậm).
-                </p>
-            </div>
-        </section>
-
-        <section id="factors" class="mb-16">
-            <h2 class="section-title">IV. Các Yếu Tố Ảnh Hưởng Đến Vòng Quay Hàng Hóa</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                <div class="card">
-                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">1. Đặc thù ngành</h3>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">🛒</span>
-                        <p><strong>Ngành bán lẻ, thực phẩm:</strong> Vòng quay cao do sản phẩm có hạn sử dụng ngắn hoặc nhu cầu tiêu dùng nhanh.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">⚙️</span>
-                        <p><strong>Ngành sản xuất hàng hóa giá trị cao, chuyên biệt:</strong> Vòng quay thấp hơn do chu kỳ sản xuất dài, giá trị lớn.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">2. Chiến lược kinh doanh</h3>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">🏷️</span>
-                        <p><strong>Giá thấp, khối lượng lớn:</strong> Thường đi kèm với vòng quay cao.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">💎</span>
-                        <p><strong>Sản phẩm độc đáo, cao cấp:</strong> Có thể chấp nhận vòng quay thấp hơn.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">3. Hiệu quả hoạt động</h3>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">🔗</span>
-                        <p><strong>Quản lý chuỗi cung ứng:</strong> Hiệu quả giúp giảm thời gian tồn kho.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">🔮</span>
-                        <p><strong>Dự báo nhu cầu:</strong> Chính xác giúp tối ưu hóa lượng hàng tồn kho.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">📣</span>
-                        <p><strong>Marketing và bán hàng:</strong> Hoạt động mạnh mẽ thúc đẩy vòng quay.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 class="font-bold text-xl text-[#1a56db] mb-3">4. Điều kiện thị trường</h3>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">📊</span>
-                        <p><strong>Nhu cầu thị trường:</strong> Tăng cao làm tăng vòng quay.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">⚔️</span>
-                        <p><strong>Cạnh tranh:</strong> Gay gắt có thể buộc giảm giá, đẩy hàng nhanh.</p>
-                    </div>
-                    <div class="icon-text-item">
-                        <span class="icon text-[#3b82f6]">📉</span>
-                        <p><strong>Tình hình kinh tế:</strong> Suy thoái có thể làm giảm nhu cầu và vòng quay.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="dio" class="mb-16">
             <h2 class="section-title">V. Số Ngày Tồn Kho Bình Quân (Days Inventory Outstanding - DIO)</h2>
             <div class="card text-center max-w-2xl mx-auto">
@@ -415,12 +507,82 @@
                     Ngoài vòng quay hàng hóa, một chỉ số liên quan và cũng rất hữu ích là <strong>Số Ngày Tồn Kho Bình Quân (DIO)</strong>, cho biết trung bình mất bao nhiêu ngày để công ty bán hết hàng tồn kho của mình.
                 </p>
                 <div class="formula-box">
-                    <span class="formula-text">DIO = 365 ngày / Vòng Quay Hàng Hóa</span>
+                    <span class="formula-text">DIO = Số ngày chu kỳ kế toán / Vòng Quay Hàng Hóa</span>
                 </div>
                 <p class="text-sm text-gray-600 mt-4">
                     Chỉ số này giúp nhà quản lý dễ hình dung hơn về thời gian hàng hóa nằm trong kho, từ đó đưa ra các quyết định tối ưu hóa.
                 </p>
             </div>
+        </section>
+
+        <section id="gemini-calculator" class="mb-16">
+            <h2 class="section-title">✨ Công cụ tính toán và phân tích</h2>
+            <div class="calculator-card mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <p class="text-gray-700 flex-grow pr-4">
+                        Sử dụng công cụ này để tính toán nhanh Vòng Quay Hàng Hóa (Inventory Turnover) và Số Ngày Tồn Kho Bình Quân (DIO). Nhập các số liệu của bạn dưới đây, và AI sẽ giúp bạn đưa ra một phân tích tổng quan!
+                    </p>
+                    <button id="show-history-button" class="history-button">Lịch sử</button>
+                </div>
+                
+                <!-- Updated layout for inputs -->
+                <div class="flex flex-col md:flex-row flex-wrap gap-6 mb-6">
+                    <div class="calculator-input-group flex-1">
+                        <label for="cogs">Giá vốn hàng bán (VNĐ)</label>
+                        <input type="text" id="cogs" placeholder="VD: 15.000.000.000">
+                    </div>
+                    <div class="calculator-input-group flex-1">
+                        <label for="start-inventory">Hàng tồn kho đầu kỳ (VNĐ)</label>
+                        <input type="text" id="start-inventory" placeholder="VD: 2.500.000.000">
+                    </div>
+                    <div class="calculator-input-group flex-1">
+                        <label for="end-inventory">Hàng tồn kho cuối kỳ (VNĐ)</label>
+                        <input type="text" id="end-inventory" placeholder="VD: 3.500.000.000">
+                    </div>
+                </div>
+                <div class="w-full mb-6">
+                    <div class="calculator-input-group">
+                        <label for="accounting-period">Số ngày chu kỳ kế toán</label>
+                        <input type="number" id="accounting-period" value="365" min="1">
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center justify-between mt-4 space-y-4 md:space-y-0 md:space-x-4">
+                    <button id="calculate-button" class="calculator-button">
+                        Tính toán & Phân tích ✨
+                    </button>
+                </div>
+                <div id="loading-indicator" class="mt-4">
+                    Đang tính toán và phân tích... Vui lòng chờ trong giây lát.
+                </div>
+                <div id="result-display">
+                    <h3>Kết quả của bạn</h3>
+                    <div class="flex items-center space-x-4 mt-4">
+                        <div class="flex-1">
+                            <p><strong>Vòng Quay Hàng Hóa:</strong> <span id="turnover-value"></span></p>
+                            <p><strong>Số Ngày Tồn Kho Bình Quân (DIO):</strong> <span id="dio-value"></span></p>
+                        </div>
+                        <div class="flex items-center">
+                            <button id="save-button" class="flex-shrink-0">Lưu lại</button>
+                            <span id="save-status"></span>
+                        </div>
+                    </div>
+                    <div id="comparison-analysis"></div>
+                    <div id="analysis-text" class="text-sm">
+                        <h4 class="font-bold text-lg text-[#1a56db] mt-4 mb-2">Phân tích tổng quan</h4>
+                        <div id="overall-analysis"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history-section">
+            <h2 class="section-title">Lịch sử phân tích</h2>
+            <div id="history-content">
+                <!-- History items will be dynamically inserted here -->
+            </div>
+            <div id="history-loading-indicator" class="text-center italic text-gray-500 mt-4">Đang tải lịch sử...</div>
+            <div id="no-history-message" class="text-center italic text-gray-500 mt-4">Chưa có bản phân tích nào được lưu.</div>
         </section>
 
     </main>
@@ -429,9 +591,381 @@
         <div class="container mx-auto px-6">
             <p><strong>Người đề xuất:</strong> Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
             <p>&copy; 2025 Công ty TNHH Công nghiệp Nghệ Năng. Mọi quyền được bảo lưu.</p>
-            <p class="text-sm mt-2">Infographic được tạo để trực quan hóa các khái niệm tài chính.</p>
         </div>
     </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Firebase Initialization
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let userId = null;
+        let isAuthReady = false;
+
+        // UI Elements
+        const calculateButton = document.getElementById('calculate-button');
+        const saveButton = document.getElementById('save-button');
+        const showHistoryButton = document.getElementById('show-history-button');
+        const cogsInput = document.getElementById('cogs');
+        const startInventoryInput = document.getElementById('start-inventory');
+        const endInventoryInput = document.getElementById('end-inventory');
+        const accountingPeriodInput = document.getElementById('accounting-period');
+        const resultDisplay = document.getElementById('result-display');
+        const turnoverValueSpan = document.getElementById('turnover-value');
+        const dioValueSpan = document.getElementById('dio-value');
+        const overallAnalysisDiv = document.getElementById('overall-analysis');
+        const comparisonAnalysisDiv = document.getElementById('comparison-analysis');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const saveStatusSpan = document.getElementById('save-status');
+        const historySection = document.getElementById('history-section');
+        const historyContentDiv = document.getElementById('history-content');
+        const historyLoadingIndicator = document.getElementById('history-loading-indicator');
+        const noHistoryMessage = document.getElementById('no-history-message');
+
+        // State variables to hold calculated data
+        let currentResult = null;
+        let currentAnalysis = null;
+        let latestHistory = [];
+
+        // Function to format number with thousands separator
+        function formatNumber(input) {
+            const value = input.value.replace(/\./g, '');
+            if (value === '' || isNaN(value)) {
+                input.value = '';
+                return;
+            }
+            input.value = new Intl.NumberFormat('vi-VN').format(value);
+        }
+
+        // Add event listeners for number formatting
+        cogsInput.addEventListener('input', (e) => formatNumber(e.target));
+        startInventoryInput.addEventListener('input', (e) => formatNumber(e.target));
+        endInventoryInput.addEventListener('input', (e) => formatNumber(e.target));
+
+        // Hàm xử lý định dạng Markdown thành HTML
+        function formatMarkdownToHtml(markdownText) {
+            let html = markdownText.trim();
+            
+            // Xử lý in đậm (strong)
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Xử lý gạch đầu dòng (bullet points)
+            const lines = html.split('\n');
+            let formattedLines = [];
+            let inList = false;
+
+            lines.forEach(line => {
+                // Kiểm tra nếu dòng bắt đầu bằng * hoặc -
+                if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+                    if (!inList) {
+                        formattedLines.push('<ul>');
+                        inList = true;
+                    }
+                    // Bỏ ký tự gạch đầu dòng và thêm vào thẻ li
+                    formattedLines.push(`<li>${line.trim().substring(2)}</li>`);
+                } else {
+                    if (inList) {
+                        formattedLines.push('</ul>');
+                        inList = false;
+                    }
+                    if (line.trim() !== '') {
+                        formattedLines.push(`<p>${line.trim()}</p>`);
+                    }
+                }
+            });
+
+            if (inList) {
+                formattedLines.push('</ul>');
+            }
+
+            return formattedLines.join('');
+        }
+        
+        // Main function to calculate and call API
+        async function calculateAndAnalyze() {
+            // Display loading state
+            resultDisplay.style.display = 'none';
+            loadingIndicator.style.display = 'block';
+            calculateButton.disabled = true;
+            saveButton.style.display = 'none';
+            saveStatusSpan.style.display = 'none';
+            overallAnalysisDiv.innerHTML = '';
+            comparisonAnalysisDiv.innerHTML = '';
+            currentResult = null;
+            currentAnalysis = null;
+
+            try {
+                // Get values and parse
+                const cogs = parseFloat(cogsInput.value.replace(/\./g, ''));
+                const startInventory = parseFloat(startInventoryInput.value.replace(/\./g, ''));
+                const endInventory = parseFloat(endInventoryInput.value.replace(/\./g, ''));
+                const accountingPeriod = parseInt(accountingPeriodInput.value, 10);
+
+                // Input validation
+                if (isNaN(cogs) || isNaN(startInventory) || isNaN(endInventory) || isNaN(accountingPeriod) || cogs < 0 || startInventory < 0 || endInventory < 0 || accountingPeriod <= 0) {
+                    overallAnalysisDiv.innerHTML = '<p class="text-red-500">Vui lòng nhập các số liệu hợp lệ và số ngày chu kỳ kế toán phải lớn hơn 0.</p>';
+                    resultDisplay.style.display = 'block';
+                    loadingIndicator.style.display = 'none';
+                    calculateButton.disabled = false;
+                    return;
+                }
+                
+                // Avoid division by zero
+                const averageInventory = (startInventory + endInventory) / 2;
+                if (averageInventory === 0) {
+                    overallAnalysisDiv.innerHTML = '<p class="text-red-500">Hàng tồn kho bình quân không thể bằng 0. Vui lòng nhập số liệu khác.</p>';
+                    resultDisplay.style.display = 'block';
+                    loadingIndicator.style.display = 'none';
+                    calculateButton.disabled = false;
+                    return;
+                }
+
+                // Calculate metrics
+                const inventoryTurnover = cogs / averageInventory;
+                const dio = accountingPeriod / inventoryTurnover;
+                
+                // Update UI with results
+                turnoverValueSpan.textContent = `${inventoryTurnover.toFixed(2)} lần`;
+                dioValueSpan.textContent = `${dio.toFixed(2)} ngày`;
+                
+                // Store results temporarily for saving
+                currentResult = { cogs, startInventory, endInventory, accountingPeriod, turnover: inventoryTurnover, dio: dio };
+
+                let prompt = `Bạn là một chuyên gia phân tích tài chính. Dựa trên các chỉ số sau đây của Công ty TNHH Công nghiệp Nghệ Năng (một công ty hoạt động trong lĩnh vực sản xuất và kinh doanh thiết bị điện, điện tử dân dụng, công nghiệp; sản phẩm quạt điện cao cấp) bạn hãy phân tích ngắn gọn, tập trung và đưa ra các gợi ý hành động.
+                
+                Chỉ số tài chính:
+                - Vòng quay hàng hóa: ${inventoryTurnover.toFixed(2)} lần
+                - Số ngày tồn kho bình quân: ${dio.toFixed(2)} ngày
+                - Chu kỳ kế toán: ${accountingPeriod} ngày
+                
+                Nội dung phân tích cần phải:
+                - Chỉ tập trung vào phân tích ý nghĩa của các chỉ số trên.
+                - Đưa ra góc nhìn tổng quan về hiệu quả quản lý tồn kho của Nghệ Năng.
+                - Gợi ý các hành động cụ thể, thiết thực cho Công ty Nghệ Năng.
+                - Sử dụng định dạng gạch đầu dòng (bullet points) để dễ đọc.
+                - Không nhắc lại các thông tin về ngành nghề của công ty hay giải thích lại công thức tính.`;
+                
+                // Comparison with history
+                if (latestHistory && latestHistory.length > 0) {
+                    const previousAnalysis = latestHistory[0];
+                    const prevTurnover = previousAnalysis.turnover;
+                    const prevDio = previousAnalysis.dio;
+                    const prevDate = new Date(previousAnalysis.timestamp.toDate()).toLocaleDateString('vi-VN');
+                    
+                    const turnoverChange = inventoryTurnover - prevTurnover;
+                    const dioChange = prevDio - dio; // DIO decrease is an improvement
+
+                    let comparisonPrompt = `
+                    Dựa trên dữ liệu lịch sử, đây là sự so sánh với lần phân tích gần nhất (${prevDate}):
+                    - Vòng quay hàng hóa: Thay đổi ${turnoverChange.toFixed(2)} lần (${turnoverChange > 0 ? 'Tăng' : 'Giảm'})
+                    - Số ngày tồn kho: Thay đổi ${dioChange.toFixed(2)} ngày (${dioChange > 0 ? 'Giảm' : 'Tăng'})
+
+                    Hãy đánh giá hiệu quả hoạt động dựa trên sự thay đổi này và đưa ra lời khuyên.
+                    `;
+
+                    prompt += comparisonPrompt;
+
+                    // Display the comparison summary
+                    let comparisonHtml = '';
+                    let comparisonClass = 'comparison-analysis';
+                    if (turnoverChange > 0 || dioChange > 0) {
+                        comparisonHtml = `<h4 class="text-green-800 font-bold">Cải thiện hiệu quả hoạt động:</h4>
+                            <p><strong>Vòng quay hàng hóa:</strong> tăng từ ${prevTurnover.toFixed(2)} lên ${inventoryTurnover.toFixed(2)} lần.</p>
+                            <p><strong>Số ngày tồn kho:</strong> giảm từ ${prevDio.toFixed(2)} xuống ${dio.toFixed(2)} ngày.</p>
+                            <p>Điều này cho thấy khả năng luân chuyển hàng tồn kho đang tốt hơn.</p>`;
+                        comparisonClass = 'comparison-analysis'; // Green for improvement
+                    } else if (turnoverChange < 0 || dioChange < 0) {
+                        comparisonHtml = `<h4 class="text-red-800 font-bold">Hiệu quả hoạt động giảm sút:</h4>
+                            <p><strong>Vòng quay hàng hóa:</strong> giảm từ ${prevTurnover.toFixed(2)} xuống ${inventoryTurnover.toFixed(2)} lần.</p>
+                            <p><strong>Số ngày tồn kho:</strong> tăng từ ${prevDio.toFixed(2)} lên ${dio.toFixed(2)} ngày.</p>
+                            <p>Cần xem xét lại các chiến lược để cải thiện.</p>`;
+                        comparisonClass = 'comparison-analysis decline'; // Red for decline
+                    } else {
+                        comparisonHtml = `<h4 class="text-gray-800 font-bold">Hiệu quả hoạt động không thay đổi:</h4>
+                            <p>Các chỉ số gần như không thay đổi so với lần phân tích gần nhất.</p>`;
+                        comparisonClass = 'comparison-analysis';
+                    }
+                    
+                    // Create a clear title for the comparison section
+                    const comparisonTitle = `<h4 class="font-bold text-lg text-[#1a56db] mt-4 mb-2">So sánh với lịch sử (ngày ${prevDate})</h4>`;
+                    comparisonAnalysisDiv.className = comparisonClass;
+                    comparisonAnalysisDiv.innerHTML = comparisonTitle + comparisonHtml;
+                }
+                
+                // Prepare and call API
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                // Extract and display API response
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    currentAnalysis = text;
+                    const formattedHtml = formatMarkdownToHtml(text);
+                    overallAnalysisDiv.innerHTML = formattedHtml;
+
+                } else {
+                    overallAnalysisDiv.innerHTML = '<p class="text-red-500">Xin lỗi, đã xảy ra lỗi trong quá trình phân tích. Vui lòng thử lại sau.</p>';
+                }
+            } catch (error) {
+                console.error('Lỗi khi gọi API hoặc tính toán:', error);
+                overallAnalysisDiv.innerHTML = '<p class="text-red-500">Đã xảy ra lỗi nghiêm trọng. Vui lòng kiểm tra lại dữ liệu và thử lại.</p>';
+            } finally {
+                // Hide loading and show result
+                loadingIndicator.style.display = 'none';
+                resultDisplay.style.display = 'block';
+                calculateButton.disabled = false;
+                if (currentResult && currentAnalysis) {
+                    saveButton.style.display = 'inline-block';
+                }
+            }
+        }
+        
+        // Function to save the current analysis to Firestore
+        async function saveAnalysis() {
+            if (!isAuthReady || !userId || !currentResult || !currentAnalysis) {
+                console.error("Authentication not ready or no data to save.");
+                return;
+            }
+            saveButton.disabled = true;
+            saveStatusSpan.textContent = 'Đang lưu...';
+            saveStatusSpan.style.display = 'inline';
+
+            try {
+                // Ensure a valid collection path
+                const collectionPath = `artifacts/${appId}/users/${userId}/inventory-analysis`;
+                const docRef = await addDoc(collection(db, collectionPath), {
+                    cogs: currentResult.cogs,
+                    startInventory: currentResult.startInventory,
+                    endInventory: currentResult.endInventory,
+                    accountingPeriod: currentResult.accountingPeriod,
+                    turnover: currentResult.turnover,
+                    dio: currentResult.dio,
+                    analysis: currentAnalysis,
+                    timestamp: new Date(),
+                    userId: userId
+                });
+                saveStatusSpan.textContent = 'Đã lưu thành công!';
+                setTimeout(() => {
+                    saveStatusSpan.style.display = 'none';
+                    saveButton.disabled = false;
+                }, 3000);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                saveStatusSpan.textContent = 'Lỗi khi lưu!';
+                saveStatusSpan.style.color = '#ef4444';
+                saveButton.disabled = false;
+            }
+        }
+        
+        // Function to fetch and display history from Firestore
+        function fetchHistory() {
+            if (!isAuthReady || !userId) {
+                historyLoadingIndicator.textContent = 'Không có quyền truy cập hoặc chưa đăng nhập. Vui lòng thử lại.';
+                historyLoadingIndicator.style.display = 'block';
+                noHistoryMessage.style.display = 'none';
+                return;
+            }
+
+            historyContentDiv.innerHTML = '';
+            historyLoadingIndicator.style.display = 'block';
+            noHistoryMessage.style.display = 'none';
+
+            const collectionPath = `artifacts/${appId}/users/${userId}/inventory-analysis`;
+            const q = query(collection(db, collectionPath));
+            
+            // Listen for real-time updates
+            onSnapshot(q, (querySnapshot) => {
+                const historyItems = [];
+                querySnapshot.forEach((doc) => {
+                    historyItems.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort in memory to get latest item and for display
+                historyItems.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
+                latestHistory = historyItems; // Update global state
+                
+                historyContentDiv.innerHTML = '';
+                if (historyItems.length === 0) {
+                    noHistoryMessage.style.display = 'block';
+                } else {
+                    noHistoryMessage.style.display = 'none';
+                    historyItems.forEach(item => {
+                        const date = item.timestamp.toDate().toLocaleString('vi-VN');
+                        const itemHtml = `
+                            <div class="history-item">
+                                <details>
+                                    <summary>Phân tích ngày ${date}</summary>
+                                    <div class="history-details-content">
+                                        <p><strong>Giá vốn:</strong> ${new Intl.NumberFormat('vi-VN').format(item.cogs)} VNĐ</p>
+                                        <p><strong>Tồn kho đầu kỳ:</strong> ${new Intl.NumberFormat('vi-VN').format(item.startInventory)} VNĐ</p>
+                                        <p><strong>Tồn kho cuối kỳ:</strong> ${new Intl.NumberFormat('vi-VN').format(item.endInventory)} VNĐ</p>
+                                        <p><strong>Chu kỳ kế toán:</strong> ${item.accountingPeriod} ngày</p>
+                                        <p><strong>Vòng quay:</strong> ${item.turnover.toFixed(2)} lần</p>
+                                        <p><strong>Số ngày tồn kho:</strong> ${item.dio.toFixed(2)} ngày</p>
+                                        <div class="mt-4 text-sm text-gray-700">${formatMarkdownToHtml(item.analysis)}</div>
+                                    </div>
+                                </details>
+                            </div>
+                        `;
+                        historyContentDiv.innerHTML += itemHtml;
+                    });
+                }
+                historyLoadingIndicator.style.display = 'none';
+            });
+        }
+        
+        // Toggle history section visibility
+        function toggleHistory() {
+            if (historySection.style.display === 'block') {
+                historySection.style.display = 'none';
+            } else {
+                historySection.style.display = 'block';
+                fetchHistory();
+            }
+        }
+
+        // Event listeners
+        calculateButton.addEventListener('click', calculateAndAnalyze);
+        saveButton.addEventListener('click', saveAnalysis);
+        showHistoryButton.addEventListener('click', toggleHistory);
+        
+        // Initial Firebase authentication check and listener setup
+        window.onload = function() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    // Initial fetch of history after authentication
+                    fetchHistory();
+                } else {
+                    try {
+                        const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                        if (token) {
+                            await signInWithCustomToken(auth, token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Firebase Auth Error:", error);
+                    }
+                }
+            });
+        };
+    </script>
 </body>
 </html>
