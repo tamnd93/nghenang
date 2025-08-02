@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Kế Hoạch Kinh Doanh Chi Tiết Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 30vh;
+            width: 80vw;
+            max-width: 500px;
+            max-height: 300px;
+        }
+        .kpi-chart-container {
+            position: relative;
+            height: 150px;
+            width: 150px;
+            margin: auto;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: #418FFF;
+            border: 4px solid #D1E4FF;
+        }
+        .swot-card {
+            border-top-width: 4px;
+            transition: all 0.3s ease-in-out;
+        }
+        .swot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#004AAD]">Kế Hoạch Tăng Trưởng Chiến Lược Nghệ Năng</h1>
+            <p class="text-xl md:text-2xl text-[#0062E3] font-semibold mt-3">Hành Trình 6 Tháng Cuối Năm 2025</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="main-goal">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#004AAD]">Mục Tiêu Doanh Thu Trọng Tâm</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Mục tiêu chính là tăng trưởng doanh thu trung bình tháng từ 1.2 - 1.4 tỷ lên mức 1.8 tỷ vào cuối năm 2025, một bước tiến quan trọng cho sự phát triển bền vững.</p>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="swot">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#004AAD]">Phân Tích Môi Trường Kinh Doanh (SWOT)</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Hiểu rõ điểm mạnh, điểm yếu, cơ hội và thách thức là nền tảng để xây dựng các hành động chiến lược phù hợp và hiệu quả.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg p-6 swot-card border-t-[#0062E3]">
+                        <h3 class="text-xl font-bold text-[#004AAD]">Điểm Mạnh (Strengths)</h3>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Sản phẩm kỹ thuật có chiều sâu.</li>
+                            <li>Đội ngũ chuyên môn cao, tư vấn tốt.</li>
+                            <li>Có showroom vật lý để khách trải nghiệm.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 swot-card border-t-[#FFC107]">
+                        <h3 class="text-xl font-bold text-[#004AAD]">Điểm Yếu (Weaknesses)</h3>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Hệ thống tồn kho chưa đồng bộ với CRM.</li>
+                            <li>Thiếu nhân sự giao hàng & bảo trì chuyên biệt.</li>
+                            <li>Nhận diện thương hiệu showroom còn hạn chế.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 swot-card border-t-[#4CAF50]">
+                        <h3 class="text-xl font-bold text-[#004AAD]">Cơ Hội (Opportunities)</h3>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Nhu cầu thị trường làm mát tăng cao theo mùa.</li>
+                            <li>Tệp khách hàng B2B có khả năng mua lặp lại cao.</li>
+                            <li>Khai thác Digital Marketing để tạo phễu khách hàng.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 swot-card border-t-[#F44336]">
+                        <h3 class="text-xl font-bold text-[#004AAD]">Thách Thức (Threats)</h3>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Doanh thu biến động mạnh theo mùa vụ.</li>
+                            <li>Cạnh tranh từ các sản phẩm giá rẻ.</li>
+                            <li>Quy trình chốt đơn với khách B2B kéo dài.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="roadmap">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#004AAD]">Lộ Trình Hành Động Chi Tiết</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Kế hoạch được chia thành 3 giai đoạn rõ ràng, đi từ xây dựng nền tảng, tăng tốc đến củng cố và chuẩn bị cho tương lai.</p>
+                <div class="relative pl-10 border-l-4 border-gray-200">
+                    <div class="mb-12 relative timeline-item">
+                        <h3 class="text-xl font-bold text-[#0062E3]">Giai Đoạn 1 (T7-T8): Chuẩn Hóa & Nền Tảng</h3>
+                        <p class="text-gray-600 mt-2">Tập trung vào việc nâng cấp cơ sở vật chất và tối ưu hóa hệ thống nội bộ để tạo đà tăng trưởng.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Cải tạo và nâng cấp showroom.</li>
+                            <li>Chuẩn hóa hệ thống CRM AMIS, tích hợp dữ liệu.</li>
+                            <li>Xây dựng khung hoa hồng cho đội ngũ kinh doanh.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-12 relative timeline-item">
+                        <h3 class="text-xl font-bold text-[#0062E3]">Giai Đoạn 2 (T9-T10): Tăng Tốc & Tối Ưu</h3>
+                        <p class="text-gray-600 mt-2">Đẩy mạnh các hoạt động marketing, mở rộng danh mục sản phẩm và nâng cao năng lực phục vụ khách hàng.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Triển khai chiến dịch Marketing Digital (Google Ads).</li>
+                            <li>Tăng số lượng SKU trưng bày tại showroom lên &ge;50 mã.</li>
+                            <li>Tuyển dụng và hợp tác với đội kỹ thuật freelance.</li>
+                        </ul>
+                    </div>
+
+                    <div class="relative timeline-item">
+                        <h3 class="text-xl font-bold text-[#0062E3]">Giai Đoạn 3 (T11-T12): Củng Cố & Tổng Kết</h3>
+                        <p class="text-gray-600 mt-2">Đo lường hiệu quả, củng cố hệ thống và lập kế hoạch chiến lược cho năm tiếp theo dựa trên dữ liệu thực tế.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                            <li>Tổng kết và đánh giá hiệu quả toàn diện.</li>
+                            <li>Đề xuất kế hoạch và ngân sách cho năm 2026.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="kpis">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#004AAD]">Các Chỉ Số Thành Công (KPIs)</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Đây là những thước đo quan trọng để đánh giá mức độ thành công của kế hoạch và hiệu quả hoạt động kinh doanh.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold text-[#0062E3]">Tỷ Lệ Chuyển Đổi (CR)</h3>
+                        <div class="kpi-chart-container my-2">
+                            <canvas id="crChart"></canvas>
+                        </div>
+                        <p class="text-2xl font-bold text-[#004AAD]">&ge;25%</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold text-[#0062E3]">Giá Trị Đơn Trung Bình</h3>
+                        <div class="flex items-center justify-center h-[150px] my-2">
+                            <p class="text-4xl font-extrabold text-[#004AAD]">&ge;12M</p>
+                        </div>
+                        <p class="text-lg font-bold text-[#004AAD]">VNĐ/Đơn</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold text-[#0062E3]">Tỷ Lệ Khách Quay Lại</h3>
+                        <div class="kpi-chart-container my-2">
+                            <canvas id="repeatChart"></canvas>
+                        </div>
+                        <p class="text-2xl font-bold text-[#004AAD]">&ge;30%</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-bold text-[#0062E3]">Chi Phí/Khách Hàng Mới</h3>
+                         <div class="flex items-center justify-center h-[150px] my-2">
+                            <p class="text-4xl font-extrabold text-[#004AAD]">&lt;25K</p>
+                        </div>
+                        <p class="text-lg font-bold text-[#004AAD]">VNĐ (CPA)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="risk-mitigation">
+                <h2 class="text-3xl font-bold text-center mb-4 text-[#004AAD]">Quản Lý Rủi Ro</h2>
+                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Để chủ động đối phó với rủi ro về tính mùa vụ, chúng tôi đã chuẩn bị các phương án hành động cụ thể.</p>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-xl text-[#0062E3] mr-4 font-bold">1</span>
+                            <div>
+                                <h4 class="font-semibold">Khuyến Mãi Dịch Vụ</h4>
+                                <p class="text-gray-600">Tập trung vào các gói bảo trì, bảo dưỡng định kỳ cho khách hàng cũ trong các tháng thấp điểm để tạo doanh thu ổn định.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-xl text-[#0062E3] mr-4 font-bold">2</span>
+                            <div>
+                                <h4 class="font-semibold">Đa Dạng Hóa Sản Phẩm</h4>
+                                <p class="text-gray-600">Đẩy mạnh marketing và bán các dòng sản phẩm không phụ thuộc vào mùa vụ như motor, linh kiện thay thế.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-xl text-[#0062E3] mr-4 font-bold">3</span>
+                            <div>
+                                <h4 class="font-semibold">Tăng Cường Content Marketing</h4>
+                                <p class="text-gray-600">Duy trì tương tác với khách hàng qua các bài viết tư vấn kỹ thuật, email marketing hữu ích để giữ chân khách hàng.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-16 pt-8 border-t border-gray-300">
+            <p class="font-bold text-lg text-[#004AAD]">Nguyễn Đức Tâm</p>
+            <p class="text-gray-600">Trưởng phòng kinh doanh iFan</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const chartColors = {
+            primary: '#0062E3',
+            secondary: '#89B9FF',
+            background: '#D1E4FF',
+            text: '#004AAD'
+        };
+
+        new Chart(document.getElementById('revenueChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Doanh Thu Hiện Tại (TB)', 'Mục Tiêu T12/2025'],
+                datasets: [{
+                    label: 'Doanh Thu (Tỷ VNĐ)',
+                    data: [1.3, 1.8],
+                    backgroundColor: [chartColors.secondary, chartColors.primary],
+                    borderColor: [chartColors.secondary, chartColors.primary],
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { callback: (value) => value + ' Tỷ' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            }
+        });
+
+        const createKpiChart = (id, dataValue, color) => {
+            new Chart(document.getElementById(id).getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Đạt được', 'Chưa đạt'],
+                    datasets: [{
+                        data: [dataValue, 100 - dataValue],
+                        backgroundColor: [color, chartColors.background],
+                        borderColor: [color, chartColors.background],
+                        borderWidth: 1,
+                        circumference: 180,
+                        rotation: 270,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                }
+            });
+        };
+
+        createKpiChart('crChart', 25, chartColors.primary);
+        createKpiChart('repeatChart', 30, chartColors.primary);
+    </script>
+</body>
+</html>
