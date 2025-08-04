@@ -33,23 +33,15 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.15);
             animation: cardFadeIn 1s ease-out;
-            transition: filter 0.5s ease;
         }
         @keyframes cardFadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Hiệu ứng làm mờ các nút không được di chuột vào */
-        .blur-active .menu-link:not(:hover) {
-            filter: blur(2px);
-            opacity: 0.7;
-            transform: scale(0.98);
-        }
-
-        /* Hiệu ứng khi di chuột vào nút */
+        /* Các nút menu cơ bản */
         .menu-link {
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, filter 0.4s ease;
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -58,13 +50,19 @@
             z-index: 10;
         }
         
-        /* Hiệu ứng phóng to khi di chuột vào */
-        .menu-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
-                        0 0 20px rgba(255, 255, 255, 0.2);
-            z-index: 20;
-            background-color: #3b82f6; /* Màu nền khi di chuột */
+        /* Chỉ áp dụng hiệu ứng khi thiết bị hỗ trợ hover (ví dụ: dùng chuột) */
+        @media (hover: hover) and (pointer: fine) {
+            .container-card:hover .menu-link:not(:hover) {
+                filter: blur(2px);
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
+            .menu-link:hover {
+                transform: scale(1.05);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+                            0 0 20px rgba(255, 255, 255, 0.2);
+                z-index: 20;
+            }
         }
     </style>
 </head>
@@ -101,36 +99,25 @@
     </div>
 
     <script>
-        const menuContainer = document.getElementById('menu-container');
         const menuLinks = document.querySelectorAll('.menu-link');
 
-        // Thêm/xóa class để kích hoạt/tắt hiệu ứng làm mờ
-        menuContainer.addEventListener('mouseenter', () => {
-            menuContainer.classList.add('blur-active');
-        });
-
-        menuContainer.addEventListener('mouseleave', () => {
-            menuContainer.classList.remove('blur-active');
-            // Đảm bảo không còn hiệu ứng đèn sân khấu nào còn lại
-            menuLinks.forEach(link => {
-                link.style.background = '';
-                link.style.backgroundColor = '';
-            });
-        });
-
-        // Thêm hiệu ứng đèn sân khấu cho từng nút
         menuLinks.forEach(link => {
+            // Thêm hiệu ứng đèn sân khấu chỉ khi thiết bị có chuột
             link.addEventListener('mousemove', (e) => {
-                const rect = link.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                // Kiểm tra loại con trỏ để đảm bảo hiệu ứng chỉ chạy trên chuột
+                if (e.pointerType === 'mouse') {
+                    const rect = link.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
 
-                // Sử dụng radial-gradient để tạo hiệu ứng đèn sân khấu
-                link.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)`;
+                    // Sử dụng radial-gradient để tạo hiệu ứng đèn sân khấu
+                    link.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)`;
+                }
             });
             
+            // Xóa hiệu ứng khi con trỏ chuột rời đi
             link.addEventListener('mouseleave', () => {
-                link.style.background = ''; // Xóa hiệu ứng gradient khi chuột rời đi
+                link.style.background = '';
             });
         });
     </script>
