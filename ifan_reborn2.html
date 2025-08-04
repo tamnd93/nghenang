@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng điều khiển Kế hoạch Sự kiện iFan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Cool Breeze (Blue, White, Light Gray, Soft Orange Accent) -->
+    <!-- Application Structure Plan: A tabbed dashboard interface (Tổng Quan, Lịch Trình, Ưu Đãi, Truyền Thông) was chosen to organize diverse information (event details, logistics, marketing assets) into user-centric sections. This non-linear structure allows users to quickly access what's relevant to them, improving usability over a linear report format. Interactions like a countdown timer, timeline highlights, and a media kit toggler enhance engagement. -->
+    <!-- Visualization & Content Choices: Event Schedule -> Organize -> HTML/CSS Timeline -> Hover Highlight -> Clear visual flow. Staffing Numbers (4-5 support, etc.) -> Compare -> Chart.js Bar Chart -> Direct comparison of roles. Budget -> Inform Proportion -> Chart.js Doughnut Chart -> Shows relative spending areas. Marketing Assets -> Organize/Compare -> JS Toggler -> Allows easy switching between different creative versions. All choices use HTML/CSS or Chart.js Canvas, avoiding SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f4f7fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-link.active {
+            border-bottom-color: #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .countdown-box {
+            background: linear-gradient(145deg, #ffffff, #e6e9ee);
+            box-shadow: 5px 5px 15px #d1d9e6, -5px -5px 15px #ffffff;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            border: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-600">iFan Reborn: Trải Nghiệm Mới, Không Gian Mới</h1>
+        </header>
+
+        <main>
+            <nav class="flex justify-center border-b border-gray-300 mb-8">
+                <button class="nav-link active py-4 px-6 text-gray-600 hover:text-blue-600" data-tab="overview">Tổng Quan</button>
+                <button class="nav-link py-4 px-6 text-gray-600 hover:text-blue-600" data-tab="schedule">Lịch Trình & Hoạt Động</button>
+                <button class="nav-link py-4 px-6 text-gray-600 hover:text-blue-600" data-tab="offers">Ưu Đãi & Sản Phẩm</button>
+                <button class="nav-link py-4 px-6 text-gray-600 hover:text-blue-600" data-tab="media">Bộ Truyền Thông</button>
+                <button class="nav-link py-4 px-6 text-gray-600 hover:text-blue-600" data-tab="logistics">Kế Hoạch Nội Bộ</button>
+            </nav>
+
+            <div id="overview" class="tab-content active">
+                <section class="text-center">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-700">Sự kiện sẽ diễn ra sau:</h2>
+                    <div id="countdown" class="flex justify-center space-x-4 md:space-x-8 text-blue-600 mb-10">
+                        <div class="countdown-box p-4 rounded-lg w-24">
+                            <div id="days" class="text-4xl font-bold">0</div>
+                            <div class="text-sm">Ngày</div>
+                        </div>
+                        <div class="countdown-box p-4 rounded-lg w-24">
+                            <div id="hours" class="text-4xl font-bold">0</div>
+                            <div class="text-sm">Giờ</div>
+                        </div>
+                        <div class="countdown-box p-4 rounded-lg w-24">
+                            <div id="minutes" class="text-4xl font-bold">0</div>
+                            <div class="text-sm">Phút</div>
+                        </div>
+                        <div class="countdown-box p-4 rounded-lg w-24">
+                            <div id="seconds" class="text-4xl font-bold">0</div>
+                            <div class="text-sm">Giây</div>
+                        </div>
+                    </div>
+                    <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md">
+                        <p class="text-lg text-gray-600">
+                            Sau thời gian nâng cấp, iFan trân trọng mời quý khách tham dự sự kiện <strong>TÁI KHAI TRƯƠNG SHOWROOM QUẬN 12</strong> từ ngày <strong>06/09 đến 08/09/2025</strong>. Chúng tôi đã kiến tạo một không gian trưng bày hoàn toàn mới, đẳng cấp và hiện đại để quý khách có thể trải nghiệm trọn vẹn sự khác biệt của hơn 100+ mẫu quạt mới nhất và nhận ưu đãi lên đến 30%.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <div id="schedule" class="tab-content">
+                <section>
+                    <h2 class="text-2xl font-bold text-center mb-8 text-gray-700">Lịch Trình Sự Kiện & Hoạt Động Tương Tác</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4 text-blue-600">Dòng Thời Gian Sự Kiện (Ngày 06/09)</h3>
+                            <div class="relative border-l-2 border-blue-200 ml-3 py-4">
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">9:00</h4>
+                                    <p class="text-gray-600">Đón khách và tặng quà check-in.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">10:00</h4>
+                                    <p class="text-gray-600">MC giới thiệu sự kiện, đại diện công ty phát biểu.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">10:30</h4>
+                                    <p class="text-gray-600">Khách tham quan, trải nghiệm sản phẩm và tham gia mini game.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">11:30</h4>
+                                    <p class="text-gray-600">Bốc thăm trúng thưởng đợt 1.</p>
+                                </div>
+                                <!-- Thêm các mục mới cho buổi chiều -->
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">12:00</h4>
+                                    <p class="text-gray-600">Nghỉ trưa, phục vụ đồ uống nhẹ và tiệc ngọt.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">14:00</h4>
+                                    <p class="text-gray-600">Giao lưu cùng đại diện iFan và các chuyên gia về sản phẩm mới.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">15:00</h4>
+                                    <p class="text-gray-600">Trình diễn và giới thiệu các mẫu quạt mới, tư vấn trực tiếp.</p>
+                                </div>
+                                <div class="timeline-item mb-8 ml-8">
+                                    <h4 class="font-bold">16:00</h4>
+                                    <p class="text-gray-600">Bốc thăm trúng thưởng đợt 2.</p>
+                                </div>
+                                <div class="timeline-item ml-8">
+                                    <h4 class="font-bold">17:00</h4>
+                                    <p class="text-gray-600">Kết thúc sự kiện ngày 1 và gửi lời cảm ơn.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                             <div class="bg-white p-6 rounded-xl shadow-md transition-transform hover:scale-105">
+                                <h3 class="text-xl font-semibold text-blue-600">Vòng Quay May Mắn</h3>
+                                <p class="text-gray-600 mt-2">Dành cho mọi khách hàng check-in. Phần thưởng bao gồm voucher 5-10%, nón bảo hiểm, áo thun iFan.</p>
+                            </div>
+                             <div class="bg-white p-6 rounded-xl shadow-md transition-transform hover:scale-105">
+                                <h3 class="text-xl font-semibold text-blue-600">Bốc Thăm Trúng Thưởng</h3>
+                                <p class="text-gray-600 mt-2">Dành cho khách có hóa đơn. Giải thưởng giá trị: Máy làm mát, Quạt công nghiệp, Quạt treo tường.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-md transition-transform hover:scale-105">
+                                <h3 class="text-xl font-semibold text-blue-600">Livestream Tương Tác</h3>
+                                <p class="text-gray-600 mt-2">Phát trực tiếp trên Facebook/TikTok. Tặng voucher cho người xem chia sẻ và tương tác.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="offers" class="tab-content">
+                <section class="text-center">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-700">Ưu Đãi Đặc Biệt & Danh Mục Sản Phẩm</h2>
+                    <p class="text-gray-600 mb-8">Khám phá các chương trình khuyến mãi và dòng sản phẩm nổi bật.</p>
+                    <div class="bg-blue-600 text-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mb-8">
+                        <h3 class="text-4xl font-extrabold">GIẢM GIÁ LÊN ĐẾN 30%</h3>
+                        <p class="mt-2 text-lg">Áp dụng cho hàng loạt sản phẩm trong suốt tuần lễ khai trương.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h4 class="text-xl font-semibold text-blue-600">Quạt Công Nghiệp</h4>
+                            <p class="text-gray-600 mt-2">Giải pháp làm mát hiệu suất cao cho nhà xưởng, không gian lớn.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h4 class="text-xl font-semibold text-blue-600">Quạt Dân Dụng</h4>
+                            <p class="text-gray-600 mt-2">Thiết kế hiện đại, thông minh, phù hợp cho gia đình và văn phòng.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h4 class="text-xl font-semibold text-blue-600">Máy Làm Mát</h4>
+                            <p class="text-gray-600 mt-2">Công nghệ làm mát tiên tiến, mang lại không khí trong lành, mát mẻ.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="media" class="tab-content">
+                <section>
+                    <h2 class="text-2xl font-bold text-center mb-8 text-gray-700">Xem Trước Bộ Tài Liệu Truyền Thông</h2>
+                    <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex justify-center border-b mb-4">
+                            <button class="media-btn active font-semibold py-2 px-4 text-blue-600 border-b-2 border-blue-600" data-media="fb">Bài Đăng Facebook</button>
+                            <button class="media-btn py-2 px-4 text-gray-500" data-media="banner1">Banner 1</button>
+                            <button class="media-btn py-2 px-4 text-gray-500" data-media="banner2">Banner 2</button>
+                        </div>
+                        <div id="fb" class="media-content active">
+                            <h3 class="text-xl font-bold text-blue-700 mb-2">💥 iFan TÁI KHAI TRƯƠNG SHOWROOM QUẬN 12 - LÀN GIÓ MỚI SẼ THỔI BÙNG MỌI KHÔNG GIAN! 💥</h3>
+                            <p class="text-gray-700">Sau thời gian nâng cấp và sửa chữa, iFan chính thức gửi lời mời đặc biệt đến quý khách hàng tham dự sự kiện TÁI KHAI TRƯƠNG SHOWROOM QUẬN 12 từ ngày 06/09 đến 08/09/2025.</p>
+                            <ul class="list-disc list-inside mt-4 space-y-2 text-gray-700">
+                                <li><strong class="text-blue-600">Không Gian Trải Nghiệm Đẳng Cấp:</strong> Rộng rãi, thoải mái.</li>
+                                <li><strong class="text-blue-600">100+ Mẫu Quạt Mới Nhất:</strong> Đầy đủ các dòng sản phẩm.</li>
+                                <li><strong class="text-blue-600">Khu Vực Trải Nghiệm Thực Tế:</strong> "Chạm" và cảm nhận hiệu suất.</li>
+                                <li><strong class="text-blue-600">ƯU ĐÃI KHAI TRƯƠNG:</strong> Giảm giá LÊN ĐẾN 30%.</li>
+                            </ul>
+                        </div>
+                        <div id="banner1" class="media-content hidden text-center p-8 border-2 border-dashed border-gray-300 rounded-lg">
+                            <h3 class="text-3xl font-extrabold text-blue-600">TÁI KHAI TRƯƠNG SHOWROOM iFAN QUẬN 12</h3>
+                            <p class="text-xl font-semibold text-gray-700 mt-2">KHÔNG GIAN MỚI - TRẢI NGHIỆM MỚI</p>
+                            <ul class="mt-4 text-gray-600 list-disc list-inside">
+                                <li>Hơn 100+ mẫu quạt & máy làm mát</li>
+                                <li>Ưu đãi độc quyền</li>
+                                <li>Quà tặng hấp dẫn</li>
+                            </ul>
+                        </div>
+                        <div id="banner2" class="media-content hidden text-center p-8 border-2 border-dashed border-gray-300 rounded-lg bg-gray-800 text-white">
+                            <h3 class="text-4xl font-black tracking-wider">iFan REBORN</h3>
+                            <p class="text-xl font-light mt-2">Đẳng Cấp Không Gian - Thổi Bùng Năng Lượng</p>
+                            <p class="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded-full inline-block">ĐẾN NGAY VÀ KHÁM PHÁ ƯU ĐÃI KHỦNG!</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="logistics" class="tab-content">
+                <section>
+                    <h2 class="text-2xl font-bold text-center mb-8 text-gray-700">Phân Tích Kế Hoạch Nội Bộ</h2>
+                     <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4 text-center text-blue-600">Phân Bổ Nhân Sự Sự Kiện</h3>
+                            <div class="chart-container">
+                                <canvas id="staffingChart"></canvas>
+                            </div>
+                            <p class="text-center text-gray-600 mt-2">Biểu đồ thể hiện số lượng nhân sự dự kiến cho mỗi vai trò trong sự kiện.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md">
+                            <h3 class="text-xl font-semibold mb-4 text-center text-blue-600">Phân Bổ Ngân Sách (Ước tính)</h3>
+                            <div class="chart-container">
+                                <canvas id="budgetChart"></canvas>
+                            </div>
+                            <p class="text-center text-gray-600 mt-2">Tỷ lệ phân bổ ngân sách dự kiến cho các hạng mục chính của sự kiện.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.nav-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tab.dataset.tab) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            const mediaBtns = document.querySelectorAll('.media-btn');
+            const mediaContents = document.querySelectorAll('.media-content');
+
+            mediaBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    mediaBtns.forEach(b => b.classList.remove('active', 'font-semibold', 'text-blue-600', 'border-b-2', 'border-blue-600'));
+                    mediaBtns.forEach(b => b.classList.add('text-gray-500'));
+                    
+                    btn.classList.add('active', 'font-semibold', 'text-blue-600', 'border-b-2', 'border-blue-600');
+                    btn.classList.remove('text-gray-500');
+
+                    mediaContents.forEach(content => {
+                        content.classList.add('hidden');
+                        content.classList.remove('active');
+                        if (content.id === btn.dataset.media) {
+                            content.classList.remove('hidden');
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            const eventDate = new Date("Sep 6, 2025 09:00:00").getTime();
+
+            const countdownFunction = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+
+                if (distance < 0) {
+                    clearInterval(countdownFunction);
+                    document.getElementById("countdown").innerHTML = "<div class='text-2xl font-bold text-green-600'>Sự kiện đang diễn ra!</div>";
+                }
+            }, 1000);
+            
+            function initCharts() {
+                const staffingCtx = document.getElementById('staffingChart').getContext('2d');
+                new Chart(staffingCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Hỗ trợ', 'Lễ tân', 'MC'],
+                        datasets: [{
+                            label: 'Số lượng nhân sự',
+                            data: [5, 2, 1],
+                            backgroundColor: ['#3b82f6', '#60a5fa', '#93c5fd'],
+                            borderColor: '#ffffff',
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw} người`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+                new Chart(budgetCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Quà tặng & Giải thưởng', 'Trang trí & In ấn', 'Nhân sự (MC)', 'Quảng cáo'],
+                        datasets: [{
+                            label: 'Phân bổ ngân sách',
+                            data: [40, 30, 15, 15],
+                            backgroundColor: ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd'],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            initCharts();
+        });
+    </script>
+</body>
+</html>
