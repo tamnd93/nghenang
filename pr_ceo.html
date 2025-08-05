@@ -66,6 +66,35 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Styling for AI-generated content */
+        #generated-content h2 {
+            font-family: 'Inter', sans-serif; /* Added for consistency */
+            font-size: 1.75rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #2d3748; /* gray-800 */
+            margin-bottom: 1rem;
+        }
+        #generated-content .lead-paragraph {
+            font-family: 'Inter', sans-serif; /* Added for consistency */
+            font-size: 1.125rem; /* text-lg */
+            color: #4a5568; /* gray-700 */
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        #generated-content blockquote {
+            font-family: 'Inter', sans-serif; /* Added for consistency */
+            border-left: 4px solid #008080; /* teal-600 */
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #4a5568; /* gray-700 */
+        }
+        #generated-content p {
+            font-family: 'Inter', sans-serif; /* Added for consistency */
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -384,7 +413,15 @@
                 outputArea.classList.add('hidden');
                 generatedContent.innerHTML = '';
 
-                const prompt = `Tạo một tiêu đề thông cáo báo chí hấp dẫn và một đoạn tóm tắt ngắn gọn (khoảng 3-4 câu) cho thành tựu sau đây của CEO Lưu Trí hoặc công ty Nghệ Năng. Chỉ trả về tiêu đề và tóm tắt, không thêm bất kỳ văn bản nào khác.
+                // REVERTED PROMPT TO ORIGINAL "GOOD" CONTENT QUALITY, BUT ADDED STRICT HTML OUTPUT AND NO INTRO/MARKDOWN BLOCK REQUIREMENTS AT THE END.
+                const prompt = `Tạo một thông cáo báo chí đầy đủ, chuyên nghiệp và hấp dẫn cho thành tựu sau đây của CEO Lưu Trí hoặc công ty Nghệ Năng.
+                Thông cáo báo chí phải được định dạng hoàn chỉnh bằng HTML, bao gồm:
+                1.  Một thẻ <h2> cho tiêu đề chính.
+                2.  Một thẻ <p class='lead-paragraph'> cho đoạn mở đầu (lead paragraph) tóm tắt ngắn gọn (Ai, cái gì, khi nào, ở đâu, tại sao).
+                3.  Một thẻ <blockquote> chứa một câu trích dẫn từ CEO Lưu Trí, nhấn mạnh ý nghĩa của thành tựu.
+                4.  Một thẻ <p> cho đoạn thân bài, cung cấp thêm chi tiết về thành tựu, tác động và tầm quan trọng.
+                Đảm bảo nội dung thông cáo báo chí chuyên nghiệp, hấp dẫn và có bố cục HTML sạch sẽ, hiện đại.
+                Chỉ trả về nội dung HTML hoàn chỉnh của thông cáo báo chí, không bao gồm bất kỳ văn bản giới thiệu, ký hiệu markdown code block (như \`\`\`html) hay bất kỳ nội dung nào khác ngoài HTML.
                 Mô tả thành tựu: ${promptText}`;
 
                 let chatHistory = [];
@@ -419,20 +456,9 @@
                         if (result.candidates && result.candidates.length > 0 &&
                             result.candidates[0].content && result.candidates[0].content.parts &&
                             result.candidates[0].content.parts.length > 0) {
-                            const text = result.candidates[0].content.parts[0].text;
-                            const lines = text.split('\n').map(line => line.trim()).filter(line => line !== '');
-
-                            if (lines.length > 0) {
-                                const title = lines[0];
-                                const summary = lines.slice(1).join('<br>'); // Join remaining lines with <br> for multi-line summary
-
-                                generatedContent.innerHTML = `
-                                    <h4 class="text-xl font-semibold text-gray-800 mb-2">${title}</h4>
-                                    <p class="text-gray-700">${summary}</p>
-                                `;
-                            } else {
-                                generatedContent.innerHTML = '<p class="text-red-500">Không thể tạo nội dung. Vui lòng thử lại.</p>';
-                            }
+                            const htmlContent = result.candidates[0].content.parts[0].text;
+                            // Directly insert the HTML content from the LLM
+                            generatedContent.innerHTML = htmlContent;
                         } else {
                             generatedContent.innerHTML = '<p class="text-red-500">Không thể tạo nội dung. Vui lòng thử lại.</p>';
                         }
