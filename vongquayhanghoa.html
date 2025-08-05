@@ -85,11 +85,6 @@
             margin-right: 0.75rem;
             flex-shrink: 0;
         }
-        .table-container {
-            overflow-x: auto;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
         .data-table {
             width: 100%;
             border-collapse: separate;
@@ -520,7 +515,7 @@
             <div class="calculator-card mx-auto">
                 <div class="flex justify-between items-center mb-6">
                     <p class="text-gray-700 flex-grow pr-4">
-                        Sử dụng công cụ này để tính toán nhanh Vòng Quay Hàng Hóa (Inventory Turnover) và Số Ngày Tồn Kho Bình Quân (DIO). Nhập các số liệu của bạn dưới đây, và AI sẽ giúp bạn đưa ra một phân tích tổng quan!
+                        Sử dụng công cụ này để tính toán nhanh Vòng Quay Hàng Hàng Hóa (Inventory Turnover) và Số Ngày Tồn Kho Bình Quân (DIO). Nhập các số liệu của bạn dưới đây, và AI sẽ giúp bạn đưa ra một phân tích tổng quan!
                     </p>
                     <button id="show-history-button" class="history-button">Lịch sử</button>
                 </div>
@@ -594,18 +589,19 @@
         </div>
     </footer>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // --- KHÔNG SỬ DỤNG FIREBASE, CHUYỂN SANG LOCAL STORAGE ---
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Initialization
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let userId = null;
-        let isAuthReady = false;
+        // Firebase Initialization (Removed)
+        // const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFirestore(app);
+        // const auth = getAuth(app);
+        // const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let userId = 'local-user'; // Dùng một ID cố định cho local storage
+        let isAuthReady = true; // Luôn sẵn sàng vì không cần xác thực Firebase
 
         // UI Elements
         const calculateButton = document.getElementById('calculate-button');
@@ -751,11 +747,15 @@
                 - Không nhắc lại các thông tin về ngành nghề của công ty hay giải thích lại công thức tính.`;
                 
                 // Comparison with history
-                if (latestHistory && latestHistory.length > 0) {
-                    const previousAnalysis = latestHistory[0];
+                // Lấy lịch sử từ localStorage để so sánh
+                const storedHistory = JSON.parse(localStorage.getItem('inventoryAnalysisHistory') || '[]');
+                if (storedHistory.length > 0) {
+                    // Sắp xếp để lấy bản phân tích gần nhất
+                    storedHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    const previousAnalysis = storedHistory[0];
                     const prevTurnover = previousAnalysis.turnover;
                     const prevDio = previousAnalysis.dio;
-                    const prevDate = new Date(previousAnalysis.timestamp.toDate()).toLocaleDateString('vi-VN');
+                    const prevDate = new Date(previousAnalysis.timestamp).toLocaleDateString('vi-VN');
                     
                     const turnoverChange = inventoryTurnover - prevTurnover;
                     const dioChange = prevDio - dio; // DIO decrease is an improvement
@@ -801,14 +801,49 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = "";
+                // KHÓA API ĐƯỢC ĐẶT TRỰC TIẾP TẠI ĐÂY.
+                // CẢNH BÁO: KHÔNG NÊN LÀM ĐIỀU NÀY TRONG MÔI TRƯỜNG SẢN PHẨM CÔNG KHAI!
+                const apiKey = "AIzaSyC6-hOHavm6hd8Y4u4gK6G2KG9Ev9SPQjs"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                // Implement exponential backoff for API calls
+                const maxRetries = 5;
+                let retryCount = 0;
+                let response;
+
+                while (retryCount < maxRetries) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.ok) {
+                            break; // Success, exit loop
+                        } else if (response.status === 429) { // Too Many Requests
+                            const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+                            console.warn(`Rate limit hit. Retrying in ${delay / 1000} seconds...`);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            retryCount++;
+                        } else {
+                            // Other errors, re-throw to be caught by outer try-catch
+                            throw new Error(`API error: ${response.status} ${response.statusText}`);
+                        }
+                    } catch (fetchError) {
+                        console.error('Fetch error:', fetchError);
+                        // If it's not a 429, or max retries reached, re-throw
+                        if (retryCount === maxRetries - 1 || response?.status !== 429) {
+                            throw fetchError;
+                        }
+                        retryCount++;
+                    }
+                }
+
+                if (!response || !response.ok) {
+                    throw new Error("Failed to get a successful response after retries.");
+                }
+
                 const result = await response.json();
                 
                 // Extract and display API response
@@ -835,10 +870,10 @@
             }
         }
         
-        // Function to save the current analysis to Firestore
+        // Function to save the current analysis to localStorage
         async function saveAnalysis() {
-            if (!isAuthReady || !userId || !currentResult || !currentAnalysis) {
-                console.error("Authentication not ready or no data to save.");
+            if (!currentResult || !currentAnalysis) {
+                console.error("Không có dữ liệu để lưu.");
                 return;
             }
             saveButton.disabled = true;
@@ -846,9 +881,8 @@
             saveStatusSpan.style.display = 'inline';
 
             try {
-                // Ensure a valid collection path
-                const collectionPath = `artifacts/${appId}/users/${userId}/inventory-analysis`;
-                const docRef = await addDoc(collection(db, collectionPath), {
+                let history = JSON.parse(localStorage.getItem('inventoryAnalysisHistory') || '[]');
+                const newItem = {
                     cogs: currentResult.cogs,
                     startInventory: currentResult.startInventory,
                     endInventory: currentResult.endInventory,
@@ -856,56 +890,47 @@
                     turnover: currentResult.turnover,
                     dio: currentResult.dio,
                     analysis: currentAnalysis,
-                    timestamp: new Date(),
-                    userId: userId
-                });
+                    timestamp: new Date().toISOString() // Lưu dưới dạng ISO string để dễ dàng parse lại
+                };
+                history.push(newItem);
+                localStorage.setItem('inventoryAnalysisHistory', JSON.stringify(history));
+
                 saveStatusSpan.textContent = 'Đã lưu thành công!';
+                // Cập nhật lịch sử hiển thị ngay lập tức sau khi lưu
+                fetchHistory(); 
                 setTimeout(() => {
                     saveStatusSpan.style.display = 'none';
                     saveButton.disabled = false;
                 }, 3000);
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error("Lỗi khi lưu dữ liệu: ", e);
                 saveStatusSpan.textContent = 'Lỗi khi lưu!';
                 saveStatusSpan.style.color = '#ef4444';
                 saveButton.disabled = false;
             }
         }
         
-        // Function to fetch and display history from Firestore
+        // Function to fetch and display history from localStorage
         function fetchHistory() {
-            if (!isAuthReady || !userId) {
-                historyLoadingIndicator.textContent = 'Không có quyền truy cập hoặc chưa đăng nhập. Vui lòng thử lại.';
-                historyLoadingIndicator.style.display = 'block';
-                noHistoryMessage.style.display = 'none';
-                return;
-            }
-
             historyContentDiv.innerHTML = '';
             historyLoadingIndicator.style.display = 'block';
             noHistoryMessage.style.display = 'none';
 
-            const collectionPath = `artifacts/${appId}/users/${userId}/inventory-analysis`;
-            const q = query(collection(db, collectionPath));
-            
-            // Listen for real-time updates
-            onSnapshot(q, (querySnapshot) => {
-                const historyItems = [];
-                querySnapshot.forEach((doc) => {
-                    historyItems.push({ id: doc.id, ...doc.data() });
-                });
-
+            try {
+                const storedHistory = JSON.parse(localStorage.getItem('inventoryAnalysisHistory') || '[]');
+                
                 // Sort in memory to get latest item and for display
-                historyItems.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
-                latestHistory = historyItems; // Update global state
+                // Chuyển đổi timestamp từ ISO string sang Date object để sắp xếp
+                storedHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                latestHistory = storedHistory; // Update global state
                 
                 historyContentDiv.innerHTML = '';
-                if (historyItems.length === 0) {
+                if (storedHistory.length === 0) {
                     noHistoryMessage.style.display = 'block';
                 } else {
                     noHistoryMessage.style.display = 'none';
-                    historyItems.forEach(item => {
-                        const date = item.timestamp.toDate().toLocaleString('vi-VN');
+                    storedHistory.forEach(item => {
+                        const date = new Date(item.timestamp).toLocaleString('vi-VN'); // Chuyển đổi lại Date object để hiển thị
                         const itemHtml = `
                             <div class="history-item">
                                 <details>
@@ -925,8 +950,12 @@
                         historyContentDiv.innerHTML += itemHtml;
                     });
                 }
+            } catch (e) {
+                console.error("Lỗi khi tải lịch sử từ localStorage: ", e);
+                historyContentDiv.innerHTML = '<p class="text-red-500">Lỗi khi tải lịch sử.</p>';
+            } finally {
                 historyLoadingIndicator.style.display = 'none';
-            });
+            }
         }
         
         // Toggle history section visibility
@@ -935,7 +964,7 @@
                 historySection.style.display = 'none';
             } else {
                 historySection.style.display = 'block';
-                fetchHistory();
+                fetchHistory(); // Tải lịch sử mỗi khi mở
             }
         }
 
@@ -944,27 +973,9 @@
         saveButton.addEventListener('click', saveAnalysis);
         showHistoryButton.addEventListener('click', toggleHistory);
         
-        // Initial Firebase authentication check and listener setup
+        // Initial load of history
         window.onload = function() {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    userId = user.uid;
-                    isAuthReady = true;
-                    // Initial fetch of history after authentication
-                    fetchHistory();
-                } else {
-                    try {
-                        const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                        if (token) {
-                            await signInWithCustomToken(auth, token);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                    } catch (error) {
-                        console.error("Firebase Auth Error:", error);
-                    }
-                }
-            });
+            fetchHistory();
         };
     </script>
 </body>
