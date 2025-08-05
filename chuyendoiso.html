@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Bày: Chuyển Đổi Để Tối Ưu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .slide {
+            display: none;
+            flex-grow: 1;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 0.75rem; /* Adjusted padding */
+            border-radius: 0.5rem;
+            background-color: #94D2BD;
+            color: #005F73;
+            font-weight: 600;
+            flex-shrink: 1;
+            flex-basis: auto;
+            max-width: 200px; /* Added max-width for smaller cards */
+            margin: 0.5rem; /* Added margin for spacing between cards */
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #0A9396;
+            margin: 0 0.5rem; /* Adjusted margin */
+        }
+        .flow-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        @media (max-width: 767px) {
+            .flow-container {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0; /* Adjusted margin */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="presentation-container" class="flex flex-col flex-grow items-center justify-center p-4">
+
+        <!-- Slide 1: Title Slide -->
+        <section id="slide-1" class="slide active w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h1 class="text-5xl md:text-7xl font-black text-[#005F73] mb-4">Chuyển Đổi Để Tối Ưu</h1>
+            <p class="text-2xl md:text-3xl text-[#0A9396] font-semibold">Tăng Tốc Tiến Độ, Tiết Kiệm Chi Phí, Tăng Cường Kiểm Soát</p>
+            <p class="mt-8 text-lg text-gray-600">Một lộ trình thực tế để nâng cao hiệu quả hoạt động</p>
+        </section>
+
+        <!-- Slide 2: Vấn đề hiện tại -->
+        <section id="slide-2" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#AE2012] mb-6">Vấn Đề Hiện Tại: Chậm Trễ & Lãng Phí</h2>
+            <p class="text-xl text-gray-700 mb-8">Quy trình ký duyệt thủ công đang tạo ra những nút thắt nghiêm trọng, ảnh hưởng trực tiếp đến hiệu suất và tài chính của công ty.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="bg-red-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">⏳</p>
+                    <h3 class="text-xl font-semibold text-[#BB3E03]">Chậm Tiến Độ</h3>
+                    <p class="text-gray-600">Mỗi văn bản chờ ký là một dự án bị trì hoãn, một cơ hội kinh doanh có thể bị bỏ lỡ.</p>
+                </div>
+                <div class="bg-red-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">💸</p>
+                    <h3 class="text-xl font-semibold text-[#BB3E03]">Lãng Phí Nguồn Lực</h3>
+                    <p class="text-gray-600">Chi phí in ấn, vận chuyển, và thời gian chờ đợi của nhân sự cấp cao.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Chi phí ẩn -->
+        <section id="slide-3" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#AE2012] mb-6">Chi Phí Ẩn: Những Khoản Mục Không Tên</h2>
+            <p class="text-xl text-gray-700 mb-8">Ngoài các chi phí dễ thấy, quy trình thủ công còn tạo ra những tổn thất vô hình nhưng đáng kể.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">📄</p>
+                    <h3 class="text-xl font-semibold text-[#EE9B00]">Chi Phí In Ấn & Giấy Tờ</h3>
+                    <p class="text-gray-600">Tích lũy hàng tháng, hàng năm là một con số không nhỏ.</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">⏱️</p>
+                    <h3 class="text-xl font-semibold text-[#EE9B00]">Thời Gian Chờ Ký Duyệt</h3>
+                    <p class="text-gray-600">Thời gian lãng phí của nhân sự, đặc biệt là các cấp quản lý.</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">❌</p>
+                    <h3 class="text-xl font-semibold text-[#EE9B00]">Mất Cơ Hội Kinh Doanh</h3>
+                    <p class="text-gray-600">Chậm trễ hợp đồng, dự án có thể khiến công ty mất đi những cơ hội vàng.</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">⚠️</p>
+                    <h3 class="text-xl font-semibold text-[#EE9B00]">Rủi Ro Sai Sót Thủ Công</h3>
+                    <p class="text-gray-600">Tiềm ẩn lỗi do con người, dẫn đến hậu quả pháp lý hoặc tài chính.</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Những khoản mục này tuy không hiển thị rõ ràng nhưng đang ảnh hưởng trực tiếp đến lợi nhuận.</p>
+        </section>
+
+        <!-- Slide 4: Lợi ích - Kiểm soát & Tiện lợi -->
+        <section id="slide-4" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#0A9396] mb-6">Lợi Ích: Kiểm Soát Toàn Diện & Tiện Lợi Vượt Trội</h2>
+            <p class="text-xl text-gray-700 mb-8">Giải pháp số hóa không chỉ khắc phục vấn đề mà còn mang lại những giá trị vượt trội cho lãnh đạo.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">✅</p>
+                    <h3 class="text-xl font-semibold text-[#005F73]">Kiểm Soát Tối Đa</h3>
+                    <p class="text-gray-600">Theo dõi mọi quy trình, mọi văn bản theo thời gian thực, mọi lúc mọi nơi. Mọi thao tác đều được ghi lại.</p>
+                </div>
+                <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">⏰</p>
+                    <h3 class="text-xl font-semibold text-[#005F73]">Giải Phóng Thời Gian</h3>
+                    <p class="text-gray-600">Không còn bận tâm đến việc ký duyệt giấy tờ. Tập trung vào các quyết định chiến lược quan trọng hơn.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Đề xuất giải pháp -->
+        <section id="slide-5" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#0A9396] mb-6">Đề Xuất Giải Pháp: Chữ Ký Số & Quy Trình Điện Tử</h2>
+            <p class="text-xl text-gray-700 mb-8">Áp dụng công nghệ để biến quy trình ký duyệt thủ công thành tự động, an toàn và hiệu quả.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">✍️</p>
+                    <h3 class="text-xl font-semibold text-[#005F73]">Chữ Ký Số Hợp Pháp</h3>
+                    <p class="text-gray-600">Được pháp luật công nhận, bảo mật cao, không thể làm giả.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-sm">
+                    <p class="text-3xl mb-2">🔗</p>
+                    <h3 class="text-xl font-semibold text-[#005F73]">Hệ Thống Phê Duyệt Tự Động</h3>
+                    <p class="text-gray-600">Văn bản được luân chuyển, thông báo tự động, lưu trữ tập trung.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Lộ trình thí điểm -->
+        <section id="slide-6" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#0A9396] mb-6">Lộ Trình Thí Điểm: Bắt Đầu Từ Nhỏ, Hiệu Quả Lớn</h2>
+            <p class="text-xl text-gray-700 mb-8">Để đảm bảo an toàn và hiệu quả, chúng ta sẽ bắt đầu với một dự án thí điểm nhỏ, dễ kiểm soát.</p>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <p class="text-base font-semibold">1. Chọn Quy Trình Nhỏ</p>
+                    <p class="text-sm text-gray-700 mt-1">Chọn một quy trình nội bộ đơn giản, ít rủi ro như duyệt nghỉ phép hoặc đề xuất mua sắm văn phòng phẩm để làm quen với hệ thống.</p>
+                </div>
+                <span class="flow-arrow"></span>
+                <div class="flow-step">
+                    <p class="text-base font-semibold">2. Thí Điểm (2 Tuần)</p>
+                    <p class="text-sm text-gray-700 mt-1">Áp dụng giải pháp chữ ký số và quy trình điện tử trên quy trình đã chọn. Đảm bảo mọi thứ diễn ra suôn sẻ và có thể quay lại quy trình cũ nếu cần.</p>
+                </div>
+                <span class="flow-arrow"></span>
+                <div class="flow-step">
+                    <p class="text-base font-semibold">3. Đánh Giá Kết Quả</p>
+                    <p class="text-sm text-gray-700 mt-1">Thu thập số liệu cụ thể về thời gian xử lý, chi phí tiết kiệm được và mức độ hài lòng của người dùng. Trình bày báo cáo chi tiết.</p>
+                </div>
+                <span class="flow-arrow"></span>
+                <div class="flow-step">
+                    <p class="text-base font-semibold">4. Quyết Định Mở Rộng</p>
+                    <p class="text-sm text-gray-700 mt-1">Dựa trên kết quả thí điểm thực tế, lãnh đạo sẽ có cơ sở vững chắc để đưa ra quyết định mở rộng áp dụng cho các quy trình khác trong công ty.</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Lộ trình này đảm bảo rủi ro tối thiểu và cho phép lãnh đạo trực tiếp kiểm chứng hiệu quả.</p>
+        </section>
+
+        <!-- Slide 7: Hoàn vốn đầu tư -->
+        <section id="slide-7" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#0A9396] mb-6">Hoàn Vốn Đầu Tư (ROI): Tiết Kiệm Ngay Lập Tức</h2>
+            <p class="text-xl text-gray-700 mb-8">Khoản đầu tư ban đầu là một khoản đầu tư chiến lược, mang lại lợi nhuận rõ ràng và nhanh chóng.</p>
+            
+            <div class="bg-green-50 p-8 rounded-lg shadow-md max-w-2xl mx-auto mb-8">
+                <h3 class="text-2xl font-bold text-[#005F73] mb-4">Ước Tính Tiết Kiệm Hàng Tháng (Minh họa)</h3>
+                <div class="space-y-4 text-left">
+                    <div class="flex justify-between items-center">
+                        <p class="text-lg font-semibold text-gray-700">Giấy tờ & In ấn:</p>
+                        <p class="text-xl font-bold text-[#0A9396]">~10 Triệu VNĐ</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-lg font-semibold text-gray-700">Chi phí vận chuyển/chuyển phát:</p>
+                        <p class="text-xl font-bold text-[#0A9396]">~5 Triệu VNĐ</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-lg font-semibold text-gray-700">Thời gian chờ duyệt (quy đổi):</p>
+                        <p class="text-xl font-bold text-[#0A9396]">~20 Triệu VNĐ</p>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-4 mt-4 border-gray-200">
+                        <p class="text-2xl font-bold text-[#AE2012]">Tổng tiết kiệm ước tính:</p>
+                        <p class="text-4xl font-black text-[#0A9396]">~35 Triệu VNĐ</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4 text-center">Các con số trên chỉ mang tính minh họa và có thể được điều chỉnh theo dữ liệu thực tế của công ty.</p>
+            </div>
+
+            <div class="bg-blue-50 p-6 rounded-lg shadow-md max-w-xl mx-auto">
+                <h3 class="text-2xl font-bold text-[#005F73] mb-4">Thời Gian Hoàn Vốn Ước Tính</h3>
+                <p class="text-5xl font-black text-[#0A9396]">Dưới 6 Tháng</p>
+                <p class="text-lg text-gray-700 mt-2">Với khoản đầu tư ban đầu hợp lý, chúng ta có thể hoàn vốn và bắt đầu sinh lời chỉ trong vòng vài tháng.</p>
+            </div>
+            <p class="text-sm text-gray-500 mt-6">Đây là một quyết định tài chính sáng suốt, mang lại lợi nhuận rõ ràng và nhanh chóng.</p>
+        </section>
+
+        <!-- Slide 8: Call to Action -->
+        <section id="slide-8" class="slide w-full max-w-4xl bg-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#005F73] mb-6">Bước Tiếp Theo: Cùng Nhau Tối Ưu Hóa</h2>
+            <p class="text-xl text-gray-700 mb-8">Để công ty phát triển nhanh hơn, hiệu quả hơn, và vững chắc hơn, chúng ta cần hành động ngay.</p>
+            <button id="ctaButton" class="bg-[#0A9396] hover:bg-[#005F73] text-white font-bold py-4 px-8 rounded-full text-2xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Cho Phép Thí Điểm Ngay Hôm Nay!
+            </button>
+            <p class="mt-8 text-lg text-gray-600">Em rất mong nhận được sự chỉ đạo của anh/chị để bắt đầu dự án thí điểm này.</p>
+        </section>
+
+    </div>
+
+    <div class="flex justify-between w-full max-w-4xl mx-auto p-4">
+        <button id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+            ← Trước
+        </button>
+        <button id="nextBtn" class="bg-[#0A9396] hover:bg-[#005F73] text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+            Tiếp →
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        window.onload = function () {
+            showSlide(currentSlide);
+        };
+    </script>
+</body>
+</html>
