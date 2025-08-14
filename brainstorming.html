@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn Brainstorming Tương tác</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f7f4;
+            color: #3d3d3d;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active {
+            border-bottom-color: #4a5568;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        .method-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .phase-btn.active {
+            background-color: #3d3d3d;
+            color: #ffffff;
+        }
+        .category-header {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .category-header:hover {
+            background-color: #f3f4f6;
+        }
+        .question-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .question-list.expanded {
+            max-height: 2000px; /* Large enough for all questions */
+            transition: max-height 0.5s ease-in;
+        }
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Cẩm Nang Brainstorming</h1>
+            <p class="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">Một công cụ tương tác giúp bạn khám phá và áp dụng các kỹ thuật tư duy sáng tạo hiệu quả.</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-gray-200 mb-12">
+            <button data-target="overview" class="nav-link active text-gray-500 py-4 px-6 block hover:text-gray-700 focus:outline-none">
+                Tổng quan
+            </button>
+            <button data-target="methods" class="nav-link text-gray-500 py-4 px-6 block hover:text-gray-700 focus:outline-none">
+                Các Phương Pháp
+            </button>
+            <button data-target="tool" class="nav-link text-gray-500 py-4 px-6 block hover:text-gray-700 focus:outline-none">
+                Công Cụ Thực Hành
+            </button>
+        </nav>
+
+        <main>
+            <section id="overview" class="content-section">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold text-gray-800">Nền tảng Brainstorming</h2>
+                     <p class="mt-2 text-md text-gray-600 max-w-2xl mx-auto">Phần này cung cấp những kiến thức cốt lõi, giúp bạn hiểu rõ bản chất, nguyên tắc và vai trò của brainstorming trong việc thúc đẩy sự sáng tạo.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">💡 Brainstorming là gì?</h3>
+                        <p class="text-gray-600">Là kỹ thuật tư duy sáng tạo để tạo ra danh sách ý tưởng cho một vấn đề, khuyến khích mọi ý tưởng mà không phán xét.</p>
+                        <h4 class="font-semibold mt-4 mb-2">Ngữ cảnh sử dụng:</h4>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1">
+                            <li>Kinh doanh, marketing</li>
+                            <li>Quản lý dự án</li>
+                            <li>Thiết kế, sáng tạo</li>
+                            <li>Giáo dục, nghiên cứu</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">📜 Nguyên tắc cốt lõi</h3>
+                        <ul class="space-y-3 text-gray-600">
+                           <li class="flex items-start"><span class="mr-2 mt-1">🔢</span><span><strong>Tập trung vào số lượng:</strong> Càng nhiều ý tưởng càng tốt.</span></li>
+                           <li class="flex items-start"><span class="mr-2 mt-1">🤫</span><span><strong>Không phê phán:</strong> Tạm gác lại mọi lời chỉ trích.</span></li>
+                           <li class="flex items-start"><span class="mr-2 mt-1">🚀</span><span><strong>Khuyến khích ý tưởng "điên rồ":</strong> Đột phá thường đến từ những ý tưởng táo bạo.</span></li>
+                           <li class="flex items-start"><span class="mr-2 mt-1">🤝</span><span><strong>Kết hợp và phát triển:</strong> Xây dựng ý tưởng dựa trên ý tưởng của người khác.</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                         <h3 class="text-xl font-semibold text-gray-800 mb-3">🧠 Lĩnh vực kiến thức</h3>
+                         <p class="text-gray-600">Brainstorming là một kỹ năng liên ngành, thuộc về:</p>
+                         <ul class="list-disc list-inside text-gray-600 space-y-1 mt-2">
+                             <li>Kỹ năng mềm (Soft Skills)</li>
+                             <li>Tư duy sáng tạo (Creative Thinking)</li>
+                             <li>Quản lý dự án (Project Management)</li>
+                             <li>Khoa học hành vi & Tâm lý học</li>
+                         </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="methods" class="content-section hidden">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold text-gray-800">Khám phá các phương pháp Brainstorming</h2>
+                     <p class="mt-2 text-md text-gray-600 max-w-2xl mx-auto">Mỗi phương pháp có một cách tiếp cận riêng để khơi nguồn ý tưởng. Hãy nhấp vào từng thẻ để tìm hiểu chi tiết hơn.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="method-card bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Mind Mapping</h3>
+                            <p class="text-gray-600 mt-2">Kỹ thuật trực quan hóa ý tưởng, bắt đầu từ trung tâm và phát triển ra các nhánh.</p>
+                        </div>
+                        <div class="details bg-gray-50 p-6 border-t border-gray-200 hidden">
+                            <p><strong style="font-weight: bold;">Cách thực hiện:</strong> Đặt chủ đề chính ở giữa, sau đó vẽ các nhánh chính cho các ý tưởng lớn và các nhánh phụ cho các chi tiết liên quan. Ví dụ: Chủ đề 'Chiến lược Marketing 2024' có các nhánh 'Mạng xã hội', 'Email Marketing'.</p>
+                        </div>
+                    </div>
+                     <div class="method-card bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Reverse Brainstorming</h3>
+                            <p class="text-gray-600 mt-2">Tư duy ngược: tìm cách gây ra hoặc làm vấn đề tồi tệ hơn để xác định nguyên nhân gốc rễ.</p>
+                        </div>
+                        <div class="details bg-gray-50 p-6 border-t border-gray-200 hidden">
+                             <p><strong style="font-weight: bold;">Cách thực hiện:</strong> Thay vì hỏi "Làm sao để tăng sự hài lòng của khách hàng?", hãy hỏi "Làm sao để khách hàng ghét sản phẩm của chúng ta?". Các câu trả lời sẽ chỉ ra những điều cần tránh.</p>
+                        </div>
+                    </div>
+                     <div class="method-card bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Starbursting</h3>
+                            <p class="text-gray-600 mt-2">Tập trung vào việc đặt câu hỏi thay vì tìm câu trả lời ngay lập tức.</p>
+                        </div>
+                        <div class="details bg-gray-50 p-6 border-t border-gray-200 hidden">
+                             <p><strong style="font-weight: bold;">Cách thực hiện:</strong> Đặt ý tưởng vào trung tâm và đặt các câu hỏi xung quanh nó: Ai? Cái gì? Khi nào? Ở đâu? Tại sao? Làm thế nào? Giúp khám phá ý tưởng từ mọi góc độ.</p>
+                        </div>
+                    </div>
+                     <div class="method-card bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">6-3-5 Brainwriting</h3>
+                            <p class="text-gray-600 mt-2">Phương pháp viết có cấu trúc để tạo ra một lượng lớn ý tưởng trong thời gian ngắn.</p>
+                        </div>
+                        <div class="details bg-gray-50 p-6 border-t border-gray-200 hidden">
+                             <p><strong style="font-weight: bold;">Cách thực hiện:</strong> 6 người, mỗi người viết 3 ý tưởng trong 5 phút. Sau đó, chuyền giấy cho người bên cạnh để họ phát triển thêm ý tưởng mới dựa trên những gì đã viết. Lặp lại 6 vòng.</p>
+                        </div>
+                    </div>
+                     <div class="method-card bg-white rounded-lg shadow-sm border border-gray-100 cursor-pointer overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Brainwriting</h3>
+                            <p class="text-gray-600 mt-2">Biến thể của brainstorming, nơi các ý tưởng được viết ra thay vì nói.</p>
+                        </div>
+                        <div class="details bg-gray-50 p-6 border-t border-gray-200 hidden">
+                             <p><strong style="font-weight: bold;">Cách thực hiện:</strong> Mọi người viết ý tưởng của mình ra giấy một cách độc lập. Sau đó, các ý tưởng được thu thập và thảo luận. Rất hiệu quả cho những người hướng nội.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tool" class="content-section hidden">
+                 <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold text-gray-800">Công Cụ Thực Hành Chuyên Nghiệp</h2>
+                     <p class="mt-2 text-md text-gray-600 max-w-2xl mx-auto">Chọn một giai đoạn của buổi brainstorming để khám phá các câu hỏi gợi ý, giúp bạn và đội nhóm khơi nguồn sáng tạo và đưa ra quyết định một cách có hệ thống.</p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-md border border-gray-100 max-w-4xl mx-auto">
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8">
+                        <button data-phase="warmup" class="phase-btn active w-full sm:w-auto text-gray-700 font-medium py-2 px-5 rounded-lg transition duration-300 border border-gray-300 hover:bg-gray-100">Khởi động</button>
+                        <button data-phase="expansion" class="phase-btn w-full sm:w-auto text-gray-700 font-medium py-2 px-5 rounded-lg transition duration-300 border border-gray-300 hover:bg-gray-100">Mở rộng ý tưởng</button>
+                        <button data-phase="deepdive" class="phase-btn w-full sm:w-auto text-gray-700 font-medium py-2 px-5 rounded-lg transition duration-300 border border-gray-300 hover:bg-gray-100">Đào sâu</button>
+                        <button data-phase="evaluation" class="phase-btn w-full sm:w-auto text-gray-700 font-medium py-2 px-5 rounded-lg transition duration-300 border border-gray-300 hover:bg-gray-100">Đánh giá</button>
+                        <button data-phase="action" class="phase-btn w-full sm:w-auto text-gray-700 font-medium py-2 px-5 rounded-lg transition duration-300 border border-gray-300 hover:bg-gray-100">Chốt hành động</button>
+                    </div>
+                    
+                    <div id="question-display" class="space-y-4">
+                        
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const methodCards = document.querySelectorAll('.method-card');
+            const phaseButtons = document.querySelectorAll('.phase-btn');
+            const questionDisplay = document.getElementById('question-display');
+
+            const questions = {
+                warmup: {
+                    "Mục tiêu & Động lực": [
+                        {question: "Nếu không bị giới hạn bởi nguồn lực, bạn sẽ làm gì để tối ưu hóa việc quản lý và theo dõi sản phẩm (ví dụ: bằng mã định danh sản phẩm)?", example: "Ví dụ: 'Thiết lập một hệ thống quản lý sản phẩm tự động, cho phép theo dõi toàn bộ vòng đời sản phẩm từ sản xuất đến bảo hành.'"},
+                        {question: "Đâu là 3 mục tiêu ưu tiên nhất trong giai đoạn này: quy trình, dữ liệu, hay chiến lược truyền thông cho các thương hiệu chủ lực?", example: "Ví dụ: 'Ưu tiên 1: Chuẩn hóa dữ liệu tồn kho để có báo cáo định kỳ chính xác. Ưu tiên 2: Cơ cấu giá. Ưu tiên 3: Truyền thông.'"},
+                        {question: "Nếu phải giải thích tầm quan trọng của việc chuẩn hóa dữ liệu cho một nhân viên mới, bạn sẽ nói gì?", example: "Ví dụ: 'Nó giống như việc dọn dẹp một căn nhà lộn xộn để mọi người có thể tìm thấy đồ dễ dàng và sống thoải mái hơn.'"}
+                    ],
+                    "Góc nhìn từ bên ngoài": [
+                         {question: "Nếu bạn là khách hàng dự án (B2B), điều gì ở quy trình bán hàng của ta khiến bạn không hài lòng nhất?", example: "Ví dụ: 'Quy trình duyệt giá quá chậm, khiến tôi phải chờ đợi và có thể lỡ cơ hội đấu thầu.'"},
+                         {question: "Nếu đối thủ biết kế hoạch của ta (phát triển online), họ sẽ phản ứng thế nào?", example: "Ví dụ: 'Họ có thể tăng cường quảng cáo trên các nền tảng online để cạnh tranh, hoặc đưa ra các chính sách chiết khấu hấp dẫn hơn.'"},
+                         {question: "Ba giả định lớn nhất của chúng ta về thị trường mục tiêu mới là gì?", example: "Ví dụ: 'Giả định 1: Các khu công nghiệp đang thiếu giải pháp làm mát. Giả định 2: Họ có ngân sách lớn. Giả định 3: Họ sẵn sàng chuyển đổi nhà cung cấp.'"}
+                    ],
+                    "Hành động trọng tâm": [
+                         {question: "Nếu chỉ được làm 1 hành động duy nhất để cải thiện dữ liệu, đó là gì?", example: "Ví dụ: 'Thiết lập một quy trình nhập liệu chuẩn duy nhất và bắt buộc toàn bộ nhân sự tuân thủ.'"},
+                         {question: "Đòn bẩy lớn nhất để tối ưu hóa quy trình phê duyệt giá là gì?", example: "Ví dụ: 'Xây dựng một khung giá cố định kèm quy tắc chiết khấu tự động cho một số trường hợp nhất định.'"}
+                    ]
+                },
+                expansion: {
+                    "Tư duy đột phá": [
+                        {question: "Điều 'điên rồ' nhất nhưng vẫn khả thi để truyền thông cho sản phẩm/dịch vụ của chúng ta là gì?", example: "Ví dụ: 'Sản xuất một chuỗi video viral trên TikTok, đưa quạt công nghiệp vào một bối cảnh hài hước, sáng tạo và bất ngờ.'"},
+                        {question: "Có cách nào áp dụng công nghệ từ ngành khác (ví dụ: logistics) vào việc quản lý dữ liệu sản phẩm của chúng ta không?", example: "Ví dụ: 'Sử dụng hệ thống quét mã vạch và máy quét cầm tay tương tự các công ty vận chuyển để cập nhật thông tin sản phẩm theo thời gian thực.'"},
+                        {question: "Những giải pháp nào về giá mà đối thủ chưa từng nghĩ tới?", example: "Ví dụ: 'Cung cấp gói cho thuê thiết bị công nghiệp theo dự án thay vì chỉ bán đứt, kèm dịch vụ bảo trì định kỳ.'"}
+                    ],
+                    "Kết hợp & Thay đổi": [
+                        {question: "Chúng ta có thể giải quyết vấn đề duyệt giá chậm bằng cách làm ngược lại hiện tại không?", example: "Ví dụ: 'Thay vì chờ phê duyệt từ CEO, cho phép đội kinh doanh được toàn quyền quyết định chiết khấu trong một khung giá nhất định, và chỉ cần CEO duyệt các trường hợp ngoại lệ.'"},
+                        {question: "Nếu kết hợp các công cụ quản lý hiện có với một giải pháp tự động hóa, ta sẽ có những đột phá gì?", example: "Ví dụ: 'Một quy trình tự động hóa việc cập nhật dữ liệu báo cáo kinh doanh từ AMIS sang Google Sheet, loại bỏ việc nhập liệu thủ công hàng tháng.'"},
+                        {question: "Nếu hợp tác với một đối tác mới để thâm nhập một thị trường mới, ai là lựa chọn lý tưởng?", example: "Ví dụ: 'Một công ty xây dựng hoặc một đơn vị cung cấp vật tư công nghiệp đã có sẵn mạng lưới quan hệ tại các khu công nghiệp.'"}
+                    ],
+                    "Sản phẩm & Dịch vụ": [
+                        {question: "Điều gì xảy ra nếu chúng ta áp dụng một hệ thống định danh sản phẩm thống nhất cho toàn bộ sản phẩm chủ lực trước?", example: "Ví dụ: 'Giúp sản phẩm có lợi thế về chất lượng, dễ dàng truy xuất nguồn gốc và bảo hành, từ đó củng cố định vị thương hiệu.'"},
+                        {question: "Nếu biến quy trình bán hàng hiện tại thành một ứng dụng số, các bước chính sẽ là gì?", example: "Ví dụ: '1. Tiếp nhận lead. 2. Báo giá tự động. 3. Đặt hàng và theo dõi đơn. 4. Cập nhật trạng thái giao hàng và thông tin sản phẩm.'"},
+                        {question: "Có thể game hóa trải nghiệm bán hàng cho đội kinh doanh ở điểm nào?", example: "Ví dụ: 'Thưởng điểm/huy hiệu khi chốt được dự án lớn, hoặc khi cập nhật dữ liệu chính xác và đúng hạn.'"}
+                    ]
+                },
+                deepdive: {
+                    "Phân tích & Rủi ro": [
+                        {question: "Điểm yếu lớn nhất khi áp dụng một hệ thống quản lý dữ liệu sản phẩm mới là gì và cách khắc phục?", example: "Ví dụ: 'Điểm yếu: Tốn thời gian và nhân lực để nhập liệu ban đầu. Khắc phục: Tự động hóa quá trình nhập liệu hoặc thuê thêm nhân sự tạm thời.'"},
+                        {question: "Nguồn lực cần thiết để triển khai một chiến dịch truyền thông hiệu quả cho thương hiệu chủ lực là gì?", example: "Ví dụ: 'Ngân sách marketing, nhân sự phụ trách content, nhân sự phụ trách quảng cáo.'"},
+                        {question: "Những yếu tố nào khiến việc khai thác một thị trường mục tiêu mới gặp khó khăn?", example: "Ví dụ: 'Cạnh tranh về giá, cần quan hệ với các chủ đầu tư, và cần hiểu rõ đặc thù kỹ thuật của từng dự án.'"},
+                        {question: "Rủi ro lớn nhất của việc cấp quyền duyệt giá cho đội kinh doanh là gì?", example: "Ví dụ: 'Nhân sự có thể lạm dụng quyền hạn, dẫn đến việc bán hàng với lợi nhuận thấp hơn mong muốn.'"}
+                    ],
+                    "Phối hợp & Quyết định": [
+                        {question: "Ai sẽ là người chịu trách nhiệm chính cho việc chuẩn hóa quy trình [tên quy trình] và làm thế nào để đảm bảo sự phối hợp hiệu quả giữa các bộ phận liên quan?", example: "Ví dụ: 'Trưởng phòng kinh doanh sẽ chịu trách nhiệm chính, phối hợp với đội kho và kế toán để chuẩn hóa mã hàng và quy trình.'"},
+                        {question: "Làm thế nào để đội kinh doanh có thể chủ động cập nhật dữ liệu tồn kho/doanh thu?", example: "Ví dụ: 'Xây dựng một dashboard tổng hợp từ nhiều nguồn dữ liệu (Drive/AMIS/Excel) để họ có thể xem theo thời gian thực.'"}
+                    ]
+                },
+                evaluation: {
+                    "Đánh giá tiềm năng": [
+                        {question: "Ý tưởng nào mang lại giá trị lớn nhất (về doanh thu hoặc hiệu suất) với chi phí/nguồn lực thấp nhất?", example: "Ví dụ: 'Xây dựng một khung báo cáo kinh doanh đơn giản nhưng đủ dữ liệu để ra quyết định, không cần đầu tư nhiều nhưng có giá trị cao.'"},
+                        {question: "Ý tưởng nào vừa khả thi vừa khác biệt mạnh so với thị trường?", example: "Ví dụ: 'Chiến lược truyền thông cho thương hiệu chủ lực tập trung vào chất lượng vượt trội và công nghệ, trong khi đối thủ chỉ tập trung vào giá.'"}
+                    ],
+                    "Tác động dài hạn": [
+                        {question: "Ý tưởng nào giúp xây dựng thương hiệu chủ lực bền vững nhất?", example: "Ví dụ: 'Tập trung vào content giáo dục, chia sẻ kiến thức về thiết bị thông gió, làm mát công nghiệp và cách lựa chọn sản phẩm phù hợp.'"},
+                        {question: "Ý tưởng nào giúp giảm phụ thuộc vào các mối quan hệ cá nhân nhất?", example: "Ví dụ: 'Đẩy mạnh SEO và content marketing để thu hút lượng lead chất lượng ổn định, từ đó có thể chuyển đổi thành khách hàng.'"}
+                    ]
+                },
+                action: {
+                    "Lập kế hoạch chi tiết": [
+                        {question: "Bước tiếp theo cần làm ngay để giải quyết vấn đề dữ liệu rời rạc là gì?", example: "Ví dụ: 'Tổ chức một buổi họp với các phòng ban liên quan (Kế toán, Kho, Kinh doanh) để xác định các nguồn dữ liệu chính và thống nhất một hệ thống duy nhất.'"},
+                        {question: "Ai phê duyệt các quyết định quan trọng trong quá trình triển khai hệ thống quản lý dữ liệu sản phẩm mới?", example: "Ví dụ: 'Quản lý kho sẽ phê duyệt các quyết định về quy trình vận hành, và Ban giám đốc sẽ phê duyệt ngân sách đầu tư.'"},
+                        {question: "Chúng ta cần kiểm tra lại những gì trước khi triển khai quy trình duyệt giá mới?", example: "Ví dụ: 'Kiểm tra lại cơ cấu giá vốn của từng sản phẩm để đảm bảo chiết khấu không ảnh hưởng đến lợi nhuận. Lấy ý kiến phản hồi từ đội ngũ kinh doanh.'"},
+                        {question: "Quyết định nào cần tài liệu hóa ngay để truyền thông nội bộ?", example: "Ví dụ: 'Các quyết định về khung giá mới, quy trình duyệt giá, và phân quyền chiết khấu cho đội ngũ kinh doanh.'"}
+                    ],
+                    "Quản lý & Đo lường": [
+                        {question: "Làm sao đo lường hiệu quả của một chiến dịch truyền thông?", example: "Ví dụ: 'Theo dõi các chỉ số như lượng truy cập website, tương tác trên mạng xã hội, số lượng lead và tỷ lệ chuyển đổi từ các kênh online.'"},
+                        {question: "Khi nào chúng ta sẽ đánh giá lại dự án quản lý dữ liệu sản phẩm lần đầu tiên và dựa trên tiêu chí nào?", example: "Ví dụ: 'Sau một khoảng thời gian triển khai thử nghiệm tại một kho nhỏ, tổ chức họp để đánh giá mức độ chính xác của dữ liệu và sự thuận tiện của quy trình.'"},
+                        {question: "Khi nào dừng/tiếp tục (kill/scale) chiến lược thâm nhập một thị trường mới – tiêu chí cụ thể?", example: "Ví dụ: 'Nếu không có một số lượng lead dự án chất lượng nhất định sau một khoảng thời gian, chúng ta sẽ xem xét lại chiến lược. Nếu có, chúng ta sẽ tăng ngân sách.'"}
+                    ]
+                }
+            };
+
+            function renderQuestions(phase) {
+                const phaseQuestions = questions[phase];
+                let htmlContent = '';
+                for (const category in phaseQuestions) {
+                    htmlContent += `
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                            <div class="category-header bg-blue-50 flex justify-between items-center p-4 rounded-t-lg hover:bg-blue-100">
+                                <h4 class="font-semibold text-lg text-gray-800">${category}</h4>
+                                <span class="text-gray-500 rotate-icon">▼</span>
+                            </div>
+                            <ul class="question-list bg-white">
+                                ${phaseQuestions[category].map(item => `
+                                    <li class="p-4 border-t border-gray-200">
+                                        <div class="text-gray-700 font-medium"><strong style="font-weight: bold;">${item.question}</strong></div>
+                                        <div class="text-gray-600 mt-2 pl-4 text-sm">
+                                            <span>${item.example}</span>
+                                        </div>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                questionDisplay.innerHTML = htmlContent;
+
+                document.querySelectorAll('.category-header').forEach(header => {
+                    const list = header.nextElementSibling;
+                    const icon = header.querySelector('.rotate-icon');
+                    // Automatically expand the first category of the active phase for better UX
+                    if (header === document.querySelector(`#question-display .category-header`)) {
+                        list.classList.add('expanded');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    header.addEventListener('click', () => {
+                        list.classList.toggle('expanded');
+                        icon.style.transform = list.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    });
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const target = link.dataset.target;
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    contentSections.forEach(section => {
+                        if (section.id === target) {
+                            section.classList.remove('hidden');
+                        } else {
+                            section.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            methodCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const details = card.querySelector('.details');
+                    details.classList.toggle('hidden');
+                });
+            });
+
+            phaseButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedPhase = button.dataset.phase;
+                    phaseButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderQuestions(selectedPhase);
+                });
+            });
+
+            // Initial render
+            renderQuestions('warmup');
+        });
+    </script>
+</body>
+</html>
