@@ -10,9 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Calm Harmony (Light neutrals with a muted teal accent) -->
-    <!-- Application Structure Plan: A single-page dashboard structure. Section 1 presents the plan's rationale. Section 2 provides an interactive calculator to test the bonus mechanism. Section 3 visualizes the 2025 simulation data with interactive charts for trend analysis and drill-down into monthly details. A new Section 4 is added for user input and data management, allowing for customization and local data persistence, transforming the report into a dynamic tracking tool. The layout of this new section has been updated to place the data table below the input form, and the table itself now includes calculated bonus amounts for a more comprehensive view. The text in the "Development Investment" section has been revised to emphasize the collective contribution of all key positions (CHT, CHP, TPKD) rather than focusing solely on the TPKD role, as per user feedback. -->
-    <!-- Visualization & Content Choices: Rationale -> Goal: Persuade -> Method: Styled HTML with icons for clarity. Bonus Table -> Goal: Understand logic -> Method: Interactive calculator (Vanilla JS) for hands-on testing. Simulation Data -> Goal: Analyze trends & impact -> Method: Interactive Bar Chart (Target vs. Revenue) using Chart.js for visual comparison. New Input Form & Table -> Goal: Enable user customization & tracking -> Method: HTML form with local storage integration for persistence and a dynamic HTML table with bonus calculations and delete functionality. CONFIRMING NO SVG/Mermaid. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Application Structure Plan: A single-page dashboard structure. Section 1 presents the plan's rationale. Section 2 provides an interactive calculator to test the bonus mechanism and now includes an editable bonus rate table. Section 3 visualizes the 2025 simulation data with interactive charts for trend analysis. A new Section 4 is added for user input and data management, allowing for customization and local data persistence, transforming the report into a dynamic tracking tool. The text in the "Development Investment" section has been revised to emphasize the collective contribution of all key positions (CHT, CHP, TPKD). -->
+    <!-- Visualization & Content Choices: Rationale -> Goal: Persuade -> Method: Styled HTML with icons for clarity. Bonus Table -> Goal: Understand & customize logic -> Method: Editable table with input fields and a save button for real-time updates and persistence. Simulation Data -> Goal: Analyze trends & impact -> Method: Interactive Bar Chart (Target vs. Revenue) using Chart.js. New Input Form & Table -> Goal: Enable user customization & tracking -> Method: HTML form with local storage integration for persistence and a dynamic HTML table. CONFIRMING NO SVG/Mermaid. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -69,7 +68,6 @@
                         </div>
                         <p class="text-gray-600">Cơ chế thưởng mới giúp cân bằng giữa việc tạo động lực mạnh mẽ khi vượt chỉ tiêu và đảm bảo tính hợp lý của quỹ thưởng, giúp duy trì thu nhập cạnh tranh cho đội ngũ.</p>
                     </div>
-                    <!-- The user asked to modify this section to be more inclusive of the whole team. -->
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
                         <div class="flex items-center mb-3">
                              <svg class="h-8 w-8 text-teal-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
@@ -85,25 +83,30 @@
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Cơ chế Thưởng và Công cụ Ước tính</h2>
                 <div class="grid lg:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-lg font-semibold mb-4">Bảng tỷ lệ thưởng theo hiệu suất</h3>
+                        <h3 class="text-lg font-semibold mb-4">Bảng tỷ lệ thưởng theo hiệu suất (Có thể chỉnh sửa)</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="text-left py-3 px-4 font-semibold text-sm">Tỷ lệ hoàn thành</th>
-                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHT</th>
-                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHP</th>
-                                        <th class="text-center py-3 px-4 font-semibold text-sm">TPKD</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHT (%)</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHP (%)</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">TPKD (%)</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-gray-700">
-                                    <tr class="border-b"><td class="py-3 px-4">&lt; 70%</td><td class="text-center py-3 px-4">0%</td><td class="text-center py-3 px-4">0%</td><td class="text-center py-3 px-4">0%</td></tr>
-                                    <tr class="border-b"><td class="py-3 px-4">70% – &lt; 90%</td><td class="text-center py-3 px-4">0.4%</td><td class="text-center py-3 px-4">0.2%</td><td class="text-center py-3 px-4">0.6%</td></tr>
-                                    <tr class="border-b"><td class="py-3 px-4">90% – &lt; 100%</td><td class="text-center py-3 px-4">0.6%</td><td class="text-center py-3 px-4">0.3%</td><td class="text-center py-3 px-4">0.8%</td></tr>
-                                    <tr class="border-b"><td class="py-3 px-4">100% – &lt; 120%</td><td class="text-center py-3 px-4">0.8%</td><td class="text-center py-3 px-4">0.4%</td><td class="text-center py-3 px-4">1.0%</td></tr>
-                                    <tr><td class="py-3 px-4">≥ 120%</td><td class="text-center py-3 px-4">1.0%</td><td class="text-center py-3 px-4">0.5%</td><td class="text-center py-3 px-4">1.2%</td></tr>
+                                <tbody id="bonusRateTableBody" class="text-gray-700">
+                                    <!-- Table rows will be dynamically populated by JS -->
+                                    <tr class="border-b"><td class="py-3 px-4">&lt; 70%</td><td class="text-center py-3 px-4">0</td><td class="text-center py-3 px-4">0</td><td class="text-center py-3 px-4">0</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">70% – &lt; 90%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_70" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_70" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_70" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">90% – &lt; 100%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_90" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_90" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_90" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">100% – &lt; 120%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_100" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_100" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_100" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr><td class="py-3 px-4">≥ 120%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_120" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_120" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_120" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <button id="saveRatesBtn" class="bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Cập nhật tỷ lệ</button>
+                            <span id="saveStatus" class="text-sm text-green-600 opacity-0 transition-opacity duration-300">Đã cập nhật!</span>
                         </div>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
@@ -233,6 +236,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Dữ liệu ban đầu
             const initialData = [
                 { time: '01/2025', target: 1000000000, revenue: 495541000 },
                 { time: '02/2025', target: 1000000000, revenue: 629104000 },
@@ -244,6 +248,15 @@
             ];
 
             let userDefinedData = JSON.parse(localStorage.getItem('kpiData')) || [];
+            
+            // Tỷ lệ thưởng mặc định
+            const defaultBonusRates = {
+                '70': { cht: 0.004, chp: 0.002, tpkd: 0.006 },
+                '90': { cht: 0.006, chp: 0.003, tpkd: 0.008 },
+                '100': { cht: 0.008, chp: 0.004, tpkd: 0.010 },
+                '120': { cht: 0.010, chp: 0.005, tpkd: 0.012 },
+            };
+            let bonusRates = JSON.parse(localStorage.getItem('bonusRates')) || defaultBonusRates;
             
             const revenueChartCtx = document.getElementById('revenueChart').getContext('2d');
             let revenueChartInstance = null;
@@ -260,16 +273,24 @@
 
             const parseNumberFromFormattedString = (str) => {
                 if (typeof str !== 'string') return NaN;
-                const cleanedString = str.replace(/\./g, '');
+                const cleanedString = str.replace(/[^0-9]/g, '');
                 return parseFloat(cleanedString);
+            };
+            
+            const parseBonusRateFromInput = (str) => {
+                if (typeof str !== 'string') return 0;
+                // Replace comma with dot for consistent parsing
+                const cleanedString = str.replace(',', '.');
+                const value = parseFloat(cleanedString);
+                return isNaN(value) ? 0 : value / 100;
             };
 
             const getBonusRates = (completion) => {
                 if (completion < 0.7) return { cht: 0, chp: 0, tpkd: 0 };
-                if (completion < 0.9) return { cht: 0.004, chp: 0.002, tpkd: 0.006 };
-                if (completion < 1.0) return { cht: 0.006, chp: 0.003, tpkd: 0.008 };
-                if (completion < 1.2) return { cht: 0.008, chp: 0.004, tpkd: 0.010 };
-                return { cht: 0.010, chp: 0.005, tpkd: 0.012 };
+                if (completion < 0.9) return bonusRates['70'];
+                if (completion < 1.0) return bonusRates['90'];
+                if (completion < 1.2) return bonusRates['100'];
+                return bonusRates['120'];
             };
 
             const calculateBonuses = (revenue, target) => {
@@ -283,6 +304,66 @@
                 };
                 const total = bonuses.cht + bonuses.chp + bonuses.tpkd;
                 return { completion, rates, bonuses, total };
+            };
+            
+            const renderBonusRateTable = () => {
+                document.getElementById('rate_cht_70').value = (bonusRates['70'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_70').value = (bonusRates['70'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_70').value = (bonusRates['70'].tpkd * 100).toFixed(2);
+                
+                document.getElementById('rate_cht_90').value = (bonusRates['90'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_90').value = (bonusRates['90'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_90').value = (bonusRates['90'].tpkd * 100).toFixed(2);
+                
+                document.getElementById('rate_cht_100').value = (bonusRates['100'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_100').value = (bonusRates['100'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_100').value = (bonusRates['100'].tpkd * 100).toFixed(2);
+
+                document.getElementById('rate_cht_120').value = (bonusRates['120'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_120').value = (bonusRates['120'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_120').value = (bonusRates['120'].tpkd * 100).toFixed(2);
+            };
+
+            const updateAndSaveBonusRates = () => {
+                // Read new rates from the input fields
+                const newRates = {
+                    '70': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_70').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_70').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_70').value),
+                    },
+                    '90': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_90').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_90').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_90').value),
+                    },
+                    '100': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_100').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_100').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_100').value),
+                    },
+                    '120': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_120').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_120').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_120').value),
+                    },
+                };
+                
+                bonusRates = newRates;
+                localStorage.setItem('bonusRates', JSON.stringify(bonusRates));
+                
+                // Show a brief success message
+                const saveStatus = document.getElementById('saveStatus');
+                saveStatus.classList.remove('opacity-0');
+                saveStatus.classList.add('opacity-100');
+                setTimeout(() => {
+                    saveStatus.classList.remove('opacity-100');
+                    saveStatus.classList.add('opacity-0');
+                }, 2000);
+
+                // FIX: Call the main render function to update all sections, and explicitly call performCalculation.
+                renderApp();
+                performCalculation(); // FIX: Explicitly call calculation after rates are saved.
             };
 
             const renderDashboard = () => {
@@ -463,9 +544,9 @@
             };
 
             const renderApp = () => {
+                renderBonusRateTable();
                 renderDashboard();
                 renderUserTable();
-                performCalculation();
             };
 
             // Calculator Logic
@@ -516,11 +597,18 @@
             setupUserFormFormatter(document.getElementById('inputRevenue'));
             
             document.getElementById('dataInputForm').addEventListener('submit', saveNewData);
+            document.getElementById('saveRatesBtn').addEventListener('click', updateAndSaveBonusRates);
+            // FIX: Explicitly add a click listener to the calculate button
+            document.getElementById('calculateBtn').addEventListener('click', performCalculation);
 
+            // FIX: Di chuyển các dòng này lên trước khi gọi renderApp() để đảm bảo
+            // công cụ ước tính có giá trị ban đầu và có thể hiển thị kết quả ngay.
             targetInput.value = formatNumberWithDots('2200000000');
             revenueInput.value = formatNumberWithDots('1950661000');
             
             renderApp();
+            // FIX: Call performCalculation once on initial load.
+            performCalculation();
         });
     </script>
 </body>
