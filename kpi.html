@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng điều khiển Kế hoạch KPI & Thưởng - Showroom iFan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Light neutrals with a muted teal accent) -->
+    <!-- Application Structure Plan: A single-page dashboard structure. Section 1 presents the plan's rationale. Section 2 provides an interactive calculator to test the bonus mechanism. Section 3 visualizes the 2025 simulation data with interactive charts for trend analysis and drill-down into monthly details. A new Section 4 is added for user input and data management, allowing for customization and local data persistence, transforming the report into a dynamic tracking tool. The layout of this new section has been updated to place the data table below the input form, and the table itself now includes calculated bonus amounts for a more comprehensive view. The text in the "Development Investment" section has been revised to emphasize the collective contribution of all key positions (CHT, CHP, TPKD) rather than focusing solely on the TPKD role, as per user feedback. -->
+    <!-- Visualization & Content Choices: Rationale -> Goal: Persuade -> Method: Styled HTML with icons for clarity. Bonus Table -> Goal: Understand logic -> Method: Interactive calculator (Vanilla JS) for hands-on testing. Simulation Data -> Goal: Analyze trends & impact -> Method: Interactive Bar Chart (Target vs. Revenue) using Chart.js for visual comparison. New Input Form & Table -> Goal: Enable user customization & tracking -> Method: HTML form with local storage integration for persistence and a dynamic HTML table with bonus calculations and delete functionality. CONFIRMING NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .metric-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold leading-tight text-gray-900">Bảng điều khiển Kế hoạch KPI & Thưởng</h1>
+            <p class="text-gray-500 mt-1">Showroom iFan – Quận 12</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="space-y-12">
+
+            <!-- Section 1: Rationale -->
+            <section id="rationale" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Ý nghĩa và Cơ sở xây dựng kế hoạch</h2>
+                <p class="text-gray-600 mb-6">Kế hoạch này được xây dựng dựa trên sự phân tích dữ liệu thực tế nhằm tạo ra một cơ chế thưởng công bằng, minh bạch, và thúc đẩy tinh thần làm việc của đội ngũ.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-8 w-8 text-teal-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 10v-1m0 0c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2m0 0c-1.11 0-2.08-.402-2.599-1M12 4V3m0 18v-1"/></svg>
+                            <h3 class="text-lg font-semibold text-gray-800">Tạo động lực cân bằng</h3>
+                        </div>
+                        <p class="text-gray-600">Cơ chế thưởng mới giúp cân bằng giữa việc tạo động lực mạnh mẽ khi vượt chỉ tiêu và đảm bảo tính hợp lý của quỹ thưởng, giúp duy trì thu nhập cạnh tranh cho đội ngũ.</p>
+                    </div>
+                    <!-- The user asked to modify this section to be more inclusive of the whole team. -->
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-teal-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                            <h3 class="text-lg font-semibold text-gray-800">Đầu tư vào sự phát triển bền vững</h3>
+                        </div>
+                        <p class="text-gray-600">Mức thưởng được xây dựng để ghi nhận đóng góp của toàn bộ đội ngũ. CHT và CHP đóng vai trò quan trọng trong việc quản lý, vận hành và trực tiếp bán hàng, trong khi TPKD tập trung vào việc định hướng chiến lược và phát triển thị trường, cùng nhau tạo nên sự phát triển bền vững cho showroom.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Bonus Mechanism & Calculator -->
+            <section id="mechanism" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Cơ chế Thưởng và Công cụ Ước tính</h2>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Bảng tỷ lệ thưởng theo hiệu suất</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="text-left py-3 px-4 font-semibold text-sm">Tỷ lệ hoàn thành</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHT</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHP</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">TPKD</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700">
+                                    <tr class="border-b"><td class="py-3 px-4">&lt; 70%</td><td class="text-center py-3 px-4">0%</td><td class="text-center py-3 px-4">0%</td><td class="text-center py-3 px-4">0%</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">70% – &lt; 90%</td><td class="text-center py-3 px-4">0.4%</td><td class="text-center py-3 px-4">0.2%</td><td class="text-center py-3 px-4">0.6%</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">90% – &lt; 100%</td><td class="text-center py-3 px-4">0.6%</td><td class="text-center py-3 px-4">0.3%</td><td class="text-center py-3 px-4">0.8%</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">100% – &lt; 120%</td><td class="text-center py-3 px-4">0.8%</td><td class="text-center py-3 px-4">0.4%</td><td class="text-center py-3 px-4">1.0%</td></tr>
+                                    <tr><td class="py-3 px-4">≥ 120%</td><td class="text-center py-3 px-4">1.0%</td><td class="text-center py-3 px-4">0.5%</td><td class="text-center py-3 px-4">1.2%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold mb-4">Ước tính thưởng nhanh</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="targetInput" class="block text-sm font-medium text-gray-700">Chỉ tiêu (Target)</label>
+                                <input type="text" id="targetInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 2.200.000.000">
+                            </div>
+                            <div>
+                                <label for="revenueInput" class="block text-sm font-medium text-gray-700">Doanh thu</label>
+                                <input type="text" id="revenueInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.950.661.000">
+                            </div>
+                            <button id="calculateBtn" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Tính toán</button>
+                        </div>
+                        <div id="result" class="mt-6 space-y-3 hidden">
+                             <div class="flex justify-between items-center text-lg font-semibold">
+                                <span>Tỷ lệ hoàn thành:</span>
+                                <span id="completionRate" class="text-teal-600"></span>
+                            </div>
+                            <div class="border-t pt-3 space-y-2">
+                                <p class="font-medium">Ước tính thưởng:</p>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">CHT:</span> <span id="bonusCHT"></span></div>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">CHP:</span> <span id="bonusCHP"></span></div>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">TPKD:</span> <span id="bonusTPKD"></span></div>
+                                <div class="flex justify-between font-bold border-t mt-2 pt-2"><span class="text-gray-800">Tổng quỹ thưởng:</span> <span id="totalBonus" class="text-blue-600"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Simulation -->
+            <section id="simulation" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Mô phỏng & Phân tích Dữ liệu 2025</h2>
+                <p class="text-gray-600 mb-6">Biểu đồ tương tác thể hiện hiệu suất kinh doanh và quỹ thưởng dự kiến dựa trên dữ liệu thực tế.</p>
+                
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Tỷ lệ hoàn thành TB</p>
+                        <p id="avgCompletion" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Tổng quỹ thưởng</p>
+                        <p id="totalFund" class="text-3xl font-bold text-blue-600"></p>
+                    </div>
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Số tháng không thưởng</p>
+                        <p id="zeroBonusMonths" class="text-3xl font-bold text-red-500"></p>
+                    </div>
+                </div>
+
+                <div class="chart-container mb-8">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Thời gian</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Chỉ tiêu</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Doanh thu</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Tỷ lệ</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Tổng quỹ thưởng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="simulationTableBody" class="text-gray-700">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 4: User Data Input and Management -->
+            <section id="userData" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Thêm & Quản lý dữ liệu mới</h2>
+                <div class="space-y-8">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold mb-4">Nhập dữ liệu mới</h3>
+                        <form id="dataInputForm" class="space-y-4">
+                            <div>
+                                <label for="inputTime" class="block text-sm font-medium text-gray-700">Thời gian (VD: 08/2025)</label>
+                                <input type="text" id="inputTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 08/2025" required>
+                            </div>
+                            <div>
+                                <label for="inputTarget" class="block text-sm font-medium text-gray-700">Chỉ tiêu</label>
+                                <input type="text" id="inputTarget" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.800.000.000" required>
+                            </div>
+                            <div>
+                                <label for="inputRevenue" class="block text-sm font-medium text-gray-700">Doanh thu</label>
+                                <input type="text" id="inputRevenue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.500.000.000" required>
+                            </div>
+                            <button type="submit" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Lưu dữ liệu</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Dữ liệu đã nhập</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="text-left py-3 px-4 font-semibold text-sm">Thời gian</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Chỉ tiêu</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Doanh thu</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng CHT</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng CHP</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng TPKD</th>
+                                        <th class="py-3 px-4 font-semibold text-sm">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userDataTableBody" class="text-gray-700">
+                                    <tr><td colspan="7" class="text-center py-4">Chưa có dữ liệu nào được lưu.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-white mt-12 border-t">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2025 Kế hoạch KPI Showroom iFan. Xây dựng cho mục đích trình bày nội bộ.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const initialData = [
+                { time: '01/2025', target: 1000000000, revenue: 495541000 },
+                { time: '02/2025', target: 1000000000, revenue: 629104000 },
+                { time: '03/2025', target: 1300000000, revenue: 1441281000 },
+                { time: '04/2025', target: 2200000000, revenue: 1907206000 },
+                { time: '05/2025', target: 2200000000, revenue: 1950661000 },
+                { time: '06/2025', target: 2100000000, revenue: 1195584000 },
+                { time: '07/2025', target: 1600000000, revenue: 1349351000 },
+            ];
+
+            let userDefinedData = JSON.parse(localStorage.getItem('kpiData')) || [];
+            
+            const revenueChartCtx = document.getElementById('revenueChart').getContext('2d');
+            let revenueChartInstance = null;
+
+            const formatCurrency = (value) => {
+                if (typeof value !== 'number') return 'N/A';
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+            };
+            
+            const formatNumberWithDots = (number) => {
+                const parts = String(number).replace(/[^0-9]/g, '');
+                return parts.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            };
+
+            const parseNumberFromFormattedString = (str) => {
+                if (typeof str !== 'string') return NaN;
+                const cleanedString = str.replace(/\./g, '');
+                return parseFloat(cleanedString);
+            };
+
+            const getBonusRates = (completion) => {
+                if (completion < 0.7) return { cht: 0, chp: 0, tpkd: 0 };
+                if (completion < 0.9) return { cht: 0.004, chp: 0.002, tpkd: 0.006 };
+                if (completion < 1.0) return { cht: 0.006, chp: 0.003, tpkd: 0.008 };
+                if (completion < 1.2) return { cht: 0.008, chp: 0.004, tpkd: 0.010 };
+                return { cht: 0.010, chp: 0.005, tpkd: 0.012 };
+            };
+
+            const calculateBonuses = (revenue, target) => {
+                if (target === 0) return { completion: 0, rates: { cht: 0, chp: 0, tpkd: 0 }, bonuses: { cht: 0, chp: 0, tpkd: 0 }, total: 0 };
+                const completion = revenue / target;
+                const rates = getBonusRates(completion);
+                const bonuses = {
+                    cht: revenue * rates.cht,
+                    chp: revenue * rates.chp,
+                    tpkd: revenue * rates.tpkd,
+                };
+                const total = bonuses.cht + bonuses.chp + bonuses.tpkd;
+                return { completion, rates, bonuses, total };
+            };
+
+            const renderDashboard = () => {
+                const combinedData = [...initialData, ...userDefinedData].sort((a, b) => {
+                    const [monthA, yearA] = a.time.split('/').map(Number);
+                    const [monthB, yearB] = b.time.split('/').map(Number);
+                    if (yearA !== yearB) return yearA - yearB;
+                    return monthA - monthB;
+                });
+
+                const processedData = combinedData.map(d => {
+                    const bonusInfo = calculateBonuses(d.revenue, d.target);
+                    return { ...d, ...bonusInfo };
+                });
+
+                const totalCompletion = processedData.reduce((acc, cur) => acc + cur.completion, 0);
+                document.getElementById('avgCompletion').textContent = (totalCompletion / processedData.length * 100).toFixed(2) + '%';
+
+                const totalFund = processedData.reduce((acc, cur) => acc + cur.total, 0);
+                document.getElementById('totalFund').textContent = formatCurrency(totalFund);
+
+                const zeroBonusMonths = processedData.filter(d => d.total === 0).length;
+                document.getElementById('zeroBonusMonths').textContent = `${zeroBonusMonths} tháng`;
+
+                const simulationTableBody = document.getElementById('simulationTableBody');
+                simulationTableBody.innerHTML = '';
+                processedData.forEach(d => {
+                    const row = document.createElement('tr');
+                    row.classList.add('border-b');
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${d.time}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.target)}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.revenue)}</td>
+                        <td class="text-right py-3 px-4 font-medium ${d.completion < 0.7 ? 'text-red-500' : d.completion >= 1 ? 'text-green-600' : 'text-yellow-600'}">${(d.completion * 100).toFixed(2)}%</td>
+                        <td class="text-right py-3 px-4 font-semibold text-blue-600">${formatCurrency(d.total)}</td>
+                    `;
+                    simulationTableBody.appendChild(row);
+                });
+
+                if (revenueChartInstance) {
+                    revenueChartInstance.destroy();
+                }
+
+                revenueChartInstance = new Chart(revenueChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: processedData.map(d => d.time),
+                        datasets: [
+                            {
+                                label: 'Doanh thu',
+                                data: processedData.map(d => d.revenue),
+                                backgroundColor: processedData.map(d => {
+                                    if (d.completion < 0.7) return 'rgba(239, 68, 68, 0.6)';
+                                    if (d.completion >= 1.0) return 'rgba(22, 163, 74, 0.6)';
+                                    return 'rgba(234, 179, 8, 0.6)';
+                                }),
+                                borderColor: processedData.map(d => {
+                                    if (d.completion < 0.7) return 'rgba(239, 68, 68, 1)';
+                                    if (d.completion >= 1.0) return 'rgba(22, 163, 74, 1)';
+                                    return 'rgba(234, 179, 8, 1)';
+                                }),
+                                borderWidth: 1,
+                                order: 2,
+                            },
+                            {
+                                label: 'Chỉ tiêu',
+                                data: processedData.map(d => d.target),
+                                type: 'line',
+                                borderColor: 'rgba(59, 130, 246, 1)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 4,
+                                pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                                order: 1,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        return (value / 1e9).toFixed(1) + ' tỷ';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += formatCurrency(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+            };
+
+            const renderUserTable = () => {
+                const userDataTableBody = document.getElementById('userDataTableBody');
+                userDataTableBody.innerHTML = '';
+                if (userDefinedData.length === 0) {
+                    userDataTableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4">Chưa có dữ liệu nào được lưu.</td></tr>';
+                    return;
+                }
+                userDefinedData.forEach((d, index) => {
+                    const bonusInfo = calculateBonuses(d.revenue, d.target);
+                    const row = document.createElement('tr');
+                    row.classList.add('border-b');
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${d.time}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.target)}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.revenue)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.cht)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.chp)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.tpkd)}</td>
+                        <td class="text-center py-3 px-4"><button data-index="${index}" class="delete-btn text-red-500 hover:text-red-700">Xóa</button></td>
+                    `;
+                    userDataTableBody.appendChild(row);
+                });
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        userDefinedData.splice(index, 1);
+                        localStorage.setItem('kpiData', JSON.stringify(userDefinedData));
+                        renderApp();
+                    });
+                });
+            };
+
+            const saveNewData = (e) => {
+                e.preventDefault();
+                const inputTime = document.getElementById('inputTime').value;
+                const inputTarget = parseNumberFromFormattedString(document.getElementById('inputTarget').value);
+                const inputRevenue = parseNumberFromFormattedString(document.getElementById('inputRevenue').value);
+
+                if (!inputTime || isNaN(inputTarget) || isNaN(inputRevenue) || inputTarget <= 0) {
+                    return;
+                }
+                
+                // Check if the time already exists and update it
+                const existingIndex = userDefinedData.findIndex(item => item.time === inputTime);
+                if (existingIndex !== -1) {
+                    userDefinedData[existingIndex].target = inputTarget;
+                    userDefinedData[existingIndex].revenue = inputRevenue;
+                } else {
+                    userDefinedData.push({
+                        time: inputTime,
+                        target: inputTarget,
+                        revenue: inputRevenue
+                    });
+                }
+                
+                localStorage.setItem('kpiData', JSON.stringify(userDefinedData));
+                document.getElementById('dataInputForm').reset();
+                renderApp();
+            };
+
+            const renderApp = () => {
+                renderDashboard();
+                renderUserTable();
+                performCalculation();
+            };
+
+            // Calculator Logic
+            const calculateBtn = document.getElementById('calculateBtn');
+            const targetInput = document.getElementById('targetInput');
+            const revenueInput = document.getElementById('revenueInput');
+            const resultDiv = document.getElementById('result');
+
+            function performCalculation() {
+                const target = parseNumberFromFormattedString(targetInput.value);
+                const revenue = parseNumberFromFormattedString(revenueInput.value);
+
+                if (isNaN(target) || isNaN(revenue) || target <= 0) {
+                    resultDiv.classList.add('hidden');
+                    return;
+                }
+
+                const result = calculateBonuses(revenue, target);
+
+                document.getElementById('completionRate').textContent = (result.completion * 100).toFixed(2) + '%';
+                document.getElementById('bonusCHT').textContent = formatCurrency(result.bonuses.cht);
+                document.getElementById('bonusCHP').textContent = formatCurrency(result.bonuses.chp);
+                document.getElementById('bonusTPKD').textContent = formatCurrency(result.bonuses.tpkd);
+                document.getElementById('totalBonus').textContent = formatCurrency(result.total);
+
+                resultDiv.classList.remove('hidden');
+            }
+
+            const setupInputFormatter = (inputElement) => {
+                inputElement.addEventListener('input', function(event) {
+                    const value = this.value.replace(/[^0-9]/g, '');
+                    this.value = formatNumberWithDots(value);
+                    performCalculation();
+                });
+            };
+            
+            const setupUserFormFormatter = (inputElement) => {
+                inputElement.addEventListener('input', function(event) {
+                    const value = this.value.replace(/[^0-9]/g, '');
+                    this.value = formatNumberWithDots(value);
+                });
+            };
+
+            setupInputFormatter(targetInput);
+            setupInputFormatter(revenueInput);
+            
+            setupUserFormFormatter(document.getElementById('inputTarget'));
+            setupUserFormFormatter(document.getElementById('inputRevenue'));
+            
+            document.getElementById('dataInputForm').addEventListener('submit', saveNewData);
+
+            targetInput.value = formatNumberWithDots('2200000000');
+            revenueInput.value = formatNumberWithDots('1950661000');
+            
+            renderApp();
+        });
+    </script>
+</body>
+</html>
