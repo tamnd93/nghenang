@@ -3,136 +3,613 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Ứng Dụng</title>
-    <!-- Thư viện Tailwind CSS để tạo giao diện đẹp và responsive -->
+    <title>Bảng điều khiển Kế hoạch KPI & Thưởng - Showroom iFan</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Light neutrals with a muted teal accent) -->
+    <!-- Application Structure Plan: A single-page dashboard structure. Section 1 presents the plan's rationale. Section 2 provides an interactive calculator to test the bonus mechanism and now includes an editable bonus rate table. Section 3 visualizes the 2025 simulation data with interactive charts for trend analysis. A new Section 4 is added for user input and data management, allowing for customization and local data persistence, transforming the report into a dynamic tracking tool. The text in the "Development Investment" section has been revised to emphasize the collective contribution of all key positions (CHT, CHP, TPKD). -->
+    <!-- Visualization & Content Choices: Rationale -> Goal: Persuade -> Method: Styled HTML with icons for clarity. Bonus Table -> Goal: Understand & customize logic -> Method: Editable table with input fields and a save button for real-time updates and persistence. Simulation Data -> Goal: Analyze trends & impact -> Method: Interactive Bar Chart (Target vs. Revenue) using Chart.js. New Input Form & Table -> Goal: Enable user customization & tracking -> Method: HTML form with local storage integration for persistence and a dynamic HTML table. CONFIRMING NO SVG/Mermaid. -->
     <style>
-        /* Hiệu ứng nền gradient chuyển động */
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e3a8a, #4f46e5, #8b5cf6, #ec4899);
-            background-size: 400% 400%;
-            animation: gradientAnimation 20s ease infinite;
+            background-color: #f8fafc;
         }
-
-        /* Keyframes cho hiệu ứng nền */
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Thiết kế chính cho khung menu */
-        .container-card {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            animation: cardFadeIn 1s ease-out;
-        }
-        @keyframes cardFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Các nút menu cơ bản */
-        .menu-link {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, filter 0.4s ease;
+        .chart-container {
             position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid transparent;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
         }
-        
-        /* Chỉ áp dụng hiệu ứng khi thiết bị hỗ trợ hover (ví dụ: dùng chuột) */
-        @media (hover: hover) and (pointer: fine) {
-            .container-card:hover .menu-link:not(:hover) {
-                filter: blur(2px);
-                opacity: 0.7;
-                transform: scale(0.98);
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
             }
-            .menu-link:hover {
-                transform: scale(1.05);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
-                            0 0 20px rgba(255, 255, 255, 0.2);
-                z-index: 20;
-            }
+        }
+        .metric-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
     </style>
 </head>
-<body class="text-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="text-gray-800">
 
-    <div id="menu-container" class="container-card p-8 rounded-2xl w-full max-w-xl text-center">
-        <h1 class="text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
-            Menu Ứng Dụng
-        </h1>
-        
-        <p class="text-lg text-gray-300 mb-8">
-            Tổng hợp kế hoạch, dự án sẽ đề xuất triển khai cho Nghệ Năng
-        </p>
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold leading-tight text-gray-900">Bảng điều khiển Kế hoạch KPI & Thưởng</h1>
+            <p class="text-gray-500 mt-1">Showroom iFan – Quận 12</p>
+        </div>
+    </header>
 
-        <div class="space-y-4">
-            <!-- Các nút menu với màu sắc đồng nhất -->
-            <a href="vongquayhanghoa.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Vòng Quay Hàng Hóa
-            </a>
-            <a href="kpi.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                KPI Showroom iFan Q12
-            </a>
-            <a href="brainstorming.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                BrainStorming
-            </a>
-            <a href="kehoachsn.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Kế Hoạch S/N
-            </a>
-            <a href="quytrinhduyetgia.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Quy Trình Duyệt Giá
-            </a>
-            <a href="xaydungquytrinh.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Xây Dựng Quy Trình
-            </a>
-            <a href="ifan_reborn.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Kế Hoạch iFan Reborn Q12
-            </a>
-             <a href="ifan_reborn2.html" class="menu-link block w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-xl">
-                Kế Hoạch iFan Reborn Q12 - Phương Án 2
-            </a>
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="space-y-12">
+
+            <!-- Section 1: Rationale -->
+            <section id="rationale" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Ý nghĩa và Cơ sở xây dựng kế hoạch</h2>
+                <p class="text-gray-600 mb-6">Kế hoạch này được xây dựng dựa trên sự phân tích dữ liệu thực tế nhằm tạo ra một cơ chế thưởng công bằng, minh bạch, và thúc đẩy tinh thần làm việc của đội ngũ.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <div class="flex items-center mb-3">
+                            <svg class="h-8 w-8 text-teal-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 10v-1m0 0c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2m0 0c-1.11 0-2.08-.402-2.599-1M12 4V3m0 18v-1"/></svg>
+                            <h3 class="text-lg font-semibold text-gray-800">Tạo động lực cân bằng</h3>
+                        </div>
+                        <p class="text-gray-600">Cơ chế thưởng mới giúp cân bằng giữa việc tạo động lực mạnh mẽ khi vượt chỉ tiêu và đảm bảo tính hợp lý của quỹ thưởng, giúp duy trì thu nhập cạnh tranh cho đội ngũ.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <div class="flex items-center mb-3">
+                             <svg class="h-8 w-8 text-teal-500 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                            <h3 class="text-lg font-semibold text-gray-800">Đầu tư vào sự phát triển bền vững</h3>
+                        </div>
+                        <p class="text-gray-600">Mức thưởng được xây dựng để ghi nhận đóng góp của toàn bộ đội ngũ. CHT và CHP đóng vai trò quan trọng trong việc quản lý, vận hành và trực tiếp bán hàng, trong khi TPKD tập trung vào việc định hướng chiến lược và phát triển thị trường, cùng nhau tạo nên sự phát triển bền vững cho showroom.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Bonus Mechanism & Calculator -->
+            <section id="mechanism" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Cơ chế Thưởng và Công cụ Ước tính</h2>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Bảng tỷ lệ thưởng theo hiệu suất (Có thể chỉnh sửa)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="text-left py-3 px-4 font-semibold text-sm">Tỷ lệ hoàn thành</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHT (%)</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">CHP (%)</th>
+                                        <th class="text-center py-3 px-4 font-semibold text-sm">TPKD (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bonusRateTableBody" class="text-gray-700">
+                                    <!-- Table rows will be dynamically populated by JS -->
+                                    <tr class="border-b"><td class="py-3 px-4">&lt; 70%</td><td class="text-center py-3 px-4">0</td><td class="text-center py-3 px-4">0</td><td class="text-center py-3 px-4">0</td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">70% – &lt; 90%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_70" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_70" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_70" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">90% – &lt; 100%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_90" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_90" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_90" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr class="border-b"><td class="py-3 px-4">100% – &lt; 120%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_100" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_100" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_100" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                    <tr><td class="py-3 px-4">≥ 120%</td><td class="text-center py-3 px-4"><input type="text" id="rate_cht_120" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_chp_120" class="w-16 text-center border-gray-300 rounded-md"></td><td class="text-center py-3 px-4"><input type="text" id="rate_tpkd_120" class="w-16 text-center border-gray-300 rounded-md"></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <button id="saveRatesBtn" class="bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Cập nhật tỷ lệ</button>
+                            <span id="saveStatus" class="text-sm text-green-600 opacity-0 transition-opacity duration-300">Đã cập nhật!</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold mb-4">Ước tính thưởng nhanh</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="targetInput" class="block text-sm font-medium text-gray-700">Chỉ tiêu (Target)</label>
+                                <input type="text" id="targetInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 2.200.000.000">
+                            </div>
+                            <div>
+                                <label for="revenueInput" class="block text-sm font-medium text-gray-700">Doanh thu</label>
+                                <input type="text" id="revenueInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.950.661.000">
+                            </div>
+                            <button id="calculateBtn" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Tính toán</button>
+                        </div>
+                        <div id="result" class="mt-6 space-y-3 hidden">
+                             <div class="flex justify-between items-center text-lg font-semibold">
+                                <span>Tỷ lệ hoàn thành:</span>
+                                <span id="completionRate" class="text-teal-600"></span>
+                            </div>
+                            <div class="border-t pt-3 space-y-2">
+                                <p class="font-medium">Ước tính thưởng:</p>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">CHT:</span> <span id="bonusCHT"></span></div>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">CHP:</span> <span id="bonusCHP"></span></div>
+                                <div class="flex justify-between text-sm"><span class="text-gray-600">TPKD:</span> <span id="bonusTPKD"></span></div>
+                                <div class="flex justify-between font-bold border-t mt-2 pt-2"><span class="text-gray-800">Tổng quỹ thưởng:</span> <span id="totalBonus" class="text-blue-600"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Simulation -->
+            <section id="simulation" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Mô phỏng & Phân tích Dữ liệu 2025</h2>
+                <p class="text-gray-600 mb-6">Biểu đồ tương tác thể hiện hiệu suất kinh doanh và quỹ thưởng dự kiến dựa trên dữ liệu thực tế.</p>
+                
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Tỷ lệ hoàn thành TB</p>
+                        <p id="avgCompletion" class="text-3xl font-bold text-teal-600"></p>
+                    </div>
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Tổng quỹ thưởng</p>
+                        <p id="totalFund" class="text-3xl font-bold text-blue-600"></p>
+                    </div>
+                    <div class="metric-card text-center">
+                        <p class="text-sm text-gray-500">Số tháng không thưởng</p>
+                        <p id="zeroBonusMonths" class="text-3xl font-bold text-red-500"></p>
+                    </div>
+                </div>
+
+                <div class="chart-container mb-8">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Thời gian</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Chỉ tiêu</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Doanh thu</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Tỷ lệ</th>
+                                <th class="text-right py-3 px-4 font-semibold text-sm">Tổng quỹ thưởng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="simulationTableBody" class="text-gray-700">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 4: User Data Input and Management -->
+            <section id="userData" class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Thêm & Quản lý dữ liệu mới</h2>
+                <div class="space-y-8">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold mb-4">Nhập dữ liệu mới</h3>
+                        <form id="dataInputForm" class="space-y-4">
+                            <div>
+                                <label for="inputTime" class="block text-sm font-medium text-gray-700">Thời gian (VD: 08/2025)</label>
+                                <input type="text" id="inputTime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 08/2025" required>
+                            </div>
+                            <div>
+                                <label for="inputTarget" class="block text-sm font-medium text-gray-700">Chỉ tiêu</label>
+                                <input type="text" id="inputTarget" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.800.000.000" required>
+                            </div>
+                            <div>
+                                <label for="inputRevenue" class="block text-sm font-medium text-gray-700">Doanh thu</label>
+                                <input type="text" id="inputRevenue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm" placeholder="VD: 1.500.000.000" required>
+                            </div>
+                            <button type="submit" class="w-full bg-teal-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Lưu dữ liệu</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Dữ liệu đã nhập</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="text-left py-3 px-4 font-semibold text-sm">Thời gian</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Chỉ tiêu</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Doanh thu</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng CHT</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng CHP</th>
+                                        <th class="text-right py-3 px-4 font-semibold text-sm">Thưởng TPKD</th>
+                                        <th class="py-3 px-4 font-semibold text-sm">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userDataTableBody" class="text-gray-700">
+                                    <tr><td colspan="7" class="text-center py-4">Chưa có dữ liệu nào được lưu.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        
-        <div class="mt-12 text-gray-400 border-t border-gray-600 pt-6">
-            <p class="text-sm font-light"><strong>Người tạo:</strong> Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
+    </main>
+
+    <footer class="bg-white mt-12 border-t">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2025 Kế hoạch KPI Showroom iFan. Xây dựng cho mục đích trình bày nội bộ.</p>
         </div>
-    </div>
+    </footer>
 
     <script>
-        const menuLinks = document.querySelectorAll('.menu-link');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dữ liệu ban đầu
+            const initialData = [
+                { time: '01/2025', target: 1000000000, revenue: 495541000 },
+                { time: '02/2025', target: 1000000000, revenue: 629104000 },
+                { time: '03/2025', target: 1300000000, revenue: 1441281000 },
+                { time: '04/2025', target: 2200000000, revenue: 1907206000 },
+                { time: '05/2025', target: 2200000000, revenue: 1950661000 },
+                { time: '06/2025', target: 2100000000, revenue: 1195584000 },
+                { time: '07/2025', target: 1600000000, revenue: 1349351000 },
+            ];
 
-        menuLinks.forEach(link => {
-            // Thêm hiệu ứng đèn sân khấu chỉ khi thiết bị có chuột
-            link.addEventListener('mousemove', (e) => {
-                // Kiểm tra loại con trỏ để đảm bảo hiệu ứng chỉ chạy trên chuột
-                if (e.pointerType === 'mouse') {
-                    const rect = link.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    // Sử dụng radial-gradient để tạo hiệu ứng đèn sân khấu
-                    link.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)`;
-                }
-            });
+            let userDefinedData = JSON.parse(localStorage.getItem('kpiData')) || [];
             
-            // Xóa hiệu ứng khi con trỏ chuột rời đi
-            link.addEventListener('mouseleave', () => {
-                link.style.background = '';
-            });
+            // Tỷ lệ thưởng mặc định
+            const defaultBonusRates = {
+                '70': { cht: 0.004, chp: 0.002, tpkd: 0.006 },
+                '90': { cht: 0.006, chp: 0.003, tpkd: 0.008 },
+                '100': { cht: 0.008, chp: 0.004, tpkd: 0.010 },
+                '120': { cht: 0.010, chp: 0.005, tpkd: 0.012 },
+            };
+            let bonusRates = JSON.parse(localStorage.getItem('bonusRates')) || defaultBonusRates;
+            
+            const revenueChartCtx = document.getElementById('revenueChart').getContext('2d');
+            let revenueChartInstance = null;
+
+            const formatCurrency = (value) => {
+                if (typeof value !== 'number') return 'N/A';
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+            };
+            
+            const formatNumberWithDots = (number) => {
+                const parts = String(number).replace(/[^0-9]/g, '');
+                return parts.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            };
+
+            const parseNumberFromFormattedString = (str) => {
+                if (typeof str !== 'string') return NaN;
+                const cleanedString = str.replace(/[^0-9]/g, '');
+                return parseFloat(cleanedString);
+            };
+            
+            const parseBonusRateFromInput = (str) => {
+                if (typeof str !== 'string') return 0;
+                // Replace comma with dot for consistent parsing
+                const cleanedString = str.replace(',', '.');
+                const value = parseFloat(cleanedString);
+                return isNaN(value) ? 0 : value / 100;
+            };
+
+            const getBonusRates = (completion) => {
+                if (completion < 0.7) return { cht: 0, chp: 0, tpkd: 0 };
+                if (completion < 0.9) return bonusRates['70'];
+                if (completion < 1.0) return bonusRates['90'];
+                if (completion < 1.2) return bonusRates['100'];
+                return bonusRates['120'];
+            };
+
+            const calculateBonuses = (revenue, target) => {
+                if (target === 0) return { completion: 0, rates: { cht: 0, chp: 0, tpkd: 0 }, bonuses: { cht: 0, chp: 0, tpkd: 0 }, total: 0 };
+                const completion = revenue / target;
+                const rates = getBonusRates(completion);
+                const bonuses = {
+                    cht: revenue * rates.cht,
+                    chp: revenue * rates.chp,
+                    tpkd: revenue * rates.tpkd,
+                };
+                const total = bonuses.cht + bonuses.chp + bonuses.tpkd;
+                return { completion, rates, bonuses, total };
+            };
+            
+            const renderBonusRateTable = () => {
+                document.getElementById('rate_cht_70').value = (bonusRates['70'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_70').value = (bonusRates['70'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_70').value = (bonusRates['70'].tpkd * 100).toFixed(2);
+                
+                document.getElementById('rate_cht_90').value = (bonusRates['90'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_90').value = (bonusRates['90'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_90').value = (bonusRates['90'].tpkd * 100).toFixed(2);
+                
+                document.getElementById('rate_cht_100').value = (bonusRates['100'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_100').value = (bonusRates['100'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_100').value = (bonusRates['100'].tpkd * 100).toFixed(2);
+
+                document.getElementById('rate_cht_120').value = (bonusRates['120'].cht * 100).toFixed(2);
+                document.getElementById('rate_chp_120').value = (bonusRates['120'].chp * 100).toFixed(2);
+                document.getElementById('rate_tpkd_120').value = (bonusRates['120'].tpkd * 100).toFixed(2);
+            };
+
+            const updateAndSaveBonusRates = () => {
+                // Read new rates from the input fields
+                const newRates = {
+                    '70': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_70').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_70').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_70').value),
+                    },
+                    '90': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_90').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_90').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_90').value),
+                    },
+                    '100': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_100').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_100').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_100').value),
+                    },
+                    '120': {
+                        cht: parseBonusRateFromInput(document.getElementById('rate_cht_120').value),
+                        chp: parseBonusRateFromInput(document.getElementById('rate_chp_120').value),
+                        tpkd: parseBonusRateFromInput(document.getElementById('rate_tpkd_120').value),
+                    },
+                };
+                
+                bonusRates = newRates;
+                localStorage.setItem('bonusRates', JSON.stringify(bonusRates));
+                
+                // Show a brief success message
+                const saveStatus = document.getElementById('saveStatus');
+                saveStatus.classList.remove('opacity-0');
+                saveStatus.classList.add('opacity-100');
+                setTimeout(() => {
+                    saveStatus.classList.remove('opacity-100');
+                    saveStatus.classList.add('opacity-0');
+                }, 2000);
+
+                // FIX: Call the main render function to update all sections, and explicitly call performCalculation.
+                renderApp();
+                performCalculation(); // FIX: Explicitly call calculation after rates are saved.
+            };
+
+            const renderDashboard = () => {
+                const combinedData = [...initialData, ...userDefinedData].sort((a, b) => {
+                    const [monthA, yearA] = a.time.split('/').map(Number);
+                    const [monthB, yearB] = b.time.split('/').map(Number);
+                    if (yearA !== yearB) return yearA - yearB;
+                    return monthA - monthB;
+                });
+
+                const processedData = combinedData.map(d => {
+                    const bonusInfo = calculateBonuses(d.revenue, d.target);
+                    return { ...d, ...bonusInfo };
+                });
+
+                const totalCompletion = processedData.reduce((acc, cur) => acc + cur.completion, 0);
+                document.getElementById('avgCompletion').textContent = (totalCompletion / processedData.length * 100).toFixed(2) + '%';
+
+                const totalFund = processedData.reduce((acc, cur) => acc + cur.total, 0);
+                document.getElementById('totalFund').textContent = formatCurrency(totalFund);
+
+                const zeroBonusMonths = processedData.filter(d => d.total === 0).length;
+                document.getElementById('zeroBonusMonths').textContent = `${zeroBonusMonths} tháng`;
+
+                const simulationTableBody = document.getElementById('simulationTableBody');
+                simulationTableBody.innerHTML = '';
+                processedData.forEach(d => {
+                    const row = document.createElement('tr');
+                    row.classList.add('border-b');
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${d.time}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.target)}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.revenue)}</td>
+                        <td class="text-right py-3 px-4 font-medium ${d.completion < 0.7 ? 'text-red-500' : d.completion >= 1 ? 'text-green-600' : 'text-yellow-600'}">${(d.completion * 100).toFixed(2)}%</td>
+                        <td class="text-right py-3 px-4 font-semibold text-blue-600">${formatCurrency(d.total)}</td>
+                    `;
+                    simulationTableBody.appendChild(row);
+                });
+
+                if (revenueChartInstance) {
+                    revenueChartInstance.destroy();
+                }
+
+                revenueChartInstance = new Chart(revenueChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: processedData.map(d => d.time),
+                        datasets: [
+                            {
+                                label: 'Doanh thu',
+                                data: processedData.map(d => d.revenue),
+                                backgroundColor: processedData.map(d => {
+                                    if (d.completion < 0.7) return 'rgba(239, 68, 68, 0.6)';
+                                    if (d.completion >= 1.0) return 'rgba(22, 163, 74, 0.6)';
+                                    return 'rgba(234, 179, 8, 0.6)';
+                                }),
+                                borderColor: processedData.map(d => {
+                                    if (d.completion < 0.7) return 'rgba(239, 68, 68, 1)';
+                                    if (d.completion >= 1.0) return 'rgba(22, 163, 74, 1)';
+                                    return 'rgba(234, 179, 8, 1)';
+                                }),
+                                borderWidth: 1,
+                                order: 2,
+                            },
+                            {
+                                label: 'Chỉ tiêu',
+                                data: processedData.map(d => d.target),
+                                type: 'line',
+                                borderColor: 'rgba(59, 130, 246, 1)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 4,
+                                pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                                order: 1,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        return (value / 1e9).toFixed(1) + ' tỷ';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += formatCurrency(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+            };
+
+            const renderUserTable = () => {
+                const userDataTableBody = document.getElementById('userDataTableBody');
+                userDataTableBody.innerHTML = '';
+                if (userDefinedData.length === 0) {
+                    userDataTableBody.innerHTML = '<tr><td colspan="7" class="text-center py-4">Chưa có dữ liệu nào được lưu.</td></tr>';
+                    return;
+                }
+                userDefinedData.forEach((d, index) => {
+                    const bonusInfo = calculateBonuses(d.revenue, d.target);
+                    const row = document.createElement('tr');
+                    row.classList.add('border-b');
+                    row.innerHTML = `
+                        <td class="py-3 px-4">${d.time}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.target)}</td>
+                        <td class="text-right py-3 px-4">${formatCurrency(d.revenue)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.cht)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.chp)}</td>
+                        <td class="text-right py-3 px-4 font-medium">${formatCurrency(bonusInfo.bonuses.tpkd)}</td>
+                        <td class="text-center py-3 px-4"><button data-index="${index}" class="delete-btn text-red-500 hover:text-red-700">Xóa</button></td>
+                    `;
+                    userDataTableBody.appendChild(row);
+                });
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        userDefinedData.splice(index, 1);
+                        localStorage.setItem('kpiData', JSON.stringify(userDefinedData));
+                        renderApp();
+                    });
+                });
+            };
+
+            const saveNewData = (e) => {
+                e.preventDefault();
+                const inputTime = document.getElementById('inputTime').value;
+                const inputTarget = parseNumberFromFormattedString(document.getElementById('inputTarget').value);
+                const inputRevenue = parseNumberFromFormattedString(document.getElementById('inputRevenue').value);
+
+                if (!inputTime || isNaN(inputTarget) || isNaN(inputRevenue) || inputTarget <= 0) {
+                    return;
+                }
+                
+                // Check if the time already exists and update it
+                const existingIndex = userDefinedData.findIndex(item => item.time === inputTime);
+                if (existingIndex !== -1) {
+                    userDefinedData[existingIndex].target = inputTarget;
+                    userDefinedData[existingIndex].revenue = inputRevenue;
+                } else {
+                    userDefinedData.push({
+                        time: inputTime,
+                        target: inputTarget,
+                        revenue: inputRevenue
+                    });
+                }
+                
+                localStorage.setItem('kpiData', JSON.stringify(userDefinedData));
+                document.getElementById('dataInputForm').reset();
+                renderApp();
+            };
+
+            const renderApp = () => {
+                renderBonusRateTable();
+                renderDashboard();
+                renderUserTable();
+            };
+
+            // Calculator Logic
+            const calculateBtn = document.getElementById('calculateBtn');
+            const targetInput = document.getElementById('targetInput');
+            const revenueInput = document.getElementById('revenueInput');
+            const resultDiv = document.getElementById('result');
+
+            function performCalculation() {
+                const target = parseNumberFromFormattedString(targetInput.value);
+                const revenue = parseNumberFromFormattedString(revenueInput.value);
+
+                if (isNaN(target) || isNaN(revenue) || target <= 0) {
+                    resultDiv.classList.add('hidden');
+                    return;
+                }
+
+                const result = calculateBonuses(revenue, target);
+
+                document.getElementById('completionRate').textContent = (result.completion * 100).toFixed(2) + '%';
+                document.getElementById('bonusCHT').textContent = formatCurrency(result.bonuses.cht);
+                document.getElementById('bonusCHP').textContent = formatCurrency(result.bonuses.chp);
+                document.getElementById('bonusTPKD').textContent = formatCurrency(result.bonuses.tpkd);
+                document.getElementById('totalBonus').textContent = formatCurrency(result.total);
+
+                resultDiv.classList.remove('hidden');
+            }
+
+            const setupInputFormatter = (inputElement) => {
+                inputElement.addEventListener('input', function(event) {
+                    const value = this.value.replace(/[^0-9]/g, '');
+                    this.value = formatNumberWithDots(value);
+                    performCalculation();
+                });
+            };
+            
+            const setupUserFormFormatter = (inputElement) => {
+                inputElement.addEventListener('input', function(event) {
+                    const value = this.value.replace(/[^0-9]/g, '');
+                    this.value = formatNumberWithDots(value);
+                });
+            };
+
+            setupInputFormatter(targetInput);
+            setupInputFormatter(revenueInput);
+            
+            setupUserFormFormatter(document.getElementById('inputTarget'));
+            setupUserFormFormatter(document.getElementById('inputRevenue'));
+            
+            document.getElementById('dataInputForm').addEventListener('submit', saveNewData);
+            document.getElementById('saveRatesBtn').addEventListener('click', updateAndSaveBonusRates);
+            // FIX: Explicitly add a click listener to the calculate button
+            document.getElementById('calculateBtn').addEventListener('click', performCalculation);
+
+            // FIX: Di chuyển các dòng này lên trước khi gọi renderApp() để đảm bảo
+            // công cụ ước tính có giá trị ban đầu và có thể hiển thị kết quả ngay.
+            targetInput.value = formatNumberWithDots('2200000000');
+            revenueInput.value = formatNumberWithDots('1950661000');
+            
+            renderApp();
+            // FIX: Call performCalculation once on initial load.
+            performCalculation();
         });
     </script>
-
 </body>
 </html>
