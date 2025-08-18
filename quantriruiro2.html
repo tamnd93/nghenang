@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Kế hoạch Quản trị Rủi ro - Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Energetic & Playful (Adapted for Professionalism) -->
+    <!-- Application Structure Plan: A top-down narrative structure is used to guide the user logically from problem to solution. It starts with a high-level visual summary (The Challenge), dives into specific risk details (Deep Dive), presents the solution in a clear timeline (The Action Plan), and concludes with the positive outcomes (The Future). This linear storytelling approach is highly effective for presentations, ensuring the key message is delivered clearly and persuasively. -->
+    <!-- Visualization & Content Choices: 1. Risk Overview (Goal: Inform) -> Icon-based Cards with Lists. Justification: Using icons makes the information more scannable and visually appealing. The list of issues provides immediate context, improving comprehension. This approach is more modern and less repetitive than a bar chart or number cards with a uniform count. (Method: HTML/CSS). 2. Risk Details (Goal: Organize) -> Styled Cards. Justification: Cards break down complex information into digestible, visually separated chunks. (Method: HTML/CSS). 3. Action Plan (Goal: Change/Organize) -> CSS Timeline. Justification: A timeline is the most intuitive way to visualize a phased plan, showing progression and sequence. (Method: HTML/CSS). 4. Outcomes (Goal: Inform) -> Big Number Cards. Justification: High-impact visuals to reinforce the benefits and positive future state. (Method: HTML/CSS). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #FF6361;
+            border: 4px solid #F8F9FA;
+        }
+        .timeline-path {
+            position: absolute;
+            left: -21px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background-color: #E0E0E0;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #BC5090, #FF6361);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column; /* Changed to column for spinner and text */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #FF6361;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            z-index: 110;
+            width: 80%; /* Adjusted width */
+            max-width: 600px; /* Added max-width for large screens */
+            max-height: 80%;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p id="loading-message" class="mt-4 text-gray-700 font-medium">Đang tạo gợi ý...</p>
+    </div>
+    <div id="messageBox" class="message-box hidden">
+        <div class="flex justify-end">
+            <button id="closeMessageBox" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+        <div id="messageBoxContent" class="p-4"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 md:px-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 gradient-text">Kế hoạch Quản trị Rủi ro Nghệ Năng</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Từ việc nhận diện thách thức đến việc triển khai giải pháp chiến lược để tăng trưởng bền vững.</p>
+        </header>
+
+        <!-- Merged the "Current Challenges" and "Detailed Analysis" sections to improve clarity and reduce repetition. -->
+        <section id="challenge" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-4">Thách thức Hiện tại & Phân tích Chi tiết</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">Những rủi ro đang tồn tại và cần được giải quyết ngay lập tức.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#58508D]">
+                    <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="text-4xl mr-3">⚙️</span> Vận hành</h3>
+                    <ul class="text-sm text-left list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong>Quá tải công việc:</strong> Nhân sự đang phải xử lý quá nhiều việc, dẫn đến chậm tiến độ, bỏ sót khách hàng và giảm chất lượng công việc.</li>
+                        <li><strong>Nút thắt cổ chai:</strong> Quy trình vận hành phụ thuộc vào một vài cá nhân, gây rủi ro lớn khi họ vắng mặt hoặc rời đi.</li>
+                        <li><strong>Thiếu thời gian cho chiến lược:</strong> Đội ngũ chỉ đủ sức xử lý tác vụ hàng ngày, không có đủ thời gian để nghĩ về các kế hoạch dài hạn.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#BC5090]">
+                    <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="text-4xl mr-3">👥</span> Con người</h3>
+                    <ul class="text-sm text-left list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong>Áp lực & Kiệt sức:</strong> Cường độ công việc cao khiến nhân sự kiệt sức, làm tăng tỷ lệ nghỉ việc đột ngột.</li>
+                        <li><strong>Chảy máu chất xám:</strong> Tỷ lệ nghỉ việc cao dẫn đến mất đi kiến thức và kinh nghiệm, gây khó khăn cho việc duy trì chất lượng.</li>
+                        <li><strong>Phụ thuộc cá nhân:</strong> Kiến thức và quan hệ khách hàng tập trung vào một vài người, làm công ty yếu thế khi họ không còn làm việc.</li>
+                        <li><strong>Thiếu người kế thừa:</strong> Không có kế hoạch phát triển nhân sự để thay thế các vị trí chủ chốt.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#FF6361]">
+                    <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="text-4xl mr-3">📈</span> Khách hàng & Doanh thu</h3>
+                    <ul class="text-sm text-left list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong>Quá tải Showroom:</strong> Năng lực tiếp đón khách hàng hạn chế, làm giảm trải nghiệm, tỷ lệ chốt đơn và khách quay lại.</li>
+                        <li><strong>Phản hồi chậm trễ:</strong> Tốc độ xử lý yêu cầu chậm từ Phòng Dự án khiến công ty có thể mất hợp đồng lớn.</li>
+                        <li><strong>Nhân sự mỏng:</strong> Nguồn lực nhân sự không đủ để duy trì và mở rộng đội ngũ bán hàng và hỗ trợ khách hàng.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-[#FFA600]">
+                    <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="text-4xl mr-3">🧭</span> Chiến lược & Quản trị</h3>
+                    <ul class="text-sm text-left list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong>Không thể mở rộng quy mô:</strong> Các vấn đề về vận hành và nhân sự khiến công ty khó mở rộng hoạt động kinh doanh.</li>
+                        <li><strong>Sai lệch dữ liệu & báo cáo:</strong> Dữ liệu không được chuẩn hóa dẫn đến báo cáo không chính xác, gây ra quyết định sai lầm.</li>
+                        <li><strong>Thiếu phân quyền:</strong> Các quyết định quản lý tập trung vào một số người, thiếu sự kiểm soát nội bộ.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- The action plan has been made more specific and actionable with concrete examples presented in a more visual way. -->
+        <section id="action-plan" class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12">Kế hoạch Hành động Chi tiết 3 Giai đoạn</h2>
+            <div class="relative pl-8">
+                <div class="timeline-path"></div>
+                <div class="space-y-12">
+                    <div class="timeline-item relative">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-2 text-[#BC5090]">Giai đoạn 1: Ổn định Cấp bách (Tháng 1-3)</h3>
+                            <p class="text-gray-600 mb-4" id="action1-desc">Mục tiêu: Đảm bảo vận hành ổn định và giảm tải áp lực tức thì cho đội ngũ.</p>
+                            <ul class="list-disc list-inside space-y-4 text-gray-700">
+                                <li>
+                                    <strong>Thực hiện tuyển dụng:</strong> Tuyển dụng và đào tạo nhanh 2 nhân viên tư vấn showroom để giảm tải áp lực tiếp đón khách.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Đăng tin trên 3 kênh tuyển dụng chính, phỏng vấn ngay trong 1 tuần, đào tạo 1 tuần.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#BC5090] text-white text-sm px-4 py-2 rounded-full hover:bg-[#8e3a6c] transition-colors" data-action="tuyển dụng và đào tạo nhanh 2 nhân viên tư vấn showroom">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Cải thiện quy trình:</strong> Chuẩn hóa và số hóa quy trình tiếp nhận khách hàng và đơn hàng.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Xây dựng một biểu mẫu online cho đơn hàng, tạo checklist công việc trên Trello cho mỗi khách hàng mới.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#BC5090] text-white text-sm px-4 py-2 rounded-full hover:bg-[#8e3a6c] transition-colors" data-action="chuẩn hóa và số hóa quy trình tiếp nhận khách hàng và đơn hàng">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Phân bổ công việc:</strong> Rà soát và phân công lại công việc theo năng lực.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Giao nhiệm vụ quản lý dự án cho cá nhân có kinh nghiệm nhất để tránh "nút thắt cổ chai" và phân bổ các nhiệm vụ khác cho đội ngũ.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#BC5090] text-white text-sm px-4 py-2 rounded-full hover:bg-[#8e3a6c] transition-colors" data-action="phân bổ lại công việc theo năng lực">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Triển khai công cụ:</strong> Áp dụng phần mềm quản lý công việc và yêu cầu tất cả dự án, nhiệm vụ phải được cập nhật hàng ngày.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Sử dụng Trello để tạo các bảng (board) cho từng dự án, phân công nhiệm vụ cụ thể và đặt thời hạn rõ ràng.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#BC5090] text-white text-sm px-4 py-2 rounded-full hover:bg-[#8e3a6c] transition-colors" data-action="áp dụng phần mềm quản lý công việc và yêu cầu tất cả dự án, nhiệm vụ phải được cập nhật hàng ngày">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-2 text-[#FF6361]">Giai đoạn 2: Xây dựng Nền tảng (Tháng 3-6)</h3>
+                            <p class="text-gray-600 mb-4" id="action2-desc">Mục tiêu: Xây dựng hệ thống nhân sự và quản trị vững chắc, tạo nền tảng cho sự phát triển.</p>
+                            <ul class="list-disc list-inside space-y-4 text-gray-700">
+                                <li>
+                                    <strong>Phát triển quy trình Onboarding:</strong> Xây dựng chương trình đào tạo chính thức cho nhân sự mới.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Tạo tài liệu đào tạo (handbook) chi tiết, chỉ định một người hướng dẫn (mentor) cho mỗi nhân sự mới trong 1 tháng đầu tiên.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FF6361] text-white text-sm px-4 py-2 rounded-full hover:bg-[#d64846] transition-colors" data-action="xây dựng chương trình đào tạo chính thức cho nhân sự mới">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Đánh giá hiệu suất:</strong> Thực hiện đánh giá hiệu suất (KPI) hàng tháng để có cơ sở điều chỉnh lương, thưởng.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Sử dụng hệ thống KPI đơn giản, tập trung vào các chỉ số cốt lõi như số lượng khách hàng tiềm năng, tỷ lệ chốt đơn, và mức độ hài lòng của khách.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FF6361] text-white text-sm px-4 py-2 rounded-full hover:bg-[#d64846] transition-colors" data-action="thực hiện đánh giá hiệu suất (KPI) hàng tháng">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Thiết lập kế hoạch kế thừa:</strong> Xác định các vị trí chủ chốt và lập danh sách các ứng viên tiềm năng để đào tạo nội bộ.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Lập danh sách 2-3 nhân sự có tiềm năng để đào tạo cho vị trí trưởng nhóm, trưởng phòng, và giao cho họ các dự án thử thách.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FF6361] text-white text-sm px-4 py-2 rounded-full hover:bg-[#d64846] transition-colors" data-action="thiết lập kế hoạch kế thừa các vị trí chủ chốt">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Nâng cao kỹ năng:</strong> Tổ chức các buổi huấn luyện về kỹ năng quản lý dự án cho đội trưởng, trưởng phòng.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Mời chuyên gia bên ngoài hoặc tận dụng kiến thức nội bộ để đào tạo về kỹ năng giao tiếp, giải quyết vấn đề.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FF6361] text-white text-sm px-4 py-2 rounded-full hover:bg-[#d64846] transition-colors" data-action="tổ chức các buổi huấn luyện về kỹ năng quản lý dự án cho đội trưởng, trưởng phòng">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-bold mb-2 text-[#FFA600]">Giai đoạn 3: Tăng trưởng Bền vững (Tháng 6-12)</h3>
+                            <p class="text-gray-600 mb-4" id="action3-desc">Mục tiêu: Mở rộng quy mô kinh doanh và tối ưu hóa hệ thống để duy trì lợi thế cạnh tranh.</p>
+                            <ul class="list-disc list-inside space-y-4 text-gray-700">
+                                <li>
+                                    <strong>Tối ưu hóa dữ liệu:</strong> Triển khai một hệ thống quản lý dữ liệu tập trung.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Sử dụng Google Data Studio hoặc Power BI để tạo dashboard báo cáo tự động, hiển thị các chỉ số kinh doanh chính như doanh thu, chi phí, và số lượng khách hàng.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FFA600] text-white text-sm px-4 py-2 rounded-full hover:bg-[#c98300] transition-colors" data-action="tối ưu hóa dữ liệu với một hệ thống quản lý dữ liệu tập trung">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Phân quyền quản lý:</strong> Thiết lập hệ thống phân quyền rõ ràng trong quản lý hồ sơ, tài chính và dự án.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Sử dụng một công cụ quản lý tài chính có chức năng phân quyền để ban lãnh đạo chỉ xem được báo cáo, còn kế toán có thể cập nhật chi tiết.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FFA600] text-white text-sm px-4 py-2 rounded-full hover:bg-[#c98300] transition-colors" data-action="thiết lập hệ thống phân quyền rõ ràng trong quản lý hồ sơ, tài chính và dự án">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Xây dựng thương hiệu nhà tuyển dụng:</strong> Tổ chức các hoạt động nội bộ và xây dựng môi trường làm việc tích cực.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Tổ chức workshop định kỳ, xây dựng các kênh truyền thông nội bộ trên mạng xã hội để chia sẻ hình ảnh, văn hóa công ty.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FFA600] text-white text-sm px-4 py-2 rounded-full hover:bg-[#c98300] transition-colors" data-action="xây dựng thương hiệu nhà tuyển dụng bằng cách tổ chức các hoạt động nội bộ và xây dựng môi trường làm việc tích cực">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                                <li>
+                                    <strong>Đánh giá mở rộng:</strong> Lập kế hoạch chi tiết cho việc mở thêm chi nhánh mới.
+                                    <div class="bg-gray-100 p-4 rounded-xl mt-2">
+                                        <p class="text-sm">💡 <strong>Ví dụ:</strong> Lập bảng phân tích chi phí và lợi nhuận cho 2 địa điểm tiềm năng, xem xét yếu tố thị trường và đối thủ cạnh tranh.</p>
+                                    </div>
+                                    <button class="generate-examples-btn mt-2 bg-[#FFA600] text-white text-sm px-4 py-2 rounded-full hover:bg-[#c98300] transition-colors" data-action="lập kế hoạch chi tiết cho việc mở thêm chi nhánh mới">✨ Gợi ý thêm ví dụ</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="outcomes">
+            <h2 class="text-3xl font-bold text-center mb-12">Kết quả Kỳ vọng</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <p class="text-5xl font-extrabold text-green-500 mb-2">▲</p>
+                    <h3 class="text-xl font-bold">Tăng trưởng Bền vững</h3>
+                    <p class="text-gray-600">Doanh thu tăng trưởng ổn định, không bị gián đoạn.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <p class="text-5xl font-extrabold text-red-500 mb-2">▼</p>
+                    <h3 class="text-xl font-bold">Giảm Tỷ lệ Nghỉ việc</h3>
+                    <p class="text-gray-600">Tiết kiệm chi phí tuyển dụng và đào tạo lại.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <p class="text-5xl font-extrabold text-blue-500 mb-2">★</p>
+                    <h3 class="text-xl font-bold">Nâng cao Uy tín</h3>
+                    <p class="text-gray-600">Thương hiệu được tin cậy bởi khách hàng và đối tác.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <p class="text-5xl font-extrabold text-yellow-500 mb-2">🚀</p>
+                    <h3 class="text-xl font-bold">Sẵn sàng Mở rộng</h3>
+                    <p class="text-gray-600">Nguồn lực vững chắc để thực thi các chiến lược lớn.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const generateButtons = document.querySelectorAll('.generate-examples-btn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingMessage = document.getElementById('loading-message');
+            const messageBox = document.getElementById('messageBox');
+            const messageBoxContent = document.getElementById('messageBoxContent');
+            const closeMessageBox = document.getElementById('closeMessageBox');
+
+            // Function to show a message box with content
+            function showMessageBox(title, content) {
+                messageBoxContent.innerHTML = `
+                    <h4 class="text-xl font-bold mb-4">${title}</h4>
+                    <p>${content}</p>
+                `;
+                messageBox.classList.remove('hidden');
+            }
+
+            // Function to close the message box
+            closeMessageBox.addEventListener('click', () => {
+                messageBox.classList.add('hidden');
+            });
+
+            // Set up event listeners for example generation buttons
+            generateButtons.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const actionText = button.dataset.action;
+                    loadingOverlay.classList.remove('hidden');
+                    loadingMessage.textContent = 'Đang tạo gợi ý từ Trưởng Phòng Kinh Doanh iFan...'; // Show a more specific loading message
+
+                    let retries = 0;
+                    const maxRetries = 3;
+                    let success = false;
+                    let responseText = '';
+
+                    while (retries < maxRetries && !success) {
+                        try {
+                            const prompt = `Bạn là một chuyên gia tư vấn chiến lược. Hãy tạo ra 5 ví dụ cụ thể, sáng tạo và chuyên nghiệp cho kế hoạch hành động sau: "${actionText}". Đảm bảo các ví dụ phải mới mẻ và không trùng lặp với ví dụ đã có. Trình bày các ví dụ này dưới dạng một danh sách có tiêu đề rõ ràng.`;
+
+                            const chatHistory = [];
+                            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                            const payload = { contents: chatHistory };
+                            // API key provided by the user
+                            const apiKey = "AIzaSyC6-hOHavm6hd8Y4u4gK6G2KG9Ev9SPQjs";
+                            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                            const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            const result = await response.json();
+                            if (result.candidates && result.candidates.length > 0 &&
+                                result.candidates[0].content && result.candidates[0].content.parts &&
+                                result.candidates[0].content.parts.length > 0) {
+                                responseText = result.candidates[0].content.parts[0].text;
+                                success = true;
+                            } else {
+                                throw new Error("API response is empty or malformed.");
+                            }
+                        } catch (error) {
+                            console.error(`Lỗi khi gọi API (thử lại lần ${retries + 1}):`, error);
+                            retries++;
+                            if (retries < maxRetries) {
+                                const delay = Math.pow(2, retries) * 1000;
+                                await new Promise(res => setTimeout(res, delay));
+                            }
+                        }
+                    }
+
+                    loadingOverlay.classList.add('hidden');
+                    if (success) {
+                        const formattedText = responseText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                        showMessageBox('Gợi ý từ Trưởng Phòng Kinh Doanh iFan', formattedText);
+                    } else {
+                        showMessageBox('Lỗi', 'Không thể tạo ví dụ. Vui lòng thử lại sau.');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
