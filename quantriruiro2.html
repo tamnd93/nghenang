@@ -76,9 +76,10 @@
             border-radius: 1rem;
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
             z-index: 110;
-            width: 80%; /* Adjusted width */
-            max-width: 600px; /* Added max-width for large screens */
-            max-height: 80%;
+            width: 90%; /* Increased for better prominence on all screens */
+            max-width: 700px; /* Increased for more content space on desktop */
+            min-width: 300px; /* Ensure readability on small screens */
+            max-height: 90vh; /* Use viewport height to prevent overflow */
             overflow-y: auto;
         }
     </style>
@@ -332,7 +333,7 @@
                             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                             const payload = { contents: chatHistory };
                             // API key provided by the user
-                            const apiKey = "AIzaSyC6-hOHavm6hd8Y4u4gK6G2KG9Ev9SPQjs";
+                            const apiKey = "";
                             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
                             const response = await fetch(apiUrl, {
