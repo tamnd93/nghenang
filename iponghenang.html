@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Chiến Lược: Sáp Nhập & IPO Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            color: #1D4ED8;
+            font-weight: 600;
+            border-bottom: 2px solid #1D4ED8;
+        }
+        .kpi-button.active {
+            background-color: #1D4ED8;
+            color: white;
+        }
+        .term-link {
+            border-bottom: 1px dotted #6B7280;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .term-link:hover {
+            color: #1D4ED8;
+            border-color: #1D4ED8;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .highlight-term {
+            font-weight: 600;
+            color: #1D4ED8;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header id="header" class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-blue-700">Nghệ Năng IPO</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Tổng Quan</a>
+                        <a href="#merger-roadmap" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Lộ Trình M&A</a>
+                        <a href="#ipo-roadmap" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Lộ Trình IPO</a>
+                        <a href="#risk-matrix" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Ma Trận Rủi Ro</a>
+                        <a href="#kpi-dashboard" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Dashboard KPI</a>
+                        <a href="#hose-listing" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Niêm Yết HOSE</a>
+                        <a href="#benefits-challenges" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Lợi Ích & Thách Thức</a>
+                        <a href="#recommendations" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-blue-700">Khuyến Nghị</a>
+                    </div>
+                </div>
+                 <div class="md:hidden">
+                    <select id="mobile-nav" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="#overview">Tổng Quan</option>
+                        <option value="#merger-roadmap">Lộ Trình M&A</option>
+                        <option value="#ipo-roadmap">Lộ Trình IPO</option>
+                        <option value="#risk-matrix">Ma Trận Rủi Ro</option>
+                        <option value="#kpi-dashboard">Dashboard KPI</option>
+                        <option value="#hose-listing">Niêm Yết HOSE</option>
+                        <option value="#benefits-challenges">Lợi Ích & Thách Thức</option>
+                        <option value="#recommendations">Khuyến Nghị</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="overview" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Lộ Trình Chiến Lược: Sáp Nhập iFan & <span class="term-link highlight-term" data-term="ipo">IPO</span></h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Trực quan hóa kế hoạch chuyển đổi của Nghệ Năng, từ một công ty công nghiệp hàng đầu đến một tập đoàn đa ngành niêm yết trên sàn chứng khoán.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-700">Nghệ Năng</h3>
+                    <p class="text-gray-600">Doanh nghiệp công nghiệp với nền tảng vững chắc, tìm kiếm sự đa dạng hóa và tăng trưởng đột phá thông qua <span class="term-link highlight-term" data-term="manda">M&A</span>.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                     <div class="text-4xl font-bold text-emerald-500 mb-2">+</div>
+                    <h3 class="text-xl font-semibold text-emerald-600">Cộng Hưởng</h3>
+                    <p class="text-gray-600">Kết hợp sức mạnh công nghiệp và tiềm năng công nghệ để tạo ra giá trị vượt trội.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-purple-700">iFan</h3>
+                    <p class="text-gray-600">Nền tảng công nghệ tương tác người hâm mộ với tiềm năng lớn, cần tái cấu trúc để phát triển bền vững.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="merger-roadmap" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Kế Hoạch Tích Hợp 100 Ngày</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Các cột mốc quan trọng để đảm bảo quá trình sáp nhập iFan diễn ra suôn sẻ, hiệu quả và giảm thiểu gián đoạn hoạt động.</p>
+            </div>
+            <div class="relative border-l-2 border-blue-500 ml-4 md:ml-0">
+                <div class="mb-8 ml-8 relative">
+                    <div class="absolute -left-[42px] top-1.5 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                    <h4 class="text-lg font-semibold text-blue-700">Day 1: Sẵn Sàng Vận Hành</h4>
+                    <p class="text-gray-600 mt-1">Đảm bảo hoạt động kinh doanh không bị gián đoạn. Thành lập ban chỉ đạo, thiết lập kênh giao tiếp, thông báo cho đối tác.</p>
+                </div>
+                <div class="mb-8 ml-8 relative">
+                    <div class="absolute -left-[42px] top-1.5 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                    <h4 class="text-lg font-semibold text-blue-700">30 Ngày: Hợp Nhất Cốt Lõi</h4>
+                    <p class="text-gray-600 mt-1">Tích hợp dữ liệu tài chính. Ban hành chính sách bán hàng & giá chung. Bắt đầu đánh giá văn hóa doanh nghiệp.</p>
+                </div>
+                <div class="mb-8 ml-8 relative">
+                    <div class="absolute -left-[42px] top-1.5 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                    <h4 class="text-lg font-semibold text-blue-700">60 Ngày: Tối Ưu Hóa</h4>
+                    <p class="text-gray-600 mt-1">Hoàn thành cơ cấu tổ chức mới. Tối ưu hóa chuỗi cung ứng và quy trình mua hàng. Giữ chân nhân sự chủ chốt.</p>
+                </div>
+                <div class="ml-8 relative">
+                    <div class="absolute -left-[42px] top-1.5 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                    <h4 class="text-lg font-semibold text-blue-700">90-100 Ngày: Đánh Giá & Tăng Tốc</h4>
+                    <p class="text-gray-600 mt-1">Đánh giá hiệu quả tích hợp. Bắt đầu triển khai các dự án cộng hưởng. Chuẩn hóa hệ thống dữ liệu (<span class="term-link highlight-term" data-term="mdm">MDM</span>).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ipo-roadmap" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Lộ Trình <span class="term-link highlight-term" data-term="ipo">IPO</span> 36 Tháng</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Hành trình chuẩn bị toàn diện để đưa Nghệ Năng trở thành một công ty đại chúng thành công.</p>
+            </div>
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-emerald-700">Giai Đoạn 1 (Tháng 1-12): Nền Tảng</h4>
+                    <p class="text-gray-600 mt-2">Hợp nhất báo cáo tài chính, bắt đầu chuyển đổi sang <span class="term-link highlight-term" data-term="ifrs">IFRS</span>. Xây dựng hệ thống kiểm soát nội bộ. Giải quyết các vấn đề pháp lý tồn đọng của iFan.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-emerald-700">Giai Đoạn 2 (Tháng 13-24): Tăng Tốc</h4>
+                    <p class="text-gray-600 mt-2">Hoàn thiện cơ cấu quản trị công ty (<span class="term-link highlight-term" data-term="hdqt">HĐQT</span> độc lập, các tiểu ban). Xây dựng câu chuyện đầu tư. Tối ưu hóa vận hành và chứng minh khả năng tăng trưởng.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-emerald-700">Giai Đoạn 3 (Tháng 25-36): Về Đích</h4>
+                    <p class="text-gray-600 mt-2">Lựa chọn nhà tư vấn <span class="term-link highlight-term" data-term="ipo">IPO</span>. Xây dựng bản cáo bạch. Tổ chức <span class="term-link highlight-term" data-term="roadshow">roadshow</span> và thực hiện các thủ tục niêm yết cuối cùng.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="risk-matrix" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Ma Trận Rủi Ro Tương Tác</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Phân tích các rủi ro tiềm ẩn trong quá trình sáp nhập và IPO. Click vào từng bong bóng để xem chi tiết và biện pháp giảm thiểu.</p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow-md">
+                    <div class="chart-container">
+                        <canvas id="riskBubbleChart"></canvas>
+                    </div>
+                </div>
+                <div id="risk-details" class="bg-white p-6 rounded-lg shadow-md min-h-[300px]">
+                    <h4 class="text-xl font-semibold text-gray-800 border-b pb-2">Chi Tiết Rủi Ro</h4>
+                    <div id="risk-info" class="mt-4 text-gray-600">
+                        <p>Vui lòng chọn một rủi ro trên biểu đồ để xem thông tin chi tiết.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kpi-dashboard" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Dashboard Chỉ Số Thành Công (<span class="term-link highlight-term" data-term="kpi">KPI</span>)</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Theo dõi các chỉ số hiệu suất chính qua các giai đoạn để đảm bảo lộ trình đi đúng hướng.</p>
+            </div>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                <button class="kpi-button active px-4 py-2 rounded-md font-semibold transition" data-kpi="financial">Tài Chính</button>
+                <button class="kpi-button px-4 py-2 rounded-md font-semibold transition" data-kpi="operational">Vận Hành</button>
+                <button class="kpi-button px-4 py-2 rounded-md font-semibold transition" data-kpi="market">Thị Trường</button>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <div class="chart-container h-[400px] md:h-[500px]">
+                    <canvas id="kpiChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="hose-listing" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Tiêu Chuẩn Niêm Yết Sàn HOSE</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Tóm tắt các điều kiện niêm yết cơ bản trên Sở Giao dịch Chứng khoán Thành phố Hồ Chí Minh (HOSE) để Nghệ Năng có thể chuẩn bị tốt nhất.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-blue-700 mb-2">1. Vốn điều lệ</h4>
+                    <p class="text-gray-600">Tối thiểu <strong>120 tỷ đồng</strong> đã góp tại thời điểm đăng ký.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-blue-700 mb-2">2. Lịch sử hoạt động</h4>
+                    <p class="text-gray-600">Hoạt động tối thiểu <strong>02 năm</strong> dưới hình thức công ty cổ phần.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-blue-700 mb-2">3. Kết quả kinh doanh</h4>
+                    <p class="text-gray-600">Có lãi 2 năm liên tiếp trước khi niêm yết và không có lỗ lũy kế. <strong>Tỷ lệ ROE</strong> năm gần nhất tối thiểu 5%.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="text-xl font-semibold text-blue-700 mb-2">4. Tỷ lệ cổ phiếu chào bán</h4>
+                    <p class="text-gray-600">Tối thiểu <strong>15%</strong> cổ phiếu có quyền biểu quyết do ít nhất <strong>100 cổ đông</strong> không phải cổ đông lớn nắm giữ.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits-challenges" class="scroll-mt-20 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Lợi Ích và Thách Thức</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Phân tích các cơ hội và rủi ro tiềm ẩn trong lộ trình chuyển đổi và niêm yết.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-2xl font-bold text-emerald-600 mb-4 text-center">Lợi Ích</h3>
+                    <ul class="space-y-4 text-gray-700 flex-grow">
+                        <li>
+                            <p class="font-semibold text-lg">Tăng quy mô và thị phần</p>
+                            <p class="text-sm">Kết hợp nguồn lực của Nghệ Năng và iFan để mở rộng phạm vi kinh doanh và tiếp cận các thị trường mới một cách nhanh chóng.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Cộng hưởng nguồn lực</p>
+                            <p class="text-sm">Tận dụng sức mạnh công nghệ của iFan và nền tảng tài chính, sản xuất của Nghệ Năng để tạo ra các sản phẩm và dịch vụ độc đáo, hiệu quả hơn.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Nâng cao giá trị thương hiệu</p>
+                            <p class="text-sm">Trở thành công ty đại chúng giúp nâng cao uy tín, minh bạch và thu hút sự quan tâm của nhà đầu tư, đối tác và khách hàng.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Tiếp cận nguồn vốn lớn</p>
+                            <p class="text-sm">IPO cho phép công ty huy động vốn từ thị trường chứng khoán để tài trợ cho các dự án mở rộng, nghiên cứu và phát triển trong tương lai.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-2xl font-bold text-red-600 mb-4 text-center">Thách Thức</h3>
+                    <ul class="space-y-4 text-gray-700 flex-grow">
+                        <li>
+                            <p class="font-semibold text-lg">Rủi ro tích hợp</p>
+                            <p class="text-sm">Khác biệt về văn hóa, hệ thống và quy trình giữa hai công ty có thể dẫn đến mâu thuẫn nội bộ và giảm hiệu quả hoạt động sau sáp nhập.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Gánh nặng pháp lý và báo cáo</p>
+                            <p class="text-sm">Việc niêm yết yêu cầu tuân thủ các quy định nghiêm ngặt về quản trị, công bố thông tin, và kiểm toán, đòi hỏi sự đầu tư lớn về thời gian và chi phí.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Biến động giá cổ phiếu</p>
+                            <p class="text-sm">Giá cổ phiếu có thể biến động do các yếu tố thị trường, hiệu quả kinh doanh, hoặc tin tức, ảnh hưởng đến niềm tin của nhà đầu tư và giá trị công ty.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg">Chi phí và sự phân tán sự chú ý</p>
+                            <p class="text-sm">Quá trình IPO và sáp nhập đòi hỏi nguồn lực lớn. Các lãnh đạo có thể bị phân tán sự chú ý khỏi hoạt động kinh doanh cốt lõi trong thời gian dài.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Khuyến Nghị Then Chốt</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Các hành động ưu tiên để đảm bảo thành công cho toàn bộ chiến lược.</p>
+            </div>
+            <div class="space-y-4 max-w-4xl mx-auto">
+                <details class="bg-white p-4 rounded-lg shadow-md group" open>
+                    <summary class="font-semibold text-lg cursor-pointer text-gray-800 group-hover:text-blue-700">1. Ưu tiên giải quyết rủi ro pháp lý & danh tiếng của iFan</summary>
+                    <p class="text-gray-600 mt-2">Đây là rào cản lớn nhất. Cần đầu tư nguồn lực để khắc phục triệt để các vấn đề bản quyền, bảo mật dữ liệu và xây dựng lại niềm tin công chúng.</p>
+                </details>
+                <details class="bg-white p-4 rounded-lg shadow-md group">
+                    <summary class="font-semibold text-lg cursor-pointer text-gray-800 group-hover:text-blue-700">2. Xây dựng kế hoạch tích hợp chi tiết & linh hoạt</summary>
+                    <p class="text-gray-600 mt-2">Do sự khác biệt lớn về văn hóa và mô hình kinh doanh, cần một kế hoạch tích hợp đa chức năng với các mốc thời gian, trách nhiệm và cơ chế giám sát rõ ràng.</p>
+                </details>
+                <details class="bg-white p-4 rounded-lg shadow-md group">
+                    <summary class="font-semibold text-lg cursor-pointer text-gray-800 group-hover:text-blue-700">3. Tập trung vào câu chuyện tăng trưởng & quản trị cho <span class="term-link highlight-term" data-term="ipo">IPO</span></summary>
+                    <p class="text-gray-600 mt-2">Chứng minh khả năng tạo ra giá trị từ thương vụ sáp nhập, đồng thời nâng cao chuẩn mực quản trị doanh nghiệp để xây dựng niềm tin với nhà đầu tư.</p>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-sm">
+            <p>&copy; 2025 Báo cáo Phân tích Chiến lược Nghệ Năng. Được tạo cho mục đích minh họa.</p>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal-overlay hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-md mx-auto relative">
+            <button id="close-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl leading-none">&times;</button>
+            <h3 id="modal-title" class="font-bold text-xl text-blue-700 mb-2"></h3>
+            <p id="modal-body" class="text-gray-600 text-sm"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const glossary = {
+                "ipo": "Phát hành cổ phiếu lần đầu ra công chúng. Là quá trình một công ty tư nhân bán cổ phiếu của mình cho công chúng lần đầu tiên, trở thành một công ty đại chúng.",
+                "manda": "Sáp nhập và mua lại. Là quá trình một công ty mua lại hoặc hợp nhất với một công ty khác để mở rộng quy mô, thị trường hoặc công nghệ.",
+                "mdm": "Quản lý dữ liệu tổng thể. Một phương pháp để tạo ra một nguồn dữ liệu duy nhất, đáng tin cậy cho toàn bộ doanh nghiệp.",
+                "ifrs": "Chuẩn mực báo cáo tài chính quốc tế. Một bộ các quy tắc kế toán chung được sử dụng để lập báo cáo tài chính, giúp so sánh giữa các công ty toàn cầu.",
+                "hdqt": "Hội đồng quản trị. Nhóm người được bầu để giám sát và đưa ra quyết định chiến lược cho công ty.",
+                "roadshow": "Lộ trình giới thiệu. Một chuỗi các sự kiện mà công ty tổ chức để gặp gỡ các nhà đầu tư tiềm năng trước khi phát hành cổ phiếu, nhằm tạo sự quan tâm và thu hút vốn.",
+                "kpi": "Chỉ số hiệu suất chính. Các giá trị đo lường được sử dụng để đánh giá hiệu quả hoạt động của một tổ chức, dự án hoặc cá nhân.",
+                "ocf": "Dòng tiền từ hoạt động kinh doanh. Số tiền mặt được tạo ra từ các hoạt động kinh doanh cốt lõi của một công ty.",
+                "mau": "Người dùng hoạt động hàng tháng. Số lượng người dùng duy nhất tương tác với một sản phẩm hoặc dịch vụ trong một tháng nhất định.",
+                "roe": "Tỷ suất lợi nhuận trên vốn chủ sở hữu. Chỉ số đo lường mức độ hiệu quả của việc sử dụng vốn chủ sở hữu để tạo ra lợi nhuận."
+            };
+
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            document.body.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.classList.contains('term-link')) {
+                    const termKey = target.getAttribute('data-term');
+                    if (glossary[termKey]) {
+                        modalTitle.textContent = target.textContent.trim();
+                        modalBody.textContent = glossary[termKey];
+                        modal.classList.remove('hidden');
+                    }
+                }
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            window.addEventListener('keydown', (event) => {
+                if (event.key === "Escape" && !modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            const riskData = {
+                labels: ["Pháp lý & Danh tiếng", "Khác biệt văn hóa", "Mất nhân tài", "Tích hợp công nghệ", "Định giá sai", "Thị trường biến động", "Quản trị yếu kém"],
+                datasets: [{
+                    label: 'Rủi ro',
+                    data: [
+                        { x: 0.7, y: 0.9, r: 25, details: { title: "Pháp lý & Danh tiếng iFan", mitigation: "Thẩm định pháp lý sâu rộng, yêu cầu điều khoản bồi thường. Truyền thông minh bạch về các hành động khắc phục." } },
+                        { x: 0.8, y: 0.7, r: 20, details: { title: "Khác biệt văn hóa", mitigation: "Xây dựng đội ngũ tích hợp đa chức năng, tổ chức hội thảo văn hóa, đảm bảo truyền thông nội bộ rõ ràng." } },
+                        { x: 0.6, y: 0.8, r: 18, details: { title: "Mất mát nhân tài chủ chốt", mitigation: "Xây dựng kế hoạch giữ chân (retention plan) với các gói đãi ngộ cạnh tranh và cơ hội phát triển." } },
+                        { x: 0.5, y: 0.6, r: 15, details: { title: "Khó khăn tích hợp công nghệ", mitigation: "Lập bản đồ kiến trúc công nghệ, ưu tiên hệ thống cốt lõi và tích hợp theo từng giai đoạn." } },
+                        { x: 0.4, y: 0.7, r: 12, details: { title: "Định giá sai/Nợ tiềm tàng", mitigation: "Thẩm định tài chính độc lập, đàm phán các điều khoản thanh toán linh hoạt (earn-out)." } },
+                        { x: 0.9, y: 0.5, r: 22, details: { title: "Thị trường chứng khoán biến động", mitigation: "Linh hoạt về thời điểm IPO, duy trì quan hệ tốt với nhà đầu tư tiềm năng." } },
+                        { x: 0.6, y: 0.6, r: 16, details: { title: "Quản trị doanh nghiệp yếu kém", mitigation: "Thực hiện kiểm toán nội bộ, nâng cao năng lực HĐQT và các ủy ban chuyên trách." } },
+                    ],
+                    backgroundColor: 'rgba(239, 68, 68, 0.6)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const kpiLabels = {
+                financial: ['Doanh thu hợp nhất', 'Biên lợi nhuận ròng', 'Dòng tiền OCF'],
+                operational: ['Tỷ lệ giữ chân nhân tài (%)', 'Hiệu suất nền tảng MAU', 'Tối ưu chi phí (%)'],
+                market: ['Sức khỏe thương hiệu (Điểm)', 'Mức độ hài lòng KH (%)', 'Nhận diện IPO (%)']
+            };
+
+            const kpiData = {
+                financial: {
+                    labels: kpiLabels.financial,
+                    datasets: [{
+                        label: 'Mục tiêu (Tỷ VNĐ)',
+                        data: [5000, 750, 1000],
+                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Dự phóng (Tỷ VNĐ)',
+                        data: [4800, 700, 950],
+                        backgroundColor: 'rgba(219, 234, 254, 0.6)',
+                        borderColor: 'rgba(219, 234, 254, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                operational: {
+                    labels: kpiLabels.operational,
+                    datasets: [{
+                        label: 'Mục tiêu',
+                        data: [90, 5000000, 15],
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Hiện tại/Dự phóng',
+                        data: [85, 4200000, 12],
+                        backgroundColor: 'rgba(209, 250, 229, 0.6)',
+                        borderColor: 'rgba(209, 250, 229, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                market: {
+                    labels: kpiLabels.market,
+                    datasets: [{
+                        label: 'Mục tiêu',
+                        data: [80, 92, 75],
+                        backgroundColor: 'rgba(139, 92, 246, 0.6)',
+                        borderColor: 'rgba(139, 92, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Hiện tại/Dự phóng',
+                        data: [65, 88, 50],
+                        backgroundColor: 'rgba(233, 213, 255, 0.6)',
+                        borderColor: 'rgba(233, 213, 255, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            };
+
+            const riskCtx = document.getElementById('riskBubbleChart').getContext('2d');
+            const riskBubbleChart = new Chart(riskCtx, {
+                type: 'bubble',
+                data: riskData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Xác Suất' },
+                            min: 0, max: 1
+                        },
+                        y: {
+                            title: { display: true, text: 'Tác Động' },
+                            min: 0, max: 1
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const label = riskData.labels[context.dataIndex];
+                                    return `${label}: (Xác suất: ${context.parsed.x}, Tác động: ${context.parsed.y})`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const { datasetIndex, index } = elements[0];
+                            const dataPoint = riskData.datasets[datasetIndex].data[index];
+                            const riskInfoDiv = document.getElementById('risk-info');
+                            riskInfoDiv.innerHTML = `
+                                <h5 class="font-semibold text-lg text-red-600">${dataPoint.details.title}</h5>
+                                <p class="mt-2"><strong class="text-gray-700">Biện pháp giảm thiểu:</strong> ${dataPoint.details.mitigation}</p>
+                            `;
+                        }
+                    }
+                }
+            });
+
+            const kpiCtx = document.getElementById('kpiChart').getContext('2d');
+            const kpiChart = new Chart(kpiCtx, {
+                type: 'bar',
+                data: kpiData.financial,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: {
+                        title: { display: true, text: 'Chỉ Số Tài Chính', font: { size: 16 } }
+                    }
+                }
+            });
+            
+            const kpiButtons = document.querySelectorAll('.kpi-button');
+            kpiButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    kpiButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const kpiCategory = button.dataset.kpi;
+                    kpiChart.data = kpiData[kpiCategory];
+                    kpiChart.options.plugins.title.text = `Chỉ Số ${button.textContent}`;
+                    kpiChart.update();
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            function changeNav() {
+                let index = sections.length;
+                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
+                navLinks.forEach((link) => link.classList.remove('active'));
+                if (navLinks[index]) {
+                   navLinks[index].classList.add('active');
+                   mobileNav.value = navLinks[index].getAttribute('href');
+                }
+            }
+            
+            mobileNav.addEventListener('change', (e) => {
+                window.location.hash = e.target.value;
+            });
+
+            changeNav();
+            window.addEventListener('scroll', changeNav);
+        });
+    </script>
+</body>
+</html>
