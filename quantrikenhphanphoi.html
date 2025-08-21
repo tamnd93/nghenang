@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế hoạch Triển khai Quản trị Kênh Phân phối - Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutral -->
+    <!-- Application Structure Plan: The application is structured as an interactive project hub, not a linear document. It starts with a high-level 'Project Overview' with key KPIs. The core is the '90-Day Roadmap', presented as an interactive timeline. An 'Operational Framework' section uses tabs and accordions to consolidate policies, SOPs, and data models for easy reference. 'Dashboard Mockups' use Chart.js to visualize the end goal, making the data aspect tangible. Finally, sections for 'Organization' and 'Risks' provide supporting details. This task-oriented structure allows users (management, sales, IT) to quickly access the information relevant to their role, enhancing usability and engagement over a static report format. -->
+    <!-- Visualization & Content Choices: 
+        - KPIs (Section J) -> Goal: Inform -> Presentation: Dynamic stat cards -> Interaction: None -> Justification: Provides an immediate, high-level summary of project success criteria.
+        - 90-Day Roadmap (Section F) -> Goal: Change/Organize -> Presentation: Interactive timeline using HTML/CSS -> Interaction: Click on phase to reveal details -> Justification: Transforms a static table into an engaging, step-by-step guide for the implementation process.
+        - SOPs (Section C) -> Goal: Organize -> Presentation: Accordion-style process flows with icons (HTML/CSS) -> Interaction: Click to expand/collapse steps -> Justification: Breaks down complex procedures into digestible, easy-to-follow steps.
+        - Dashboard Mockups (Section E) -> Goal: Compare/Inform -> Presentation: Bar and Line charts (Chart.js) -> Interaction: Hover for tooltips -> Justification: Provides a concrete visual preview of the data management goals, making abstract concepts understandable. Library: Chart.js for its simplicity and responsiveness.
+        - RACI Matrix (Section G) -> Goal: Organize -> Presentation: Interactive HTML table -> Interaction: Hover highlight -> Justification: Clearly defines roles and responsibilities in a universally understood format.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #1e40af;
+            color: #fff;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #dbeafe;
+            border: 4px solid #1e40af;
+        }
+        .term-tooltip {
+            border-bottom: 1px dotted #1e40af;
+            cursor: pointer;
+            font-weight: 500;
+            color: #1e40af;
+        }
+        .tooltip-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+        }
+        .tooltip-popup-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="tooltip-popup" class="tooltip-popup-overlay">
+        <div class="tooltip-popup-content">
+            <button id="tooltip-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 id="tooltip-title" class="text-xl font-bold mb-2 text-blue-900"></h3>
+            <p id="tooltip-definition" class="text-gray-700"></p>
+        </div>
+    </div>
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-900">DMS NGHỆ NĂNG</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="nav-link font-medium text-gray-600 pb-1">Tổng Quan</a>
+                <a href="#roadmap" class="nav-link font-medium text-gray-600 pb-1">Lộ Trình</a>
+                <a href="#framework" class="nav-link font-medium text-gray-600 pb-1">Khung Vận Hành</a>
+                <a href="#dashboard" class="nav-link font-medium text-gray-600 pb-1">Dashboard Mẫu</a>
+                <a href="#organization" class="nav-link font-medium text-gray-600 pb-1">Tổ Chức</a>
+                <a href="#risks" class="nav-link font-medium text-gray-600 pb-1">Rủi Ro</a>
+                <a href="#glossary" class="nav-link font-medium text-gray-600 pb-1">Chú Thích</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#overview" class="block py-2 text-gray-600">Tổng Quan</a>
+            <a href="#roadmap" class="block py-2 text-gray-600">Lộ Trình</a>
+            <a href="#framework" class="block py-2 text-gray-600">Khung Vận Hành</a>
+            <a href="#dashboard" class="block py-2 text-gray-600">Dashboard Mẫu</a>
+            <a href="#organization" class="block py-2 text-gray-600">Tổ Chức</a>
+            <a href="#risks" class="block py-2 text-gray-600">Rủi Ro</a>
+            <a href="#glossary" class="block py-2 text-gray-600">Chú Thích</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="overview" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-blue-900">Tổng Quan Dự Án Triển Khai <span class="term-tooltip" data-term="DMS">DMS</span></h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">Mục tiêu của dự án là chuẩn hóa dữ liệu, xây dựng quy trình vận hành tinh gọn và tối ưu hóa hệ thống quản trị kênh phân phối (<span class="term-tooltip" data-term="GT">GT</span>), tập trung vào việc kiểm soát giá, tồn kho và hiệu suất bán hàng.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-bold text-5xl text-blue-600 mb-2">≥80%</h3>
+                    <p class="font-semibold text-gray-800">Giảm Vi Phạm Giá</p>
+                    <p class="text-sm text-gray-500 mt-1">Mục tiêu giảm số vụ vi phạm giá tại khu vực pilot trong 90 ngày.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-bold text-5xl text-blue-600 mb-2">≤5%</h3>
+                    <p class="font-semibold text-gray-800">Độ Lệch Tồn Kho</p>
+                    <p class="text-sm text-gray-500 mt-1">Chênh lệch giữa sổ sách và thực tế sau 2 vòng kiểm kê.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-bold text-5xl text-blue-600 mb-2">≥95%</h3>
+                    <p class="font-semibold text-gray-800">Tuân Thủ Báo Cáo</p>
+                    <p class="text-sm text-gray-500 mt-1">Tỷ lệ đại lý nộp báo cáo đúng hạn và đúng mẫu trong 60 ngày.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-10 text-blue-900">Lộ Trình Triển Khai 90 Ngày</h2>
+            <div class="relative pl-8 border-l-2 border-blue-200">
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-bold text-blue-800">Phase 1: Pilot (Ngày 0 - 30)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Thử nghiệm tại 1 khu vực với 5-10 đại lý trọng điểm.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Hoàn thiện & ban hành chính sách, biểu mẫu.</li>
+                        <li>Dán tem QR/<span class="term-tooltip" data-term="SN">S/N</span> thử nghiệm cho 1-2 lô hàng.</li>
+                        <li>Xây dựng Dashboard <span class="term-tooltip" data-term="MVP">MVP</span> và tổ chức đào tạo.</li>
+                        <li><span class="font-semibold">Milestone:</span> 100% <span class="term-tooltip" data-term="GT">GT</span> pilot ký phụ lục, Dashboard hoạt động, ghi nhận baseline.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-bold text-blue-800">Phase 2: Mở Rộng (Ngày 31 - 60)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Nhân rộng ra 3-5 khu vực chiến lược và tinh chỉnh quy trình.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Bắt đầu áp dụng chế tài và thưởng tuân thủ.</li>
+                        <li>Tinh chỉnh <span class="term-tooltip" data-term="SOP">SOP</span> dựa trên phản hồi từ Phase 1.</li>
+                        <li>Thử nghiệm kết nối dữ liệu tự động từ AMIS.</li>
+                        <li><span class="font-semibold">Milestone:</span> ≥80% <span class="term-tooltip" data-term="GT">GT</span> khu vực mới nộp báo cáo, xử lý thành công 5+ case vi phạm.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold text-blue-800">Phase 3: Chuẩn Hóa (Ngày 61 - 90)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Rollout toàn quốc và khóa quy trình vận hành.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Yêu cầu tất cả <span class="term-tooltip" data-term="GT">GT</span> ký phụ lục hợp đồng.</li>
+                        <li>Kiểm toán dữ liệu toàn quốc lần đầu, chốt phiên bản Dashboard.</li>
+                        <li>Lên kế hoạch mua sắm thiết bị quét và in tem <span class="term-tooltip" data-term="SN">S/N</span> hàng loạt.</li>
+                        <li><span class="font-semibold">Milestone:</span> ≥95% <span class="term-tooltip" data-term="GT">GT</span> toàn quốc áp dụng, Dashboard phản ánh dữ liệu D+2.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="framework" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-blue-900">Khung Vận Hành</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">Nền tảng các quy tắc, quy trình và chuẩn dữ liệu để đảm bảo hệ thống hoạt động nhất quán và hiệu quả.</p>
+            
+            <div class="bg-white rounded-xl shadow-md border border-gray-200 p-4 sm:p-6">
+                <div class="mb-6 border-b border-gray-200">
+                    <nav class="flex flex-wrap -mb-px" id="framework-tabs">
+                        <button data-tab="policy" class="tab-button active text-sm sm:text-base font-medium py-3 px-4 rounded-t-lg">Chính Sách & Chế Tài</button>
+                        <button data-tab="sop" class="tab-button text-sm sm:text-base font-medium py-3 px-4 rounded-t-lg text-gray-600">Quy Trình (<span class="term-tooltip" data-term="SOP">SOP</span>)</button>
+                        <button data-tab="data" class="tab-button text-sm sm:text-base font-medium py-3 px-4 rounded-t-lg text-gray-600">Biểu Mẫu & Dữ Liệu</button>
+                    </nav>
+                </div>
+
+                <div id="framework-content">
+                    <div data-content="policy" class="tab-content">
+                        <h4 class="text-lg font-semibold mb-4">Thang Chế Tài Xử Lý Vi Phạm Giá</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="p-3 font-medium">Cấp độ Vi phạm</th>
+                                        <th class="p-3 font-medium">Hành động Xử lý</th>
+                                        <th class="p-3 font-medium">Thời gian Áp dụng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="p-3 font-semibold">Lần 1</td>
+                                        <td class="p-3">Gửi thông báo, yêu cầu khắc phục trong 24 giờ.</td>
+                                        <td class="p-3">-</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="p-3 font-semibold">Lần 2 (trong 30 ngày)</td>
+                                        <td class="p-3">Cắt chiết khấu tháng/quý đối với <span class="term-tooltip" data-term="SKU">SKU</span> vi phạm.</td>
+                                        <td class="p-3">Theo kỳ thanh toán</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="p-3 font-semibold">Lần 3 (trong 90 ngày)</td>
+                                        <td class="p-3">Ngừng cung cấp <span class="term-tooltip" data-term="SKU">SKU</span> bán chạy, cắt hỗ trợ Marketing.</td>
+                                        <td class="p-3">30 ngày</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-semibold">Lần 4+</td>
+                                        <td class="p-3">Tạm dừng cung cấp toàn bộ hàng hóa, xem xét thanh lý HĐ.</td>
+                                        <td class="p-3">30-90 ngày</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h4 class="text-lg font-semibold mt-6 mb-4">Cơ Chế Thưởng Tuân Thủ</h4>
+                         <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="font-semibold text-blue-800">Thưởng Tuân thủ Giá</p>
+                                <p class="text-sm text-blue-700"><strong>+1%</strong> chiết khấu/quý nếu không vi phạm giá.</p>
+                            </div>
+                             <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="font-semibold text-green-800">Thưởng Báo cáo Đúng hạn</p>
+                                <p class="text-sm text-green-700"><strong>+0.5%</strong> chiết khấu/quý nếu nộp 100% báo cáo đúng hạn.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-content="sop" class="tab-content hidden">
+                        <div id="sop-accordion" class="space-y-3">
+                            <div>
+                                <button class="accordion-header w-full flex justify-between items-center p-4 bg-gray-100 rounded-lg text-left font-semibold">
+                                    <span class="term-tooltip" data-term="SOP">SOP</span> Kiểm Soát Giá
+                                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="accordion-content hidden p-4 bg-gray-50 rounded-b-lg">
+                                    <ol class="list-decimal list-inside space-y-2">
+                                        <li><strong>Thu thập bằng chứng:</strong> Giám sát thị trường chủ động quét giá, thực hiện mystery shopping.</li>
+                                        <li><strong>Xác minh:</strong> TPKD xác nhận bằng chứng trong 4 giờ làm việc.</li>
+                                        <li><strong>Thông báo:</strong> Sale Admin gửi thông báo & yêu cầu khắc phục trong 24 giờ.</li>
+                                        <li><strong>Theo dõi khắc phục:</strong> Giám sát thị trường kiểm tra lại sau 24 giờ.</li>
+                                        <li><strong>Áp dụng Chế tài:</strong> TPKD & Kế toán thực thi cấn trừ, khóa đơn hàng.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                             <div>
+                                <button class="accordion-header w-full flex justify-between items-center p-4 bg-gray-100 rounded-lg text-left font-semibold">
+                                    <span class="term-tooltip" data-term="SOP">SOP</span> Thu Thập Dữ Liệu
+                                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="accordion-content hidden p-4 bg-gray-50 rounded-b-lg">
+                                    <ol class="list-decimal list-inside space-y-2">
+                                        <li><strong>Nhắc nhở:</strong> Sale Admin nhắc <span class="term-tooltip" data-term="GT">GT</span> nộp báo cáo trước hạn 2 ngày.</li>
+                                        <li><strong>Tiếp nhận:</strong> <span class="term-tooltip" data-term="GT">GT</span> nộp báo cáo theo mẫu chuẩn trước 17h00 Thứ Hai.</li>
+                                        <li><strong>Kiểm tra:</strong> Sale Admin kiểm tra và yêu cầu sửa lỗi (nếu có) trong ngày.</li>
+                                        <li><strong>Tổng hợp & Đối soát:</strong> Dữ liệu được tổng hợp vào file master.</li>
+                                        <li><strong>Cảnh báo:</strong> Tự động khóa quyền lên đơn nếu trễ hạn báo cáo quá 24 giờ.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-content="data" class="tab-content hidden">
+                        <h4 class="text-lg font-semibold mb-4">Chuẩn Hóa Dữ Liệu Master</h4>
+                        <p class="mb-4 text-sm">Dữ liệu phải được chuẩn hóa tại nguồn để đảm bảo tính chính xác cho toàn hệ thống. Các bảng master chính bao gồm:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong><span class="term-tooltip" data-term="SKU">SKU</span> Master:</strong> Nguồn dữ liệu duy nhất về sản phẩm (Mã, Tên, Nhóm, Thương hiệu...).</li>
+                            <li><strong>Đại lý/NPP Master:</strong> Quản lý thông tin tập trung của kênh phân phối (Mã, Tên, Khu vực, Cấp độ...).</li>
+                            <li><strong>Giá & Chiết khấu:</strong> Bảng quy tắc giá và chiết khấu theo từng cấp đại lý, khu vực.</li>
+                        </ul>
+                         <h4 class="text-lg font-semibold mt-6 mb-4">Cấu Trúc Mã Serial Number (<span class="term-tooltip" data-term="SN">S/N</span>)</h4>
+                         <div class="bg-gray-100 p-4 rounded-lg font-mono text-sm">
+                             <p>[Mã <span class="term-tooltip" data-term="SKU">SKU</span>]-[YYMM]-[XXXXXX]</p>
+                             <p class="mt-2 text-xs text-gray-600">Ví dụ: IFAN-B400-2508-000123</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-blue-900">Dashboard Quản Trị Mẫu (<span class="term-tooltip" data-term="MVP">MVP</span>)</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">Trực quan hóa các chỉ số quan trọng trên Google Looker Studio, giúp ban lãnh đạo và TPKD ra quyết định nhanh chóng và chính xác.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold text-center mb-4">Giá & Vi Phạm</h3>
+                    <div class="chart-container"><canvas id="violationsChart"></canvas></div>
+                    <p class="text-xs text-center text-gray-500 mt-2">Theo dõi số vụ vi phạm theo từng đại lý để có hành động kịp thời.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold text-center mb-4"><span class="term-tooltip" data-term="Sell-in">Sell-in</span> vs <span class="term-tooltip" data-term="Sell-out">Sell-out</span></h3>
+                    <div class="chart-container"><canvas id="sellInOutChart"></canvas></div>
+                    <p class="text-xs text-center text-gray-500 mt-2">Phát hiện sớm tình trạng "ôm hàng" hoặc "đẩy hàng ảo" cuối kỳ.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold text-center mb-4">Tồn Kho & Vòng Quay</h3>
+                    <div class="chart-container"><canvas id="inventoryChart"></canvas></div>
+                    <p class="text-xs text-center text-gray-500 mt-2">Xác định các <span class="term-tooltip" data-term="SKU">SKU</span> tồn kho lâu, làm cơ sở cho chương trình đẩy hàng.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold text-center mb-4"><span class="term-tooltip" data-term="KPI">KPI</span> Đại Lý</h3>
+                    <div class="chart-container"><canvas id="kpiChart"></canvas></div>
+                    <p class="text-xs text-center text-gray-500 mt-2">Đánh giá hiệu suất tổng thể của từng đại lý theo các tiêu chí chính.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="organization" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-10 text-blue-900">Tổ Chức & Phân Công (<span class="term-tooltip" data-term="RACI">RACI</span>)</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-3 font-medium">Hoạt động</th>
+                            <th class="p-3 font-medium text-center">TPKD</th>
+                            <th class="p-3 font-medium text-center">Sale Admin</th>
+                            <th class="p-3 font-medium text-center">Giám sát TT</th>
+                            <th class="p-3 font-medium text-center">Kế toán</th>
+                            <th class="p-3 font-medium text-center">IT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-3">Xây dựng chính sách giá & chế tài</td>
+                            <td class="p-3 text-center font-bold text-red-600">A</td>
+                            <td class="p-3 text-center text-yellow-600">C</td>
+                            <td class="p-3 text-center text-yellow-600">C</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3">Thu thập & làm sạch dữ liệu</td>
+                            <td class="p-3 text-center font-bold text-red-600">A</td>
+                            <td class="p-3 text-center font-bold text-green-600">R</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3">Phát hiện & xử lý vi phạm giá</td>
+                            <td class="p-3 text-center font-bold text-red-600">A</td>
+                            <td class="p-3 text-center text-yellow-600">C</td>
+                            <td class="p-3 text-center font-bold text-green-600">R</td>
+                            <td class="p-3 text-center font-bold text-green-600">R</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                        </tr>
+                         <tr>
+                            <td class="p-3">Xây dựng & duy trì Dashboard</td>
+                            <td class="p-3 text-center font-bold text-red-600">A</td>
+                            <td class="p-3 text-center font-bold text-green-600">R</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                            <td class="p-3 text-center text-blue-600">I</td>
+                            <td class="p-3 text-center text-yellow-600">C</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4 text-xs flex flex-wrap gap-x-4 gap-y-1">
+                    <span><span class="font-bold text-red-600">A</span>: Accountable (Chịu trách nhiệm cuối cùng)</span>
+                    <span><span class="font-bold text-green-600">R</span>: Responsible (Thực hiện)</span>
+                    <span><span class="font-bold text-yellow-600">C</span>: Consulted (Cần hỏi ý kiến)</span>
+                    <span><span class="font-bold text-blue-600">I</span>: Informed (Cần thông báo)</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="risks" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-10 text-blue-900">Quản Trị Rủi Ro</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold mb-2">Rủi ro: Đại lý chống đối, không báo cáo</h3>
+                    <p class="text-sm text-gray-600"><span class="font-bold text-red-600">Giải pháp:</span> Áp dụng quy tắc "Không báo cáo = Không lên đơn". Đồng thời truyền thông lợi ích và đào tạo 1-1 để thuyết phục.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <h3 class="font-semibold mb-2">Rủi ro: Dữ liệu báo cáo sai, gian lận</h3>
+                    <p class="text-sm text-gray-600"><span class="font-bold text-red-600">Giải pháp:</span> Đối soát chéo bằng <span class="term-tooltip" data-term="SN">S/N</span> khi kiểm kê, thực hiện mystery shopping, và phân tích các dấu hiệu bất thường trên dashboard.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="glossary" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-10 text-blue-900">Chú Thích Thuật Ngữ</h2>
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                    <div>
+                        <p class="font-semibold text-gray-800">DMS</p>
+                        <p class="text-sm text-gray-600">Distribution Management System - Hệ thống Quản trị Kênh Phân phối.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">GT</p>
+                        <p class="text-sm text-gray-600">General Trade - Kênh phân phối truyền thống, bao gồm các Đại lý & Nhà Phân phối.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">SKU</p>
+                        <p class="text-sm text-gray-600">Stock Keeping Unit - Đơn vị lưu kho, dùng để phân biệt một mặt hàng cụ thể.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">S/N</p>
+                        <p class="text-sm text-gray-600">Serial Number - Số sê-ri duy nhất cho mỗi sản phẩm để truy vết.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">Sell-in</p>
+                        <p class="text-sm text-gray-600">Doanh số bán hàng từ Công ty vào cho các Đại lý/Nhà phân phối.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">Sell-out</p>
+                        <p class="text-sm text-gray-600">Doanh số bán hàng từ Đại lý/Nhà phân phối ra cho người dùng cuối.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">KPI</p>
+                        <p class="text-sm text-gray-600">Key Performance Indicator - Chỉ số Hiệu suất Chính để đo lường hiệu quả công việc.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">SOP</p>
+                        <p class="text-sm text-gray-600">Standard Operating Procedure - Quy trình Vận hành Chuẩn.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">RACI</p>
+                        <p class="text-sm text-gray-600">Ma trận phân công trách nhiệm: Responsible, Accountable, Consulted, Informed.</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">DOH</p>
+                        <p class="text-sm text-gray-600">Days of Hand - Số ngày tồn kho trung bình của một sản phẩm.</p>
+                    </div>
+                     <div>
+                        <p class="font-semibold text-gray-800">MVP</p>
+                        <p class="text-sm text-gray-600">Minimum Viable Product - Phiên bản sản phẩm tối thiểu, khả thi để thử nghiệm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-4 text-center text-sm text-gray-500">
+            &copy; 2025 Công ty TNHH Công Nghiệp Nghệ Năng. All Rights Reserved.
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const termDefinitions = {
+        'DMS': 'Distribution Management System - Hệ thống Quản trị Kênh Phân phối.',
+        'GT': 'General Trade - Kênh phân phối truyền thống, bao gồm các Đại lý & Nhà Phân phối.',
+        'SKU': 'Stock Keeping Unit - Đơn vị lưu kho, dùng để phân biệt một mặt hàng cụ thể.',
+        'SN': 'Serial Number - Số sê-ri duy nhất cho mỗi sản phẩm để truy vết.',
+        'Sell-in': 'Doanh số bán hàng từ Công ty vào cho các Đại lý/Nhà phân phối.',
+        'Sell-out': 'Doanh số bán hàng từ Đại lý/Nhà phân phối ra cho người dùng cuối.',
+        'KPI': 'Key Performance Indicator - Chỉ số Hiệu suất Chính để đo lường hiệu quả công việc.',
+        'SOP': 'Standard Operating Procedure - Quy trình Vận hành Chuẩn.',
+        'RACI': 'Ma trận phân công trách nhiệm: Responsible, Accountable, Consulted, Informed.',
+        'DOH': 'Days of Hand - Số ngày tồn kho trung bình của một sản phẩm.',
+        'MVP': 'Minimum Viable Product - Phiên bản sản phẩm tối thiểu, khả thi để thử nghiệm.'
+    };
+
+    const tooltipPopup = document.getElementById('tooltip-popup');
+    const tooltipTitle = document.getElementById('tooltip-title');
+    const tooltipDefinition = document.getElementById('tooltip-definition');
+    const tooltipCloseBtn = document.getElementById('tooltip-close-btn');
+    const termTooltips = document.querySelectorAll('.term-tooltip');
+
+    termTooltips.forEach(termEl => {
+        termEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const term = termEl.dataset.term;
+            if (termDefinitions[term]) {
+                tooltipTitle.textContent = term;
+                tooltipDefinition.textContent = termDefinitions[term];
+                tooltipPopup.style.display = 'flex';
+            }
+        });
+    });
+
+    const hideTooltip = () => {
+        tooltipPopup.style.display = 'none';
+    };
+
+    tooltipCloseBtn.addEventListener('click', hideTooltip);
+    tooltipPopup.addEventListener('click', (e) => {
+        if (e.target === tooltipPopup) {
+            hideTooltip();
+        }
+    });
+
+    const chartColors = {
+        blue: 'rgba(59, 130, 246, 0.7)',
+        green: 'rgba(16, 185, 129, 0.7)',
+        red: 'rgba(239, 68, 68, 0.7)',
+        yellow: 'rgba(245, 158, 11, 0.7)',
+        purple: 'rgba(139, 92, 246, 0.7)',
+        teal: 'rgba(20, 184, 166, 0.7)',
+        blueBorder: 'rgb(59, 130, 246)',
+        greenBorder: 'rgb(16, 185, 129)',
+        redBorder: 'rgb(239, 68, 68)',
+        yellowBorder: 'rgb(245, 158, 11)',
+        purpleBorder: 'rgb(139, 92, 246)',
+        tealBorder: 'rgb(20, 184, 166)',
+    };
+
+    function createChart(ctx, type, data, options) {
+        if (ctx) {
+            new Chart(ctx, { type, data, options });
+        }
+    }
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor: '#333',
+                titleFont: { size: 14 },
+                bodyFont: { size: 12 },
+                padding: 10,
+                cornerRadius: 4,
+            },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: '#e5e7eb',
+                },
+                ticks: {
+                    color: '#6b7280',
+                }
+            },
+            x: {
+                grid: {
+                    display: false,
+                },
+                ticks: {
+                    color: '#6b7280',
+                }
+            },
+        },
+    };
+
+    const violationsCtx = document.getElementById('violationsChart');
+    createChart(violationsCtx, 'bar', {
+        labels: ['ĐL An Phát', 'ĐL Bình Minh', 'ĐL Cường Thịnh', 'ĐL Đại Nam', 'ĐL Hưng Long'],
+        datasets: [{
+            label: 'Số vụ vi phạm',
+            data: [8, 5, 11, 3, 6],
+            backgroundColor: [chartColors.red, chartColors.yellow, chartColors.red, chartColors.green, chartColors.yellow],
+            borderColor: [chartColors.redBorder, chartColors.yellowBorder, chartColors.redBorder, chartColors.greenBorder, chartColors.yellowBorder],
+            borderWidth: 1,
+            borderRadius: 4,
+        }]
+    }, defaultChartOptions);
+
+    const sellInOutCtx = document.getElementById('sellInOutChart');
+    createChart(sellInOutCtx, 'line', {
+        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4', 'Tuần 5', 'Tuần 6'],
+        datasets: [{
+            label: 'Sell-in',
+            data: [120, 130, 150, 140, 250, 160],
+            borderColor: chartColors.blueBorder,
+            backgroundColor: chartColors.blue,
+            tension: 0.3,
+            fill: true,
+        }, {
+            label: 'Sell-out',
+            data: [100, 110, 120, 130, 110, 140],
+            borderColor: chartColors.greenBorder,
+            backgroundColor: chartColors.green,
+            tension: 0.3,
+            fill: true,
+        }]
+    }, { ...defaultChartOptions, plugins: { legend: { display: true, position: 'bottom' } } });
+
+    const inventoryCtx = document.getElementById('inventoryChart');
+    createChart(inventoryCtx, 'bar', {
+        labels: ['SKU-A01', 'SKU-B03', 'SKU-C12', 'SKU-D05', 'SKU-E20'],
+        datasets: [{
+            label: 'Số ngày tồn kho (DOH)',
+            data: [150, 135, 121, 95, 80],
+            backgroundColor: [chartColors.red, chartColors.red, chartColors.red, chartColors.yellow, chartColors.green],
+            borderColor: [chartColors.redBorder, chartColors.redBorder, chartColors.redBorder, chartColors.yellowBorder, chartColors.greenBorder],
+            borderWidth: 1,
+            borderRadius: 4,
+        }]
+    }, { ...defaultChartOptions, indexAxis: 'y' });
+
+    const kpiCtx = document.getElementById('kpiChart');
+    createChart(kpiCtx, 'doughnut', {
+        labels: ['Hoàn thành KPI', 'Chưa hoàn thành'],
+        datasets: [{
+            label: 'Tỷ lệ hoàn thành KPI',
+            data: [85, 15],
+            backgroundColor: [chartColors.teal, '#e5e7eb'],
+            borderColor: [chartColors.tealBorder, '#d1d5db'],
+            borderWidth: 1,
+        }]
+    }, { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom' } } });
+
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-tab');
+            tabContents.forEach(content => {
+                if (content.getAttribute('data-content') === target) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+    
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                if (mobileMenu.classList.contains('hidden') === false) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        });
+    });
+    
+    const sections = document.querySelectorAll('section');
+    const mainNavLinks = document.querySelectorAll('header nav .nav-link');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainNavLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                });
+            }
+        });
+    }, { rootMargin: "-50% 0px -50% 0px" });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+});
+</script>
+
+</body>
+</html>
