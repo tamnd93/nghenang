@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung tâm Chiến lược Quản lý Kênh Phân phối - Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Add KaTeX for mathematical notation rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Softer background */
+            color: #1a202c; /* Darker, more professional text */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 350px;
+        }
+        .nav-link {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 2px solid transparent;
+            position: relative;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #2a6fdb; /* Slightly different blue for active/hover */
+            border-bottom-color: #2a6fdb;
+        }
+        .tab-button {
+            transition: all 0.3s ease-in-out;
+            transform: scale(1);
+        }
+        .tab-button:hover {
+            background-color: #e0e7ff;
+            color: #2a6fdb;
+            transform: scale(1.02);
+        }
+        .tab-button.active {
+            background-color: #2a6fdb;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(42, 111, 219, 0.2);
+            transform: scale(1.0); /* Reset scale on active */
+        }
+        .pillar-card, .section-card {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Softer shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover, .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 2px solid #b0c2e6;
+            margin-bottom: 2.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 4px solid #2a6fdb;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/90 backdrop-blur-lg shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-slate-800">CHIẾN LƯỢC KÊNH PHÂN PHỐI - NGHỆ NĂNG</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link font-medium text-slate-600 pb-1">Tổng quan</a>
+                <a href="#pillars" class="nav-link font-medium text-slate-600 pb-1">4 Trụ cột</a>
+                <a href="#dashboard" class="nav-link font-medium text-slate-600 pb-1">Dashboard KPI</a>
+                <a href="#roadmap" class="nav-link font-medium text-slate-600 pb-1">Lộ trình</a>
+                <a href="#recruitment" class="nav-link font-medium text-slate-600 pb-1">Tuyển dụng</a>
+                <a href="#team-management" class="nav-link font-medium text-slate-600 pb-1">Quản lý Đội ngũ</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-slate-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 bg-white shadow-inner">
+            <a href="#overview" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Tổng quan</a>
+            <a href="#pillars" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">4 Trụ cột</a>
+            <a href="#dashboard" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Dashboard KPI</a>
+            <a href="#roadmap" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Lộ trình</a>
+            <a href="#recruitment" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Tuyển dụng</a>
+            <a href="#team-management" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Quản lý Đội ngũ</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <!-- Strategic Overview Section -->
+        <section id="overview" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Tổng quan Chiến lược</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Đây là kế hoạch tổng thể nhằm xây dựng một hệ thống quản lý kênh phân phối thông minh và hiệu quả cho Nghệ Năng. Mục tiêu không chỉ là kiểm soát, mà còn là thúc đẩy sự hợp tác, tối ưu hóa hiệu suất và đưa ra quyết định dựa trên dữ liệu thực tế, đảm bảo sự phát triển bền vững trên thị trường quạt công nghiệp.</p>
+        </section>
+
+        <!-- 4 Pillars of Control Section -->
+        <section id="pillars" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">4 Trụ cột Kiểm soát</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Chiến lược của chúng ta được xây dựng dựa trên bốn trụ cột chính, tương hỗ lẫn nhau để tạo nên một hệ thống quản lý toàn diện. Hãy khám phá từng trụ cột để hiểu rõ hơn về cách chúng ta sẽ triển khai.</p>
+            
+            <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-4 sm:p-6">
+                <div class="mb-6 border-b border-slate-200">
+                    <nav class="flex flex-wrap -mb-px" id="pillars-tabs">
+                        <button data-tab="tech" class="tab-button active text-sm sm:text-base font-medium py-3 px-5 rounded-lg">1. Nền tảng Công nghệ</button>
+                        <button data-tab="policy" class="tab-button text-sm sm:text-base font-medium py-3 px-5 rounded-lg text-slate-600">2. Chính sách & Hợp đồng</button>
+                        <button data-tab="data" class="tab-button text-sm sm:text-base font-medium py-3 px-5 rounded-lg text-slate-600">3. Quản lý Dữ liệu</button>
+                        <button data-tab="relations" class="tab-button text-sm sm:text-base font-medium py-3 px-5 rounded-lg text-slate-600">4. Phát triển Quan hệ</button>
+                    </nav>
+                </div>
+
+                <div id="pillars-content">
+                    <!-- Technology Pillar -->
+                    <div data-content="tech" class="pillar-content grid md:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-blue-700 mb-3">Xây dựng hệ thống thông minh</h3>
+                            <p class="text-slate-600 mb-6">Chúng ta sẽ tập trung vào các công cụ cốt lõi, dễ triển khai và có khả năng mở rộng trong tương lai để số hóa quy trình quản lý.</p>
+                            <div class="space-y-4">
+                                <div class="pillar-card">
+                                    <h4 class="font-semibold text-slate-800 mb-2">Hệ thống Truy vết bằng Serial Number (SN)</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-sm text-slate-500">
+                                        <li>Kích hoạt bảo hành điện tử.</li>
+                                        <li>Truy vết tồn kho và đường đi sản phẩm.</li>
+                                        <li>Cung cấp bằng chứng xử lý vi phạm giá.</li>
+                                    </ul>
+                                </div>
+                                <div class="pillar-card">
+                                    <h4 class="font-semibold text-slate-800 mb-2">Ứng dụng di động cho NVKD</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-sm text-slate-500">
+                                        <li>Báo cáo thị trường, tồn kho, đối thủ.</li>
+                                        <li>Gửi đơn hàng trực tiếp lên hệ thống.</li>
+                                        <li>Tiếp nhận và xử lý yêu cầu hỗ trợ kỹ thuật.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                             <h4 class="font-semibold text-slate-800 text-center mb-4">Luồng hoạt động hệ thống SN</h4>
+                             <div class="space-y-4 text-center">
+                                 <div class="p-3 bg-white rounded-md shadow-sm">
+                                     <p class="font-bold text-blue-600">1. Xuất kho</p>
+                                     <p class="text-xs text-slate-500">Mỗi quạt được gán mã SN duy nhất.</p>
+                                 </div>
+                                 <p class="font-bold text-slate-400 text-2xl">↓</p>
+                                 <div class="p-3 bg-white rounded-md shadow-sm">
+                                     <p class="font-bold text-blue-600">2. Giao cho Đại lý</p>
+                                     <p class="text-xs text-slate-500">Hệ thống ghi nhận SN thuộc về Đại lý A.</p>
+                                 </div>
+                                  <p class="font-bold text-slate-400 text-2xl">↓</p>
+                                 <div class="p-3 bg-white rounded-md shadow-sm">
+                                     <p class="font-bold text-blue-600">3. Bán hàng & Kích hoạt</p>
+                                     <p class="text-xs text-slate-500">Đại lý kích hoạt bảo hành bằng SN cho khách hàng.</p>
+                                 </div>
+                                  <p class="font-bold text-slate-400 text-2xl">↓</p>
+                                  <div class="p-3 bg-white rounded-md shadow-sm">
+                                     <p class="font-xs text-slate-500">Dữ liệu được gửi về Dashboard để theo dõi.</p>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Policy Pillar -->
+                    <div data-content="policy" class="pillar-content hidden grid md:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-blue-700 mb-3">Hướng đến sự hợp tác minh bạch</h3>
+                            <p class="text-slate-600 mb-6">Hợp đồng và chính sách sẽ được thiết kế để tạo động lực, khuyến khích sự tuân thủ và xây dựng mối quan hệ đối tác cùng có lợi.</p>
+                            <div class="space-y-4">
+                                <div class="pillar-card">
+                                    <h4 class="font-semibold text-slate-800 mb-2">Hợp đồng Định hướng Hiệu suất</h4>
+                                    <p class="text-sm text-slate-500">Ghi rõ các KPI cần đạt về tuân thủ giá ($\ge95\%$) và kích hoạt bảo hành ($\ge90\%$).</p>
+                                </div>
+                                <div class="pillar-card">
+                                    <h4 class="font-semibold text-slate-800 mb-2">Chiết khấu và Thưởng theo Hiệu suất</h4>
+                                    <p class="text-sm text-slate-500">Thưởng thêm 1-2% chiết khấu cuối kỳ nếu đại lý đạt KPI, tạo động lực cạnh tranh lành mạnh.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                             <h4 class="font-semibold text-slate-800 text-center mb-4">Quy trình Xử lý Vi phạm</h4>
+                             <div class="space-y-4">
+                                 <div class="flex items-center gap-4 p-3 bg-white rounded-md shadow-sm">
+                                     <span class="flex-shrink-0 w-10 h-10 bg-yellow-100 text-yellow-600 font-bold rounded-full flex items-center justify-center">1</span>
+                                     <div>
+                                         <p class="font-semibold">Cảnh báo</p>
+                                         <p class="text-xs text-slate-500">Gửi thông báo qua email/ứng dụng.</p>
+                                     </div>
+                                 </div>
+                                 <div class="flex items-center gap-4 p-3 bg-white rounded-md shadow-sm">
+                                     <span class="flex-shrink-0 w-10 h-10 bg-orange-100 text-orange-600 font-bold rounded-full flex items-center justify-center">2</span>
+                                     <div>
+                                         <p class="font-semibold">Tạm dừng Cung cấp</p>
+                                         <p class="text-xs text-slate-500">Ngừng giao các dòng sản phẩm bán chạy.</p>
+                                     </div>
+                                 </div>
+                                 <div class="flex items-center gap-4 p-3 bg-white rounded-md shadow-sm">
+                                     <span class="flex-shrink-0 w-10 h-10 bg-red-100 text-red-600 font-bold rounded-full flex items-center justify-center">3</span>
+                                     <div>
+                                         <p class="font-semibold">Chế tài Tài chính</p>
+                                         <p class="text-xs text-slate-500">Cắt giảm chiết khấu hoặc xem xét lại hợp đồng.</p>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Pillar -->
+                    <div data-content="data" class="pillar-content hidden">
+                        <h3 class="text-xl font-bold text-blue-700 mb-3">Ra quyết định dựa trên bằng chứng</h3>
+                        <p class="text-slate-600 mb-6">Dữ liệu thu thập được sẽ là tài sản quý giá nhất. Chúng ta sẽ biến dữ liệu thô thành các báo cáo trực quan, giúp ban lãnh đạo và TPKD nắm bắt tình hình và đưa ra quyết định nhanh chóng, chính xác.</p>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="pillar-card text-center">
+                                <p class="text-2xl mb-1">📈</p>
+                                <h4 class="font-semibold text-slate-800">Tỷ lệ Tuân thủ Giá</h4>
+                                <p class="text-xs text-slate-500 mt-1">Đánh giá mức độ bán đúng giá của đại lý.</p>
+                            </div>
+                            <div class="pillar-card text-center">
+                                <p class="text-2xl mb-1">🎯</p>
+                                <h4 class="font-semibold text-slate-800">Tỷ lệ Kích hoạt Bảo hành</h4>
+                                <p class="text-xs text-slate-500 mt-1">Đo lường hiệu quả thu thập dữ liệu khách hàng.</p>
+                            </div>
+                            <div class="pillar-card text-center">
+                                <p class="text-2xl mb-1">🔄</p>
+                                <h4 class="font-semibold text-slate-800">Tốc độ Luân chuyển Tồn kho</h4>
+                                <p class="text-xs text-slate-500 mt-1">Xác định sản phẩm bán chạy/chậm.</p>
+                            </div>
+                            <div class="pillar-card text-center">
+                                <p class="text-2xl mb-1">📞</p>
+                                <h4 class="font-semibold text-slate-800">Tỷ lệ Phàn nàn Bảo hành</h4>
+                                <p class="text-xs text-slate-500 mt-1">Đo lường chất lượng sản phẩm & dịch vụ.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Relations Pillar -->
+                    <div data-content="relations" class="pillar-content hidden">
+                        <h3 class="text-xl font-bold text-blue-700 mb-3">Hướng tới hợp tác bền vững</h3>
+                        <p class="text-slate-600 mb-6">Chúng ta sẽ xây dựng một mối quan hệ đối tác tin cậy, biến đại lý thành những người đồng hành thực sự, cùng nhau phát triển thị trường.</p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="pillar-card">
+                                <p class="text-3xl mb-2">🎓</p>
+                                <h4 class="font-semibold text-slate-800 mb-2">Đào tạo Chuyên sâu</h4>
+                                <p class="text-sm text-slate-500">Tổ chức các buổi đào tạo định kỳ về sản phẩm mới, kỹ năng tư vấn bán hàng và quy trình bảo hành, giúp đại lý tự tin và chuyên nghiệp hơn.</p>
+                            </div>
+                            <div class="pillar-card">
+                                <p class="text-3xl mb-2">🏆</p>
+                                <h4 class="font-semibold text-slate-800 mb-2">Chương trình Đại lý Đối tác</h4>
+                                <p class="text-sm text-slate-500">Tổ chức thi đua, vinh danh "Đại lý xuất sắc nhất năm" và tạo kênh giao tiếp riêng để lắng nghe, hỗ trợ và xây dựng cộng đồng đại lý vững mạnh.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Dashboard Mockup Section -->
+        <section id="dashboard" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Dashboard KPI (Mô phỏng)</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Đây là giao diện mô phỏng cách chúng ta sẽ theo dõi các chỉ số hiệu suất chính. Một bảng điều khiển trực quan giúp nhanh chóng phát hiện các xu hướng, điểm mạnh và các vấn đề cần cải thiện trong hệ thống phân phối.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-semibold text-center mb-4 text-slate-700">Tỷ lệ Tuân thủ Giá (%)</h3>
+                    <div class="chart-container"><canvas id="priceComplianceChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-semibold text-center mb-4 text-slate-700">Tỷ lệ Kích hoạt Bảo hành</h3>
+                    <div class="chart-container"><canvas id="warrantyActivationChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-semibold text-center mb-4 text-slate-700">Tốc độ Luân chuyển Tồn kho (Số ngày)</h3>
+                    <div class="chart-container"><canvas id="inventoryTurnoverChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <h3 class="font-semibold text-center mb-4 text-slate-700">Tỷ lệ Phàn nàn Bảo hành (%)</h3>
+                    <div class="chart-container"><canvas id="complaintRateChart"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Roadmap Section -->
+        <section id="roadmap" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-slate-800">Lộ trình Triển khai</h2>
+            <div class="relative pl-8 border-l-2 border-blue-300 max-w-2xl mx-auto">
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold text-blue-800 mb-1">Quý 1: Nền tảng & Thử nghiệm</h3>
+                    <p class="text-sm text-slate-500 mb-4">Các hành động tập trung vào việc xây dựng cơ sở hạ tầng.</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                        <li>Xây dựng và hoàn thiện hệ thống truy vết bằng SN.</li>
+                        <li>Soạn thảo Hợp đồng Định hướng Hiệu suất mới.</li>
+                        <li>Thử nghiệm hệ thống SN và quy trình mới tại 2-3 đại lý chiến lược.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold text-blue-800 mb-1">Quý 2: Mở rộng & Phát triển</h3>
+                    <p class="text-sm text-slate-500 mb-4">Mở rộng quy mô triển khai và phát triển công cụ hỗ trợ.</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                        <li>Triển khai hệ thống SN cho 50% đại lý.</li>
+                        <li>Phát triển phiên bản đầu tiên của Ứng dụng di động cho NVKD.</li>
+                        <li>Tổ chức buổi đào tạo đầu tiên về sản phẩm và chính sách mới.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold text-blue-800 mb-1">Quý 3 & 4: Tối ưu & Toàn diện</h3>
+                    <p class="text-sm text-slate-500 mb-4">Hoàn thiện hệ thống và tập trung vào tối ưu hóa hiệu suất.</p>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700 text-sm">
+                        <li>Triển khai hệ thống SN và ứng dụng di động cho toàn bộ hệ thống.</li>
+                        <li>Xây dựng và ra mắt Dashboard KPI phiên bản 1.0.</li>
+                        <li>Khởi động "Chương trình Đại lý Đối tác" và vinh danh các đại lý xuất sắc.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recruitment Roadmap Section -->
+        <section id="recruitment" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Lộ trình Tuyển dụng</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Để mở rộng và phát triển kênh phân phối, đội ngũ nhân viên thị trường là vô cùng quan trọng. Đây là kế hoạch ba giai đoạn để xây dựng lực lượng nòng cốt này.</p>
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="section-card p-6">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">Giai đoạn 1: Chuẩn bị & Lập kế hoạch</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                        <li>Phân tích nhu cầu: Xác định số lượng nhân sự cần thiết cho từng khu vực.</li>
+                        <li>Định hình hồ sơ ứng viên lý tưởng: Kinh nghiệm, kỹ năng mềm, kiến thức ngành.</li>
+                        <li>Xây dựng mô tả công việc và bộ KPI chi tiết cho nhân viên thị trường.</li>
+                    </ul>
+                </div>
+                <div class="section-card p-6">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">Giai đoạn 2: Thu hút & Sàng lọc</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                        <li>Đăng tin tuyển dụng trên các kênh phù hợp (trực tuyến, mạng lưới chuyên ngành).</li>
+                        <li>Tiến hành sàng lọc hồ sơ và tổ chức phỏng vấn chuyên sâu.</li>
+                        <li>Kiểm tra năng lực thực tế qua các bài tập tình huống hoặc case study.</li>
+                    </ul>
+                </div>
+                <div class="section-card p-6">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">Giai đoạn 3: Hội nhập & Đào tạo</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                        <li>Đào tạo chuyên sâu về sản phẩm, chính sách bán hàng và quy trình.</li>
+                        <li>Hướng dẫn sử dụng ứng dụng di động cho NVKD và các công cụ khác.</li>
+                        <li>Chỉ định mentor và theo dõi, hỗ trợ nhân viên mới trong 1-2 tháng đầu.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Management Section -->
+        <section id="team-management" class="scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Kế hoạch Quản lý Đội ngũ</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Kiểm soát đội ngũ nhân viên thị trường không phải là "thắt chặt" mà là xây dựng một hệ thống để họ làm việc hiệu quả, minh bạch và có động lực.</p>
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 max-w-3xl mx-auto">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">1. Quy trình làm việc & Báo cáo</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 pl-4">
+                        <li><span class="font-bold">Quy trình thăm đại lý:</span> Lập kế hoạch tuần, check-in/check-out bằng GPS, báo cáo kết quả chi tiết sau mỗi lần thăm.</li>
+                        <li><span class="font-bold">Báo cáo định kỳ:</span> Tóm tắt công việc hàng ngày, phân tích chi tiết kết quả hàng tuần và đánh giá tổng thể hiệu suất hàng tháng.</li>
+                    </ul>
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">2. Chính sách Lương thưởng & Đánh giá Hiệu suất</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 pl-4">
+                        <li><span class="font-bold">Bộ KPI rõ ràng:</span>
+                            <ul>
+                                <li><span class="font-bold">Doanh số thực tế:</span> $$ \frac{\text{Doanh thu thực tế}}{\text{Doanh thu mục tiêu}} \times 100\% $$</li>
+                                <li><span class="font-bold">Độ phủ kênh:</span> $$ \frac{\text{Số đại lý mới}}{\text{Mục tiêu đại lý mới}} \times 100\% $$</li>
+                                <li><span class="font-bold">Chất lượng kênh:</span> $$ \frac{\text{Số đại lý tuân thủ giá}}{\text{Tổng số đại lý}} \times 100\% $$</li>
+                                <li><span class="font-bold">Mức độ tương tác:</span> Số lượng thăm viếng đại lý mỗi tuần.</li>
+                                <li><span class="font-bold">Tỷ lệ báo cáo:</span> % báo cáo được gửi đúng hạn trong tuần/tháng.</li>
+                            </ul>
+                        </li>
+                        <li><span class="font-bold">Cơ chế Lương & Thưởng:</span> Kết hợp lương cứng và lương mềm (thưởng KPI) để tạo động lực mạnh mẽ.</li>
+                    </ul>
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-blue-700 mb-3">3. Công cụ Hỗ trợ & Kiểm soát</h3>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 pl-4">
+                        <li><span class="font-bold">Ứng dụng di động (NVKD App):</span>
+                            <ul>
+                                <li><span class="font-bold">Chấm công & Vị trí:</span> Check-in/check-out tự động ghi nhận GPS.</li>
+                                <li><span class="font-bold">Gửi báo cáo trực quan:</span> Nhập dữ liệu tồn kho, chụp ảnh trưng bày.</li>
+                                <li><span class="font-bold">Theo dõi KPI:</span> Dashboard cá nhân giúp nhân viên tự theo dõi tiến độ.</li>
+                            </ul>
+                        </li>
+                        <li><span class="font-bold">Hệ thống CRM:</span> Tạo hồ sơ chi tiết cho từng đại lý và tổng hợp dữ liệu để quản lý.</li>
+                        <li><span class="font-bold">Phân quyền và Giám sát:</span> Cấp quản lý có quyền truy cập để giám sát và đưa ra huấn luyện kịp thời.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Add the math rendering function call here to ensure the DOM is fully loaded.
+    renderMathInElement(document.body);
+
+    const chartColors = {
+        blue: 'rgba(42, 111, 219, 0.7)',
+        green: 'rgba(22, 163, 74, 0.7)',
+        red: 'rgba(220, 38, 38, 0.7)',
+        yellow: 'rgba(234, 179, 8, 0.7)',
+        slate: 'rgba(226, 232, 240, 0.7)',
+        blueBorder: 'rgb(42, 111, 219)',
+        greenBorder: 'rgb(22, 163, 74)',
+        redBorder: 'rgb(220, 38, 38)',
+    };
+
+    function createChart(ctx, type, data, options) {
+        if (ctx) {
+            new Chart(ctx, { type, data, options });
+        }
+    }
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                backgroundColor: '#1a202c',
+                titleFont: { size: 14, weight: 'bold' },
+                bodyFont: { size: 12 },
+                padding: 12,
+                cornerRadius: 6,
+                boxPadding: 4,
+            },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { color: '#e2e8f0' },
+                ticks: { color: '#64748b' },
+            },
+            x: {
+                grid: { display: false },
+                ticks: { color: '#64748b' },
+            },
+        },
+    };
+
+    // Price Compliance Chart
+    const priceCtx = document.getElementById('priceComplianceChart');
+    createChart(priceCtx, 'line', {
+        labels: ['Thg 1', 'Thg 2', 'Thg 3', 'Thg 4', 'Thg 5', 'Thg 6'],
+        datasets: [{
+            label: 'Tỷ lệ tuân thủ',
+            data: [85, 88, 87, 92, 94, 95],
+            borderColor: chartColors.blueBorder,
+            backgroundColor: chartColors.blue,
+            tension: 0.3,
+            fill: true,
+        }]
+    }, defaultChartOptions);
+
+    // Warranty Activation Chart
+    const warrantyCtx = document.getElementById('warrantyActivationChart');
+    createChart(warrantyCtx, 'doughnut', {
+        labels: ['Đã kích hoạt', 'Chưa kích hoạt'],
+        datasets: [{
+            data: [82, 18],
+            backgroundColor: [chartColors.green, chartColors.slate],
+            borderColor: ['#fff', '#fff'],
+            borderWidth: 4,
+        }]
+    }, { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { color: '#64748b' } } } });
+    
+    // Inventory Turnover Chart
+    const inventoryCtx = document.getElementById('inventoryTurnoverChart');
+    createChart(inventoryCtx, 'bar', {
+        labels: ['ĐL An Phát', 'ĐL Bình Minh', 'ĐL Cường Thịnh', 'ĐL Đại Nam'],
+        datasets: [{
+            label: 'Số ngày',
+            data: [45, 62, 50, 75],
+            backgroundColor: [chartColors.green, chartColors.yellow, chartColors.green, chartColors.red],
+            borderRadius: 4,
+        }]
+    }, defaultChartOptions);
+
+    // Complaint Rate Chart
+    const complaintCtx = document.getElementById('complaintRateChart');
+    createChart(complaintCtx, 'line', {
+        labels: ['Thg 1', 'Thg 2', 'Thg 3', 'Thg 4', 'Thg 5', 'Thg 6'],
+        datasets: [{
+            label: 'Tỷ lệ phàn nàn',
+            data: [2.5, 2.2, 2.3, 1.8, 1.5, 1.4],
+            borderColor: chartColors.redBorder,
+            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+            tension: 0.3,
+            fill: true,
+        }]
+    }, defaultChartOptions);
+
+
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.pillar-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.classList.add('text-slate-600');
+            });
+            tab.classList.add('active');
+            tab.classList.remove('text-slate-600');
+            
+            const target = tab.getAttribute('data-tab');
+            tabContents.forEach(content => {
+                if (content.getAttribute('data-content') === target) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        });
+    });
+    
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Smooth scroll and active navigation link
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        });
+    });
+    
+    const sections = document.querySelectorAll('section');
+    const mainNavLinks = document.querySelectorAll('header nav .nav-link');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                mainNavLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href').substring(1) === id);
+                });
+            }
+        });
+    }, { rootMargin: "-40% 0px -60% 0px" });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+});
+</script>
+
+</body>
+</html>
