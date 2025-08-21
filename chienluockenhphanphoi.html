@@ -86,6 +86,53 @@
         .timeline-item:last-child {
             margin-bottom: 0;
         }
+        .gemini-feature-container, .history-container {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .copy-btn, .clear-btn {
+            background-color: #4CAF50; /* Green color for copy button */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+        .clear-btn {
+            background-color: #dc2626; /* Red for clear button */
+        }
+        .clear-btn:hover {
+            background-color: #b91c1c;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #2a6fdb;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .history-item {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .history-item:hover {
+            background-color: #f1f5f9;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -101,6 +148,8 @@
                 <a href="#roadmap" class="nav-link font-medium text-slate-600 pb-1">Lộ trình</a>
                 <a href="#recruitment" class="nav-link font-medium text-slate-600 pb-1">Tuyển dụng</a>
                 <a href="#team-management" class="nav-link font-medium text-slate-600 pb-1">Quản lý Đội ngũ</a>
+                <a href="#gemini-email" class="nav-link font-medium text-slate-600 pb-1">Trợ lý Email ✨</a>
+                <a href="#email-history" class="nav-link font-medium text-slate-600 pb-1">Lịch sử Email</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-slate-700 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,6 +164,8 @@
             <a href="#roadmap" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Lộ trình</a>
             <a href="#recruitment" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Tuyển dụng</a>
             <a href="#team-management" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Quản lý Đội ngũ</a>
+            <a href="#gemini-email" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Trợ lý Email ✨</a>
+            <a href="#email-history" class="block py-2 text-slate-600 hover:text-blue-600 transition-colors duration-200">Lịch sử Email</a>
         </div>
     </header>
 
@@ -185,7 +236,7 @@
                                  </div>
                                   <p class="font-bold text-slate-400 text-2xl">↓</p>
                                   <div class="p-3 bg-white rounded-md shadow-sm">
-                                     <p class="font-xs text-slate-500">Dữ liệu được gửi về Dashboard để theo dõi.</p>
+                                     <p class="text-xs text-slate-500">Dữ liệu được gửi về Dashboard để theo dõi.</p>
                                  </div>
                              </div>
                         </div>
@@ -419,6 +470,57 @@
             </div>
         </section>
 
+        <!-- New Gemini Feature Section -->
+        <section id="gemini-email" class="scroll-mt-24 mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Trợ lý Email ✨</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">Sử dụng sức mạnh của AI để tự động soạn thảo email chuyên nghiệp cho đại lý, dựa trên các vấn đề hiệu suất cụ thể.</p>
+            <div class="gemini-feature-container max-w-2xl mx-auto p-6 space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="dealerName" class="block font-medium text-slate-700 mb-1">Tên Đại lý:</label>
+                        <input type="text" id="dealerName" placeholder="Ví dụ: Đại lý An Phát" class="w-full p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="issueDescription" class="block font-medium text-slate-700 mb-1">Mô tả vấn đề:</label>
+                        <textarea id="issueDescription" rows="4" placeholder="Ví dụ: Tỷ lệ tuân thủ giá thấp hơn 95% trong tháng này và tỷ lệ kích hoạt bảo hành thấp." class="w-full p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button id="generateEmailBtn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors duration-300 shadow-lg flex items-center gap-2">
+                        <div id="loadingSpinner" class="hidden loading-spinner"></div>
+                        <span>Soạn Email ✨</span>
+                    </button>
+                </div>
+                <div id="emailOutputSection" class="hidden mt-6 pt-6 border-t border-slate-200 space-y-4">
+                    <h3 class="font-semibold text-slate-800">Bản nháp Email:</h3>
+                    <textarea id="emailOutput" rows="10" readonly class="w-full p-3 bg-slate-50 border border-slate-300 rounded-md text-sm"></textarea>
+                    <div class="flex justify-end">
+                         <button id="copyBtn" class="copy-btn">Sao chép</button>
+                    </div>
+                </div>
+                 <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Lỗi!</strong>
+                    <span class="block sm:inline" id="errorText">Có vấn đề khi tạo email. Vui lòng thử lại.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Email History Section -->
+        <section id="email-history" class="scroll-mt-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-slate-800">Lịch sử Email</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto mb-6">Tất cả các email bạn đã tạo sẽ được lưu tại đây để dễ dàng xem lại.</p>
+            <div class="history-container max-w-4xl mx-auto p-6 space-y-4">
+                <div class="flex justify-between items-center mb-4">
+                     <p class="text-slate-700 font-semibold text-lg" id="history-count">Không có email nào được lưu.</p>
+                     <button id="clearHistoryBtn" class="clear-btn text-sm font-semibold rounded-md hidden">Xóa Lịch sử</button>
+                </div>
+                <div id="emailHistoryList" class="space-y-4">
+                    <!-- History items will be injected here by JavaScript -->
+                </div>
+                
+            </div>
+        </section>
+
     </main>
 
 <script>
@@ -589,6 +691,167 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
+
+    // --- Gemini API Integration: Email Assistant Feature ---
+    const generateEmailBtn = document.getElementById('generateEmailBtn');
+    const dealerNameInput = document.getElementById('dealerName');
+    const issueDescriptionInput = document.getElementById('issueDescription');
+    const emailOutputSection = document.getElementById('emailOutputSection');
+    const emailOutputTextarea = document.getElementById('emailOutput');
+    const copyBtn = document.getElementById('copyBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const emailHistoryList = document.getElementById('emailHistoryList');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const historyCountElem = document.getElementById('history-count');
+    
+    // Function to load email history from local storage
+    function loadEmailHistory() {
+        const history = JSON.parse(localStorage.getItem('emailHistory')) || [];
+        emailHistoryList.innerHTML = ''; // Clear previous history
+        if (history.length > 0) {
+            historyCountElem.textContent = `Có ${history.length} email được lưu.`;
+            clearHistoryBtn.classList.remove('hidden');
+            history.forEach((item, index) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <h4 class="font-bold text-slate-800 mb-1">Đại lý: ${item.dealerName}</h4>
+                    <p class="text-sm text-slate-600 mb-2">Vấn đề: ${item.issueDescription}</p>
+                    <textarea class="w-full p-2 bg-white border border-slate-200 rounded-md text-sm cursor-pointer" rows="5" readonly>${item.emailContent}</textarea>
+                `;
+                // Add click listener to copy text to clipboard
+                historyItem.querySelector('textarea').addEventListener('click', (e) => {
+                    e.target.select();
+                    document.execCommand('copy');
+                });
+                emailHistoryList.appendChild(historyItem);
+            });
+        } else {
+            historyCountElem.textContent = 'Không có email nào được lưu.';
+            clearHistoryBtn.classList.add('hidden');
+        }
+    }
+
+    // Function to save an email to local storage
+    function saveEmailToLocalStorage(dealerName, issue, emailContent) {
+        let history = JSON.parse(localStorage.getItem('emailHistory')) || [];
+        const newEntry = {
+            dealerName: dealerName,
+            issueDescription: issue,
+            emailContent: emailContent,
+            timestamp: new Date().toISOString()
+        };
+        history.unshift(newEntry); // Add to the beginning of the array
+        localStorage.setItem('emailHistory', JSON.stringify(history));
+        loadEmailHistory(); // Reload history to update the UI
+    }
+
+    // Event listener for generating the email
+    generateEmailBtn.addEventListener('click', async () => {
+        const dealerName = dealerNameInput.value;
+        const issueDescription = issueDescriptionInput.value;
+        
+        // Basic input validation
+        if (!dealerName || !issueDescription) {
+            errorMessage.classList.remove('hidden');
+            document.getElementById('errorText').textContent = 'Vui lòng điền đầy đủ tên đại lý và mô tả vấn đề.';
+            return;
+        }
+
+        // Hide previous output and error, show loading spinner
+        emailOutputSection.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        loadingSpinner.classList.remove('hidden');
+        generateEmailBtn.disabled = true;
+
+        try {
+            // Construct the prompt for the LLM
+            const prompt = `Soạn thảo một email chuyên nghiệp và lịch sự bằng tiếng Việt cho đại lý phân phối.
+            Nội dung email cần đề cập đến vấn đề hiệu suất của họ một cách tế nhị và đưa ra các đề xuất hợp tác để cải thiện.
+            Sử dụng thông tin sau:
+            - Tên đại lý: ${dealerName}
+            - Vấn đề hiệu suất: ${issueDescription}
+            
+            Yêu cầu:
+            - Bắt đầu bằng lời chào trân trọng và thân thiện.
+            - Nêu vấn đề một cách khách quan, sử dụng ngôn từ tích cực.
+            - Đề xuất một cuộc gặp gỡ hoặc thảo luận để cùng tìm giải pháp.
+            - Kết thúc bằng lời chúc và chữ ký chuyên nghiệp.
+            - Soạn email hoàn chỉnh, không cần tiêu đề. Chỉ cần nội dung email.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            // API key is hard-coded as per user's request
+            const apiKey = "AIzaSyC6-hOHavm6hd8Y4u4gK6G2KG9Ev9SPQjs" 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            // Fetch the API response with exponential backoff
+            const maxRetries = 5;
+            let attempt = 0;
+            let response;
+            while(attempt < maxRetries) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) break; // Exit loop on success
+                } catch (e) {
+                    console.error('Fetch attempt failed:', e);
+                }
+                await new Promise(res => setTimeout(res, Math.pow(2, attempt) * 1000));
+                attempt++;
+            }
+
+            if (!response || !response.ok) {
+                throw new Error('API request failed after multiple retries.');
+            }
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const generatedText = result.candidates[0].content.parts[0].text;
+                emailOutputTextarea.value = generatedText;
+                emailOutputSection.classList.remove('hidden');
+                
+                // Save the generated email to local storage
+                saveEmailToLocalStorage(dealerName, issueDescription, generatedText);
+
+            } else {
+                errorMessage.classList.remove('hidden');
+                document.getElementById('errorText').textContent = 'Không thể tạo email. Vui lòng thử lại với mô tả khác.';
+            }
+
+        } catch (error) {
+            console.error('Error generating email:', error);
+            errorMessage.classList.remove('hidden');
+            document.getElementById('errorText').textContent = `Lỗi: ${error.message}`;
+        } finally {
+            loadingSpinner.classList.add('hidden');
+            generateEmailBtn.disabled = false;
+        }
+    });
+
+    // Copy to clipboard functionality
+    copyBtn.addEventListener('click', () => {
+        emailOutputTextarea.select();
+        document.execCommand('copy');
+    });
+
+    // Clear history functionality
+    clearHistoryBtn.addEventListener('click', () => {
+        localStorage.removeItem('emailHistory');
+        loadEmailHistory();
+    });
+
+    // Initial load of history
+    loadEmailHistory();
 });
 </script>
 
