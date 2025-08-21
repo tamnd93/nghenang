@@ -82,6 +82,12 @@
             max-height: 90vh; /* Use viewport height to prevent overflow */
             overflow-y: auto;
         }
+        .suggestion-card {
+            background-color: #F8F9FA;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -288,6 +294,19 @@
                 </div>
             </div>
         </section>
+        
+        <!-- New History Section -->
+        <div class="flex justify-center mt-12 mb-8">
+            <button id="toggleHistoryBtn" class="bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-300 transition-colors">
+                Xem Lịch sử Gợi ý
+            </button>
+        </div>
+        <section id="historySection" class="hidden">
+            <h2 class="text-3xl font-bold text-center mb-6">Lịch sử Gợi ý</h2>
+            <div id="historyLogContainer" class="max-w-4xl mx-auto">
+                <!-- History items will be dynamically inserted here -->
+            </div>
+        </section>
     </div>
 
     <script>
@@ -298,12 +317,89 @@
             const messageBox = document.getElementById('messageBox');
             const messageBoxContent = document.getElementById('messageBoxContent');
             const closeMessageBox = document.getElementById('closeMessageBox');
+            const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
+            const historySection = document.getElementById('historySection');
+            const historyLogContainer = document.getElementById('historyLogContainer');
+
+            // Function to save a suggestion to local storage
+            const saveSuggestion = (action, suggestions) => {
+                try {
+                    const history = JSON.parse(localStorage.getItem('suggestionHistory') || '[]');
+                    const newEntry = {
+                        timestamp: new Date().toISOString(),
+                        action: action,
+                        suggestions: suggestions
+                    };
+                    history.push(newEntry);
+                    localStorage.setItem('suggestionHistory', JSON.stringify(history));
+                } catch (e) {
+                    console.error("Could not save to local storage:", e);
+                }
+            };
+            
+            // Function to load and display the history
+            const loadAndDisplayHistory = () => {
+                try {
+                    const history = JSON.parse(localStorage.getItem('suggestionHistory') || '[]');
+                    if (history.length === 0) {
+                        historyLogContainer.innerHTML = '<p class="text-center text-gray-500">Chưa có gợi ý nào được lưu.</p>';
+                        return;
+                    }
+                    
+                    // Sort by timestamp in descending order (newest first)
+                    history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    const historyHtml = history.map(item => {
+                        const formattedDate = new Date(item.timestamp).toLocaleString('vi-VN');
+                        // Use regex to find and replace ** and * with <strong> for bolding
+                        const formattedSuggestions = item.suggestions
+                            .split('\n')
+                            .filter(line => line.trim() !== '')
+                            .map(line => `<li class="list-disc ml-4 text-sm">${line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<strong>$1</strong>')}</li>`)
+                            .join('');
+
+                        return `
+                            <div class="bg-gray-100 p-6 rounded-xl shadow-inner mb-4">
+                                <p class="text-xs text-gray-500 mb-2">${formattedDate}</p>
+                                <h4 class="font-bold text-lg text-[#BC5090] mb-2">Gợi ý cho: ${item.action}</h4>
+                                <ul class="text-gray-700 mt-2 space-y-1">
+                                    ${formattedSuggestions}
+                                </ul>
+                            </div>
+                        `;
+                    }).join('');
+
+                    historyLogContainer.innerHTML = historyHtml;
+                } catch (e) {
+                    console.error("Could not load history from local storage:", e);
+                    historyLogContainer.innerHTML = '<p class="text-center text-red-500">Lỗi khi tải lịch sử. Vui lòng thử lại.</p>';
+                }
+            };
 
             // Function to show a message box with content
-            function showMessageBox(title, content) {
+            function showMessageBox(content) {
+                // Tách nội dung thành các dòng và lọc bỏ dòng trống
+                const lines = content.split('\n').filter(line => line.trim() !== '');
+
+                // Xử lý định dạng Markdown ** và * thành thẻ <strong> HTML
+                const formattedContent = lines.map(line => {
+                    const cleanedLine = line.trim().replace(/^[\-\*•]\s*/, '');
+                    // Regex để tìm kiếm các đoạn văn bản được bao quanh bởi ** hoặc *
+                    const boldedLine = cleanedLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+                    return `
+                        <div class="suggestion-card flex items-start space-x-3">
+                            <span class="text-xl">💡</span>
+                            <p class="flex-1">${boldedLine}</p>
+                        </div>
+                    `;
+                }).join('');
+
                 messageBoxContent.innerHTML = `
-                    <h4 class="text-xl font-bold mb-4">${title}</h4>
-                    <p>${content}</p>
+                    <h4 class="text-xl font-bold mb-4 text-[#BC5090]">Gợi ý từ Trưởng Phòng Kinh Doanh iFan</h4>
+                    <div class="space-y-4">
+                        ${formattedContent}
+                    </div>
+                    <p class="text-sm text-gray-500 text-center mt-6">Hy vọng những gợi ý này sẽ giúp ích cho bạn!</p>
                 `;
                 messageBox.classList.remove('hidden');
             }
@@ -327,7 +423,7 @@
 
                     while (retries < maxRetries && !success) {
                         try {
-                            const prompt = `Bạn là một chuyên gia tư vấn chiến lược. Hãy tạo ra 5 ví dụ cụ thể, sáng tạo và chuyên nghiệp cho kế hoạch hành động sau: "${actionText}". Đảm bảo các ví dụ phải mới mẻ và không trùng lặp với ví dụ đã có. Trình bày các ví dụ này dưới dạng một danh sách có tiêu đề rõ ràng.`;
+                            const prompt = `Với vai trò là một chuyên gia tư vấn chiến lược cấp cao, hãy đưa ra 5 ví dụ hành động chi tiết và chuyên nghiệp cho kế hoạch sau: "${actionText}". Các ví dụ phải ngắn gọn, súc tích, tập trung vào kết quả. Trình bày dưới dạng danh sách gạch đầu dòng.`;
 
                             const chatHistory = [];
                             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
@@ -367,12 +463,25 @@
 
                     loadingOverlay.classList.add('hidden');
                     if (success) {
-                        const formattedText = responseText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-                        showMessageBox('Gợi ý từ Trưởng Phòng Kinh Doanh iFan', formattedText);
+                        // Save the new suggestion to local storage
+                        saveSuggestion(actionText, responseText);
+                        // Show the suggestion in the message box
+                        showMessageBox(responseText);
                     } else {
-                        showMessageBox('Lỗi', 'Không thể tạo ví dụ. Vui lòng thử lại sau.');
+                        showMessageBox('Không thể tạo ví dụ. Vui lòng thử lại sau.');
                     }
                 });
+            });
+
+            // Toggle history section visibility and load history
+            toggleHistoryBtn.addEventListener('click', () => {
+                const isHidden = historySection.classList.toggle('hidden');
+                if (!isHidden) {
+                    loadAndDisplayHistory();
+                    toggleHistoryBtn.textContent = 'Ẩn Lịch sử Gợi ý';
+                } else {
+                    toggleHistoryBtn.textContent = 'Xem Lịch sử Gợi ý';
+                }
             });
         });
     </script>
