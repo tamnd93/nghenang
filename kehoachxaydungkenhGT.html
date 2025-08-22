@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kế hoạch Phát triển Kênh GT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: Tôi đã thiết kế ứng dụng theo cấu trúc dashboard một trang (SPA) với các khu vực theo chủ đề, thay vì theo cấu trúc tuyến tính của báo cáo gốc. Cấu trúc này bao gồm: 1. Header điều hướng cố định. 2. Bảng điều khiển tổng quan với các chỉ số KPI chính. 3. Lộ trình 12 tháng trực quan hóa bằng biểu đồ và dòng thời gian tương tác. 4. Khu vực chính sách tương tác, nổi bật là công cụ tính chiết khấu. 5. Phân tích đội ngũ sale và KPI. 6. Khu vực quản trị và rủi ro. Lựa chọn cấu trúc này nhằm mục đích giúp ban lãnh đạo và đội ngũ bán hàng có thể truy cập nhanh chóng đến thông tin họ cần, tương tác với dữ liệu để hiểu sâu hơn và theo dõi tiến độ một cách trực quan, thay vì phải đọc qua một tài liệu dài. -->
+    <!-- Visualization & Content Choices: 1. Mục tiêu Doanh thu (Báo cáo mục V) -> Mục tiêu: Theo dõi sự thay đổi -> Biểu đồ cột (Chart.js) -> Tương tác: Hover để xem chi tiết, các nút bấm để lọc theo quý -> Lý do: Trực quan hóa mục tiêu tăng trưởng doanh thu theo từng giai đoạn, dễ dàng so sánh. 2. Chính sách chiết khấu (Báo cáo mục III.1) -> Mục tiêu: Cung cấp thông tin, công cụ -> Công cụ tính toán (HTML/JS) -> Tương tác: Người dùng nhập doanh số, hệ thống tự tính và hiển thị mức chiết khấu -> Lý do: Biến bảng chính sách phức tạp thành một công cụ thực tế, dễ hiểu và ngay lập tức hữu ích cho NPP. 3. Lộ trình 12 tháng (Báo cáo mục V) -> Mục tiêu: Tổ chức thông tin theo trình tự -> Dòng thời gian tương tác (HTML/CSS/JS) -> Tương tác: Nhấn vào từng quý để xem chi tiết hoạt động -> Lý do: Trình bày kế hoạch một cách sinh động, dễ theo dõi hơn so với bảng biểu tĩnh. 4. Cơ cấu lương Sale (Báo cáo mục IV) -> Mục tiêu: Hiển thị tỷ lệ -> Biểu đồ tròn (Chart.js) -> Tương tác: Hover để xem chi tiết từng thành phần lương -> Lý do: Giúp nhân viên kinh doanh hiểu rõ cơ cấu thu nhập của mình một cách nhanh chóng. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F5F2;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+        .kpi-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-blue-600">Kế hoạch Kênh GT</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#tong-quan" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Tổng quan</a>
+                        <a href="#lo-trinh" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Lộ trình</a>
+                        <a href="#chinh-sach" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Chính sách</a>
+                        <a href="#doi-ngu" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Đội ngũ</a>
+                        <a href="#quan-tri" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Quản trị</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="tong-quan" class="mb-16 text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-gray-800">Bảng điều khiển Tổng quan</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10">
+                Các mục tiêu và chỉ số hiệu suất chính (KPI) cho kế hoạch phát triển kênh GT trong 12 tháng tới.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="kpi-card">
+                    <div class="text-blue-500 text-4xl mb-2">🎯</div>
+                    <h3 class="text-lg font-semibold text-gray-800">Mục tiêu Doanh thu</h3>
+                    <p class="text-3xl font-bold text-blue-600">40%</p>
+                    <p class="text-gray-500">Tỷ trọng trên tổng doanh thu công ty</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="text-green-500 text-4xl mb-2">📈</div>
+                    <h3 class="text-lg font-semibold text-gray-800">Tổng Doanh số 12 tháng</h3>
+                    <p class="text-3xl font-bold text-green-600">8 Tỷ</p>
+                    <p class="text-gray-500">Dự kiến từ kênh GT</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="text-yellow-500 text-4xl mb-2">👥</div>
+                    <h3 class="text-lg font-semibold text-gray-800">NPP/Đại lý mới</h3>
+                    <p class="text-3xl font-bold text-yellow-600">24-33</p>
+                    <p class="text-gray-500">Mục tiêu tuyển mới trong năm</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="lo-trinh" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Lộ trình Phát triển 12 tháng</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Trực quan hóa mục tiêu doanh thu và các hoạt động chính theo từng quý. Nhấn vào các nút bên dưới để xem chi tiết từng giai đoạn.
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <div class="chart-container mb-6">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div id="timeline-details" class="mt-8 space-y-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="chinh-sach" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Chính sách Cốt lõi cho NPP & Đại lý</h2>
+             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Khám phá các chính sách chiết khấu, công nợ và hỗ trợ được thiết kế để thúc đẩy tăng trưởng và hợp tác bền vững.
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-blue-700">Công cụ Ước tính Chiết khấu</h3>
+                    <p class="text-gray-600 mb-4">Nhập doanh số nhập hàng dự kiến mỗi tháng để xem mức chiết khấu và các khoản thưởng có thể nhận.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="salesInput" class="block text-sm font-medium text-gray-700">Doanh số nhập hàng/tháng (triệu VNĐ)</label>
+                            <input type="number" id="salesInput" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Ví dụ: 150">
+                        </div>
+                        <div id="result" class="p-4 bg-blue-50 rounded-lg text-center">
+                            <p class="text-gray-700">Vui lòng nhập doanh số để xem kết quả.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-blue-700">Chính sách Công nợ</h3>
+                        <div class="relative pl-6 border-l-2 border-blue-200">
+                            <div class="mb-4 relative">
+                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-blue-500 rounded-full border-4 border-white"></div>
+                                <p class="font-semibold">Đơn hàng đầu tiên</p>
+                                <p class="text-gray-600">Thanh toán 100%.</p>
+                            </div>
+                            <div class="mb-4 relative">
+                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-blue-500 rounded-full border-4 border-white"></div>
+                                <p class="font-semibold">Sau 3 tháng</p>
+                                <p class="text-gray-600">Hỗ trợ công nợ 15 ngày (giới hạn 50 triệu).</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-blue-500 rounded-full border-4 border-white"></div>
+                                <p class="font-semibold">Sau 6 tháng</p>
+                                <p class="text-gray-600">Hỗ trợ công nợ 30 ngày (giới hạn 100 triệu).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-blue-700">Hỗ trợ từ Công ty</h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-1">
+                            <li>Cung cấp POSM (bảng hiệu, poster, catalogue...).</li>
+                            <li>Đồng tài trợ 50/50 cho các sự kiện marketing.</li>
+                            <li>Hỗ trợ kỹ thuật và đào tạo sản phẩm trực tuyến.</li>
+                            <li>Cam kết SLA bảo hành nhanh chóng (phản hồi 48h).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="doi-ngu" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Đội ngũ Bán hàng GT</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Cấu trúc, KPI và chính sách lương thưởng cho đội ngũ sale thị trường - lực lượng nòng cốt trong việc mở rộng mạng lưới.
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-green-700">KPIs Chính</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <p class="font-bold text-green-800">Doanh số</p>
+                            <p class="text-lg font-semibold">≥100% Target</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <p class="font-bold text-green-800">Đại lý mới</p>
+                            <p class="text-lg font-semibold">≥2 / tháng</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <p class="font-bold text-green-800">Viếng thăm</p>
+                            <p class="text-lg font-semibold">≥15 điểm / tuần</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <p class="font-bold text-green-800">Độ phủ</p>
+                            <p class="text-lg font-semibold">≥80% điểm bán đặt lại hàng</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                     <h3 class="text-xl font-bold mb-4 text-green-700">Cơ cấu Lương (Ước tính)</h3>
+                     <div class="chart-container h-64 md:h-auto">
+                        <canvas id="salaryChart"></canvas>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quan-tri">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Quản trị & Xử lý Rủi ro</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Các quy trình kiểm soát và chính sách xử lý được thiết lập để đảm bảo hệ thống vận hành minh bạch và hiệu quả.
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-red-700">Cơ chế Kiểm soát</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-3 mt-1">✓</span>
+                                <span><strong class="font-semibold">Giá bán:</strong> Sử dụng "Mystery shopper" và đối chiếu báo cáo để chống phá giá.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-3 mt-1">✓</span>
+                                <span><strong class="font-semibold">Tồn kho:</strong> Báo cáo hàng tuần và kiểm tra đột xuất để tránh ôm hàng, thiếu hàng.</span>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-red-500 mr-3 mt-1">✓</span>
+                                <span><strong class="font-semibold">Xung đột kênh:</strong> Nguyên tắc "ưu tiên kênh chốt đơn trước" và bảo vệ khu vực cho NPP.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-red-700">Chính sách Rút lui (Exit Policy)</h3>
+                        <div class="relative pl-6 border-l-2 border-red-200">
+                            <div class="mb-4 relative">
+                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-red-500 rounded-full border-4 border-white"></div>
+                                <p class="font-semibold">Không đạt KPI 2 quý liên tiếp</p>
+                                <p class="text-gray-600">→ Gửi cảnh báo bằng văn bản.</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-red-500 rounded-full border-4 border-white"></div>
+                                <p class="font-semibold">Quý thứ 3 không cải thiện</p>
+                                <p class="text-gray-600">→ Chấm dứt hợp đồng.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 mt-16">
+        <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
+            <p>&copy; 2025 - Dashboard Kế hoạch Phát triển Kênh GT.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const timelineData = [
+                {
+                    quarter: 'Quý 1',
+                    revenue: 0.5,
+                    activities: [
+                        'Tuyển dụng 3-5 sale thị trường.',
+                        'Mở 6-8 Đại lý/NPP mới tại Long An, Tây Ninh, Bình Phước.'
+                    ],
+                    expectedResult: [
+                        'Bao phủ 80% khu vực trọng điểm.',
+                        'Doanh số GT đạt <strong>500 triệu</strong>.'
+                    ]
+                },
+                {
+                    quarter: 'Quý 2',
+                    revenue: 1.5,
+                    activities: [
+                        'Mở thêm 8-10 Đại lý/NPP.',
+                        'Triển khai hệ thống báo cáo và dashboard tự động (Google Data Studio).'
+                    ],
+                    expectedResult: [
+                        'Doanh số GT đạt <strong>1.5 tỷ</strong>.',
+                        'Thiết lập nền tảng quản trị vững chắc.'
+                    ]
+                },
+                {
+                    quarter: 'Quý 3',
+                    revenue: 2.5,
+                    activities: [
+                        'Mở rộng ra Miền Trung (Đà Nẵng, Nha Trang): Tuyển 2 sale mới, mở ≥5 NPP.',
+                        'Tổ chức sự kiện co-marketing đầu tiên với NPP.'
+                    ],
+                    expectedResult: [
+                        'Doanh số GT đạt <strong>2.5 tỷ</strong>.',
+                        'Tăng nhận diện thương hiệu tại miền Trung.'
+                    ]
+                },
+                {
+                    quarter: 'Quý 4',
+                    revenue: 3.5,
+                    activities: [
+                        'Bắc tiến (Hà Nội, Bắc Ninh, Hải Phòng): Tuyển 3 sale mới, mở ≥5 NPP.',
+                        'Tổng kết và trao thưởng cho NPP xuất sắc năm.'
+                    ],
+                    expectedResult: [
+                        'Doanh số GT đạt <strong>3.5 tỷ</strong>.',
+                        'Kênh GT chiếm <strong>40%</strong> tổng doanh thu toàn công ty.'
+                    ]
+                }
+            ];
+
+            const timelineDetailsContainer = document.getElementById('timeline-details');
+            timelineData.forEach((item, index) => {
+                const detailElement = document.createElement('div');
+                detailElement.id = `q${index + 1}-details`;
+                detailElement.className = 'p-6 border border-gray-200 rounded-xl bg-gray-50';
+                detailElement.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">${item.quarter} - Doanh số mục tiêu: ${item.revenue} tỷ</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Hoạt động chính:</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">${item.activities.map(act => `<li>${act}</li>`).join('')}</ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Kết quả kỳ vọng:</h4>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">${item.expectedResult.map(res => `<li>${res}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                `;
+                timelineDetailsContainer.appendChild(detailElement);
+            });
+
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: timelineData.map(d => d.quarter),
+                    datasets: [{
+                        label: 'Doanh thu Mục tiêu (tỷ VNĐ)',
+                        data: timelineData.map(d => d.revenue),
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.6)',
+                            'rgba(16, 185, 129, 0.6)',
+                            'rgba(234, 179, 8, 0.6)',
+                            'rgba(239, 68, 68, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(234, 179, 8, 1)',
+                            'rgba(239, 68, 68, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Tỷ VNĐ'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Doanh thu: ${context.raw} tỷ VNĐ`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const salesInput = document.getElementById('salesInput');
+            const resultDiv = document.getElementById('result');
+            salesInput.addEventListener('input', function () {
+                const sales = parseFloat(this.value);
+                if (isNaN(sales) || sales < 0) {
+                    resultDiv.innerHTML = '<p class="text-gray-700">Vui lòng nhập một số hợp lệ.</p>';
+                    return;
+                }
+
+                let discount = 0;
+                let bonus = '';
+
+                if (sales < 100) {
+                    discount = 15;
+                } else if (sales >= 100 && sales <= 300) {
+                    discount = 18;
+                    bonus = '<br><span class="font-semibold text-green-600">+2% nếu đạt target SKU chiến lược</span>';
+                } else {
+                    discount = 20;
+                    bonus = '<br><span class="font-semibold text-green-600">+3% thưởng vượt target & hỗ trợ marketing</span>';
+                }
+
+                resultDiv.innerHTML = `
+                    <p class="text-lg text-gray-800">Mức chiết khấu cơ bản:</p>
+                    <p class="text-3xl font-bold text-blue-600">${discount}%</p>
+                    <p class="text-sm text-gray-600 mt-2">Thưởng thêm tiềm năng:${bonus || ' Không có'}</p>
+                `;
+            });
+
+            const salaryCtx = document.getElementById('salaryChart').getContext('2d');
+            const salaryChart = new Chart(salaryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Lương cứng (8-10tr)', 'Lương KPI (5-7tr)'],
+                    datasets: [{
+                        label: 'Cơ cấu Lương',
+                        data: [9, 6],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(107, 114, 128, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += `${context.formattedValue} (Ước tính)`;
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
