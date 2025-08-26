@@ -309,85 +309,77 @@
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
                 Cơ chế lương thưởng và các chỉ số KPI chi tiết cho đội ngũ sale thị trường.
             </p>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold mb-4 text-green-700">Cơ chế Lương Thưởng Chi tiết</h3>
-                    <!-- Responsive table for salary structure -->
-                    <div class="responsive-table-container">
-                         <div class="responsive-table-header four-col">
-                            <div>Thành phần</div>
-                            <div>Tỷ trọng</div>
-                            <div>Cơ chế</div>
-                            <div>Ví dụ</div>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-green-700">Cơ chế Lương Thưởng Chi tiết</h3>
+                <!-- Responsive table for salary structure -->
+                <div class="responsive-table-container">
+                     <div class="responsive-table-header four-col">
+                        <div>Thành phần</div>
+                        <div>Tỷ trọng</div>
+                        <div>Cơ chế</div>
+                        <div>Ví dụ</div>
+                    </div>
+                    <div class="space-y-4 md:space-y-0">
+                        <div class="responsive-table-row four-col">
+                            <div class="font-semibold">Lương cứng</div>
+                            <div class="font-semibold">60%</div>
+                            <div>Mức lương cơ bản ổn định, đảm bảo thu nhập hàng tháng không phụ thuộc vào kết quả kinh doanh.</div>
+                            <div>Mức lương 8 triệu VNĐ/tháng.</div>
                         </div>
-                        <div class="space-y-4 md:space-y-0">
-                            <div class="responsive-table-row four-col">
-                                <div class="font-semibold">Lương cứng</div>
-                                <div class="font-semibold">60%</div>
-                                <div>Mức lương cơ bản ổn định, đảm bảo thu nhập hàng tháng không phụ thuộc vào kết quả kinh doanh.</div>
-                                <div>Mức lương 8 triệu VNĐ/tháng.</div>
+                        <div class="responsive-table-row four-col">
+                            <div class="font-semibold">Lương KPI</div>
+                            <div class="font-semibold">40%</div>
+                            <div>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li>Đạt < 50% KPI: Nhận 0% lương KPI.</li>
+                                    <li>Đạt 50%-70% KPI: Thưởng 1 triệu VNĐ.</li>
+                                    <li>Đạt 70%-99% KPI: Nhận 80% lương KPI.</li>
+                                    <li>Đạt 100% KPI: Nhận 100% lương KPI.</li>
+                                    <li>Đạt 101% - 120% KPI: Thưởng lũy tiến 150% cho phần doanh số vượt.</li>
+                                    <li>Vượt >120% KPI: Thưởng lũy tiến 200% cho phần doanh số vượt.</li>
+                                </ul>
                             </div>
-                            <div class="responsive-table-row four-col">
-                                <div class="font-semibold">Lương KPI</div>
-                                <div class="font-semibold">40%</div>
-                                <div>
-                                    <ul class="list-disc list-inside text-sm">
-                                        <li>Đạt < 50% KPI: Nhận 0% lương KPI.</li>
-                                        <li>Đạt 50%-70% KPI: Thưởng 1 triệu VNĐ.</li>
-                                        <li>Đạt 70%-99% KPI: Nhận 80% lương KPI.</li>
-                                        <li>Đạt 100% KPI: Nhận 100% lương KPI.</li>
-                                        <li>Đạt 101% - 120% KPI: Thưởng lũy tiến 150% cho phần doanh số vượt.</li>
-                                        <li>Vượt >120% KPI: Thưởng lũy tiến 200% cho phần doanh số vượt.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <ul class="list-disc list-inside text-sm">
-                                        <li><strong>Nếu đạt 40% KPI:</strong> Nhận 0% lương KPI mục tiêu = <strong>0 VNĐ</strong>.</li>
-                                        <li><strong>Nếu đạt 60% KPI:</strong> Nhận thưởng cố định <strong>1 triệu VNĐ</strong>.</li>
-                                        <li><strong>Nếu đạt 80% KPI:</strong> Nhận 80% lương KPI mục tiêu = 80% x 5.33 triệu = <strong>4.264 triệu VNĐ</strong>.</li>
-                                        <li><strong>Nếu đạt 100% KPI:</strong> Nhận 100% lương KPI mục tiêu = 100% x 5.33 triệu = <strong>5.33 triệu VNĐ</strong>.</li>
-                                        <li><strong>Nếu đạt 110% KPI:</strong> Lương = 5.33 triệu + (10% x 5.33 triệu x 150%) = 5.33 + 0.8 = <strong>6.13 triệu VNĐ</strong>.</li>
-                                        <li><strong>Nếu đạt 125% KPI:</strong> Lương = 5.33 triệu + (25% x 5.33 triệu x 200%) = 5.33 + 2.67 = <strong>8 triệu VNĐ</strong>.</li>
-                                    </ul>
-                                </div>
+                            <div>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li><strong>Nếu đạt 40% KPI:</strong> Nhận 0% lương KPI mục tiêu = <strong>0 VNĐ</strong>.</li>
+                                    <li><strong>Nếu đạt 60% KPI:</strong> Nhận thưởng cố định <strong>1 triệu VNĐ</strong>.</li>
+                                    <li><strong>Nếu đạt 80% KPI:</strong> Nhận 80% lương KPI mục tiêu = 80% x 5.33 triệu = <strong>4.264 triệu VNĐ</strong>.</li>
+                                    <li><strong>Nếu đạt 100% KPI:</strong> Nhận 100% lương KPI mục tiêu = 100% x 5.33 triệu = <strong>5.33 triệu VNĐ</strong>.</li>
+                                    <li><strong>Nếu đạt 110% KPI:</strong> Lương = 5.33 triệu + (10% x 5.33 triệu x 150%) = 5.33 + 0.8 = <strong>6.13 triệu VNĐ</strong>.</li>
+                                    <li><strong>Nếu đạt 125% KPI:</strong> Lương = 5.33 triệu + (25% x 5.33 triệu x 200%) = 5.33 + 2.67 = <strong>8 triệu VNĐ</strong>.</li>
+                                </ul>
                             </div>
-                            <div class="responsive-table-row four-col">
-                                <div class="font-semibold">Thưởng nóng</div>
-                                <div>Theo hiệu suất</div>
-                                <div>
-                                    <ul class="list-disc list-inside text-sm">
-                                        <li><strong>Mở Đại lý/NPP mới:</strong> 500,000 VNĐ/điểm, chi trả sau khi ký hợp đồng và nhập lô hàng đầu tiên.</li>
-                                        <li><strong>Phủ điểm bán mới (thúc đẩy NPP):</strong> 200,000 VNĐ/điểm. Khoản thưởng này dành cho nhân viên sale khi hỗ trợ NPP hoàn thành KPI độ phủ điểm bán mới, đảm bảo sản phẩm được phân phối sâu rộng.</li>
-                                        <li><strong>Bán SKU chiến lược:</strong> +1% trên doanh số trực tiếp từ SKU đó.</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <ul>
-                                        <li>Mở thành công 2 đại lý mới trong tháng, nhận thưởng 1 triệu VNĐ.</li>
-                                        <li>Giúp NPP đạt KPI phủ được 10 điểm bán mới trong quý, nhận thưởng 2 triệu VNĐ.</li>
-                                        <li>Bán được 100 triệu VNĐ từ SKU X, nhận thêm 1 triệu VNĐ (1% doanh số).</li>
-                                    </ul>
-                                </div>
+                        </div>
+                        <div class="responsive-table-row four-col">
+                            <div class="font-semibold">Thưởng nóng</div>
+                            <div>Theo hiệu suất</div>
+                            <div>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li><strong>Mở Đại lý/NPP mới:</strong> 500,000 VNĐ/điểm, chi trả sau khi ký hợp đồng và nhập lô hàng đầu tiên.</li>
+                                    <li><strong>Phủ điểm bán mới (thúc đẩy NPP):</strong> 200,000 VNĐ/điểm. Khoản thưởng này dành cho nhân viên sale khi hỗ trợ NPP hoàn thành KPI độ phủ điểm bán mới, đảm bảo sản phẩm được phân phối sâu rộng.</li>
+                                    <li><strong>Bán SKU chiến lược:</strong> +1% trên doanh số trực tiếp từ SKU đó.</li>
+                                </ul>
                             </div>
-                            <div class="responsive-table-row four-col">
-                                <div class="font-semibold">Thưởng quý/năm</div>
-                                <div>Theo thành tích</div>
-                                <div>
-                                    <ul class="list-disc list-inside text-sm">
-                                        <li><strong>Thưởng Quý:</strong> Đạt 100% KPI quý: Thưởng 1 tháng lương cứng. Vượt 120% KPI quý: Thưởng 1.5 tháng lương cứng.</li>
-                                        <li><strong>Thưởng Năm:</strong> Top 1 xuất sắc năm: Thưởng 3 tháng lương cứng, vinh danh trước toàn công ty.</li>
-                                    </ul>
-                                </div>
-                                <div>Đạt 100% KPI quý, nhận thêm 1 tháng lương cứng (ví dụ: 8 triệu VNĐ). Được vinh danh Top 1 xuất sắc nhất năm và nhận thưởng 3 tháng lương cứng.</div>
+                            <div>
+                                <ul>
+                                    <li>Mở thành công 2 đại lý mới trong tháng, nhận thưởng 1 triệu VNĐ.</li>
+                                    <li>Giúp NPP đạt KPI phủ được 10 điểm bán mới trong quý, nhận thưởng 2 triệu VNĐ.</li>
+                                    <li>Bán được 100 triệu VNĐ từ SKU X, nhận thêm 1 triệu VNĐ (1% doanh số).</li>
+                                </ul>
                             </div>
+                        </div>
+                        <div class="responsive-table-row four-col">
+                            <div class="font-semibold">Thưởng quý/năm</div>
+                            <div>Theo thành tích</div>
+                            <div>
+                                <ul class="list-disc list-inside text-sm">
+                                    <li><strong>Thưởng Quý:</strong> Đạt 100% KPI quý: Thưởng 1 tháng lương cứng. Vượt 120% KPI quý: Thưởng 1.5 tháng lương cứng.</li>
+                                    <li><strong>Thưởng Năm:</strong> Top 1 xuất sắc năm: Thưởng 3 tháng lương cứng, vinh danh trước toàn công ty.</li>
+                                </ul>
+                            </div>
+                            <div>Đạt 100% KPI quý, nhận thêm 1 tháng lương cứng (ví dụ: 8 triệu VNĐ). Được vinh danh Top 1 xuất sắc nhất năm và nhận thưởng 3 tháng lương cứng.</div>
                         </div>
                     </div>
-                </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg">
-                     <h3 class="text-xl font-bold mb-4 text-green-700">Cơ cấu Lương (Ước tính)</h3>
-                     <div class="chart-container h-64 md:h-auto">
-                        <canvas id="salaryChart"></canvas>
-                     </div>
                 </div>
             </div>
 
@@ -722,50 +714,7 @@
                     <p class="text-sm text-gray-600 mt-2">Thưởng thêm tiềm năng:${bonus || ' Không có'}</p>
                 `;
             });
-
-            // Salary structure chart
-            const salaryCtx = document.getElementById('salaryChart').getContext('2d');
-            const salaryChart = new Chart(salaryCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Lương cứng (60%)', 'Lương KPI (40%)'],
-                    datasets: [{
-                        label: 'Cơ cấu Lương',
-                        data: [60, 40],
-                        backgroundColor: [
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(107, 114, 128, 0.5)'
-                        ],
-                        borderColor: [
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(107, 114, 128, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                             callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    label += `${context.formattedValue}%`;
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
+            
             // Scroll-spy navigation
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main section');
