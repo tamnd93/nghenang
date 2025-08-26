@@ -9,10 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony Neutrals -->
-    <!-- Application Structure Plan: Tôi đã thiết kế ứng dụng theo cấu trúc dashboard một trang (SPA) với các khu vực theo chủ đề, thay vì theo cấu trúc tuyến tính của báo cáo gốc. Cấu trúc này bao gồm: 1. Header điều hướng cố định. 2. Bảng điều khiển tổng quan với các chỉ số KPI chính. 3. Lộ trình 12 tháng trực quan hóa bằng biểu đồ và dòng thời gian tương tác. 4. Khu vực chính sách tương tác, nổi bật là công cụ tính chiết khấu. 5. Phân tích đội ngũ sale và KPI. 6. Khu vực quản trị và rủi ro. Lựa chọn cấu trúc này nhằm mục đích giúp ban lãnh đạo và đội ngũ bán hàng có thể truy cập nhanh chóng đến thông tin họ cần, tương tác với dữ liệu để hiểu sâu hơn và theo dõi tiến độ một cách trực quan, thay vì phải đọc qua một tài liệu dài. -->
-    <!-- Visualization & Content Choices: 1. Mục tiêu Doanh thu (Báo cáo mục V) -> Mục tiêu: Theo dõi sự thay đổi -> Biểu đồ cột (Chart.js) -> Tương tác: Hover để xem chi tiết, các nút bấm để lọc theo quý -> Lý do: Trực quan hóa mục tiêu tăng trưởng doanh thu theo từng giai đoạn, dễ dàng so sánh. 2. Chính sách chiết khấu (Báo cáo mục III.1) -> Mục tiêu: Cung cấp thông tin, công cụ -> Công cụ tính toán (HTML/JS) -> Tương tác: Người dùng nhập doanh số, hệ thống tự tính và hiển thị mức chiết khấu -> Lý do: Biến bảng chính sách phức tạp thành một công cụ thực tế, dễ hiểu và ngay lập tức hữu ích cho NPP. 3. Lộ trình 12 tháng (Báo cáo mục V) -> Mục tiêu: Tổ chức thông tin theo trình tự -> Dòng thời gian tương tác (HTML/CSS/JS) -> Tương tác: Nhấn vào từng quý để xem chi tiết hoạt động -> Lý do: Trình bày kế hoạch một cách sinh động, dễ theo dõi hơn so với bảng biểu tĩnh. 4. Cơ cấu lương Sale (Báo cáo mục IV) -> Mục tiêu: Hiển thị tỷ lệ -> Biểu đồ tròn (Chart.js) -> Tương tác: Hover để xem chi tiết từng thành phần lương -> Lý do: Giúp nhân viên kinh doanh hiểu rõ cơ cấu thu nhập của mình một cách nhanh chóng. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -52,6 +48,111 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
         }
+        /* New vertical timeline styles for a more modern look */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #3b82f6, #60a5fa, #bfdbfe);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background-color: #3b82f6;
+            border: 3px solid #F8F5F2;
+            border-radius: 9999px;
+            z-index: 10;
+        }
+        .timeline-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-left: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+
+        /* Style for the responsive "table" layout */
+        .responsive-table-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .responsive-table-header {
+            display: none;
+            background-color: #f3f4f6;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .responsive-table-header > div {
+            padding: 0.75rem 1rem;
+        }
+        .responsive-table-row {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: background-color 0.2s ease;
+            margin-bottom: 1rem;
+        }
+        .responsive-table-row:hover {
+            background-color: #f9fafb;
+        }
+        .responsive-table-row > div {
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .responsive-table-container {
+                background-color: #f3f4f6;
+            }
+            .responsive-table-header {
+                display: grid;
+            }
+            .responsive-table-row {
+                display: grid;
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+                margin-bottom: 0;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            .responsive-table-row > div {
+                padding: 1rem;
+                margin-bottom: 0;
+            }
+            /* Specific column layouts for each table type */
+            .responsive-table-header.four-col, .responsive-table-row.four-col {
+                grid-template-columns: 1fr 1fr 2fr 2fr;
+            }
+            .responsive-table-header.three-col, .responsive-table-row.three-col {
+                grid-template-columns: 1.5fr 1fr 2fr;
+            }
+            .responsive-table-header.two-col, .responsive-table-row.two-col {
+                grid-template-columns: 1fr 2fr;
+            }
+            .responsive-table-header.discount-col, .responsive-table-row.discount-col {
+                grid-template-columns: 1.5fr 1fr 2fr;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -68,7 +169,9 @@
                         <a href="#lo-trinh" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Lộ trình</a>
                         <a href="#chinh-sach" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Chính sách</a>
                         <a href="#doi-ngu" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Đội ngũ</a>
-                        <a href="#quan-tri" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Quản trị</a>
+                        <a href="#kiem-soat" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Kiểm soát</a>
+                        <a href="#rui-ro" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Rủi ro</a>
+                        <a href="#xu-ly" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Xử lý</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +189,7 @@
                 <div class="kpi-card">
                     <div class="text-blue-500 text-4xl mb-2">🎯</div>
                     <h3 class="text-lg font-semibold text-gray-800">Mục tiêu Doanh thu</h3>
-                    <p class="text-3xl font-bold text-blue-600">40%</p>
+                    <p class="text-3xl font-bold text-blue-600">20%</p>
                     <p class="text-gray-500">Tỷ trọng trên tổng doanh thu công ty</p>
                 </div>
                 <div class="kpi-card">
@@ -107,13 +210,15 @@
         <section id="lo-trinh" class="mb-16">
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Lộ trình Phát triển 12 tháng</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                Trực quan hóa mục tiêu doanh thu và các hoạt động chính theo từng quý. Nhấn vào các nút bên dưới để xem chi tiết từng giai đoạn.
+                Trực quan hóa mục tiêu doanh thu và các hoạt động chính theo từng quý.
             </p>
             <div class="bg-white p-6 rounded-xl shadow-lg">
-                <div class="chart-container mb-6">
+                <div class="chart-container mb-12">
                     <canvas id="revenueChart"></canvas>
                 </div>
-                <div id="timeline-details" class="mt-8 space-y-8">
+                <div class="timeline-container" id="timeline-details">
+                    <!-- Dynamic timeline content will be inserted here by JavaScript -->
+                    <div class="timeline-line"></div>
                 </div>
             </div>
         </section>
@@ -124,6 +229,34 @@
                 Khám phá các chính sách chiết khấu, công nợ và hỗ trợ được thiết kế để thúc đẩy tăng trưởng và hợp tác bền vững.
             </p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg lg:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 text-blue-700">Chính sách Chiết khấu theo bậc Sản lượng</h3>
+                    <p class="text-gray-600 mb-4">Mức chiết khấu được áp dụng trên doanh số nhập hàng hàng tháng, là cơ sở để Đại lý/NPP có động lực phát triển doanh số.</p>
+                    <div class="responsive-table-container">
+                        <div class="responsive-table-header discount-col">
+                            <div>Doanh số nhập hàng/tháng</div>
+                            <div>Mức chiết khấu</div>
+                            <div>Thưởng thêm</div>
+                        </div>
+                        <div class="space-y-4 md:space-y-0">
+                            <div class="responsive-table-row discount-col">
+                                <div class="font-semibold text-lg sm:text-base">&lt; 100 triệu VNĐ</div>
+                                <div>15%</div>
+                                <div>-</div>
+                            </div>
+                            <div class="responsive-table-row discount-col">
+                                <div class="font-semibold text-lg sm:text-base">100 - 300 triệu VNĐ</div>
+                                <div>18%</div>
+                                <div>+2% nếu đạt target SKU chiến lược</div>
+                            </div>
+                            <div class="responsive-table-row discount-col">
+                                <div class="font-semibold text-lg sm:text-base">&gt; 300 triệu VNĐ</div>
+                                <div>20%</div>
+                                <div>+3% thưởng vượt target + hỗ trợ marketing cục bộ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="bg-white p-6 rounded-xl shadow-lg">
                     <h3 class="text-xl font-bold mb-4 text-blue-700">Công cụ Ước tính Chiết khấu</h3>
                     <p class="text-gray-600 mb-4">Nhập doanh số nhập hàng dự kiến mỗi tháng để xem mức chiết khấu và các khoản thưởng có thể nhận.</p>
@@ -164,7 +297,7 @@
                             <li>Cung cấp POSM (bảng hiệu, poster, catalogue...).</li>
                             <li>Đồng tài trợ 50/50 cho các sự kiện marketing.</li>
                             <li>Hỗ trợ kỹ thuật và đào tạo sản phẩm trực tuyến.</li>
-                            <li>Cam kết SLA bảo hành nhanh chóng (phản hồi 48h).</li>
+                            <li>Cam kết dịch vụ bảo hành nhanh chóng: Phản hồi trong 48 giờ làm việc và xử lý trong 7 ngày.</li>
                         </ul>
                     </div>
                 </div>
@@ -172,82 +305,221 @@
         </section>
 
         <section id="doi-ngu" class="mb-16">
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Đội ngũ Bán hàng GT</h2>
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Đội ngũ Bán hàng GT & Cơ chế Lương Thưởng</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                Cấu trúc, KPI và chính sách lương thưởng cho đội ngũ sale thị trường - lực lượng nòng cốt trong việc mở rộng mạng lưới.
+                Cơ chế lương thưởng và các chỉ số KPI chi tiết cho đội ngũ sale thị trường.
             </p>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-bold mb-4 text-green-700">KPIs Chính</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <p class="font-bold text-green-800">Doanh số</p>
-                            <p class="text-lg font-semibold">≥100% Target</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-green-700">Cơ chế Lương Thưởng Chi tiết</h3>
+                    <!-- Responsive table for salary structure -->
+                    <div class="responsive-table-container">
+                         <div class="responsive-table-header four-col">
+                            <div>Thành phần</div>
+                            <div>Tỷ trọng</div>
+                            <div>Cơ chế</div>
+                            <div>Ví dụ</div>
                         </div>
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <p class="font-bold text-green-800">Đại lý mới</p>
-                            <p class="text-lg font-semibold">≥2 / tháng</p>
-                        </div>
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <p class="font-bold text-green-800">Viếng thăm</p>
-                            <p class="text-lg font-semibold">≥15 điểm / tuần</p>
-                        </div>
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <p class="font-bold text-green-800">Độ phủ</p>
-                            <p class="text-lg font-semibold">≥80% điểm bán đặt lại hàng</p>
+                        <div class="space-y-4 md:space-y-0">
+                            <div class="responsive-table-row four-col">
+                                <div class="font-semibold">Lương cứng</div>
+                                <div class="font-semibold">60%</div>
+                                <div>Mức lương cơ bản ổn định, đảm bảo thu nhập hàng tháng không phụ thuộc vào kết quả kinh doanh.</div>
+                                <div>Mức lương 8 triệu VNĐ/tháng.</div>
+                            </div>
+                            <div class="responsive-table-row four-col">
+                                <div class="font-semibold">Lương KPI</div>
+                                <div class="font-semibold">40%</div>
+                                <div>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li>Đạt < 50% KPI: Nhận 0% lương KPI.</li>
+                                        <li>Đạt 50%-70% KPI: Thưởng 1 triệu VNĐ.</li>
+                                        <li>Đạt 70%-99% KPI: Nhận 80% lương KPI.</li>
+                                        <li>Đạt 100% KPI: Nhận 100% lương KPI.</li>
+                                        <li>Đạt 101% - 120% KPI: Thưởng lũy tiến 150% cho phần doanh số vượt.</li>
+                                        <li>Vượt >120% KPI: Thưởng lũy tiến 200% cho phần doanh số vượt.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li><strong>Nếu đạt 40% KPI:</strong> Nhận 0% lương KPI mục tiêu = <strong>0 VNĐ</strong>.</li>
+                                        <li><strong>Nếu đạt 60% KPI:</strong> Nhận thưởng cố định <strong>1 triệu VNĐ</strong>.</li>
+                                        <li><strong>Nếu đạt 80% KPI:</strong> Nhận 80% lương KPI mục tiêu = 80% x 5.33 triệu = <strong>4.264 triệu VNĐ</strong>.</li>
+                                        <li><strong>Nếu đạt 100% KPI:</strong> Nhận 100% lương KPI mục tiêu = 100% x 5.33 triệu = <strong>5.33 triệu VNĐ</strong>.</li>
+                                        <li><strong>Nếu đạt 110% KPI:</strong> Lương = 5.33 triệu + (10% x 5.33 triệu x 150%) = 5.33 + 0.8 = <strong>6.13 triệu VNĐ</strong>.</li>
+                                        <li><strong>Nếu đạt 125% KPI:</strong> Lương = 5.33 triệu + (25% x 5.33 triệu x 200%) = 5.33 + 2.67 = <strong>8 triệu VNĐ</strong>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="responsive-table-row four-col">
+                                <div class="font-semibold">Thưởng nóng</div>
+                                <div>Theo hiệu suất</div>
+                                <div>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li><strong>Mở Đại lý/NPP mới:</strong> 500,000 VNĐ/điểm, chi trả sau khi ký hợp đồng và nhập lô hàng đầu tiên.</li>
+                                        <li><strong>Phủ điểm bán mới (thúc đẩy NPP):</strong> 200,000 VNĐ/điểm. Khoản thưởng này dành cho nhân viên sale khi hỗ trợ NPP hoàn thành KPI độ phủ điểm bán mới, đảm bảo sản phẩm được phân phối sâu rộng.</li>
+                                        <li><strong>Bán SKU chiến lược:</strong> +1% trên doanh số trực tiếp từ SKU đó.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>Mở thành công 2 đại lý mới trong tháng, nhận thưởng 1 triệu VNĐ.</li>
+                                        <li>Giúp NPP đạt KPI phủ được 10 điểm bán mới trong quý, nhận thưởng 2 triệu VNĐ.</li>
+                                        <li>Bán được 100 triệu VNĐ từ SKU X, nhận thêm 1 triệu VNĐ (1% doanh số).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="responsive-table-row four-col">
+                                <div class="font-semibold">Thưởng quý/năm</div>
+                                <div>Theo thành tích</div>
+                                <div>
+                                    <ul class="list-disc list-inside text-sm">
+                                        <li><strong>Thưởng Quý:</strong> Đạt 100% KPI quý: Thưởng 1 tháng lương cứng. Vượt 120% KPI quý: Thưởng 1.5 tháng lương cứng.</li>
+                                        <li><strong>Thưởng Năm:</strong> Top 1 xuất sắc năm: Thưởng 3 tháng lương cứng, vinh danh trước toàn công ty.</li>
+                                    </ul>
+                                </div>
+                                <div>Đạt 100% KPI quý, nhận thêm 1 tháng lương cứng (ví dụ: 8 triệu VNĐ). Được vinh danh Top 1 xuất sắc nhất năm và nhận thưởng 3 tháng lương cứng.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg">
+                 <div class="bg-white p-6 rounded-xl shadow-lg">
                      <h3 class="text-xl font-bold mb-4 text-green-700">Cơ cấu Lương (Ước tính)</h3>
                      <div class="chart-container h-64 md:h-auto">
                         <canvas id="salaryChart"></canvas>
                      </div>
                 </div>
             </div>
-        </section>
 
-        <section id="quan-tri">
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Quản trị & Xử lý Rủi ro</h2>
-            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                Các quy trình kiểm soát và chính sách xử lý được thiết lập để đảm bảo hệ thống vận hành minh bạch và hiệu quả.
-            </p>
-            <div class="bg-white p-8 rounded-xl shadow-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 text-red-700">Cơ chế Kiểm soát</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <span class="text-red-500 mr-3 mt-1">✓</span>
-                                <span><strong class="font-semibold">Giá bán:</strong> Sử dụng "Mystery shopper" và đối chiếu báo cáo để chống phá giá.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-red-500 mr-3 mt-1">✓</span>
-                                <span><strong class="font-semibold">Tồn kho:</strong> Báo cáo hàng tuần và kiểm tra đột xuất để tránh ôm hàng, thiếu hàng.</span>
-                            </li>
-                             <li class="flex items-start">
-                                <span class="text-red-500 mr-3 mt-1">✓</span>
-                                <span><strong class="font-semibold">Xung đột kênh:</strong> Nguyên tắc "ưu tiên kênh chốt đơn trước" và bảo vệ khu vực cho NPP.</span>
-                            </li>
-                        </ul>
+            <!-- New KPI table section -->
+            <div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">Bảng KPI Chi tiết cho Nhân viên Sale</h3>
+                <p class="text-gray-600 mb-4">Các chỉ số chính được sử dụng để đánh giá hiệu quả và là cơ sở để tính toán lương thưởng hàng tháng.</p>
+                <div class="responsive-table-container">
+                    <div class="responsive-table-header three-col">
+                        <div>Chỉ số</div>
+                        <div>Mức độ</div>
+                        <div>Công thức tính</div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 text-red-700">Chính sách Rút lui (Exit Policy)</h3>
-                        <div class="relative pl-6 border-l-2 border-red-200">
-                            <div class="mb-4 relative">
-                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-red-500 rounded-full border-4 border-white"></div>
-                                <p class="font-semibold">Không đạt KPI 2 quý liên tiếp</p>
-                                <p class="text-gray-600">→ Gửi cảnh báo bằng văn bản.</p>
-                            </div>
-                            <div class="relative">
-                                <div class="absolute -left-[1.6rem] top-1 w-6 h-6 bg-red-500 rounded-full border-4 border-white"></div>
-                                <p class="font-semibold">Quý thứ 3 không cải thiện</p>
-                                <p class="text-gray-600">→ Chấm dứt hợp đồng.</p>
-                            </div>
+                    <div class="space-y-4 md:space-y-0">
+                        <div class="responsive-table-row three-col">
+                            <div class="font-semibold">Doanh số tháng (VND)</div>
+                            <div>Cá nhân</div>
+                            <div>Tổng doanh số thực tế/Tổng doanh số mục tiêu</div>
+                        </div>
+                        <div class="responsive-table-row three-col">
+                            <div class="font-semibold">Tỷ lệ khách hàng cũ tái nhập</div>
+                            <div>Cá nhân</div>
+                            <div>(Số khách hàng tái nhập/Tổng số khách hàng cũ) * 100%</div>
+                        </div>
+                        <div class="responsive-table-row three-col">
+                            <div class="font-semibold">Số lượng khách hàng mới</div>
+                            <div>Cá nhân</div>
+                            <div>Số lượng khách hàng mới mở trong tháng</div>
+                        </div>
+                        <div class="responsive-table-row three-col">
+                            <div class="font-semibold">Độ phủ sản phẩm (%)</div>
+                            <div>Đại lý/NPP</div>
+                            <div>(Số sản phẩm có mặt tại điểm bán/Tổng số SKU) * 100%</div>
+                        </div>
+                        <div class="responsive-table-row three-col">
+                            <div class="font-semibold">Độ phủ ngành hàng (%)</div>
+                            <div>Khu vực</div>
+                            <div>(Số điểm bán có sản phẩm/Tổng điểm bán trong khu vực) * 100%</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section id="kiem-soat" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Cơ chế Kiểm soát & Giám sát</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Sử dụng các công cụ và quy trình để đảm bảo sự minh bạch và hiệu quả trong toàn hệ thống.
+            </p>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <!-- Responsive table for control mechanism -->
+                <div class="responsive-table-container">
+                    <div class="responsive-table-header two-col">
+                        <div>Đối tượng</div>
+                        <div>Công cụ/Phương thức Kiểm soát</div>
+                    </div>
+                    <div class="space-y-4 md:space-y-0">
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Sale Thị trường</div>
+                            <div>Báo cáo hàng ngày/tuần (Google Form), Dashboard theo dõi, Kiểm tra đột xuất.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">NPP & Đại lý</div>
+                            <div>Đối chiếu đơn hàng, Audit tồn kho định kỳ, "Mystery shopper" kiểm tra giá bán.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">KPIs Chung</div>
+                            <div>Hệ thống cảnh báo tự động khi không đạt doanh số hoặc có hành vi phá giá.</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <section id="rui-ro" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Rủi ro & Giải pháp</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Các rủi ro tiềm ẩn trong quá trình phát triển kênh và các giải pháp đã được đề xuất.
+            </p>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <!-- Responsive table for risks and solutions -->
+                <div class="responsive-table-container">
+                    <div class="responsive-table-header two-col">
+                        <div>Rủi ro</div>
+                        <div>Giải pháp</div>
+                    </div>
+                    <div class="space-y-4 md:space-y-0">
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Phá giá</div>
+                            <div>Áp dụng chính sách phạt nghiêm ngặt, sử dụng "mystery shopper", và cắt hợp đồng nếu tái phạm.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Ôm hàng</div>
+                            <div>Kiểm tra tồn kho định kỳ, hỗ trợ NPP xây dựng kế hoạch bán hàng.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Chậm thanh toán</div>
+                            <div>Quy trình cảnh báo sớm, thu hẹp hạn mức công nợ hoặc tạm dừng cung cấp hàng.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Sale thông đồng</div>
+                            <div>Áp dụng KPI chặt chẽ, kiểm tra đột xuất, và thưởng KPI rõ ràng.</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <section id="xu-ly" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-center text-gray-800">Chính sách Xử lý Vi phạm & Kém hiệu quả</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                Quy trình xử lý các trường hợp nhân viên không đạt KPI kéo dài.
+            </p>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                <!-- Responsive table for disciplinary actions -->
+                <div class="responsive-table-container">
+                    <div class="responsive-table-header two-col">
+                        <div>Trường hợp</div>
+                        <div>Biện pháp xử lý</div>
+                    </div>
+                    <div class="space-y-4 md:space-y-0">
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Không đạt KPI 2 tháng liên tiếp</div>
+                            <div>Cảnh báo bằng văn bản, yêu cầu trình bày lý do và kế hoạch cải thiện.</div>
+                        </div>
+                        <div class="responsive-table-row two-col">
+                            <div class="font-semibold">Không đạt KPI 3 tháng liên tiếp</div>
+                            <div>Chấm dứt hợp đồng lao động theo quy định.</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
         </section>
 
     </main>
@@ -260,78 +532,117 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Data for the timeline and charts
             const timelineData = [
                 {
                     quarter: 'Quý 1',
                     revenue: 0.5,
+                    icon: `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m0 0l-4.5-4.5M12 19.5l4.5-4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>`,
                     activities: [
                         'Tuyển dụng 3-5 sale thị trường.',
                         'Mở 6-8 Đại lý/NPP mới tại Long An, Tây Ninh, Bình Phước.'
                     ],
                     expectedResult: [
                         'Bao phủ 80% khu vực trọng điểm.',
-                        'Doanh số GT đạt <strong>500 triệu</strong>.'
+                        'Doanh số GT đạt 500 triệu.'
                     ]
                 },
                 {
                     quarter: 'Quý 2',
                     revenue: 1.5,
+                    icon: `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.109C3.12 10.364-.251 16.533.003 21.066c.254 4.533 5.435 6.452 9.079 4.887 3.644-1.566 5.86-5.875 5.86-9.157 0-3.282-1.956-6.425-5.122-8.498z" />
+                        </svg>`,
                     activities: [
                         'Mở thêm 8-10 Đại lý/NPP.',
                         'Triển khai hệ thống báo cáo và dashboard tự động (Google Data Studio).'
                     ],
                     expectedResult: [
-                        'Doanh số GT đạt <strong>1.5 tỷ</strong>.',
+                        'Doanh số GT đạt 1.5 tỷ.',
                         'Thiết lập nền tảng quản trị vững chắc.'
                     ]
                 },
                 {
                     quarter: 'Quý 3',
                     revenue: 2.5,
+                    icon: `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c0 3.866 2.5 7 5 7s5-3.134 5-7h-5zm0 0c0-3.866-2.5-7-5-7s-5 3.134-5 7h5z" />
+                        </svg>`,
                     activities: [
                         'Mở rộng ra Miền Trung (Đà Nẵng, Nha Trang): Tuyển 2 sale mới, mở ≥5 NPP.',
                         'Tổ chức sự kiện co-marketing đầu tiên với NPP.'
                     ],
                     expectedResult: [
-                        'Doanh số GT đạt <strong>2.5 tỷ</strong>.',
+                        'Doanh số GT đạt 2.5 tỷ.',
                         'Tăng nhận diện thương hiệu tại miền Trung.'
                     ]
                 },
                 {
                     quarter: 'Quý 4',
                     revenue: 3.5,
+                    icon: `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H6.737a2 2 0 01-1.789-2.894l3.5-7A2 2 0 019.237 10H14zm-4-3v2m0-2a2 2 0 100-4 2 2 0 000 4zm-2 8a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>`,
                     activities: [
                         'Bắc tiến (Hà Nội, Bắc Ninh, Hải Phòng): Tuyển 3 sale mới, mở ≥5 NPP.',
                         'Tổng kết và trao thưởng cho NPP xuất sắc năm.'
                     ],
                     expectedResult: [
-                        'Doanh số GT đạt <strong>3.5 tỷ</strong>.',
-                        'Kênh GT chiếm <strong>40%</strong> tổng doanh thu toàn công ty.'
+                        'Doanh số GT đạt 3.5 tỷ.',
+                        'Kênh GT chiếm 20% tổng doanh thu toàn công ty.'
                     ]
                 }
             ];
 
+            // Render the new timeline details
             const timelineDetailsContainer = document.getElementById('timeline-details');
+            timelineDetailsContainer.innerHTML = ''; // Clear existing content
             timelineData.forEach((item, index) => {
                 const detailElement = document.createElement('div');
-                detailElement.id = `q${index + 1}-details`;
-                detailElement.className = 'p-6 border border-gray-200 rounded-xl bg-gray-50';
+                detailElement.className = 'timeline-item';
                 detailElement.innerHTML = `
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">${item.quarter} - Doanh số mục tiêu: ${item.revenue} tỷ</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700 mb-2">Hoạt động chính:</h4>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1">${item.activities.map(act => `<li>${act}</li>`).join('')}</ul>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700 mb-2">Kết quả kỳ vọng:</h4>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1">${item.expectedResult.map(res => `<li>${res}</li>`).join('')}</ul>
+                    <div class="timeline-dot flex items-center justify-center">
+                        ${item.icon}
+                    </div>
+                    <div class="timeline-card">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">${item.quarter}</h3>
+                        <p class="text-sm font-semibold text-blue-600 mb-4">Mục tiêu Doanh số: ${item.revenue} tỷ VNĐ</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-2 flex items-center">
+                                    <span class="mr-2 text-blue-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 102 0V6a1 1 0 10-2 0v3z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    Hoạt động chính
+                                </h4>
+                                <ul class="list-none text-gray-600 space-y-1">${item.activities.map(act => `<li class="relative pl-4"><span class="absolute left-0 top-1.5 text-blue-500">•</span>${act}</li>`).join('')}</ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-2 flex items-center">
+                                    <span class="mr-2 text-green-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    Kết quả kỳ vọng
+                                </h4>
+                                <ul class="list-none text-gray-600 space-y-1">${item.expectedResult.map(res => `<li class="relative pl-4"><span class="absolute left-0 top-1.5 text-green-500">•</span>${res}</li>`).join('')}</ul>
+                            </div>
                         </div>
                     </div>
                 `;
                 timelineDetailsContainer.appendChild(detailElement);
             });
 
+            // Revenue chart
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             const revenueChart = new Chart(revenueCtx, {
                 type: 'bar',
@@ -382,6 +693,7 @@
                 }
             });
 
+            // Discount calculator
             const salesInput = document.getElementById('salesInput');
             const resultDiv = document.getElementById('result');
             salesInput.addEventListener('input', function () {
@@ -411,14 +723,15 @@
                 `;
             });
 
+            // Salary structure chart
             const salaryCtx = document.getElementById('salaryChart').getContext('2d');
             const salaryChart = new Chart(salaryCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Lương cứng (8-10tr)', 'Lương KPI (5-7tr)'],
+                    labels: ['Lương cứng (60%)', 'Lương KPI (40%)'],
                     datasets: [{
                         label: 'Cơ cấu Lương',
-                        data: [9, 6],
+                        data: [60, 40],
                         backgroundColor: [
                             'rgba(16, 185, 129, 0.7)',
                             'rgba(107, 114, 128, 0.5)'
@@ -444,7 +757,7 @@
                                     if (label) {
                                         label += ': ';
                                     }
-                                    label += `${context.formattedValue} (Ước tính)`;
+                                    label += `${context.formattedValue}%`;
                                     return label;
                                 }
                             }
@@ -453,6 +766,7 @@
                 }
             });
 
+            // Scroll-spy navigation
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('main section');
 
