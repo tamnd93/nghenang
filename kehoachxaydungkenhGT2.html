@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Kế hoạch Phát triển Kênh GT</title>
-    <!-- Tải Tailwind CSS từ CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tải Chart.js để vẽ biểu đồ -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tải Font Awesome cho icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Tải font Inter từ Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -168,107 +164,6 @@
             }
         }
         
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 600px;
-            animation: fadeIn 0.3s ease-out;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            transition: color 0.2s;
-        }
-        .close-btn:hover, .close-btn:focus {
-            color: #333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            height: 500px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            z-index: 90;
-            overflow: hidden;
-            transform: scale(0.9);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-in-out;
-        }
-        .chat-container.open {
-            transform: scale(1);
-        }
-        .chat-header {
-            background-color: #2563eb;
-            color: #fff;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-        .chat-body {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .chat-input {
-            padding: 1rem;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-        }
-        .chat-message {
-            max-width: 80%;
-            padding: 0.75rem;
-            border-radius: 1rem;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background-color: #e2e8f0;
-            align-self: flex-end;
-            border-bottom-right-radius: 0;
-        }
-        .bot-message {
-            background-color: #d1fae5;
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -298,9 +193,6 @@
     </header>
 
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <!-- New Gemini Feature: Strategic Idea Generator -->
-      
-
         <section id="tong-quan" class="mb-16 text-center">
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4 text-gray-800">Bảng điều khiển Tổng quan</h2>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10">
@@ -378,7 +270,6 @@
                     <canvas id="revenueChart"></canvas>
                 </div>
                 <div class="timeline-container" id="timeline-details">
-                    <!-- Dynamic timeline content will be inserted here by JavaScript -->
                     <div class="timeline-line"></div>
                 </div>
             </div>
@@ -389,7 +280,6 @@
                 Đánh giá tổng quan về thị trường, đối thủ cạnh tranh và ma trận SWOT để định hướng chiến lược.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                <!-- Market Analysis Card -->
                 <div class="kpi-card bg-blue-50/50">
                     <h3 class="text-xl font-bold text-blue-700 mb-2">Phân tích Thị trường Mục tiêu</h3>
                     <ul class="list-disc list-inside text-gray-600 space-y-2">
@@ -398,7 +288,6 @@
                         <li><strong>Hà Nội, Bắc Ninh, Hải Phòng:</strong> Thị trường truyền thống, mật độ dân số cao. Cần chiến lược thâm nhập sâu.</li>
                     </ul>
                 </div>
-                <!-- Competitor Analysis Card -->
                 <div class="kpi-card bg-green-50/50">
                     <h3 class="text-xl font-bold text-green-700 mb-2">Phân tích Đối thủ Cạnh tranh</h3>
                     <ul class="list-disc list-inside text-gray-600 space-y-2">
@@ -407,7 +296,6 @@
                         <li><strong>Lợi thế cạnh tranh:</strong> Nhấn mạnh vào chất lượng sản phẩm, dịch vụ hậu mãi vượt trội, và chính sách hỗ trợ NPP hấp dẫn.</li>
                     </ul>
                 </div>
-                <!-- SWOT Analysis Card -->
                 <div class="kpi-card lg:col-span-1 md:col-span-2 bg-yellow-50/50">
                     <h3 class="text-xl font-bold text-yellow-700 mb-2">Ma trận SWOT Tổng quát</h3>
                     <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
@@ -628,7 +516,6 @@
             </p>
             <div class="bg-white p-6 rounded-xl shadow-lg">
                 <h3 class="text-xl font-bold mb-4 text-green-700">Cơ chế Lương Thưởng Chi tiết</h3>
-                <!-- Responsive table for salary structure -->
                 <div class="responsive-table-container">
                      <div class="responsive-table-header four-col">
                         <div>Thành phần</div>
@@ -866,8 +753,6 @@
              </div>
         </section>
 
-        <!-- New Gemini Feature: Summary and Analysis Button -->
-
     </main>
 
     <footer class="bg-gray-800 mt-16">
@@ -875,33 +760,6 @@
             <p>&copy; 2025 - Dashboard Kế hoạch Phát triển Kênh GT.</p>
         </div>
     </footer>
-
-    <!-- New Gemini Feature: Chatbot button and container -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button id="chatBtn" class="w-16 h-16 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-blue-700 transition-colors duration-200">
-            <i class="fas fa-comment-dots"></i>
-        </button>
-    </div>
-
-    <div id="chatContainer" class="chat-container hidden">
-        <div class="chat-header">
-            <h4 class="font-bold text-lg">Trợ lý Kế hoạch GT ✨</h4>
-            <button id="closeChatBtn" class="text-white text-xl">&times;</button>
-        </div>
-        <div id="chatBody" class="chat-body">
-            <!-- Chat messages will be appended here -->
-            <div class="bot-message chat-message">
-                Chào bạn! Tôi là trợ lý AI. Bạn có câu hỏi nào về kế hoạch phát triển kênh GT không?
-            </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" class="flex-1 rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Nhập câu hỏi của bạn...">
-            <button id="sendChatBtn" class="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
-                Gửi
-            </button>
-        </div>
-    </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -960,257 +818,6 @@
                     ]
                 }
             ];
-
-            // Content of the entire plan to be summarized
-            const planContent = `
-                Kế hoạch Phát triển Kênh GT Nghệ Năng:
-
-                I. Định hướng chung
-                - Mục tiêu: Phủ kênh GT tại 63 tỉnh thành trong 3 năm.
-                - Nguyên tắc: Phát triển theo từng vùng, tập trung NPP chính, ứng dụng công nghệ, kết hợp online-offline.
-
-                II. Lộ trình 3 giai đoạn
-                - GĐ 1 (Năm 1): Phủ Miền Nam (15 tỉnh). KPI: 15-20% tổng doanh thu. Nhân sự: 1 Trưởng phòng, 2 GS, 4 Sales.
-                - GĐ 2 (Năm 2): Mở rộng Miền Trung & Tây Nguyên (20 tỉnh). Doanh thu tăng 30-40%. Nhân sự: thêm 1 GS, 3 Sales.
-                - GĐ 3 (Năm 3): Phủ sóng Miền Bắc (28 tỉnh). Doanh thu >35%. Nhân sự: thêm 1 Quản lý vùng, 5 Sales.
-                - Tổng đầu tư 3 năm: 25-30 tỷ VND.
-
-                III. Lộ trình 12 tháng (Chi tiết)
-                - Q1: Doanh số 500 triệu. Hoạt động: Tuyển 3-5 sales, mở 6-8 đại lý.
-                - Q2: Doanh số 1.5 tỷ. Hoạt động: Mở 8-10 đại lý, triển khai dashboard.
-                - Q3: Doanh số 2.5 tỷ. Hoạt động: Mở rộng Miền Trung, tổ chức co-marketing.
-                - Q4: Doanh số 3.5 tỷ. Hoạt động: Bắc tiến, tổng kết cuối năm.
-
-                IV. Phân tích
-                - Thị trường: Các khu công nghiệp, đô thị mới nổi (Long An, Tây Ninh), thị trường du lịch (Đà Nẵng), thị trường truyền thống (Hà Nội).
-                - Đối thủ: Cạnh tranh trực tiếp và gián tiếp.
-                - SWOT: Sức mạnh (sản phẩm, đội ngũ), Điểm yếu (thương hiệu, ngân sách), Cơ hội (thị trường), Thách thức (phá giá, ôm hàng).
-
-                V. Chính sách NPP
-                - Chiết khấu: Theo bậc doanh số, từ 15% đến 20%, có thưởng thêm.
-                - Công nợ: 100% thanh toán ban đầu, sau đó hỗ trợ 15-30 ngày.
-                - Hỗ trợ: POSM, đồng tài trợ marketing, bảo hành 48h-7 ngày.
-
-                VI. Quy trình Tiếp cận
-                - 6 bước: Nghiên cứu thị trường, tìm đối tác, ưu đãi tiên phong, đơn hàng mẫu, đồng hành, tái ký.
-
-                VII. Đội ngũ & Lương thưởng
-                - Lương: 60% cứng, 40% KPI. Thưởng nóng mở đại lý, phủ điểm bán, bán SKU chiến lược. Thưởng quý/năm.
-
-                VIII. Đào tạo
-                - Nội bộ: Kiến thức sản phẩm, kỹ năng bán hàng, quản lý NPP.
-                - Đối tác: Đào tạo sản phẩm chuyên sâu, kỹ năng tư vấn, hỗ trợ kỹ thuật.
-
-                IX. Kiểm soát
-                - Doanh số: Hệ thống ERP/CRM, mã số đại lý.
-                - Giá & Tồn kho: Mystery shopper, báo cáo tồn kho định kỳ.
-                - Độ phủ: KPI độ phủ, so sánh doanh số.
-
-                X. Hậu mãi & Xung đột
-                - Bảo hành: Phản hồi 48h, xử lý 7 ngày.
-                - Xung đột: Ưu tiên kênh chốt đơn, quản lý Key Account, bảo vệ khu vực.
-
-                XI. Rủi ro & Giải pháp
-                - Phá giá: Chính sách phạt, mystery shopper.
-                - Ôm hàng: Kiểm tra tồn kho, hỗ trợ kế hoạch.
-                - Chậm thanh toán: Cảnh báo sớm, thu hẹp hạn mức.
-                - Sale thông đồng: KPI chặt, kiểm tra đột xuất.
-            `;
-
-            // Function to make API call with exponential backoff
-            async function callGeminiApi(prompt, isSummary = false) {
-                const maxRetries = 3;
-                let retries = 0;
-                let delay = 1000; // 1 second
-                
-                // Define the system instruction based on the use case
-                let systemPrompt = `
-                    Bạn là một trợ lý AI chuyên về phân tích và tư vấn kinh doanh tại Việt Nam. 
-                    Nhiệm vụ của bạn là đưa ra các nhận xét, phân tích, tóm tắt và lời khuyên dựa trên dữ liệu. 
-                    Khi trả lời, hãy sử dụng văn phong chuyên nghiệp, trực tiếp, và đi thẳng vào vấn đề. 
-                    Sử dụng các số liệu và ý chính từ dữ liệu được cung cấp.
-                `;
-                
-                if (isSummary) {
-                    systemPrompt += ` Dữ liệu được cung cấp là một bản kế hoạch phát triển kênh GT. 
-                    Nhiệm vụ của bạn là tóm tắt và phân tích các điểm chính, cơ hội, và rủi ro tiềm ẩn.
-                    Tóm tắt cần bao gồm:
-                    - Tổng quan mục tiêu và ngân sách.
-                    - Các chiến lược và lộ trình chính.
-                    - Các rủi ro và giải pháp đã đề cập.
-                    - Phân tích và nhận định cá nhân về điểm mạnh/điểm yếu của kế hoạch.
-                    - Không được tạo ra dữ liệu không có trong kế hoạch.
-                    - Cần giữ nguyên các con số (tỷ VNĐ, %...) đã được đề cập trong văn bản gốc.
-                    Phản hồi nên dưới dạng danh sách gạch đầu dòng và đoạn văn ngắn gọn.
-                    Tóm tắt bằng tiếng Việt.
-                    `;
-                } else {
-                    systemPrompt += ` Dữ liệu được cung cấp là một bản kế hoạch phát triển kênh GT. 
-                    Nhiệm vụ của bạn là trả lời câu hỏi của người dùng dựa trên hoặc liên quan đến kế hoạch này.
-                    - Nếu câu hỏi yêu cầu phân tích, hãy sử dụng dữ liệu từ kế hoạch.
-                    - Nếu câu hỏi yêu cầu sáng tạo ý tưởng, hãy sử dụng nội dung kế hoạch làm nền tảng.
-                    - Nếu câu hỏi không liên quan đến kế hoạch, hãy trả lời một cách lịch sự rằng bạn chỉ có thể hỗ trợ về nội dung của kế hoạch.
-                    - Tránh việc tạo ra các thông tin không có trong văn bản gốc.
-                    - Trả lời bằng tiếng Việt.
-                    `;
-                }
-
-                while (retries < maxRetries) {
-                    try {
-                        const payload = {
-                            contents: [{ parts: [{ text: prompt }] }],
-                            systemInstruction: { parts: [{ text: systemPrompt }] },
-                            tools: [{ "google_search": {} }],
-                        };
-
-                        const apiKey = "";
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (response.status === 429) {
-                            throw new Error('Too Many Requests');
-                        }
-
-                        if (!response.ok) {
-                            throw new Error(`API call failed with status: ${response.status}`);
-                        }
-
-                        const result = await response.json();
-                        const candidate = result.candidates?.[0];
-                        if (candidate && candidate.content?.parts?.[0]?.text) {
-                            return candidate.content.parts[0].text;
-                        } else {
-                            throw new Error('Invalid API response format.');
-                        }
-                    } catch (error) {
-                        if (error.message === 'Too Many Requests' && retries < maxRetries - 1) {
-                            console.warn(`Rate limit hit. Retrying in ${delay / 1000} seconds...`);
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            delay *= 2; // Exponential backoff
-                            retries++;
-                        } else {
-                            console.error('Failed to call Gemini API:', error);
-                            return 'Rất tiếc, đã có lỗi xảy ra. Vui lòng thử lại sau.';
-                        }
-                    }
-                }
-                return 'Rất tiếc, đã xảy ra lỗi sau nhiều lần thử. Vui lòng thử lại sau.';
-            }
-
-            // Summary button logic
-            const summarizeBtn = document.getElementById('summarizeBtn');
-            const summaryModal = document.getElementById('summaryModal');
-            const summaryContent = document.getElementById('summaryContent');
-            const summaryLoader = document.getElementById('summaryLoader');
-            const closeBtn = document.querySelector('.close-btn');
-
-            summarizeBtn.addEventListener('click', async () => {
-                summaryContent.innerHTML = `<p class="text-center text-gray-500 italic">Đang phân tích...</p>`;
-                summaryLoader.classList.remove('hidden');
-                summaryModal.style.display = 'block';
-
-                const result = await callGeminiApi(planContent, true);
-                summaryContent.innerHTML = result.replace(/\n/g, '<br>');
-                summaryLoader.classList.add('hidden');
-            });
-
-            closeBtn.onclick = function() {
-                summaryModal.style.display = 'none';
-            }
-            window.onclick = function(event) {
-                if (event.target == summaryModal) {
-                    summaryModal.style.display = 'none';
-                }
-            }
-
-            // Strategy generator logic
-            const strategyInput = document.getElementById('strategyInput');
-            const generateStrategyBtn = document.getElementById('generateStrategyBtn');
-            const strategyOutput = document.getElementById('strategyOutput');
-            const strategyText = document.getElementById('strategyText');
-            const strategyLoader = document.getElementById('strategyLoader');
-
-            generateStrategyBtn.addEventListener('click', async () => {
-                const keyword = strategyInput.value;
-                if (keyword.trim() === '') {
-                    alert('Vui lòng nhập từ khóa hoặc vấn đề.');
-                    return;
-                }
-
-                strategyOutput.classList.remove('hidden');
-                strategyText.innerHTML = '';
-                strategyLoader.classList.remove('hidden');
-
-                const prompt = `Dựa trên bản kế hoạch phát triển kênh GT sau đây, hãy đưa ra một vài ý tưởng chiến lược sáng tạo xoay quanh chủ đề "${keyword}". 
-                Kế hoạch: ${planContent}`;
-
-                const result = await callGeminiApi(prompt);
-                strategyText.innerHTML = result.replace(/\n/g, '<br>');
-                strategyLoader.classList.add('hidden');
-            });
-
-
-            // Chatbot logic
-            const chatBtn = document.getElementById('chatBtn');
-            const chatContainer = document.getElementById('chatContainer');
-            const closeChatBtn = document.getElementById('closeChatBtn');
-            const chatBody = document.getElementById('chatBody');
-            const chatInput = document.getElementById('chatInput');
-            const sendChatBtn = document.getElementById('sendChatBtn');
-            let isChatOpen = false;
-
-            chatBtn.addEventListener('click', () => {
-                isChatOpen = !isChatOpen;
-                chatContainer.classList.toggle('hidden', !isChatOpen);
-                chatContainer.classList.toggle('open', isChatOpen);
-            });
-
-            closeChatBtn.addEventListener('click', () => {
-                isChatOpen = false;
-                chatContainer.classList.add('hidden');
-                chatContainer.classList.remove('open');
-            });
-
-            sendChatBtn.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-
-            async function sendMessage() {
-                const userMessage = chatInput.value.trim();
-                if (userMessage === '') return;
-
-                // Display user message
-                const userMsgDiv = document.createElement('div');
-                userMsgDiv.className = 'chat-message user-message';
-                userMsgDiv.textContent = userMessage;
-                chatBody.appendChild(userMsgDiv);
-                chatBody.scrollTop = chatBody.scrollHeight;
-                chatInput.value = '';
-
-                // Display loading indicator
-                const botTypingDiv = document.createElement('div');
-                botTypingDiv.className = 'bot-message chat-message text-gray-500 italic';
-                botTypingDiv.textContent = 'Đang nghĩ...';
-                chatBody.appendChild(botTypingDiv);
-                chatBody.scrollTop = chatBody.scrollHeight;
-
-                const prompt = `Dựa trên bản kế hoạch GT sau, hãy trả lời câu hỏi của người dùng: "${userMessage}". 
-                Kế hoạch: ${planContent}`;
-                
-                const responseText = await callGeminiApi(prompt);
-
-                // Update the bot message with the actual response
-                botTypingDiv.textContent = responseText;
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
 
             // Render the new timeline details
             const timelineDetailsContainer = document.getElementById('timeline-details');
