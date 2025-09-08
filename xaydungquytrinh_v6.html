@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Lộ Trình Chuyên Nghiệp Hóa Quy Trình Doanh Nghiệp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 350px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .flowchart-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .flowchart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            border-left: 4px solid #ef5675;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -61px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ef5675;
+            border: 4px solid #f7fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-gradient-to-r from-[#003f5c] to-[#374c80] text-white text-center py-16 px-4">
+        <h1 class="text-4xl md:text-5xl font-black mb-4">Xây Dựng Nền Tảng Vững Chắc</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto mb-2">Lộ trình trực quan hóa và chuyên nghiệp hóa hệ thống quy trình cho Công ty Nghệ Năng, hướng tới hiệu quả và tăng trưởng bền vững.</p>
+        <p class="text-sm md:text-base max-w-3xl mx-auto">Đề xuất bởi: Nguyễn Đức Tâm - Trưởng phòng kinh doanh iFan</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="overview" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#003f5c]">Tổng Quan Hệ Thống Quy Trình</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Một hệ thống vận hành chuyên nghiệp được xây dựng trên 10 nhóm quy trình cốt lõi, liên kết chặt chẽ để tạo ra sức mạnh tổng thể cho doanh nghiệp.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 text-center">
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#003f5c]" data-process-id="chien_luoc_quan_tri">
+                    <div class="text-3xl mb-2">🎯</div><h3 class="font-bold">Chiến Lược & Quản Trị</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#374c80]" data-process-id="rnd_san_pham">
+                    <div class="text-3xl mb-2">💡</div><h3 class="font-bold">R&D Sản Phẩm</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#7a5195]" data-process-id="chuoi_cung_ung">
+                    <div class="text-3xl mb-2">🔗</div><h3 class="font-bold">Chuỗi Cung Ứng</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#bc5090]" data-process-id="san_xuat">
+                    <div class="text-3xl mb-2">⚙️</div><h3 class="font-bold">Sản Xuất</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#ef5675]" data-process-id="ban_hang_marketing">
+                    <div class="text-3xl mb-2">📈</div><h3 class="font-bold">Bán Hàng & Marketing</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#ff764a]" data-process-id="cskh_hau_mai">
+                    <div class="text-3xl mb-2">🤝</div><h3 class="font-bold">CSKH & Hậu Mãi</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#ffa600]" data-process-id="tai_chinh_ke_toan">
+                    <div class="text-3xl mb-2">💰</div><h3 class="font-bold">Tài Chính & Kế Toán</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#003f5c]" data-process-id="nhan_su">
+                    <div class="text-3xl mb-2">👥</div><h3 class="font-bold">Nhân Sự</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#374c80]" data-process-id="cong_nghe_thong_tin">
+                    <div class="text-3xl mb-2">💻</div><h3 class="font-bold">Công Nghệ Thông Tin</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#7a5195]" data-process-id="quan_ly_chat_luong">
+                    <div class="text-3xl mb-2">🏆</div><h3 class="font-bold">Quản Lý Chất Lượng</h3>
+                </div>
+                <div class="flowchart-item bg-white p-4 rounded-lg shadow-md border-b-4 border-[#003f5c]" data-process-id="trien_khai_quy_trinh">
+                    <div class="text-3xl mb-2">🚀</div><h3 class="font-bold">Triển Khai Quy Trình</h3>
+                </div>
+            </div>
+        </section>
+
+        <section id="process-detail-section" class="mb-16 hidden">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="process-detail-title" class="font-bold text-2xl text-[#003f5c]"></h3>
+                    <button id="close-process-detail" class="text-gray-500 hover:text-gray-700 font-bold text-xl">&times;</button>
+                </div>
+                <div id="process-detail-content" class="text-gray-700 leading-relaxed"></div>
+            </div>
+        </section>
+
+        <section id="rnd" class="mb-16">
+             <h2 class="text-3xl font-bold text-center mb-2 text-[#374c80]">II. Nghiên Cứu & Phát Triển Sản Phẩm (R&D)</h2>
+             <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Đổi mới là trái tim của doanh nghiệp. Áp dụng quy trình R&D bài bản giúp biến ý tưởng thành sản phẩm đột phá và đáp ứng đúng nhu cầu thị trường.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-4 text-center">Lộ trình R&D 8 bước theo chuẩn Sony</h3>
+                    <div class="timeline">
+                        <div class="timeline-item"><strong>Bước 1 & 2:</strong> Xác định mục tiêu & Nghiên cứu thị trường.</div>
+                        <div class="timeline-item"><strong>Bước 3 & 4:</strong> Lập kế hoạch & Lên ý tưởng sản phẩm.</div>
+                        <div class="timeline-item"><strong>Bước 5 & 6:</strong> Phát triển & Thử nghiệm sản phẩm.</div>
+                        <div class="timeline-item"><strong>Bước 7 & 8:</strong> Thương mại hóa & Đánh giá, cập nhật.</div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-4 text-center">Tầm Quan Trọng Của Việc Lắng Nghe Khách Hàng</h3>
+                    <p class="text-gray-600 text-center mb-4">Phản hồi của khách hàng là nguồn thông tin quý giá, định hướng cho các cải tiến và đổi mới sản phẩm.</p>
+                    <div class="chart-container">
+                        <canvas id="vocChart"></canvas>
+                    </div>
+                </div>
+             </div>
+        </section>
+        
+        <section id="manufacturing" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#bc5090]">IV. Quy Trình Sản Xuất</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Hiện đại hóa quy trình sản xuất bằng tự động hóa và quản lý thông minh giúp tăng năng suất, giảm sai sót và nâng cao khả năng cạnh tranh.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-4 text-center">5 Trụ Cột Của Sản Xuất Hiện Đại</h3>
+                     <p class="text-gray-600 text-center mb-4">Cân bằng giữa các yếu tố cốt lõi là chìa khóa để xây dựng một nhà máy thông minh và hiệu quả.</p>
+                    <div class="chart-container">
+                        <canvas id="manufacturingPillarsChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-4 text-center">Tác Động Của Việc Tối Ưu Hóa</h3>
+                    <p class="text-gray-600 text-center mb-4">So sánh hiệu quả trước và sau khi áp dụng các phương pháp quản lý sản xuất tiên tiến.</p>
+                     <div class="chart-container">
+                        <canvas id="optimizationImpactChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quality" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#7a5195]">X. Quản Lý Chất Lượng</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Chất lượng không phải là đích đến, mà là một hành trình. Áp dụng các phương pháp như Six Sigma giúp doanh nghiệp tiệm cận sự hoàn hảo.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-4 text-center">Hành Trình Giảm Tỷ Lệ Lỗi</h3>
+                    <p class="text-gray-600 text-center mb-4">Biểu đồ thể hiện sự sụt giảm đáng kể của tỷ lệ sản phẩm lỗi sau khi triển khai hệ thống quản lý chất lượng mới qua các năm.</p>
+                    <div class="chart-container">
+                        <canvas id="defectRateChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center flex flex-col justify-center h-full">
+                    <h3 class="font-bold text-xl mb-4">Mục Tiêu Six Sigma</h3>
+                    <div class="text-6xl font-black text-[#7a5195]">3.4</div>
+                    <p class="text-lg text-gray-600 mt-2">Lỗi trên một triệu cơ hội</p>
+                    <p class="mt-4">Đây là tiêu chuẩn vàng về chất lượng mà các tập đoàn hàng đầu thế giới hướng tới, đảm bảo sự hài lòng gần như tuyệt đối của khách hàng.</p>
+                </div>
+            </div>
+        </section>
+
+        
+
+    
+<!-- ============== QUY TRÌNH XÂY DỰNG VÀ BAN HÀNH QUY TRÌNH (BẢN DỄ HIỂU) ============== -->
+<section id="quy-trinh-chuan-don-gian" class="mb-16">
+  <div class="bg-white rounded-2xl shadow ring-1 ring-gray-100 p-6 md:p-8">
+    <h2 class="text-3xl md:text-4xl font-black text-[#003f5c]">Quy trình chuẩn: Từ đề xuất đến cập nhật</h2>
+    <p class="mt-2 text-gray-700">
+      Đây là lộ trình 5 bước rõ ràng để bất kỳ phòng ban nào cũng có thể đề xuất, soạn thảo, xin duyệt, ban hành
+      và cập nhật quy trình của công ty một cách thống nhất.
+    </p>
+    <div class="mt-6 flex flex-col md:flex-row md:items-center gap-3 text-sm">
+      <div class="px-3 py-2 rounded-lg bg-[#003f5c] text-white font-semibold">1. Đề xuất</div>
+      <div class="hidden md:block">→</div>
+      <div class="px-3 py-2 rounded-lg bg-[#374c80] text-white font-semibold">2. Soạn thảo</div>
+      <div class="hidden md:block">→</div>
+      <div class="px-3 py-2 rounded-lg bg-[#7a5195] text-white font-semibold">3. Phê duyệt & chạy thử</div>
+      <div class="hidden md:block">→</div>
+      <div class="px-3 py-2 rounded-lg bg-[#ef5675] text-white font-semibold">4. Ban hành & triển khai</div>
+      <div class="hidden md:block">→</div>
+      <div class="px-3 py-2 rounded-lg bg-[#ffa600] text-white font-semibold">5. Đánh giá & cập nhật</div>
+    </div>
+  </div>
+
+  <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <button data-open="#step1" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#003f5c] text-left">
+      <div class="text-2xl">📝</div>
+      <div class="font-bold mt-1">1) Đề xuất</div>
+      <p class="text-sm text-gray-600 mt-1">Nêu vấn đề, hiện trạng, mục tiêu mong muốn.</p>
+      <div class="mt-2 text-xs text-[#003f5c] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step2" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#374c80] text-left">
+      <div class="text-2xl">🧭</div>
+      <div class="font-bold mt-1">2) Soạn thảo</div>
+      <p class="text-sm text-gray-600 mt-1">Vẽ luồng công việc, viết hướng dẫn, mẫu biểu.</p>
+      <div class="mt-2 text-xs text-[#374c80] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step3" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#7a5195] text-left">
+      <div class="text-2xl">✅</div>
+      <div class="font-bold mt-1">3) Phê duyệt & chạy thử</div>
+      <p class="text-sm text-gray-600 mt-1">Lãnh đạo duyệt, áp dụng thử nhỏ, chỉnh nhanh.</p>
+      <div class="mt-2 text-xs text-[#7a5195] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step4" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ef5675] text-left">
+      <div class="text-2xl">📣</div>
+      <div class="font-bold mt-1">4) Ban hành & triển khai</div>
+      <p class="text-sm text-gray-600 mt-1">Ra thông báo, đào tạo, hỗ trợ vận hành.</p>
+      <div class="mt-2 text-xs text-[#ef5675] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step5" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ffa600] text-left">
+      <div class="text-2xl">♻️</div>
+      <div class="font-bold mt-1">5) Đánh giá & cập nhật</div>
+      <p class="text-sm text-gray-600 mt-1">Xem kết quả, sửa đổi, lưu phiên bản.</p>
+      <div class="mt-2 text-xs text-[#ffa600] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+  </div>
+
+  <div class="mt-6 space-y-4">
+    <div id="step1" class="qpanel bg-white rounded-xl shadow-md border border-gray-100">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#003f5c]">1) Đề xuất quy trình mới</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: hiểu rõ vấn đề và lý do cần quy trình</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai chịu trách nhiệm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Trưởng bộ phận gặp khó khăn thực tế</li>
+            <li>Nhóm cải tiến nội bộ (nếu có)</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cần chuẩn bị</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Bản mô tả hiện trạng: đang làm thế nào, bước nào chậm, sai, trùng</li>
+            <li>Mục tiêu mong muốn: nhanh hơn, ít lỗi hơn, rõ trách nhiệm hơn</li>
+            <li>Ước tính lợi ích: tiết kiệm thời gian/chi phí, giảm khiếu nại…</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Cách làm đơn giản</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Liệt kê vấn đề theo gạch đầu dòng, kèm ví dụ thật</li>
+            <li>Vẽ sơ đồ hiện trạng bằng các hộp và mũi tên (giấy/ảnh cũng được)</li>
+            <li>Chọn 1–2 vấn đề “đau” nhất để ưu tiên xử lý trước</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="step2" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#374c80]">2) Soạn thảo nội dung quy trình</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: ai làm gì, làm khi nào, làm ở đâu</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai chịu trách nhiệm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Nhóm dự án gồm đại diện các bộ phận liên quan</li>
+            <li>Bộ phận nhân sự hoặc quản lý chất lượng rà soát câu chữ</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Tài liệu cần có</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Sơ đồ luồng công việc “mong muốn” (bản mới)</li>
+            <li>Hướng dẫn chi tiết từng bước (ngắn gọn, dễ hiểu)</li>
+            <li>Mẫu biểu, danh sách kiểm tra để nhân viên dùng ngay</li>
+            <li>Bảng phân rõ trách nhiệm: ai chịu trách nhiệm chính, ai phối hợp</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Nguyên tắc viết dễ hiểu</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Mỗi bước ghi: “đầu vào – thao tác – kết quả”</li>
+            <li>Dùng câu ngắn, tránh viết tắt, tránh từ chuyên môn khó</li>
+            <li>Đặt tên file, tên biểu mẫu theo một quy tắc thống nhất</li>
+            <li>Nếu cần phần mềm hỗ trợ (kế toán, bán hàng…), ghi rõ điểm chạm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="step3" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#7a5195]">3) Phê duyệt và chạy thử nhỏ</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: hợp lý trên giấy và dùng được ngoài thực tế</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai phê duyệt</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Ban lãnh đạo và các trưởng bộ phận liên quan</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cách chạy thử</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Chọn một nhóm nhỏ hoặc một cửa hàng/nhà máy để áp dụng</li>
+            <li>Ghi nhận vướng mắc trong 1–2 tuần đầu</li>
+            <li>Chỉnh sửa ngay những điểm chưa phù hợp</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Kết quả cần có</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Biên bản phê duyệt</li>
+            <li>Kế hoạch chạy thử: phạm vi, thời gian, người phụ trách</li>
+            <li>Biên bản tổng kết chạy thử và bản quy trình đã chỉnh sửa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="step4" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#ef5675]">4) Ban hành và triển khai toàn công ty</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: mọi người đều biết, đều làm giống nhau</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Việc cần làm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Thông báo chính thức: ngày áp dụng, nơi tra cứu bản gốc</li>
+            <li>Đào tạo ngắn gọn theo vai trò công việc</li>
+            <li>Thiết lập kênh hỗ trợ hỏi – đáp (nhóm chat, số điện thoại)</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Theo dõi sau khi áp dụng</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Kiểm tra mức độ tuân thủ sau 1–2 tuần</li>
+            <li>Ghi nhận góp ý để cải thiện trong lần cập nhật tới</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="step5" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#ffa600]">5) Đánh giá định kỳ và cập nhật</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: quy trình luôn phù hợp thực tế</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Khi nào đánh giá</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Mỗi quý hoặc khi có thay đổi lớn (con người, phần mềm, mô hình)</li>
+            <li>Khi có sai sót lặp lại hoặc phản ánh từ khách hàng nội bộ</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cách cập nhật</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Sửa nội dung, ghi rõ điểm thay đổi</li>
+            <li>Lưu “phiên bản mới” và ngày hiệu lực</li>
+            <li>Thông báo ngắn gọn cho người liên quan và đào tạo lại nếu cần</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Tài liệu cần lưu</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Bảng theo dõi phiên bản (mẫu ở bên dưới)</li>
+            <li>Bản quy trình mới nhất (định dạng PDF/Google Docs)</li>
+            <li>Danh sách người đã được đào tạo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 bg-white rounded-xl p-5 shadow ring-1 ring-gray-100">
+    <h4 class="font-bold text-[#003f5c] mb-3 text-lg">Bảng theo dõi phiên bản quy trình</h4>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-50 text-gray-700">
+          <tr>
+            <th class="px-3 py-2 text-left font-semibold">Mã quy trình</th>
+            <th class="px-3 py-2 text-left font-semibold">Tên quy trình</th>
+            <th class="px-3 py-2 text-left font-semibold">Phiên bản</th>
+            <th class="px-3 py-2 text-left font-semibold">Ngày hiệu lực</th>
+            <th class="px-3 py-2 text-left font-semibold">Người chịu trách nhiệm</th>
+            <th class="px-3 py-2 text-left font-semibold">Tóm tắt thay đổi</th>
+            <th class="px-3 py-2 text-left font-semibold">Tệp bản gốc</th>
+          </tr>
+        </thead>
+        <tbody id="version-rows" class="divide-y">
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-2">BH-01</td>
+            <td class="px-3 py-2">Bán hàng tại showroom</td>
+            <td class="px-3 py-2">v1.0</td>
+            <td class="px-3 py-2">2025-09-15</td>
+            <td class="px-3 py-2">Nguyễn Đức Tâm</td>
+            <td class="px-3 py-2">Tạo mới quy trình</td>
+            <td class="px-3 py-2"><a href="#" class="text-[#374c80] underline">Xem file</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-500 mt-2">Gợi ý: đặt tên file theo quy tắc: <em>MaQuyTrinh_TenQuyTrinh_PhiênBản_Ngay.pdf</em></p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const tabs = document.querySelectorAll('#quy-trinh-chuan-don-gian .qtab');
+    const panels = document.querySelectorAll('#quy-trinh-chuan-don-gian .qpanel');
+    function openPanel(sel) {
+      panels.forEach(p => p.classList.add('hidden'));
+      const el = document.querySelector(sel);
+      if (el) el.classList.remove('hidden');
+      setTimeout(() => el && el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+    tabs.forEach(btn => btn.addEventListener('click', () => openPanel(btn.dataset.open)));
+    openPanel('#step1');
+  })();
+</script>
+<!-- ============== /QUY TRÌNH XÂY DỰNG VÀ BAN HÀNH QUY TRÌNH (BẢN DỄ HIỂU) ============== -->
+
+
+<!-- ========== ĐỐI CHIẾU LỘ TRÌNH 5 BƯỚC ↔ ISO 9001 / PDCA ========== -->
+<section id="doi-chieu-iso-pdca" class="mb-16">
+  <div class="bg-white rounded-2xl shadow ring-1 ring-gray-100 p-6 md:p-8">
+    <h2 class="text-2xl md:text-3xl font-black text-[#003f5c]">Đối chiếu lộ trình 5 bước với ISO 9001 và PDCA</h2>
+<p class="mt-2 text-gray-600">Bảng này cho thấy lộ trình nội bộ bám sát các chuẩn mực quốc tế. ISO 9001 là tiêu chuẩn quản lý chất lượng được công nhận rộng rãi; PDCA là chu trình cải tiến liên tục. So sánh song song giúp thống nhất cách hiểu và nâng cao tính kỷ luật khi triển khai.</p>
+    <p class="mt-2 text-gray-700">
+      Bảng dưới đây giúp chứng minh lộ trình 5 bước (Đề xuất → Soạn thảo → Phê duyệt & chạy thử → Ban hành & triển khai → Đánh giá & cập nhật)
+      bám theo tinh thần của tiêu chuẩn ISO 9001 và chu trình PDCA (Lập kế hoạch – Thực hiện – Kiểm tra – Hành động cải tiến).
+    </p>
+    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="bg-[#003f5c] text-white rounded-xl p-4">
+        <div class="font-semibold">🧭 Lưu ý</div>
+        <p class="text-white/90 text-sm mt-1">
+          Các điều khoản ISO nêu là <em>liên quan</em> để tham khảo; dùng làm cơ sở đối chiếu khi xây dựng và rà soát quy trình.
+        </p>
+      </div>
+      <div class="bg-[#374c80] text-white rounded-xl p-4">
+        <div class="font-semibold">🔄 PDCA rút gọn</div>
+        <ul class="text-white/90 text-sm list-disc list-inside mt-1">
+          <li><strong><strong>Plan</strong>:</strong> Bước 1–2</li>
+          <li><strong>Do:</strong> Bước 3 (chạy thử) & 4 (triển khai chính thức)</li>
+          <li><strong>Check:</strong> Rà soát trong Bước 3 và sau ban hành</li>
+          <li><strong>Act:</strong> Bước 5 (cải tiến/cập nhật)</li>
+        </ul>
+      </div>
+      <div class="bg-[#7a5195] text-white rounded-xl p-4">
+        <div class="font-semibold">🎓 Mục đích bảng đối chiếu</div>
+        <p class="text-white/90 text-sm mt-1">
+          Bảng giúp thống nhất cách hiểu giữa các phòng ban và tạo cầu nối giữa cách làm nội bộ và chuẩn mực quốc tế.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-50 text-gray-700">
+          <tr>
+            <th class="px-3 py-2 text-left font-semibold"><span class="mr-1">🏁</span>Bước nội bộ</th>
+            <th class="px-3 py-2 text-left font-semibold"><span class="mr-1">📘</span>Điều khoản ISO 9001 (liên quan)</th>
+            <th class="px-3 py-2 text-left font-semibold"><span class="mr-1">🔄</span>PDCA tương ứng</th>
+            <th class="px-3 py-2 text-left font-semibold"><span class="mr-1">🎯</span>Mục tiêu kiểm soát</th>
+            <th class="px-3 py-2 text-left font-semibold"><span class="mr-1">🗂️</span>Tài liệu/bằng chứng</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-3">
+              <div class="font-semibold">1) Đề xuất</div>
+              <div class="text-gray-600">Xác định vấn đề, hiện trạng, mục tiêu.</div>
+            </td>
+            <td class="px-3 py-3">4.4 (Hệ thống & quá trình); 6.1 (Rủi ro & cơ hội); 6.2 (Mục tiêu chất lượng)</td>
+            <td class="px-3 py-3"><strong>Plan</strong></td>
+            <td class="px-3 py-3">Chọn đúng vấn đề ưu tiên; <strong>có mục tiêu đo được</strong>.</td>
+            <td class="px-3 py-3">Phiếu đề xuất; mô tả hiện trạng; mục tiêu dự kiến.</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-3">
+              <div class="font-semibold">2) Soạn thảo</div>
+              <div class="text-gray-600">Vẽ luồng công việc, viết hướng dẫn, mẫu biểu.</div>
+            </td>
+            <td class="px-3 py-3">7.5 (Thông tin dạng văn bản); 8.1 (Hoạch định vận hành); 7.1 (Nguồn lực); 7.4 (Truyền đạt)</td>
+            <td class="px-3 py-3"><strong>Plan</strong></td>
+            <td class="px-3 py-3">Rõ ai làm gì, <strong>đầu vào/đầu ra</strong>, biểu mẫu thống nhất.</td>
+            <td class="px-3 py-3">Sơ đồ quy trình; hướng dẫn từng bước; biểu mẫu; phân công trách nhiệm.</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-3">
+              <div class="font-semibold">3) Phê duyệt & chạy thử</div>
+              <div class="text-gray-600">Lãnh đạo duyệt, áp dụng thử nhỏ, điều chỉnh nhanh.</div>
+            </td>
+            <td class="px-3 py-3">8.1 (Hoạch định vận hành); 8.5 (Thực hiện); 8.7 (Kiểm soát sai lỗi); 9.1 (Đo lường, phân tích)</td>
+            <td class="px-3 py-3"><strong>Do</strong> / <strong>Check</strong></td>
+            <td class="px-3 py-3"><strong>Tính khả thi</strong>; phát hiện sớm lỗi; ghi nhận cải tiến.</td>
+            <td class="px-3 py-3">Biên bản duyệt; kế hoạch thử; nhật ký phản hồi; bản sửa đổi.</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-3">
+              <div class="font-semibold">4) Ban hành & triển khai</div>
+              <div class="text-gray-600">Thông báo, đào tạo, hỗ trợ vận hành.</div>
+            </td>
+            <td class="px-3 py-3">7.2 (Năng lực); 7.3 (Nhận thức); 7.4 (Truyền đạt); 8.1 (Kiểm soát vận hành); 7.5 (Kiểm soát tài liệu)</td>
+            <td class="px-3 py-3"><strong>Do</strong></td>
+            <td class="px-3 py-3"><strong>Mọi người biết và làm thống nhất</strong> theo bản chính.</td>
+            <td class="px-3 py-3">Thông báo ban hành; tài liệu đào tạo; danh sách điểm danh; nơi lưu “bản gốc”.</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-3">
+              <div class="font-semibold">5) Đánh giá & cập nhật</div>
+              <div class="text-gray-600">Xem kết quả, sửa đổi, lưu phiên bản.</div>
+            </td>
+            <td class="px-3 py-3">9.1 (Đo lường & đánh giá); 9.2 (Đánh giá nội bộ); 9.3 (Xem xét của lãnh đạo); 10 (Cải tiến)</td>
+            <td class="px-3 py-3"><strong>Check</strong> / <strong>Act</strong></td>
+            <td class="px-3 py-3">Luôn phù hợp thực tế; có <strong>lịch sử phiên bản rõ ràng</strong>.</td>
+            <td class="px-3 py-3">Báo cáo kết quả; đề xuất sửa đổi; bảng theo dõi phiên bản; bản cập nhật.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+   
+  </div>
+</section>
+<!-- ========== /ĐỐI CHIẾU LỘ TRÌNH 5 BƯỚC ↔ ISO 9001 / PDCA ========== -->
+
+</main>
+
+    <footer class="bg-gray-800 text-white text-center p-8">
+        <p class="font-bold">Cải Tiến Liên Tục</p>
+        <p class="text-gray-400">Xây dựng quy trình là một hành trình không ngừng nghỉ, đòi hỏi sự cam kết và nỗ lực từ toàn thể doanh nghiệp.</p>
+    </footer>
+
+    <script>
+        function wrapLabels(labels, maxWidth) {
+            return labels.map(label => {
+                if (label.length <= maxWidth) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
+            });
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+        
+        const commonTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const colors = {
+            blue: '#003f5c',
+            purple: '#7a5195',
+            pink: '#ef5675',
+            orange: '#ff764a',
+            yellow: '#ffa600'
+        };
+
+        new Chart(document.getElementById('vocChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Phản hồi khách hàng', 'Nghiên cứu nội bộ', 'Phân tích đối thủ'],
+                datasets: [{
+                    label: 'Nguồn gốc đổi mới',
+                    data: [65, 25, 10],
+                    backgroundColor: [colors.pink, colors.purple, colors.blue],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+
+        new Chart(document.getElementById('manufacturingPillarsChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Tự động hóa', 'Chất lượng (Six Sigma)', 'Linh hoạt', 'Bền vững', 'An toàn'],
+                datasets: [{
+                    label: 'Nhà máy hiện đại',
+                    data: [90, 85, 75, 80, 95],
+                    backgroundColor: 'rgba(122, 81, 149, 0.2)',
+                    borderColor: colors.purple,
+                    pointBackgroundColor: colors.purple,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colors.purple
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: { font: { size: 14 } },
+                        ticks: {
+                           backdropColor: 'transparent',
+                           stepSize: 20
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+        
+        new Chart(document.getElementById('optimizationImpactChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Năng suất', 'Tỷ lệ lỗi', 'Thời gian sản xuất'],
+                datasets: [
+                    {
+                        label: 'Trước tối ưu hóa',
+                        data: [60, 25, 40],
+                        backgroundColor: 'rgba(0, 63, 92, 0.7)',
+                        borderColor: colors.blue,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Sau tối ưu hóa',
+                        data: [90, 5, 25],
+                        backgroundColor: 'rgba(239, 86, 117, 0.7)',
+                        borderColor: colors.pink,
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { display: false }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+
+        new Chart(document.getElementById('defectRateChart'), {
+            type: 'line',
+            data: {
+                labels: ['Năm 1', 'Năm 2', 'Năm 3', 'Năm 4', 'Năm 5'],
+                datasets: [{
+                    label: 'Tỷ lệ sản phẩm lỗi (%)',
+                    data: [5.2, 3.5, 2.1, 1.0, 0.4],
+                    fill: true,
+                    backgroundColor: 'rgba(255, 118, 74, 0.2)',
+                    borderColor: colors.orange,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: commonTooltipOptions.plugins.tooltip
+                }
+            }
+        });
+
+        const processDetails = {
+            chien_luoc_quan_tri: {
+                title: 'I. Quy Trình Chiến Lược & Quản Trị',
+                content: `
+                    <p class="mb-2">Nhóm quy trình này định hướng và đảm bảo sự vận hành tổng thể của công ty.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Lập kế hoạch chiến lược:</strong> Xác định tầm nhìn, sứ mệnh, mục tiêu dài hạn và ngắn hạn của công ty. Phân tích môi trường kinh doanh (SWOT, PESTEL). Xây dựng các chiến lược tổng thể (sản phẩm, thị trường, công nghệ, nhân sự). Thiết lập các chỉ số hiệu suất chính (KPIs) cho toàn công ty.</li>
+                        <li><strong>Quy trình Quản lý rủi ro:</strong> Nhận diện, đánh giá và phân loại các rủi ro tiềm ẩn (tài chính, vận hành, thị trường, pháp lý...). Xây dựng kế hoạch phòng ngừa và ứng phó rủi ro. Giám sát và báo cáo tình hình rủi ro.</li>
+                        <li><strong>Quy trình Quản lý hiệu suất doanh nghiệp:</strong> Thiết lập hệ thống đo lường hiệu suất (BSC, OKRs...). Đánh giá định kỳ hiệu suất của các phòng ban và cá nhân. Phân tích kết quả và đưa ra hành động cải tiến.</li>
+                        <li><strong>Quy trình Quản lý tuân thủ pháp luật & Đạo đức kinh doanh:</strong> Đảm bảo mọi hoạt động của công ty tuân thủ các quy định pháp luật hiện hành (lao động, thuế, môi trường, an toàn sản phẩm...). Xây dựng và truyền thông bộ quy tắc đạo đức kinh doanh.</li>
+                    </ul>
+                `
+            },
+            rnd_san_pham: {
+                title: 'II. Quy Trình Nghiên Cứu & Phát Triển Sản Phẩm (R&D)',
+                content: `
+                    <p class="mb-2">Đây là xương sống cho một doanh nghiệp sản xuất, đảm bảo sản phẩm luôn đổi mới và đáp ứng thị trường.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Nghiên cứu thị trường & Xác định nhu cầu:</strong> Thu thập thông tin về xu hướng thị trường, công nghệ mới, đối thủ cạnh tranh. Phân tích nhu cầu, mong muốn và các vấn đề của khách hàng (B2B & B2C). Đánh giá tiềm năng thị trường cho sản phẩm mới/cải tiến.</li>
+                        <li><strong>Quy trình Thiết kế & Phát triển sản phẩm:</strong> Lên ý tưởng và phác thảo thiết kế sản phẩm (bao gồm cả tính năng, thẩm mỹ, vật liệu). Xây dựng nguyên mẫu (prototype). Thiết kế kỹ thuật, lập bản vẽ chi tiết và BOM (Bill of Materials). Phát triển quy trình sản xuất cho sản phẩm mới.</li>
+                        <li><strong>Quy trình Kiểm thử & Đánh giá sản phẩm:</strong> Thực hiện các bài kiểm tra chất lượng, độ bền, hiệu suất của sản phẩm. Thu thập phản hồi từ các nhóm thử nghiệm (nội bộ, khách hàng chọn lọc). Điều chỉnh thiết kế và quy trình dựa trên kết quả kiểm thử.</li>
+                        <li><strong>Quy trình Giới thiệu & Ra mắt sản phẩm (Product Launch):</strong> Lập kế hoạch marketing và truyền thông cho sản phẩm mới. Chuẩn bị kênh phân phối và đội ngũ bán hàng. Tổ chức sự kiện ra mắt (nếu cần). Theo dõi hiệu quả ban đầu của sản phẩm trên thị trường.</li>
+                        <li><strong>Quy trình Quản lý vòng đời sản phẩm (Product Lifecycle Management - PLM):</strong> Theo dõi hiệu suất sản phẩm sau khi ra mắt. Lên kế hoạch cải tiến, nâng cấp hoặc khai tử sản phẩm khi cần.</li>
+                    </ul>
+                `
+            },
+            chuoi_cung_ung: {
+                title: 'III. Quy Trình Chuỗi Cung Ứng',
+                content: `
+                    <p class="mb-2">Đảm bảo nguyên vật liệu và thành phẩm được luân chuyển hiệu quả, tối ưu chi phí.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Hoạch định nhu cầu & Sản xuất (Demand & Production <strong>Plan</strong>ning):</strong> Dự báo nhu cầu thị trường cho cả B2B và B2C. Lập kế hoạch sản xuất tổng thể dựa trên dự báo và năng lực sản xuất.</li>
+                        <li><strong>Quy trình Quản lý mua hàng (Procurement Management):</strong> Xác định nhu cầu nguyên vật liệu, linh kiện, dịch vụ. Tìm kiếm, đánh giá và lựa chọn nhà cung cấp. Đàm phán hợp đồng, đặt hàng và theo dõi tiến độ giao hàng. Quản lý chất lượng nhà cung cấp.</li>
+                        <li><strong>Quy trình Quản lý tồn kho (Inventory Management):</strong> Kiểm soát mức tồn kho nguyên vật liệu, bán thành phẩm và thành phẩm. Tối ưu hóa chi phí lưu kho và tránh tình trạng thiếu hụt/thừa hàng. Thực hiện kiểm kê định kỳ.</li>
+                        <li><strong>Quy trình Quản lý kho bãi (Warehouse Management):</strong> Tiếp nhận, lưu trữ và xuất kho hàng hóa. Sắp xếp kho bãi khoa học, tối ưu không gian. Đảm bảo an toàn và điều kiện bảo quản.</li>
+                        <li><strong>Quy trình Quản lý vận chuyển & Logistics:</strong> Lập kế hoạch và điều phối vận chuyển hàng hóa từ nhà cung cấp đến nhà máy, và từ nhà máy đến khách hàng (B2B & B2C). Lựa chọn đối tác vận chuyển, theo dõi lộ trình. Quản lý chi phí vận chuyển.</li>
+                    </ul>
+                `
+            },
+            san_xuat: {
+                title: 'IV. Quy Trình Sản Xuất',
+                content: `
+                    <p class="mb-2">Trọng tâm của một doanh nghiệp sản xuất, đảm bảo sản phẩm được tạo ra hiệu quả và chất lượng.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Lập kế hoạch sản xuất chi tiết:</strong> Chuyển đổi kế hoạch tổng thể thành lịch trình sản xuất cụ thể cho từng dây chuyền, máy móc. Phân bổ nguồn lực (nhân công, vật tư, máy móc).</li>
+                        <li><strong>Quy trình Vận hành sản xuất:</strong> Thực hiện các công đoạn sản xuất theo quy trình kỹ thuật. Giám sát và điều khiển dây chuyền sản xuất. Ghi nhận dữ liệu sản xuất (số lượng, thời gian, lỗi...).</li>
+                        <li><strong>Quy trình Kiểm soát chất lượng sản xuất (In-process Quality Control):</strong> Kiểm tra chất lượng nguyên vật liệu đầu vào. Kiểm tra chất lượng tại các công đoạn sản xuất. Kiểm tra chất lượng thành phẩm cuối cùng trước khi đóng gói. Xử lý sản phẩm lỗi, không đạt chuẩn.</li>
+                        <li><strong>Quy trình Bảo trì thiết bị:</strong> Lập kế hoạch bảo trì định kỳ (bảo dưỡng phòng ngừa). Thực hiện bảo trì sửa chữa khi có sự cố. Quản lý phụ tùng thay thế.</li>
+                        <li><strong>Quy trình Quản lý an toàn lao động & Môi trường:</strong> Đảm bảo môi trường làm việc an toàn, tuân thủ các quy định về an toàn lao động. Quản lý chất thải và tác động môi trường của hoạt động sản xuất.</li>
+                    </ul>
+                `
+            },
+            ban_hang_marketing: {
+                title: 'V. Quy Trình Bán Hàng & Tiếp Thị',
+                content: `
+                    <p class="mb-2">Đây là nhóm quy trình quan trọng nhất để tiếp cận và chuyển đổi khách hàng, cần phân biệt rõ cho B2B và B2C.</p>
+                    <h4 class="font-bold mt-4 mb-1">V.1. Quy Trình Marketing</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Nghiên cứu thị trường & Phân khúc khách hàng:</strong> Phân tích thị trường B2B (ngành, quy mô doanh nghiệp, đối tượng mua hàng). Phân tích thị trường B2C (nhân khẩu học, hành vi tiêu dùng, sở thích). Xác định các phân khúc khách hàng mục tiêu cho từng thương hiệu (iFan/eFan).</li>
+                        <li><strong>Quy trình Phát triển chiến lược Marketing:</strong> Xây dựng chiến lược thương hiệu (Brand Strategy) cho iFan và eFan. Lập kế hoạch Marketing tổng thể và chi tiết cho từng phân khúc (B2B, B2C). Xác định các kênh Marketing phù hợp (Digital Marketing, sự kiện, PR...).</li>
+                        <li><strong>Quy trình Quản lý chiến dịch Marketing:</strong> Lên kế hoạch, triển khai và theo dõi các chiến dịch quảng cáo, khuyến mãi. Đo lường hiệu quả chiến dịch (ROI, Lead Generation...).</li>
+                        <li><strong>Quy trình Tạo Lead (Lead Generation):</strong> Thiết lập các kênh tạo Lead (Form đăng ký, Landing Page, sự kiện, giới thiệu...). Thu thập và phân loại Leads (Marketing Qualified Leads - MQLs).</li>
+                    </ul>
+                    <h4 class="font-bold mt-4 mb-1">V.2. Quy Trình Bán Hàng B2B</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Tìm kiếm & Đánh giá khách hàng tiềm năng B2B (Prospecting & Qualification):</strong> Xác định các doanh nghiệp/tổ chức có nhu cầu (nhà máy, xưởng, tòa nhà...). Tiếp cận ban đầu, xác định nhu cầu sơ bộ, ngân sách, quyền quyết định. Chuyển đổi MQLs thành Sales Qualified Leads (SQLs).</li>
+                        <li><strong>Quy trình Phát triển quan hệ & Xây dựng giải pháp:</strong> Gặp gỡ, khảo sát chi tiết nhu cầu kỹ thuật, đặc thù dự án của khách hàng B2B. Phối hợp với bộ phận kỹ thuật để thiết kế giải pháp tối ưu (hệ thống thông gió, làm mát...). Trình bày giải pháp và báo giá chi tiết.</li>
+                        <li><strong>Quy trình Đàm phán & Ký hợp đồng B2B:</strong> Thương lượng các điều khoản về giá, thời gian, điều kiện thanh toán, bảo hành. Hoàn thiện và ký kết hợp đồng mua bán/dự án.</li>
+                        <li><strong>Quy trình Quản lý dự án B2B (nếu có các dự án lớn):</strong> Lập kế hoạch triển khai dự án (lắp đặt, nghiệm thu). Phối hợp các bộ phận liên quan (sản xuất, kỹ thuật, vận chuyển). Giám sát tiến độ, chất lượng và ngân sách dự án.</li>
+                    </ul>
+                    <h4 class="font-bold mt-4 mb-1">V.3. Quy Trình Bán Hàng B2C</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Quản lý kênh phân phối B2C:</strong> Phát triển và quản lý mạng lưới đại lý, nhà phân phối, cửa hàng bán lẻ. Thiết lập chính sách giá, chiết khấu, hỗ trợ cho các kênh.</li>
+                        <li><strong>Quy trình Quản lý bán hàng trực tuyến (E-commerce):</strong> Vận hành website thương mại điện tử, các sàn TMĐT (Shopee, Lazada...). Quản lý đơn hàng online, tồn kho online. Xử lý thanh toán và vận chuyển cho đơn hàng online.</li>
+                        <li><strong>Quy trình Quản lý bán hàng tại cửa hàng/showroom:</strong> Thiết lập tiêu chuẩn trưng bày sản phẩm. Đào tạo nhân viên bán hàng về sản phẩm và kỹ năng tư vấn. Quản lý doanh số và tồn kho tại điểm bán.</li>
+                        <li><strong>Quy trình Quản lý chiết khấu & Khuyến mãi:
+                        </strong> Lên kế hoạch và triển khai các chương trình chiết khấu, giảm giá, quà tặng, ưu đãi đặc biệt. Đảm bảo tính minh bạch và tuân thủ quy định pháp luật về khuyến mãi. Đánh giá hiệu quả các chương trình khuyến mãi.</li>
+                    </ul>
+                `
+            },
+            cskh_hau_mai: {
+                title: 'VI. Quy Trình Chăm Sóc Khách Hàng & Hậu Mãi',
+                content: `
+                    <p class="mb-2">Đảm bảo sự hài lòng và lòng trung thành của khách hàng sau khi mua hàng.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Tiếp nhận & Xử lý yêu cầu/khiếu nại:</strong> Thiết lập các kênh tiếp nhận (hotline, email, chat, mạng xã hội, trực tiếp). Quy trình ghi nhận thông tin, phân loại mức độ ưu tiên. Quy trình chuyển giao yêu cầu đến bộ phận liên quan.</li>
+                        <li><strong>Quy trình Hỗ trợ kỹ thuật:</strong> Cung cấp hướng dẫn sử dụng, khắc phục sự cố từ xa. Sắp xếp kỹ thuật viên đến tận nơi (nếu cần). Lưu trữ cơ sở dữ liệu về các vấn đề thường gặp và giải pháp.</li>
+                        <li><strong>Quy trình Bảo hành & Bảo trì:</strong> Tiếp nhận yêu cầu bảo hành/bảo trì. Kiểm tra điều kiện bảo hành, lên lịch sửa chữa/bảo dưỡng. Thực hiện sửa chữa/thay thế linh kiện. Quản lý linh kiện thay thế và chi phí.</li>
+                        <li><strong>Quy trình Quản lý quan hệ khách hàng (CRM):</strong> Lưu trữ và cập nhật thông tin khách hàng (lịch sử mua hàng, tương tác, phản hồi). Phân loại khách hàng để có chiến lược chăm sóc phù hợp (khách hàng thân thiết, khách hàng VIP...). Chủ động liên hệ khách hàng để duy trì mối quan hệ.</li>
+                        <li><strong>Quy trình Thu thập phản hồi & Đánh giá hài lòng khách hàng:</strong> Thực hiện khảo sát định kỳ (qua điện thoại, email, form online). Phân tích dữ liệu phản hồi để nhận diện các điểm cần cải thiện trong sản phẩm và dịch vụ.</li>
+                    </ul>
+                `
+            },
+            tai_chinh_ke_toan: {
+                title: 'VII. Quy Trình Tài Chính & Kế Toán',
+                content: `
+                    <p class="mb-2">Đảm bảo sự minh bạch và hiệu quả trong quản lý tài chính.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Lập ngân sách & Dự báo tài chính:</strong> Lập kế hoạch ngân sách hàng năm cho từng phòng ban và toàn công ty. Thực hiện dự báo doanh thu, chi phí, lợi nhuận.</li>
+                        <li><strong>Quy trình Quản lý công nợ (Phải thu & Phải trả):</strong> Theo dõi các khoản phải thu từ khách hàng (B2B & B2C). Theo dõi các khoản phải trả cho nhà cung cấp. Quy trình thu hồi công nợ và thanh toán đúng hạn.</li>
+                        <li><strong>Quy trình Kế toán & Báo cáo tài chính:</strong> Ghi nhận các giao dịch tài chính hàng ngày. Lập các báo cáo tài chính định kỳ (Báo cáo kết quả kinh doanh, Bảng cân đối kế toán, Báo cáo lưu chuyển tiền tệ). Thực hiện kiểm toán nội bộ/bên ngoài.</li>
+                        <li><strong>Quy trình Quản lý dòng tiền (Cash Flow Management):</strong> Theo dõi và dự báo dòng tiền vào/ra. Đảm bảo đủ thanh khoản cho hoạt động kinh doanh.</li>
+                        <li><strong>Quy trình Quản lý thuế:</strong> Đảm bảo kê khai và nộp thuế đúng quy định. Cập nhật các chính sách thuế mới.</li>
+                        <li><strong>Quy trình Kiểm kê tài sản cố định & Công cụ dụng cụ:</strong> Lập danh mục tài sản cố định và công cụ dụng cụ. Quy trình ghi nhận tài sản khi mua sắm và thanh lý. Thực hiện kiểm kê định kỳ (hàng năm, quý) để đối chiếu số liệu và tình trạng sử dụng. Quản lý khấu hao tài sản.</li>
+                    </ul>
+                `
+            },
+            nhan_su: {
+                title: 'VIII. Quy Trình Nhân Sự',
+                content: `
+                    <p class="mb-2">Đảm bảo công ty có đủ nguồn lực con người chất lượng và môi trường làm việc tốt.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Hoạch định nguồn nhân lực:</strong> Dự báo nhu cầu nhân sự trong ngắn và dài hạn. Lập kế hoạch phát triển nguồn nhân lực.</li>
+                        <li><strong>Quy trình Tuyển dụng & Onboarding (Hội nhập):</strong> Hoạch định, thu hút, sàng lọc, phỏng vấn, kiểm tra, đề xuất, đàm phán và hội nhập ứng viên.</li>
+                        <li><strong>Quy trình Đào tạo & Phát triển:</strong> Xác định nhu cầu đào tạo của nhân viên. Xây dựng chương trình đào tạo (kỹ năng chuyên môn, kỹ năng mềm, kiến thức sản phẩm). Đánh giá hiệu quả đào tạo.</li>
+                        <li><strong>Quy trình Quản lý hiệu suất:</strong> Thiết lập mục tiêu cá nhân và phòng ban. Đánh giá hiệu suất định kỳ (tháng, quý, năm). Phản hồi, coaching và xây dựng kế hoạch phát triển cá nhân.</li>
+                        <li><strong>Quy trình Chính sách lương thưởng & Phúc lợi:</strong> Xây dựng và quản lý hệ thống lương, thưởng, phụ cấp. Quản lý các chế độ phúc lợi (bảo hiểm, nghỉ phép, khám sức khỏe...).</li>
+                        <li><strong>Quy trình Quản lý quan hệ lao động:</strong> Giải quyết các vấn đề, mâu thuẫn trong nội bộ. Đảm bảo môi trường làm việc công bằng, minh bạch.</li>
+                    </ul>
+                `
+            },
+            cong_nghe_thong_tin: {
+                title: 'IX. Quy Trình Công Nghệ Thông Tin',
+                content: `
+                    <p class="mb-2">Hỗ trợ và tối ưu hóa hoạt động của các phòng ban khác.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Quản lý hạ tầng IT:</strong> Quản lý máy chủ, mạng, thiết bị phần cứng. Đảm bảo hệ thống hoạt động ổn định, an toàn.</li>
+                        <li><strong>Quy trình Quản lý phần mềm & Ứng dụng:</strong> Lựa chọn, triển khai và bảo trì các phần mềm (ERP, CRM, Kế toán...). Đảm bảo các hệ thống tích hợp và hoạt động trơn tru.</li>
+                        <li><strong>Quy trình Bảo mật thông tin:</strong> Bảo vệ dữ liệu công ty và khách hàng khỏi các mối đe dọa an ninh mạng. Thiết lập chính sách bảo mật, sao lưu dữ liệu.</li>
+                        <li><strong>Quy trình Hỗ trợ người dùng (IT Helpdesk):</strong> Tiếp nhận và xử lý các yêu cầu hỗ trợ về IT từ nhân viên.</li>
+                        <li><strong>Quy trình Quản lý dữ liệu:</strong> Thu thập, lưu trữ, xử lý và phân tích dữ liệu từ các hoạt động. Đảm bảo tính chính xác, nhất quán và bảo mật của dữ liệu.</li>
+                    </ul>
+                `
+            },
+            quan_ly_chat_luong: {
+                title: 'X. Quy Trình Quản Lý Chất Lượng',
+                content: `
+                    <p class="mb-2">Đảm bảo sản phẩm và dịch vụ luôn đạt tiêu chuẩn cao nhất.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Quy trình Hoạch định chất lượng:</strong> Xác định các tiêu chuẩn chất lượng cho sản phẩm và dịch vụ. Thiết lập các chỉ tiêu chất lượng (Quality KPIs).</li>
+                        <li><strong>Quy trình Kiểm soát chất lượng (Quality Control):</strong> Thực hiện kiểm tra chất lượng ở mọi giai đoạn (đầu vào, trong quá trình sản xuất, thành phẩm). Sử dụng các công cụ kiểm soát chất lượng (biểu đồ kiểm soát, Pareto...).</li>
+                        <li><strong>Quy trình Đảm bảo chất lượng (Quality Assurance):</strong> Xây dựng hệ thống tài liệu chất lượng (quy trình, hướng dẫn công việc). Thực hiện đánh giá nội bộ và bên ngoài để đảm bảo tuân thủ tiêu chuẩn.</li>
+                        <li><strong>Quy trình Cải tiến chất lượng liên tục (Continuous Improvement - Kaizen):</strong> Phân tích nguyên nhân gốc rễ của các vấn đề chất lượng. Áp dụng các phương pháp cải tiến (Lean, Six Sigma, Kaizen).</li>
+                        <li><strong>Quy trình Quản lý tài liệu chất lượng:</strong> Kiểm soát phiên bản, phân phối và lưu trữ các tài liệu liên quan đến chất lượng.</li>
+                    </ul>
+                `
+            },
+            trien_khai_quy_trinh: {
+                title: 'XI. Các giai đoạn triển khai quy trình mới',
+                content: `
+                    <p class="mb-2">Việc đưa một quy trình mới vào vận hành đòi hỏi một kế hoạch chi tiết, có tính chiến lược và sự phối hợp chặt chẽ. Dưới đây là các giai đoạn chính để đảm bảo quá trình triển khai diễn ra suôn sẻ, hiệu quả và bền vững, dựa trên kinh nghiệm từ các tập đoàn hàng đầu.</p>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#003f5c] mb-2">Giai đoạn 1: Chuẩn bị & Hoạch định chiến lược (Strategic Preparation & <strong>Plan</strong>ning)</h4>
+                            <p class="text-gray-700 italic mb-2">Giai đoạn này tập trung vào việc thiết lập nền tảng vững chắc và sự đồng thuận từ cấp cao nhất.</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li><strong>Xác định tầm nhìn & Mục tiêu chiến lược (Vision & Strategic Goals):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Ban Lãnh đạo (BLĐ), Hội đồng Quy trình (sẽ được thành lập).</li>
+                                        <li><strong>Hoạt động:</strong> Liên kết trực tiếp việc triển khai quy trình mới với các mục tiêu kinh doanh cốt lõi của Nghệ Năng (ví dụ: tăng 15% thị phần B2C trong 2 năm, giảm 10% chi phí sản xuất quạt công nghiệp, nâng cao chỉ số hài lòng khách hàng B2B lên 4.5/5). Đây là bước tạo ra "ý nghĩa cấp bách" (Sense of Urgency) theo mô hình quản lý thay đổi của John Kotter.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Thành lập Hội đồng Quy trình (Process Council):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> BLĐ, Giám đốc các khối/phòng ban chủ chốt (Sản xuất, Kinh doanh, Kế toán, HCNS, IT).</li>
+                                        <li><strong>Hoạt động:</strong> Nhóm này đóng vai trò "Liên minh dẫn dắt" (Guiding Coalition) theo Kotter. Nhiệm vụ: định hướng chiến lược, phê duyệt các quy trình lớn, giải quyết xung đột liên phòng ban, đảm bảo sự liên kết giữa các quy trình.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Thành lập Nhóm Dự án Quy trình (Process Project Teams):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Trưởng các phòng ban liên quan, nhân viên chủ chốt trực tiếp thực hiện quy trình.</li>
+                                        <li><strong>Hoạt động:</strong> Mỗi quy trình (ví dụ: Quy trình Tuyển dụng, Quy trình Bán hàng B2B) sẽ có một nhóm dự án riêng. Nhiệm vụ: phân tích hiện trạng, thiết kế quy trình mới, xây dựng tài liệu chi tiết.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Phân tích hiện trạng (AS-IS) & Thiết kế quy trình mới (TO-BE):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Nhóm Dự án Quy trình, có sự hỗ trợ từ Hội đồng Quy trình.</li>
+                                        <li><strong>Hoạt động:</strong> Sử dụng các phương pháp như <strong>Value Stream Mapping (VSM) của Lean</strong> để trực quan hóa quy trình hiện tại, xác định lãng phí. Sau đó, thiết kế quy trình TO-BE bằng <strong>Business Process Modeling Notation (BPMN)</strong> để mô tả chi tiết từng bước, vai trò, trách nhiệm, <strong>đầu vào/đầu ra</strong>, KPIs.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Đánh giá tác động (Impact Assessment) & Hoạch định nguồn lực:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Phòng HCNS, Phòng IT, Phòng Tài chính, Nhóm Dự án.</li>
+                                        <li><strong>Hoạt động:</strong> Xác định ảnh hưởng của quy trình mới đến con người (kỹ năng, tâm lý), công nghệ (cần nâng cấp/mua sắm phần mềm ERP, CRM, MES), và ngân sách. Lập kế hoạch chi tiết về nhân sự, công nghệ, tài chính.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Lập kế hoạch truyền thông chi tiết:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Phòng HCNS, Phòng Marketing (hỗ trợ truyền thông nội bộ), Hội đồng Quy trình.</li>
+                                        <li><strong>Hoạt động:</strong> Xây dựng thông điệp nhất quán về lợi ích của quy trình mới. Lên lịch và kênh truyền thông (họp toàn công ty, email, bảng tin nội bộ, workshop). Mục tiêu là "Truyền đạt tầm nhìn" (Communicate the Vision) và "Tạo ra những chiến thắng ngắn hạn" (Create Short-term Wins) để duy trì động lực.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#374c80] mb-2">Giai đoạn 2: Phát triển & Thử nghiệm (Development & Piloting)</h4>
+                            <p class="text-gray-700 italic mb-2">Giai đoạn này tập trung vào việc xây dựng năng lực và kiểm tra tính khả thi của quy trình trong môi trường thực tế.</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li><strong>Xây dựng tài liệu chuẩn & Công cụ hỗ trợ:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Nhóm Dự án Quy trình, Phòng IT.</li>
+                                        <li><strong>Hoạt động:</strong> Hoàn thiện các tài liệu như SOPs (Standard Operating Procedures), hướng dẫn công việc, biểu mẫu, checklist. Phát triển hoặc tùy chỉnh các công cụ/hệ thống phần mềm (ERP, CRM, MES) để hỗ trợ quy trình mới.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Đào tạo chuyên sâu & Nâng cao năng lực:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Phòng HCNS, Trưởng các phòng ban, Nhóm Dự án.</li>
+                                        <li><strong>Hoạt động:</strong> Tổ chức các buổi đào tạo chuyên sâu, thực hành tình huống cho nhân viên. Áp dụng mô hình <strong>"Train the Trainer"</strong> để đào tạo các chuyên gia nội bộ, những người sẽ tiếp tục hỗ trợ đồng nghiệp sau này.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Chạy thử nghiệm (Pilot Program):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Nhóm Dự án Quy trình, các bộ phận được chọn thí điểm.</li>
+                                        <li><strong>Hoạt động:</strong> Chọn một bộ phận nhỏ hoặc một dự án cụ thể để áp dụng thử quy trình. Mục tiêu là phát hiện lỗi, điểm chưa hợp lý, và các vấn đề phát sinh trong thực tế. Ví dụ: Thử nghiệm quy trình bán hàng B2C mới với một nhóm đại lý nhỏ.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Thu thập phản hồi & Điều chỉnh nhanh (Rapid Feedback & Adjustment):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Nhóm Dự án Quy trình, Hội đồng Quy trình.</li>
+                                        <li><strong>Hoạt động:</strong> Ghi nhận mọi ý kiến, vấn đề từ nhóm thử nghiệm. Áp dụng vòng lặp cải tiến nhanh theo nguyên tắc <strong>PDCA (<strong>Plan</strong>-Do-Check-Act)</strong> hoặc phương pháp <strong>Agile</strong> để điều chỉnh quy trình và tài liệu ngay lập tức.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#7a5195] mb-2">Giai đoạn 3: Triển khai chính thức (Full Rollout)</h4>
+                            <p class="text-gray-700 italic mb-2">Giai đoạn này là lúc quy trình mới được áp dụng rộng rãi trên toàn công ty.</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li><strong>Thông báo chính thức & Khởi động:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> BLĐ, Hội đồng Quy trình, Trưởng các phòng ban.</li>
+                                        <li><strong>Hoạt động:</strong> Công bố chính thức thời điểm áp dụng quy trình mới trên toàn công ty. Có thể tổ chức một buổi "kick-off" để tạo khí thế và nhắc lại tầm quan trọng.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Hỗ trợ liên tục & Xử lý vấn đề:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Phòng IT (Helpdesk), Nhóm Dự án Quy trình, các chuyên gia nội bộ (đã được đào tạo).</li>
+                                        <li><strong>Hoạt động:</strong> Đảm bảo có các kênh hỗ trợ kịp thời (hotline, email, chat nội bộ) để giải đáp thắc mắc, xử lý vấn đề phát sinh ngay lập tức. Đây là bước quan trọng để "Củng cố những thành quả" (Consolidate Gains) của Kotter.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Giám sát & Đánh giá tuân thủ:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Trưởng các phòng ban, Bộ phận Quản lý Chất lượng (QA), Phòng Kiểm soát nội bộ.</li>
+                                        <li><strong>Hoạt động:</strong> Thực hiện kiểm tra định kỳ mức độ tuân thủ quy trình của nhân viên. Báo cáo mức độ tuân thủ và các vấn đề phát sinh lên Hội đồng Quy trình.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#bc5090] mb-2">Giai đoạn 4: Đánh giá & Cải tiến liên tục (Review & Continuous Improvement)</h4>
+                            <p class="text-gray-700 italic mb-2">Quy trình không bao giờ là hoàn hảo. Giai đoạn này đảm bảo sự thích nghi và tối ưu hóa liên tục.</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li><strong>Đánh giá hiệu quả tổng thể (Post-Implementation Review):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Hội đồng Quy trình, Trưởng các phòng ban.</li>
+                                        <li><strong>Hoạt động:</strong> Sau 1-3 tháng triển khai chính thức, tổ chức đánh giá toàn diện hiệu quả của quy trình. So sánh KPIs thực tế với mục tiêu ban đầu.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Phân tích dữ liệu & Nguyên nhân gốc rễ (Data Analysis & Root Cause Analysis):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Bộ phận Quản lý Chất lượng, Nhóm Dự án, Phòng IT (cung cấp dữ liệu).</li>
+                                        <li><strong>Hoạt động:</strong> Sử dụng các công cụ phân tích dữ liệu để xác định các điểm nghẽn, vấn đề lặp lại. Áp dụng các kỹ thuật như <strong>5 Whys, Ishikawa (Fishbone Diagram)</strong> để tìm ra nguyên nhân gốc rễ.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Cải tiến liên tục (Continuous Improvement - Kaizen):</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Toàn thể nhân viên, Nhóm Dự án, Hội đồng Quy trình.</li>
+                                        <li><strong>Hoạt động:</strong> Thiết lập chu kỳ xem xét và cập nhật quy trình định kỳ (ví dụ: hàng quý, nửa năm). Khuyến khích nhân viên đóng góp ý tưởng cải tiến thông qua các sáng kiến <strong>Kaizen</strong> (như Toyota đã làm). Áp dụng lại vòng lặp <strong>PDCA</strong> cho các cải tiến nhỏ.</li>
+                                        <li><strong>Dẫn chứng:</strong> Các tập đoàn như <strong>Toyota</strong> với triết lý <strong>Lean Manufacturing</strong> và <strong>Kaizen</strong> đã chứng minh sức mạnh của cải tiến liên tục trong việc tối ưu hóa quy trình và chất lượng. <strong>GE</strong> với <strong>Six Sigma</strong> cũng là một ví dụ điển hình về việc sử dụng dữ liệu để giảm thiểu sai sót.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Cập nhật tài liệu & Duy trì văn hóa:</strong>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li><strong>Phụ trách:</strong> Phòng HCNS, Nhóm Dự án.</li>
+                                        <li><strong>Hoạt động:</strong> Đảm bảo tài liệu quy trình luôn phản ánh phiên bản mới nhất. Lồng ghép văn hóa "tuân thủ quy trình và cải tiến" vào các hoạt động hàng ngày, đánh giá hiệu suất cá nhân. Đây là bước "Neo giữ những thay đổi vào văn hóa" (Anchor New Approaches in the Culture) của Kotter.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        document.querySelectorAll('.flowchart-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const processId = this.dataset.processId;
+                const detailSection = document.getElementById('process-detail-section');
+                const detailTitle = document.getElementById('process-detail-title');
+                const detailContent = document.getElementById('process-detail-content');
+
+                if (processDetails[processId]) {
+                    detailTitle.textContent = processDetails[processId].title;
+                    detailContent.innerHTML = processDetails[processId].content;
+                    detailSection.classList.remove('hidden');
+                    detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        document.getElementById('close-process-detail').addEventListener('click', function() {
+            document.getElementById('process-detail-section').classList.add('hidden');
+        });
+
+    </script>
+</body>
+</html>
