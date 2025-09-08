@@ -419,7 +419,6 @@
       panels.forEach(p => p.classList.add('hidden'));
       const el = document.querySelector(sel);
       if (el) el.classList.remove('hidden');
-      setTimeout(() => el && el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     }
     tabs.forEach(btn => btn.addEventListener('click', () => openPanel(btn.dataset.open)));
     openPanel('#step1');
