@@ -59,263 +59,277 @@
     </header>
 
     <main class="container mx-auto p-4 md:p-8">
-        <!-- ===================== QUY TRÌNH CHUẨN 5 BƯỚC ===================== -->
-<section id="quy-trinh-5-buoc" class="mb-16">
-  <div class="bg-gradient-to-r from-[#003f5c] to-[#374c80] text-white rounded-2xl p-6 md:p-8 shadow-lg">
-    <h2 class="text-3xl md:text-4xl font-black mb-2">Quy Trình Chuẩn: Đề xuất → Soạn thảo → Phê duyệt → Ban hành → Cập nhật</h2>
-    <p class="text-white/90">Khung triển khai thống nhất toàn công ty, tích hợp Kaizen/PDCA, kiểm soát phiên bản và đào tạo định kỳ.</p>
-    <!-- Progress -->
-    <div class="mt-6">
-      <div class="flex items-center justify-between text-sm font-semibold">
-        <span>1. Đề xuất</span><span>2. Soạn thảo</span><span>3. Phê duyệt & Pilot</span><span>4. Ban hành</span><span>5. Cập nhật</span>
-      </div>
-      <div class="mt-2 h-2 w-full bg-white/20 rounded-full">
-        <div class="h-2 bg-[#ffa600] rounded-full w-full"></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Flowchart pills -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-6">
-    <button data-acc="acc1" class="acc-link group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#003f5c] text-left">
-      <div class="text-2xl">📝</div>
-      <div class="font-bold mt-1">1) Đề xuất</div>
-      <p class="text-sm text-gray-600 mt-1">Xác định vấn đề, mô tả AS-IS, mục tiêu cải tiến.</p>
-      <div class="mt-2 text-xs text-[#003f5c] font-semibold group-hover:underline">Xem chi tiết</div>
-    </button>
-    <button data-acc="acc2" class="acc-link group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#374c80] text-left">
-      <div class="text-2xl">🧭</div>
-      <div class="font-bold mt-1">2) Soạn thảo</div>
-      <p class="text-sm text-gray-600 mt-1">Thiết kế TO-BE, SOP, RACI, KPI, biểu mẫu.</p>
-      <div class="mt-2 text-xs text-[#374c80] font-semibold group-hover:underline">Xem chi tiết</div>
-    </button>
-    <button data-acc="acc3" class="acc-link group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#7a5195] text-left">
-      <div class="text-2xl">✅</div>
-      <div class="font-bold mt-1">3) Phê duyệt & Pilot</div>
-      <p class="text-sm text-gray-600 mt-1">Hội đồng duyệt, chạy thử, PDCA.</p>
-      <div class="mt-2 text-xs text-[#7a5195] font-semibold group-hover:underline">Xem chi tiết</div>
-    </button>
-    <button data-acc="acc4" class="acc-link group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ef5675] text-left">
-      <div class="text-2xl">📣</div>
-      <div class="font-bold mt-1">4) Ban hành</div>
-      <p class="text-sm text-gray-600 mt-1">Kick-off, đào tạo, hỗ trợ vận hành.</p>
-      <div class="mt-2 text-xs text-[#ef5675] font-semibold group-hover:underline">Xem chi tiết</div>
-    </button>
-    <button data-acc="acc5" class="acc-link group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ffa600] text-left">
-      <div class="text-2xl">♻️</div>
-      <div class="font-bold mt-1">5) Cập nhật</div>
-      <p class="text-sm text-gray-600 mt-1">Đánh giá KPI, Kaizen, quản lý phiên bản.</p>
-      <div class="mt-2 text-xs text-[#ffa600] font-semibold group-hover:underline">Xem chi tiết</div>
-    </button>
-  </div>
 
-  <!-- Accordions -->
-  <div class="mt-6 space-y-4">
-    <!-- 1. De xuat -->
-    <div id="acc1" class="acc-panel bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
-        <h3 class="font-bold text-[#003f5c]">1) Đề xuất quy trình mới</h3>
-        <span class="text-sm text-gray-500">AS-IS • Vấn đề • Mục tiêu</span>
-      </div>
-      <div class="p-5 grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold">Người phụ trách</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Trưởng phòng nghiệp vụ/ Nhóm cải tiến nội bộ</li>
-            <li>Hỗ trợ: QA/QMS (nếu có), HCNS</li>
-          </ul>
-          <h4 class="font-semibold mt-4">Tài liệu đầu ra</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Phiếu/biên bản đề xuất</li>
-            <li>Sơ đồ <strong>AS-IS</strong>, vấn đề & tác động</li>
-            <li>Mục tiêu, phạm vi, rủi ro sơ bộ</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold">Công cụ gợi ý</h4>
-          <p class="text-gray-700">Ishikawa, 5 Whys, Value Stream Mapping</p>
-          <h4 class="font-semibold mt-4">Lưu ý triển khai</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Định lượng “nỗi đau” (thời gian, chi phí, lỗi)</li>
-            <li>Ưu tiên theo ma trận <em>Impact × Effort</em></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        
+      <!-- ============== QUY TRÌNH XÂY DỰNG VÀ BAN HÀNH QUY TRÌNH (BẢN DỄ HIỂU) ============== -->
+<section id="quy-trinh-chuan-don-gian" class="mb-16">
+  <!-- Tiêu đề + mô tả -->
+  <div class="bg-white rounded-2xl shadow ring-1 ring-gray-100 p-6 md:p-8">
+    <h2 class="text-3xl md:text-4xl font-black text-[#003f5c]">Quy trình chuẩn: Từ đề xuất đến cập nhật</h2>
+    <p class="mt-2 text-gray-700">
+      Đây là lộ trình 5 bước rõ ràng để bất kỳ phòng ban nào cũng có thể đề xuất, soạn thảo, xin duyệt, ban hành
+      và cập nhật quy trình của công ty một cách thống nhất.
+    </p>
 
-    <!-- 2. Soan thao -->
-    <div id="acc2" class="acc-panel bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hidden">
-      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
-        <h3 class="font-bold text-[#374c80]">2) Soạn thảo & thiết kế TO-BE</h3>
-        <span class="text-sm text-gray-500">BPMN • SOP • RACI • KPI</span>
-      </div>
-      <div class="p-5 grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold">Người phụ trách</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Nhóm dự án quy trình (đa phòng ban)</li>
-            <li>QA/QMS rà soát chuẩn hóa</li>
-          </ul>
-          <h4 class="font-semibold mt-4">Tài liệu đầu ra</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Sơ đồ <strong>BPMN/Flowchart</strong> TO-BE</li>
-            <li><strong>SOP</strong>, Hướng dẫn công việc, Checklist</li>
-            <li><strong>RACI</strong>, <strong>KPI</strong>, biểu mẫu, tiêu chí đo</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold">Công cụ gợi ý</h4>
-          <p class="text-gray-700">Lucidchart/Miro, Google Docs/Sheets, Template KPI</p>
-          <h4 class="font-semibold mt-4">Lưu ý triển khai</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Rõ “đầu vào/đầu ra” từng bước</li>
-            <li>Thiết lập mã biểu mẫu & quy tắc đặt tên</li>
-            <li>Chuẩn bị dữ liệu/IT cần tích hợp (ERP/CRM/MES)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Phe duyet & Pilot -->
-    <div id="acc3" class="acc-panel bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hidden">
-      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
-        <h3 class="font-bold text-[#7a5195]">3) Phê duyệt & Chạy thử (Pilot)</h3>
-        <span class="text-sm text-gray-500">Hội đồng quy trình • PDCA</span>
-      </div>
-      <div class="p-5 grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold">Người phụ trách</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Hội đồng Quy trình (BLĐ + Trưởng khối)</li>
-            <li>Nhóm dự án & đơn vị được chọn thí điểm</li>
-          </ul>
-          <h4 class="font-semibold mt-4">Tài liệu đầu ra</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Biên bản phê duyệt</li>
-            <li>Kế hoạch Pilot + tiêu chí thành công</li>
-            <li>Biên bản nghiệm thu Pilot + điều chỉnh</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold">Công cụ gợi ý</h4>
-          <p class="text-gray-700">PDCA/Agile Sprint, biểu mẫu Feedback, Dashboard KPI</p>
-          <h4 class="font-semibold mt-4">Lưu ý triển khai</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Chọn phạm vi nhỏ, đo lường được</li>
-            <li>Vòng lặp điều chỉnh nhanh, ghi log thay đổi</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. Ban hanh -->
-    <div id="acc4" class="acc-panel bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hidden">
-      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
-        <h3 class="font-bold text-[#ef5675]">4) Ban hành & triển khai toàn công ty</h3>
-        <span class="text-sm text-gray-500">Kick-off • Đào tạo • Hỗ trợ</span>
-      </div>
-      <div class="p-5 grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold">Người phụ trách</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>BLĐ/ Hội đồng Quy trình</li>
-            <li>Trưởng phòng, HCNS, IT Helpdesk</li>
-          </ul>
-          <h4 class="font-semibold mt-4">Tài liệu đầu ra</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Thông báo ban hành/Ngày hiệu lực</li>
-            <li>Tài liệu đào tạo, bài test, danh sách điểm danh</li>
-            <li>Quyền truy cập & nơi lưu trữ “bản chính”</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold">Công cụ gợi ý</h4>
-          <p class="text-gray-700">Email nội bộ, bảng tin, LMS/Google Classroom, FAQ</p>
-          <h4 class="font-semibold mt-4">Lưu ý triển khai</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Thiết lập kênh hỗ trợ (hotline/chat)</li>
-            <li>Khảo sát sau đào tạo, kiểm tra tuân thủ 1–2 tuần</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. Cap nhat -->
-    <div id="acc5" class="acc-panel bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hidden">
-      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
-        <h3 class="font-bold text-[#ffa600]">5) Đánh giá & cập nhật định kỳ</h3>
-        <span class="text-sm text-gray-500">KPI • Kaizen • Versioning</span>
-      </div>
-      <div class="p-5 grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold">Người phụ trách</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>QA/QMS hoặc Trưởng phòng + HCNS</li>
-            <li>Toàn thể nhân viên đề xuất Kaizen</li>
-          </ul>
-          <h4 class="font-semibold mt-4">Tài liệu đầu ra</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Báo cáo KPI so với mục tiêu</li>
-            <li>Biểu mẫu đề xuất cải tiến/Kaizen</li>
-            <li>Nhật ký phiên bản (ver, ngày hiệu lực, thay đổi)</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold">Công cụ gợi ý</h4>
-          <p class="text-gray-700">Dashboard KPI, Form Kaizen, lịch review quý</p>
-          <h4 class="font-semibold mt-4">Lưu ý triển khai</h4>
-          <ul class="list-disc list-inside text-gray-700">
-            <li>Định kỳ quý/06 tháng hoặc sau sự cố lớn</li>
-            <li>Tái đào tạo nếu thay đổi ảnh hưởng vai trò/KPI</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Gợi ý sơ đồ ngang -->
-  <div class="mt-8 bg-white rounded-xl p-5 shadow ring-1 ring-gray-100">
-    <h4 class="font-bold text-[#003f5c] mb-2 text-lg">Sơ đồ nhanh (dán vào tài liệu huấn luyện)</h4>
-    <div class="flex flex-col md:flex-row md:items-center gap-3 text-sm">
+    <!-- Sơ đồ ngang 5 bước -->
+    <div class="mt-6 flex flex-col md:flex-row md:items-center gap-3 text-sm">
       <div class="px-3 py-2 rounded-lg bg-[#003f5c] text-white font-semibold">1. Đề xuất</div>
       <div class="hidden md:block">→</div>
       <div class="px-3 py-2 rounded-lg bg-[#374c80] text-white font-semibold">2. Soạn thảo</div>
       <div class="hidden md:block">→</div>
-      <div class="px-3 py-2 rounded-lg bg-[#7a5195] text-white font-semibold">3. Phê duyệt & Pilot</div>
+      <div class="px-3 py-2 rounded-lg bg-[#7a5195] text-white font-semibold">3. Phê duyệt & chạy thử</div>
       <div class="hidden md:block">→</div>
-      <div class="px-3 py-2 rounded-lg bg-[#ef5675] text-white font-semibold">4. Ban hành</div>
+      <div class="px-3 py-2 rounded-lg bg-[#ef5675] text-white font-semibold">4. Ban hành & triển khai</div>
       <div class="hidden md:block">→</div>
-      <div class="px-3 py-2 rounded-lg bg-[#ffa600] text-white font-semibold">5. Cập nhật</div>
+      <div class="px-3 py-2 rounded-lg bg-[#ffa600] text-white font-semibold">5. Đánh giá & cập nhật</div>
     </div>
+  </div>
+
+  <!-- Các thẻ bước (bấm để xem chi tiết) -->
+  <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <button data-open="#step1" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#003f5c] text-left">
+      <div class="text-2xl">📝</div>
+      <div class="font-bold mt-1">1) Đề xuất</div>
+      <p class="text-sm text-gray-600 mt-1">Nêu vấn đề, hiện trạng, mục tiêu mong muốn.</p>
+      <div class="mt-2 text-xs text-[#003f5c] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step2" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#374c80] text-left">
+      <div class="text-2xl">🧭</div>
+      <div class="font-bold mt-1">2) Soạn thảo</div>
+      <p class="text-sm text-gray-600 mt-1">Vẽ luồng công việc, viết hướng dẫn, mẫu biểu.</p>
+      <div class="mt-2 text-xs text-[#374c80] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step3" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#7a5195] text-left">
+      <div class="text-2xl">✅</div>
+      <div class="font-bold mt-1">3) Phê duyệt & chạy thử</div>
+      <p class="text-sm text-gray-600 mt-1">Lãnh đạo duyệt, áp dụng thử nhỏ, chỉnh nhanh.</p>
+      <div class="mt-2 text-xs text-[#7a5195] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step4" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ef5675] text-left">
+      <div class="text-2xl">📣</div>
+      <div class="font-bold mt-1">4) Ban hành & triển khai</div>
+      <p class="text-sm text-gray-600 mt-1">Ra thông báo, đào tạo, hỗ trợ vận hành.</p>
+      <div class="mt-2 text-xs text-[#ef5675] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+    <button data-open="#step5" class="qtab group bg-white p-4 rounded-xl shadow hover:shadow-lg border-b-4 border-[#ffa600] text-left">
+      <div class="text-2xl">♻️</div>
+      <div class="font-bold mt-1">5) Đánh giá & cập nhật</div>
+      <p class="text-sm text-gray-600 mt-1">Xem kết quả, sửa đổi, lưu phiên bản.</p>
+      <div class="mt-2 text-xs text-[#ffa600] font-semibold group-hover:underline">Xem chi tiết</div>
+    </button>
+  </div>
+
+  <!-- Nội dung chi tiết từng bước (không dùng thuật ngữ khó) -->
+  <div class="mt-6 space-y-4">
+    <!-- Bước 1 -->
+    <div id="step1" class="qpanel bg-white rounded-xl shadow-md border border-gray-100">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#003f5c]">1) Đề xuất quy trình mới</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: hiểu rõ vấn đề và lý do cần quy trình</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai chịu trách nhiệm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Trưởng bộ phận gặp khó khăn thực tế</li>
+            <li>Nhóm cải tiến nội bộ (nếu có)</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cần chuẩn bị</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Bản mô tả hiện trạng: đang làm thế nào, bước nào chậm, sai, trùng</li>
+            <li>Mục tiêu mong muốn: nhanh hơn, ít lỗi hơn, rõ trách nhiệm hơn</li>
+            <li>Ước tính lợi ích: tiết kiệm thời gian/chi phí, giảm khiếu nại…</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Cách làm đơn giản</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Liệt kê vấn đề theo gạch đầu dòng, kèm ví dụ thật</li>
+            <li>Vẽ sơ đồ hiện trạng bằng các hộp và mũi tên (giấy/ảnh cũng được)</li>
+            <li>Chọn 1–2 vấn đề “đau” nhất để ưu tiên xử lý trước</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bước 2 -->
+    <div id="step2" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#374c80]">2) Soạn thảo nội dung quy trình</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: ai làm gì, làm khi nào, làm ở đâu</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai chịu trách nhiệm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Nhóm dự án gồm đại diện các bộ phận liên quan</li>
+            <li>Bộ phận nhân sự hoặc quản lý chất lượng rà soát câu chữ</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Tài liệu cần có</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Sơ đồ luồng công việc “mong muốn” (bản mới)</li>
+            <li>Hướng dẫn chi tiết từng bước (ngắn gọn, dễ hiểu)</li>
+            <li>Mẫu biểu, danh sách kiểm tra (checklist) để nhân viên dùng ngay</li>
+            <li>Bảng phân rõ trách nhiệm: ai chịu trách nhiệm chính, ai phối hợp</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Nguyên tắc viết dễ hiểu</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Mỗi bước ghi: “đầu vào – thao tác – kết quả”</li>
+            <li>Dùng câu ngắn, tránh viết tắt, tránh từ chuyên môn khó</li>
+            <li>Đặt tên file, tên biểu mẫu theo một quy tắc thống nhất</li>
+            <li>Nếu cần phần mềm hỗ trợ (kế toán, bán hàng…), ghi rõ điểm chạm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bước 3 -->
+    <div id="step3" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#7a5195]">3) Phê duyệt và chạy thử nhỏ</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: hợp lý trên giấy và dùng được ngoài thực tế</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Ai phê duyệt</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Ban lãnh đạo và các trưởng bộ phận liên quan</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cách chạy thử</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Chọn một nhóm nhỏ hoặc một cửa hàng/nhà máy để áp dụng</li>
+            <li>Ghi nhận vướng mắc trong 1–2 tuần đầu</li>
+            <li>Chỉnh sửa ngay những điểm chưa phù hợp</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Kết quả cần có</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Biên bản phê duyệt</li>
+            <li>Kế hoạch chạy thử: phạm vi, thời gian, người phụ trách</li>
+            <li>Biên bản tổng kết chạy thử và bản quy trình đã chỉnh sửa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bước 4 -->
+    <div id="step4" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#ef5675]">4) Ban hành và triển khai toàn công ty</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: mọi người đều biết, đều làm giống nhau</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Việc cần làm</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Thông báo chính thức: ngày áp dụng, nơi tra cứu bản gốc</li>
+            <li>Đào tạo ngắn gọn theo vai trò công việc</li>
+            <li>Thiết lập kênh hỗ trợ hỏi – đáp (nhóm chat, số điện thoại)</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Theo dõi sau khi áp dụng</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Kiểm tra mức độ tuân thủ sau 1–2 tuần</li>
+            <li>Ghi nhận góp ý để cải thiện trong lần cập nhật tới</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bước 5 -->
+    <div id="step5" class="qpanel bg-white rounded-xl shadow-md border border-gray-100 hidden">
+      <div class="px-5 py-4 bg-gray-50 border-b flex items-center justify-between">
+        <h3 class="font-bold text-[#ffa600]">5) Đánh giá định kỳ và cập nhật</h3>
+        <span class="text-sm text-gray-500">Mục tiêu: quy trình luôn phù hợp thực tế</span>
+      </div>
+      <div class="p-5 grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold">Khi nào đánh giá</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Mỗi quý hoặc khi có thay đổi lớn (con người, phần mềm, mô hình)</li>
+            <li>Khi có sai sót lặp lại hoặc phản ánh từ khách hàng nội bộ</li>
+          </ul>
+          <h4 class="font-semibold mt-4">Cách cập nhật</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Sửa nội dung, ghi rõ điểm thay đổi</li>
+            <li>Lưu “phiên bản mới” và ngày hiệu lực</li>
+            <li>Thông báo ngắn gọn cho người liên quan và đào tạo lại nếu cần</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Tài liệu cần lưu</h4>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Bảng theo dõi phiên bản (mẫu ở bên dưới)</li>
+            <li>Bản quy trình mới nhất (định dạng PDF/Google Docs)</li>
+            <li>Danh sách người đã được đào tạo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bảng theo dõi phiên bản (không thuật ngữ) -->
+  <div class="mt-8 bg-white rounded-xl p-5 shadow ring-1 ring-gray-100">
+    <h4 class="font-bold text-[#003f5c] mb-3 text-lg">Bảng theo dõi phiên bản quy trình</h4>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-50 text-gray-700">
+          <tr>
+            <th class="px-3 py-2 text-left font-semibold">Mã quy trình</th>
+            <th class="px-3 py-2 text-left font-semibold">Tên quy trình</th>
+            <th class="px-3 py-2 text-left font-semibold">Phiên bản</th>
+            <th class="px-3 py-2 text-left font-semibold">Ngày hiệu lực</th>
+            <th class="px-3 py-2 text-left font-semibold">Người chịu trách nhiệm</th>
+            <th class="px-3 py-2 text-left font-semibold">Tóm tắt thay đổi</th>
+            <th class="px-3 py-2 text-left font-semibold">Tệp bản gốc</th>
+          </tr>
+        </thead>
+        <tbody id="version-rows" class="divide-y">
+          <!-- Ví dụ dòng mẫu; khi dùng thật có thể thay bằng dữ liệu động -->
+          <tr class="hover:bg-gray-50">
+            <td class="px-3 py-2">BH-01</td>
+            <td class="px-3 py-2">Bán hàng tại showroom</td>
+            <td class="px-3 py-2">v1.0</td>
+            <td class="px-3 py-2">2025-09-15</td>
+            <td class="px-3 py-2">Nguyễn Đức Tâm</td>
+            <td class="px-3 py-2">Tạo mới quy trình</td>
+            <td class="px-3 py-2"><a href="#" class="text-[#374c80] underline">Xem file</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-500 mt-2">Gợi ý: đặt tên file theo quy tắc thống nhất, ví dụ: <em>MaQuyTrinh_TenQuyTrinh_PhiênBản_Ngay.pdf</em></p>
   </div>
 </section>
 
 <script>
-  // Toggle accordions via the top 5 "pills" and persist one-open UX.
+  // Mở/đóng nội dung bước theo nút bấm; mặc định mở Bước 1
   (function () {
-    const links = document.querySelectorAll('#quy-trinh-5-buoc .acc-link');
-    const panels = document.querySelectorAll('#quy-trinh-5-buoc .acc-panel');
+    const tabs = document.querySelectorAll('#quy-trinh-chuan-don-gian .qtab');
+    const panels = document.querySelectorAll('#quy-trinh-chuan-don-gian .qpanel');
 
-    function openPanel(id) {
+    function openPanel(sel) {
       panels.forEach(p => p.classList.add('hidden'));
-      const el = document.getElementById(id);
+      const el = document.querySelector(sel);
       if (el) el.classList.remove('hidden');
-      // scroll into view on mobile
+      // cuộn tới phần nội dung (hữu ích trên di động)
       setTimeout(() => el && el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     }
 
-    links.forEach(btn => {
-      btn.addEventListener('click', () => {
-        openPanel(btn.dataset.acc);
-      });
-    });
-
-    // Open the first by default
-    openPanel('acc1');
+    tabs.forEach(btn => btn.addEventListener('click', () => openPanel(btn.dataset.open)));
+    openPanel('#step1');
   })();
 </script>
-<!-- ===================== /QUY TRÌNH CHUẨN 5 BƯỚC ===================== -->
+<!-- ============== /QUY TRÌNH XÂY DỰNG VÀ BAN HÀNH QUY TRÌNH (BẢN DỄ HIỂU) ============== -->
 
+
+
+        
         <section id="overview" class="mb-16">
             <h2 class="text-3xl font-bold text-center mb-2 text-[#003f5c]">Tổng Quan Hệ Thống Quy Trình</h2>
             <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">Một hệ thống vận hành chuyên nghiệp được xây dựng trên 10 nhóm quy trình cốt lõi, liên kết chặt chẽ để tạo ra sức mạnh tổng thể cho doanh nghiệp.</p>
