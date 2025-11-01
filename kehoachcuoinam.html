@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Hoạch Bứt Tốc Doanh Thu Q12 - One Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals (Gray/White) with Blue Accent -->
+    <!-- Application Structure Plan: Một trang cuộn duy nhất (One-Page SPA). Cấu trúc tuyến tính: Tổng Quan (Mục tiêu + Dự báo thẻ) -> Trụ Cột Chiến Lược -> Kế Ho hoạch Chi Tiết (Có bộ lọc) -> KPIs & Thưởng. Cấu trúc này tối ưu cho việc xem xét toàn bộ kế hoạch nhanh chóng và tập trung vào các hành động cụ thể thông qua bộ lọc trong phần chi tiết. -->
+    <!-- Visualization & Content Choices: Thông tin Báo cáo (Bảng Dự báo) -> Mục tiêu (So sánh) -> Trực quan hóa (Thẻ HTML/CSS) -> Tương tác (Không) -> Lý do (Thay thế biểu đồ theo yêu cầu, làm nổi bật chỉ số quan trọng) -> Thư viện (Vanilla JS). Thông tin Báo cáo (Bảng Kế hoạch Hành động) -> Mục tiêu (Tổ chức/Khám phá) -> Trực quan hóa (Danh sách Thẻ HTML) -> Tương tác (Bộ lọc JS theo Tháng) -> Lý do (Làm cho kế hoạch dày đặc dễ tiêu hóa, responsive) -> Thư viện (Vanilla JS). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            /* Cập nhật font để hiển thị tiếng Việt rõ ràng và dễ chịu hơn */
+            font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            scroll-behavior: smooth;
+        }
+        section {
+            padding-top: 5rem;
+            padding-bottom: 2rem;
+        }
+        .filter-button.active {
+            background-color: #2563EB;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1), 0 2px 4px -2px rgba(37, 99, 235, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="min-h-screen flex flex-col">
+        
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center h-auto md:h-20 py-3 md:py-0">
+                    <h1 class="text-xl md:text-2xl font-bold text-blue-600 mb-2 md:mb-0">Kế Hoạch Q12 (11-12/2025)</h1>
+                    <nav class="flex space-x-4 text-sm font-medium">
+                        <a href="#section-overview" class="py-1 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600">Tổng Quan</a>
+                        <a href="#section-pillars" class="py-1 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600">Trụ Cột</a>
+                        <a href="#section-details" class="py-1 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600">Chi Tiết</a>
+                        <a href="#section-kpis" class="py-1 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600">KPIs</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 w-full">
+            
+            <!-- 1. TỔNG QUAN -->
+            <section id="section-overview" class="mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-2">1. Tổng Quan Kế Hoạch</h2>
+                <p class="text-lg text-gray-700 mb-8">Trang này tóm tắt các mục tiêu cốt lõi và dự báo hiệu quả. Mục tiêu chính là đạt doanh thu đột phá trong 2 tháng cuối năm, tạo nền tảng vững chắc cho Q1/2026 thông qua các hành động tinh gọn.</p>
+                
+                <!-- Mục Tiêu Cốt Lõi -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase">Mục Tiêu Doanh Thu Tổng (2 Tháng)</h3>
+                        <p class="text-4xl font-bold text-gray-900 mt-2">3 - 4 tỷ</p>
+                        <p class="text-sm text-gray-600 mt-1">Tăng trưởng +70% so với T9-T10</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
+                        <h3 class="text-sm font-medium text-gray-500 uppercase">Mục Tiêu Tỷ Lệ Chuyển Đổi</h3>
+                        <p class="text-4xl font-bold text-gray-900 mt-2">28%</p>
+                        <p class="text-sm text-gray-600 mt-1">Duy trì chất lượng tư vấn tại showroom</p>
+                    </div>
+                </div>
+
+                <!-- Dự Báo Hiệu Quả (Chỉ hiển thị mục tiêu Tăng trưởng %) -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <!-- Tiêu đề: Mục Tiêu Tăng Trưởng Kế Hoạch -->
+                    <h3 class="text-xl font-semibold mb-6 text-center text-gray-800">Mục Tiêu Tăng Trưởng Kế Hoạch</h3>
+                    <div id="forecast-cards" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Cards sẽ được chèn bởi JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. TRỤ CỘT CHIẾN LƯỢC -->
+            <section id="section-pillars" class="mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-2">2. 4 Trụ Cột Hành Động Cốt Lõi</h2>
+                <p class="text-lg text-gray-700 mb-8">Chiến lược tập trung vào 4 trụ cột hành động, giải quyết mọi khía cạnh từ thu hút khách mới (Online/Offline) đến chăm sóc và chốt đơn giá trị cao (CRM/B2B).</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500 hover:shadow-lg transition-shadow">
+                        <span class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 text-xl font-bold mb-4">1</span>
+                        <h3 class="text-lg font-semibold mb-2">OFFLINE & TRẢI NGHIỆM MỚI</h3>
+                        <p class="text-gray-600">Tối ưu trải nghiệm tại chỗ, hút khách vãng lai và B2C khu vực bằng ưu đãi trực tiếp.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-green-500 hover:shadow-lg transition-shadow">
+                        <span class="flex items-center justify-center h-10 w-10 rounded-full bg-green-100 text-green-600 text-xl font-bold mb-4">2</span>
+                        <h3 class="text-lg font-semibold mb-2">MARKETING ONLINE CHỦ ĐỘNG</h3>
+                        <p class="text-gray-600">Tạo lead B2B/B2C chất lượng cao, tập trung quảng cáo Local Search/Zalo theo định vị địa lý showroom.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-yellow-500 hover:shadow-lg transition-shadow">
+                        <span class="flex items-center justify-center h-10 w-10 rounded-full bg-yellow-100 text-yellow-600 text-xl font-bold mb-4">3</span>
+                        <h3 class="text-lg font-semibold mb-2">CHĂM SÓC KHÁCH HÀNG CŨ (CRM)</h3>
+                        <p class="text-gray-600">Tái kích hoạt tệp khách hàng đã mua thông qua Telesale/Zalo, khuyến khích Cross-sell và giới thiệu.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-500 hover:shadow-lg transition-shadow">
+                        <span class="flex items-center justify-center h-10 w-10 rounded-full bg-red-100 text-red-600 text-xl font-bold mb-4">4</span>
+                        <h3 class="text-lg font-semibold mb-2">CHỐT ĐƠN B2B & DỰ ÁN</h3>
+                        <p class="text-gray-600">Tăng tỷ trọng đơn hàng giá trị cao bằng chính sách đặc biệt (BH Vàng, Lắp đặt miễn phí) cho các gói Combo lớn.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. KẾ HOẠCH HÀNH ĐỘNG CHI TIẾT -->
+            <section id="section-details" class="mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-2">3. Kế Hoạch Hành Động Chi Tiết Tinh Gọn</h2>
+                <p class="text-lg text-gray-700 mb-8">Xem xét các hành động cụ thể cho từng trụ cột. Sử dụng bộ lọc bên dưới để tập trung vào nhiệm vụ của từng tháng (11 hoặc 12) hoặc xem toàn bộ kế hoạch.</p>
+                <div id="filter-buttons" class="flex space-x-3 mb-8">
+                    <button data-filter="all" class="filter-button px-5 py-2 rounded-full font-medium text-sm bg-blue-600 text-white shadow-md">Tất Cả</button>
+                    <button data-filter="11" class="filter-button px-5 py-2 rounded-full font-medium text-sm bg-gray-200 text-gray-700">Tháng 11</button>
+                    <button data-filter="12" class="filter-button px-5 py-2 rounded-full font-medium text-sm bg-gray-200 text-gray-700">Tháng 12</button>
+                </div>
+                <div id="action-list" class="space-y-4">
+                </div>
+            </section>
+
+            <!-- 4. KPIS & THƯỞNG -->
+            <section id="section-kpis" class="mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-2">4. KPIs & Cơ Chế Động Lực</h2>
+                <p class="text-lg text-gray-700 mb-8">Để đảm bảo kế hoạch thành công, đội nhóm cần bám sát các chỉ số hiệu suất (KPI) cá nhân và cơ chế thưởng rõ ràng để tạo động lực, thúc đẩy hành động mang lại kết quả.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                        <h3 class="text-xl font-semibold mb-4 text-blue-600">KPI Cốt Lõi Cá Nhân (Tháng)</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                                <span class="text-green-500 mr-3 mt-1 text-xl">🚀</span>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Sale Showroom</h4>
+                                    <!-- FIX: Thay thế ** bằng <strong> -->
+                                    <p class="text-gray-600">Đạt <strong>≥150 triệu/người/tháng</strong></p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                                <span class="text-green-500 mr-3 mt-1 text-xl">💡</span>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Marketing</h4>
+                                    <!-- FIX: Thay thế ** bằng <strong> -->
+                                    <p class="text-gray-600">Lead online <strong>≥100/tháng</strong> (Tỷ lệ chốt ≥20%)</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-yellow-600">
+                        <h3 class="text-xl font-semibold mb-4 text-yellow-700">Thưởng Nóng Nhóm (Tổng 2 tháng)</h3>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start bg-yellow-50 p-3 rounded-lg">
+                                <span class="text-yellow-500 mr-3 mt-1 text-xl">💰</span>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Mốc 1: Đạt 3 tỷ</h4>
+                                    <p class="text-gray-600">Thưởng 5 triệu</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start bg-yellow-50 p-3 rounded-lg">
+                                <span class="text-yellow-500 mr-3 mt-1 text-xl">🏆</span>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Mốc 2: Đạt 4 tỷ</h4>
+                                    <p class="text-gray-600">Thưởng 8 triệu + 1 ngày nghỉ thêm</p>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <h3 class="text-lg font-semibold mb-4 text-gray-700 border-t pt-4">Quy Trình Kiểm Soát</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-gray-500 mr-2 mt-1">✓</span>
+                                <p class="text-gray-600"><strong>Hằng ngày:</strong> Báo cáo doanh thu và Lead mới qua Google Sheets Dashboard.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gray-500 mr-2 mt-1">✓</span>
+                                <p class="text-gray-600"><strong>Đầu tuần:</strong> Họp nhanh 15 phút Review KPI, xử lý chênh lệch.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const actionData = [
+                {
+                    pillar: '1. OFFLINE',
+                    color: 'blue',
+                    action: 'Tối ưu Trải nghiệm Demo chuyên sâu (Trưng bày Combo B2B/B2C) và Duy trì chương trình Quà tặng tại chỗ.',
+                    kpi: 'Thu hút 400 khách ghé Showroom (200/tháng)',
+                    month: 'both'
+                },
+                {
+                    pillar: '1. OFFLINE',
+                    color: 'blue',
+                    action: 'Ưu đãi Kích cầu B2C/Walk-in (Combo lắp đặt trọn gói -5%; Lì xì liền tay T12).',
+                    kpi: 'Kích cầu đơn B2C và vãng lai >10 triệu',
+                    month: 'both'
+                },
+                {
+                    pillar: '2. ONLINE',
+                    color: 'green',
+                    action: 'Chạy Ads Local Tối ưu (Google/Zalo Ads) tập trung Q12-Hóc Môn-Củ Chi.',
+                    kpi: 'Đạt 200 lead online chất lượng cao (Tỷ lệ chốt 20%)',
+                    month: 'both'
+                },
+                {
+                    pillar: '2. ONLINE',
+                    color: 'green',
+                    action: 'Livestream Kỹ thuật + Giờ vàng ưu đãi',
+                    kpi: '50 đơn online, 500 view/buổi (2 buổi/tuần)',
+                    month: '12'
+                },
+                {
+                    pillar: '3. KHÁCH CŨ',
+                    color: 'yellow',
+                    action: 'Telesale/Zalo Khách hàng cũ CRM',
+                    kpi: 'Tái mua 100 khách (Tỷ lệ quay lại 25%)',
+                    month: '11'
+                },
+                {
+                    pillar: '3. KHÁCH CŨ',
+                    color: 'yellow',
+                    action: 'Cross-sell Phụ kiện/Linh kiện tại POS',
+                    kpi: '+10% doanh thu trên mỗi đơn hàng',
+                    month: 'both'
+                },
+                {
+                    pillar: '4. B2B & DỰ ÁN',
+                    color: 'red',
+                    action: 'Triển khai Gói Bảo hành Vàng + Lắp đặt miễn phí (cho Combo >30 triệu).',
+                    kpi: 'Tăng tỷ lệ chốt B2B và Dự án lớn',
+                    month: 'both'
+                }
+            ];
+
+            // Đã loại bỏ ký tự '%' ở trường 'unit' theo yêu cầu
+            const forecastData = [
+                { label: 'Lượt khách Showroom', targetGrowth: 100, unit: '' }, 
+                { label: 'Lead Online chất lượng', targetGrowth: 185, unit: '' }, 
+                { label: 'Doanh thu TB/ngày', targetGrowth: 78, unit: '' }, 
+                { label: 'Tỷ lệ Chuyển đổi Khách Lẻ', targetGrowth: 12, unit: '' } 
+            ];
+            
+            const pillarColors = {
+                'blue': 'border-blue-500',
+                'green': 'border-green-500',
+                'yellow': 'border-yellow-500',
+                'red': 'border-red-500'
+            };
+
+            const pillarTextColors = {
+                'blue': 'text-blue-600',
+                'green': 'text-green-600',
+                'yellow': 'text-yellow-600',
+                'red': 'text-red-600'
+            };
+
+            const filterButtonsContainer = document.getElementById('filter-buttons');
+            const filterButtons = filterButtonsContainer.querySelectorAll('.filter-button');
+            const actionList = document.getElementById('action-list');
+            const forecastCardsContainer = document.getElementById('forecast-cards');
+
+            function renderForecastCards() {
+                forecastCardsContainer.innerHTML = '';
+                forecastData.forEach(item => {
+                    const isPositive = item.targetGrowth >= 0;
+                    // Sử dụng màu xanh chủ đạo cho các mục tiêu tăng trưởng
+                    const growthColor = 'text-blue-600 bg-blue-100'; 
+                    const icon = isPositive ? '↑' : '↓';
+
+                    const card = `
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200 hover:shadow-md transition-shadow">
+                            <p class="text-sm font-medium text-gray-500">${item.label}</p>
+                            <div class="flex items-end justify-between mt-1">
+                                <p class="text-3xl font-bold text-gray-900">${icon} ${item.targetGrowth}</p>
+                                <!-- Phần đơn vị đã được bỏ ký tự % -->
+                                <span class="text-sm font-semibold ${growthColor} px-2 py-0.5 rounded-full">${item.unit}</span>
+                            </div>
+                            <!-- Chú thích giữ nguyên -->
+                            <p class="text-xs text-gray-400 mt-2">Mục tiêu tăng trưởng kỳ vọng (dựa trên chiến lược mới)</p>
+                        </div>
+                    `;
+                    forecastCardsContainer.innerHTML += card;
+                });
+            }
+
+            function updateFilterButtons(activeFilter) {
+                filterButtons.forEach(button => {
+                    if (button.dataset.filter === activeFilter) {
+                        button.classList.add('active');
+                        button.classList.remove('bg-gray-200', 'text-gray-700');
+                    } else {
+                        button.classList.remove('active');
+                        button.classList.add('bg-gray-200', 'text-gray-700');
+                    }
+                });
+            }
+
+            function renderActions(filterMonth) {
+                actionList.innerHTML = '';
+                
+                const filteredActions = actionData.filter(action => {
+                    if (filterMonth === 'all') return true;
+                    if (filterMonth === '11') return action.month === '11' || action.month === 'both';
+                    if (filterMonth === '12') return action.month === '12' || action.month === 'both';
+                });
+
+                if(filteredActions.length === 0) {
+                    actionList.innerHTML = `<p class="text-gray-600 text-center py-8">Không có hành động nào được lên lịch cho tháng này.</p>`;
+                    return;
+                }
+
+                filteredActions.forEach(item => {
+                    let timingLabel = '';
+                    if (item.month === '11') timingLabel = 'Tập trung T11';
+                    if (item.month === '12') timingLabel = 'Tập trung T12';
+                    if (item.month === 'both') timingLabel = 'Thực thi T11 & T12';
+
+                    const card = `
+                        <div class="bg-white p-5 rounded-xl shadow-lg border-l-4 ${pillarColors[item.color]}">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-sm font-bold uppercase ${pillarTextColors[item.color]}">${item.pillar}</h4>
+                                <span class="text-xs font-medium bg-gray-100 text-gray-700 px-3 py-1 rounded-full">${timingLabel}</span>
+                            </div>
+                            <p class="font-semibold text-gray-800 my-2">${item.action}</p>
+                            <div class="border-t border-gray-100 pt-3 mt-3">
+                                <p class="text-sm text-gray-600"><span class="font-medium text-gray-800">Mục tiêu KPI:</span> ${item.kpi}</p>
+                            </div>
+                        </div>
+                    `;
+                    actionList.innerHTML += card;
+                });
+
+                updateFilterButtons(filterMonth);
+            }
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => renderActions(button.dataset.filter));
+            });
+
+            renderForecastCards();
+            renderActions('all');
+        });
+    </script>
+</body>
+</html>
