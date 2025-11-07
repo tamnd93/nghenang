@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kế hoạch 2026 - Showroom iFan Q12</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .tab-btn.active {
+            border-color: #2563eb;
+            color: #2563eb;
+            background-color: #eff6ff;
+        }
+        .timeline-tab-btn.active {
+            border-color: #16a34a;
+            color: #16a34a;
+            background-color: #f0fdf4;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="sticky top-0 z-50 w-full bg-white/95 shadow-md backdrop-blur-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-blue-700">Kế hoạch 2026 | iFan Q12</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 rounded-md">Tổng quan</a>
+                        <a href="#sales" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 rounded-md">🎯 Doanh số</a>
+                        <a href="#ops" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 rounded-md">📦 Vận hành</a>
+                        <a href="#hr" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 rounded-md">👥 Nhân sự</a>
+                        <a href="#timeline" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 rounded-md">🗓️ Tiến độ</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="overview" class="my-10 scroll-mt-20">
+            <div class="rounded-lg bg-white p-6 shadow-lg">
+                <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Dashboard Kế hoạch 2026</h2>
+                <p class="mt-4 text-lg text-slate-600">Kế hoạch triển khai 3 hạng mục trọng điểm cho Showroom iFan (Quận 12) trong năm 2026.</p>
+                
+                <div class="mt-8 border-t border-slate-200 pt-6">
+                    <dl class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="rounded-xl bg-slate-100 p-6 shadow">
+                            <dt class="text-base font-semibold leading-7 text-slate-600">Người phụ trách</dt>
+                            <dd class="mt-2 text-2xl font-bold tracking-tight text-slate-900">Nguyễn Đức Tâm</dd>
+                            <dd class="text-sm font-medium text-slate-500">Trưởng phòng Kinh doanh</dd>
+                        </div>
+                        <div class="rounded-xl bg-slate-100 p-6 shadow">
+                            <dt class="text-base font-semibold leading-7 text-slate-600">Công ty</dt>
+                            <dd class="mt-2 text-2xl font-bold tracking-tight text-slate-900">Nghệ Năng</dd>
+                            <dd class="text-sm font-medium text-slate-500">TNHH Công Nghiệp Nghệ Năng</dd>
+                        </div>
+                        <div class="rounded-xl bg-slate-100 p-6 shadow">
+                            <dt class="text-base font-semibold leading-7 text-slate-600">Phạm vi</dt>
+                            <dd class="mt-2 text-2xl font-bold tracking-tight text-slate-900">Showroom Q12</dd>
+                            <dd class="text-sm font-medium text-slate-500">Không bao gồm GT, OEM, Dự án</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="flex items-center rounded-lg bg-white p-6 shadow-lg">
+                    <div class="flex-shrink-0 rounded-md bg-blue-100 p-4">
+                        <span class="text-3xl">🎯</span>
+                    </div>
+                    <div class="ml-4">
+                        <dt class="text-sm font-medium text-slate-500">Mục tiêu Doanh số 2026</dt>
+                        <dd class="text-3xl font-bold text-blue-700">18.7 Tỷ</dd>
+                    </div>
+                </div>
+                <div class="flex items-center rounded-lg bg-white p-6 shadow-lg">
+                    <div class="flex-shrink-0 rounded-md bg-green-100 p-4">
+                        <span class="text-3xl">🚚</span>
+                    </div>
+                    <div class="ml-4">
+                        <dt class="text-sm font-medium text-slate-500">Cam kết Giao hàng (Nội thành)</dt>
+                        <dd class="text-3xl font-bold text-green-700">≤ 4 Giờ</dd>
+                    </div>
+                </div>
+                <div class="flex items-center rounded-lg bg-white p-6 shadow-lg">
+                    <div class="flex-shrink-0 rounded-md bg-indigo-100 p-4">
+                        <span class="text-3xl">👥</span>
+                    </div>
+                    <div class="ml-4">
+                        <dt class="text-sm font-medium text-slate-500">Tuyển dụng Nhân sự mới</dt>
+                        <dd class="text-3xl font-bold text-indigo-700">03 Người</dd>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sales" class="my-20 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-900">🎯 Hạng mục 1: Mục tiêu Doanh số 2026</h2>
+            <p class="mt-2 text-lg text-slate-600">Thiết lập và phân bổ mục tiêu doanh thu 18.7 tỷ VNĐ cho năm 2026, tăng trưởng +10% so với 2025.</p>
+
+            <div class="mt-8 grid grid-cols-1 gap-8 rounded-lg bg-white p-6 shadow-lg md:grid-cols-2">
+                <div class="flex flex-col justify-center">
+                    <h3 class="text-2xl font-semibold text-blue-800">Phân bổ Doanh thu theo Quý</h3>
+                    <p class="mt-2 text-slate-600">Doanh thu được phân bổ dựa trên tính mùa vụ, tập trung vào cao điểm Q2.
+                    </p>
+                    <ul class="mt-4 space-y-3">
+                        <li class="flex items-center">
+                            <span class="mr-3 h-5 w-5 rounded-sm bg-blue-300"></span>
+                            <span class="font-medium text-slate-700">Q1/2026 (Trung bình thấp): 3.74 tỷ (20%)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-3 h-5 w-5 rounded-sm bg-blue-700"></span>
+                            <span class="font-medium text-slate-700">Q2/2026 (Cao điểm): 6.54 tỷ (35%)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-3 h-5 w-5 rounded-sm bg-blue-500"></span>
+                            <span class="font-medium text-slate-700">Q3/2026 (Duy trì): 4.68 tỷ (25%)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-3 h-5 w-5 rounded-sm bg-blue-300"></span>
+                            <span class="font-medium text-slate-700">Q4/2026 (Trung bình thấp): 3.74 tỷ (20%)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- START: PHẦN PHÂN BỔ THEO THÁNG MỚI -->
+            <div class="mt-12 grid grid-cols-1 gap-8 rounded-lg bg-white p-6 shadow-lg md:grid-cols-2">
+                <div class="flex flex-col justify-center">
+                    <h3 class="text-2xl font-semibold text-blue-800">Phân bổ Doanh thu theo Tháng</h3>
+                    
+                    <div class="mt-4 space-y-2 text-sm">
+                        <div class="grid grid-cols-3 gap-2 p-2 font-bold text-slate-800 bg-slate-100 rounded-md">
+                            <span>Quý</span>
+                            <span>Tháng</span>
+                            <span class="text-right">Doanh thu (Tỷ VNĐ)</span>
+                        </div>
+                        
+                        <!-- Q1 -->
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q1</span><span>T1</span><span class="text-right">0.90</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q1</span><span>T2</span><span class="text-right">1.10</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q1</span><span>T3</span><span class="text-right">1.74</span></div>
+                        
+                        <!-- Q2 (Highlight) -->
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-700 pl-2 bg-blue-50 font-semibold text-blue-700"><span>Q2</span><span>T4</span><span class="text-right">2.50</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-700 pl-2 bg-blue-50 font-semibold text-blue-700"><span>Q2</span><span>T5</span><span class="text-right">2.44</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-700 pl-2"><span>Q2</span><span>T6</span><span class="text-right">1.60</span></div>
+
+                        <!-- Q3 -->
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-500 pl-2"><span>Q3</span><span>T7</span><span class="text-right">1.90</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-500 pl-2"><span>Q3</span><span>T8</span><span class="text-right">1.58</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-500 pl-2"><span>Q3</span><span>T9</span><span class="text-right">1.20</span></div>
+
+                        <!-- Q4 -->
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q4</span><span>T10</span><span class="text-right">1.24</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q4</span><span>T11</span><span class="text-right">1.25</span></div>
+                        <div class="grid grid-cols-3 gap-2 border-l-4 border-blue-300 pl-2"><span>Q4</span><span>T12</span><span class="text-right">1.25</span></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="monthlySalesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- END: PHẦN PHÂN BỔ THEO THÁNG MỚI -->
+
+            <div class="mt-8">
+                <h4 class="text-xl font-semibold text-slate-800">Kế hoạch Hành động & Kết quả mong đợi</h4>
+                <div class="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div class="rounded-lg border border-slate-200 bg-white p-5">
+                        <h5 class="font-semibold text-slate-700">Hành động chính</h5>
+                        <ul class="mt-2 list-inside list-disc space-y-1 text-slate-600">
+                            <li>Phân bổ KPI cho NVKD (hiện tại & mới) ngay từ Q1.</li>
+                            <li>Dồn lực tư vấn, marketing, CSKH mạnh mẽ vào Q2.</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-lg border border-slate-200 bg-white p-5">
+                        <h5 class="font-semibold text-slate-700">Kết quả mong đợi</h5>
+                        <ul class="mt-2 list-inside list-disc space-y-1 text-slate-600">
+                            <li>Hoàn thành 100% mục tiêu 18.7 tỷ vào cuối Q4/2026.</li>
+                            <li>NVKD mới bắt đầu đóng góp doanh số từ Q2/2026.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ops" class="my-20 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-900">📦 Hạng mục 2: Tối ưu Kho & Giao hàng</h2>
+            <p class="mt-2 text-lg text-slate-600">Tập trung vào vận hành kho thủ công hiệu quả và xây dựng cam kết "Giao nhanh nhất" (≤ 4 giờ).</p>
+
+            <div class="mt-8">
+                <div class="mb-6 flex space-x-2 border-b-2 border-slate-200">
+                    <button class="tab-btn active py-3 px-4 font-semibold text-slate-600 border-b-2 border-transparent" data-tab="ops-tab-1">
+                        Tối ưu Kho (Tầng 2)
+                    </button>
+                    <button class="tab-btn py-3 px-4 font-semibold text-slate-600 border-b-2 border-transparent" data-tab="ops-tab-2">
+                        Quy trình Giao hàng (≤ 4h)
+                    </button>
+                </div>
+
+                <div id="ops-tab-1" class="ops-tab-content rounded-lg bg-white p-6 shadow-lg">
+                    <h3 class="text-2xl font-semibold text-slate-800">Giải pháp Vận hành Kho</h3>
+                    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div>
+                            <h4 class="text-lg font-semibold text-blue-700">Cải tiến Quy trình Thủ công</h4>
+                            <p class="text-sm text-slate-500">(Tập trung thực tế)</p>
+                            <ul class="mt-3 list-inside list-disc space-y-2 text-slate-600">
+                                <li><strong>Phân khu (Zoning):</strong> Hàng bán chạy (A) gần thang máy, hàng cồng kềnh (B) ở trong cùng.</li>
+                                <li><strong>Quản lý Tồn kho:</strong> Dùng Google Sheet (Sổ kho) và Thẻ kho (Bin card) vật lý.</li>
+                                <li><strong>Kiểm kê:</strong> Hàng tuần (Mã A) và hàng tháng (toàn bộ) để đảm bảo khớp số liệu.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-blue-700">Giải pháp cho Bất tiện (Tầng 2)</h4>
+                            <p class="text-sm text-slate-500">(Thang máy chở người)</p>
+                            <ul class="mt-3 list-inside list-disc space-y-2 text-slate-600">
+                                <li><strong>Tạm thời (Ngay):</strong> Hàng cồng kềnh tập kết tầng trệt, vận chuyển 1 lần/ngày vào giờ thấp điểm.</li>
+                                <li><strong>Dài hạn (Q3/2026):</strong> Lập đề xuất (kèm chi phí/lợi ích) về việc lắp đặt thang tời hàng chuyên dụng.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="ops-tab-2" class="ops-tab-content rounded-lg bg-white p-6 shadow-lg hidden">
+                    <h3 class="text-2xl font-semibold text-slate-800">Quy trình "Giao nhanh ≤ 4 giờ" (Nội thành)</h3>
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold text-green-700">Thiết lập Nguồn lực</h4>
+                        <ul class="mt-3 list-inside list-disc space-y-2 text-slate-600">
+                            <li>Hoàn tất mua xe tải giao hàng của công ty (Chậm nhất 12/2025).</li>
+                            <li>Tuyển dụng 01 Tài xế ngay khi có xe (Q4/2025 - Q1/2026).</li>
+                        </ul>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold text-green-700">Luồng xử lý Đơn hàng "Giao Nhanh"</h4>
+                        <div class="mt-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="text-center p-4 rounded-lg bg-slate-100 flex-1">
+                                <div class="text-2xl font-bold text-green-700">1. Chốt đơn</div>
+                                <div class="text-sm text-slate-600">NVKD xác nhận & phân loại "Giao nhanh"</div>
+                            </div>
+                            <div class="text-2xl text-slate-400 hidden md:block">&rarr;</div>
+                            <div class="text-center p-4 rounded-lg bg-slate-100 flex-1">
+                                <div class="text-2xl font-bold text-green-700">2. Soạn hàng (30p)</div>
+                                <div class="text-sm text-slate-600">NV Kho soạn, kiểm tra, đóng gói</div>
+                            </div>
+                            <div class="text-2xl text-slate-400 hidden md:block">&rarr;</div>
+                            <div class="text-center p-4 rounded-lg bg-slate-100 flex-1">
+                                <div class="text-2xl font-bold text-green-700">3. Giao hàng (3.5h)</div>
+                                <div class="text-sm text-slate-600">Tài xế nhận & giao đến tay khách hàng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h4 class="text-xl font-semibold text-slate-800">Kết quả Vận hành mong đợi</h4>
+                <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="rounded-lg border border-slate-200 bg-white p-5 text-center">
+                        <div class="text-3xl font-bold text-green-700">&gt; 95%</div>
+                        <div class="mt-1 font-semibold text-slate-600">Tỷ lệ giao đúng cam kết (≤ 4h)</div>
+                    </div>
+                    <div class="rounded-lg border border-slate-200 bg-white p-5 text-center">
+                        <div class="text-3xl font-bold text-green-700">&gt; 90%</div>
+                        <div class="mt-1 font-semibold text-slate-600">Độ chính xác tồn kho (thủ công)</div>
+                    </div>
+                    <div class="rounded-lg border border-slate-200 bg-white p-5 text-center">
+                        <div class="text-3xl font-bold text-green-700">&lt; 30 Phút</div>
+                        <div class="mt-1 font-semibold text-slate-600">Thời gian soạn hàng / đơn</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hr" class="my-20 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-900">👥 Hạng mục 3: Kế hoạch Tuyển dụng</h2>
+            <p class="mt-2 text-lg text-slate-600">Hoàn tất tuyển dụng 03 nhân sự then chốt chậm nhất là Tháng 01/2026 để đảm bảo vận hành ổn định trước mùa cao điểm Q2.</p>
+
+            <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div class="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold text-indigo-800">1. Nhân viên KD Showroom</h3>
+                    <p class="mt-1 text-sm font-medium text-indigo-600">Cần trước: 01/01/2026</p>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Mục tiêu</h4>
+                        <p class="text-slate-600">Trực tiếp đóng góp vào 18.7 tỷ, tư vấn, chốt đơn tại chỗ.</p>
+                        <h4 class="mt-3 font-semibold text-slate-700">Yêu cầu chính</h4>
+                        <p class="text-slate-600">Giao tiếp tốt, hiểu sản phẩm, làm việc tại chỗ (không đi tỉnh/GT).</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold text-indigo-800">2. Nhân viên Kho</h3>
+                    <p class="mt-1 text-sm font-medium text-indigo-600">Cần trước: 15/01/2026</p>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Mục tiêu</h4>
+                        <p class="text-slate-600">Chịu trách nhiệm 100% vận hành kho (sắp xếp, soạn hàng, Sổ kho).</p>
+                        <h4 class="mt-3 font-semibold text-slate-700">Yêu cầu chính</h4>
+                        <p class="text-slate-600">Cẩn thận, trung thực, sức khỏe tốt, biết Excel/Google Sheet cơ bản.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold text-indigo-800">3. Tài xế Giao hàng</h3>
+                    <p class="mt-1 text-sm font-medium text-indigo-600">Cần ngay khi có xe (12/2025 - 01/2026)</p>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Mục tiêu</h4>
+                        <p class="text-slate-600">Đảm bảo thực thi cam kết "Giao nhanh ≤ 4 giờ", bảo quản xe.</p>
+                        <h4 class="mt-3 font-semibold text-slate-700">Yêu cầu chính</h4>
+                        <p class="text-slate-600">Bằng B2/C, rành đường TP.HCM, thái độ dịch vụ tốt, trung thực.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 rounded-lg border border-slate-200 bg-white p-5">
+                <h4 class="text-xl font-semibold text-slate-800">Kết quả Tuyển dụng mong đợi</h4>
+                <ul class="mt-3 list-inside list-disc space-y-1 text-slate-600">
+                    <li>Hoàn tất tuyển dụng đủ 03 nhân sự chậm nhất 31/01/2026.</li>
+                    <li>100% nhân sự mới được đào tạo hội nhập về quy trình, sản phẩm trong 2 tuần đầu.</li>
+                    <li>Hệ thống (Kho - Giao hàng - Kinh doanh) vận hành ổn định từ Q2/2026.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="timeline" class="my-20 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-900">🗓️ Hạng mục 4: Tiến độ Tổng quát 2026</h2>
+            <p class="mt-2 text-lg text-slate-600">Chọn các Quý để xem các nhiệm vụ chính được phân bổ theo từng giai đoạn.</p>
+
+            <div class="mt-8">
+                <div class="mb-6 flex flex-wrap -m-1">
+                    <button class="timeline-tab-btn active m-1 py-2 px-4 font-semibold text-slate-600 border-2 border-transparent rounded-lg" data-tab="time-tab-1">
+                        Q4/2025 (Chuẩn bị)
+                    </button>
+                    <button class="timeline-tab-btn m-1 py-2 px-4 font-semibold text-slate-600 border-2 border-transparent rounded-lg" data-tab="time-tab-2">
+                        Q1/2026 (Khởi động)
+                    </button>
+                    <button class="timeline-tab-btn m-1 py-2 px-4 font-semibold text-slate-600 border-2 border-transparent rounded-lg" data-tab="time-tab-3">
+                        Q2/2026 (Tăng tốc)
+                    </button>
+                    <button class="timeline-tab-btn m-1 py-2 px-4 font-semibold text-slate-600 border-2 border-transparent rounded-lg" data-tab="time-tab-4">
+                        Q3/2026 (Tối ưu)
+                    </button>
+                    <button class="timeline-tab-btn m-1 py-2 px-4 font-semibold text-slate-600 border-2 border-transparent rounded-lg" data-tab="time-tab-5">
+                        Q4/2026 (Hoàn thành)
+                    </button>
+                </div>
+
+                <div class="rounded-lg bg-white p-6 shadow-lg">
+                    <div id="time-tab-1" class="timeline-tab-content space-y-4">
+                        <h3 class="text-2xl font-semibold text-green-800">Q4/2025 (Giai đoạn Chuẩn bị)</h3>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-blue-500">
+                            <h4 class="font-semibold text-blue-700">🎯 Doanh số</h4>
+                            <p class="text-slate-600">Hoàn thiện Kế hoạch 2026.</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-blue-500">
+                            <h4 class="font-semibold text-blue-700">📦 Vận hành</h4>
+                            <ul class="list-inside list-disc text-slate-600">
+                                <li>Khảo sát, lên thiết kế Sổ kho/Thẻ kho.</li>
+                                <li>Hoàn tất mua xe tải công ty (12/2025).</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-blue-500">
+                            <h4 class="font-semibold text-blue-700">👥 Nhân sự</h4>
+                            <p class="text-slate-600">Gửi yêu cầu tuyển dụng & JD cho P. Nhân sự. Bắt đầu phỏng vấn.</p>
+                        </div>
+                    </div>
+
+                    <div id="time-tab-2" class="timeline-tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-green-800">Q1/2026 (Giai đoạn Khởi động)</h3>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-green-500">
+                            <h4 class="font-semibold text-green-700">🎯 Doanh số</h4>
+                            <p class="text-slate-600">Triển khai mục tiêu Q1 (3.74 tỷ), đặc biệt là T3 (1.74 tỷ).</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-green-500">
+                            <h4 class="font-semibold text-green-700">📦 Vận hành</h4>
+                            <ul class="list-inside list-disc text-slate-600">
+                                <li>Setup kho (Phân khu, Thẻ kho).</li>
+                                <li>Vận hành thử nghiệm quy trình "Giao nhanh".</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-green-500">
+                            <h4 class="font-semibold text-green-700">👥 Nhân sự</h4>
+                            <ul class="list-inside list-disc text-slate-600">
+                                <li>Hoàn tất tuyển dụng 3 NS mới (Chậm nhất T1/2026).</li>
+                                <li>Đào tạo hội nhập.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="time-tab-3" class="timeline-tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-green-800">Q2/2026 (Giai đoạn Tăng tốc - Cao điểm)</h3>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-red-500">
+                            <h4 class="font-semibold text-red-700">🎯 Doanh số</h4>
+                            <p class="text-slate-600">Tăng tốc Q2 (Cao điểm 6.54 tỷ), dồn lực cho T4 (2.50 tỷ) & T5 (2.44 tỷ).</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-red-500">
+                            <h4 class="font-semibold text-red-700">📦 Vận hành</h4>
+                            <p class="text-slate-600">Vận hành chính thức cam kết "Giao nhanh ≤ 4h". Đo lường hiệu suất kho.</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-red-500">
+                            <h4 class="font-semibold text-red-700">👥 Nhân sự</h4>
+                            <p class="text-slate-600">3 NS mới chính thức vận hành. NVKD mới bắt đầu đóng góp doanh số.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="time-tab-4" class="timeline-tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-green-800">Q3/2026 (Giai đoạn Tối ưu)</h3>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-yellow-500">
+                            <h4 class="font-semibold text-yellow-700">🎯 Doanh số</h4>
+                            <p class="text-slate-600">Duy trì mục tiêu Q3 (4.68 tỷ), tận dụng nhu cầu tồn dư T7 (1.90 tỷ).</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-yellow-500">
+                            <h4 class="font-semibold text-yellow-700">📦 Vận hành</h4>
+                            <ul class="list-inside list-disc text-slate-600">
+                                <li>Rà soát, tối ưu quy trình kho.</li>
+                                <li>Lập đề xuất (dài hạn) về thang tời.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-yellow-500">
+                            <h4 class="font-semibold text-yellow-700">👥 Nhân sự</h4>
+                            <p class="text-slate-600">Đánh giá thử việc/hiệu suất NS mới.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="time-tab-5" class="timeline-tab-content space-y-4 hidden">
+                        <h3 class="text-2xl font-semibold text-green-800">Q4/2026 (Giai đoạn Hoàn thành)</h3>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-gray-500">
+                            <h4 class="font-semibold text-gray-700">🎯 Doanh số</h4>
+                            <p class="text-slate-600">Hoàn thành mục tiêu Q4 (3.74 tỷ). Tổng kết KPI 18.7 tỷ.</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-gray-500">
+                            <h4 class="font-semibold text-gray-700">📦 Vận hành</h4>
+                            <p class="text-slate-600">Đảm bảo vận hành ổn định cuối năm. Tổng kết KPI giao hàng & tồn kho.</p>
+                        </div>
+                        <div class="p-4 rounded-md bg-slate-50 border-l-4 border-gray-500">
+                            <h4 class="font-semibold text-gray-700">👥 Nhân sự</h4>
+                            <p class="text-slate-600">Đánh giá hiệu suất năm.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="mt-20 border-t border-slate-200 bg-white">
+        <div class="container mx-auto px-6 py-8 text-center text-sm text-slate-500">
+            <p>&copy; 2025 Công ty TNHH Công Nghiệp Nghệ Năng. Tài liệu lập bởi Nguyễn Đức Tâm.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const createSalesChart = (ctx, type, labels, data, backgroundColors, titleText) => {
+                new Chart(ctx, {
+                    type: type,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Doanh thu (Tỷ VNĐ)',
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: 'rgba(29, 78, 216, 1)',
+                            borderWidth: 1.5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: titleText,
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (context.parsed.y !== null) {
+                                            label = 'Giá trị: ' + context.parsed.y.toFixed(2) + ' tỷ VNĐ';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu (Tỷ VNĐ)'
+                                },
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        return value + ' tỷ';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            // Dữ liệu và Cấu hình Biểu đồ Quý (Không đổi)
+            const quarterlyLabels = ['Q1/2026 (20%)', 'Q2/2026 (35%)', 'Q3/2026 (25%)', 'Q4/2026 (20%)'];
+            const quarterlyData = [3.74, 6.54, 4.68, 3.74];
+            const quarterlyColors = [
+                'rgba(147, 197, 253, 0.8)', // Q1 - blue-300
+                'rgba(37, 99, 235, 1)',      // Q2 - blue-700 (Nổi bật)
+                'rgba(96, 165, 250, 0.8)',  // Q3 - blue-500
+                'rgba(147, 197, 253, 0.8)'  // Q4 - blue-300
+            ];
+            
+            const salesChartCtx = document.getElementById('salesChart');
+            if (salesChartCtx) {
+                createSalesChart(salesChartCtx, 'bar', quarterlyLabels, quarterlyData, quarterlyColors, 'Tổng Mục tiêu: 18.7 Tỷ VNĐ (Theo Quý)');
+            }
+            
+            // Dữ liệu và Cấu hình Biểu đồ Tháng 
+            const monthlyLabels = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+            const monthlyData = [0.90, 1.10, 1.74, 2.50, 2.44, 1.60, 1.90, 1.58, 1.20, 1.24, 1.25, 1.25];
+            const monthlyColors = [
+                'rgba(147, 197, 253, 0.8)', // T1 - blue-300
+                'rgba(147, 197, 253, 0.8)', // T2 - blue-300
+                'rgba(96, 165, 250, 0.8)',  // T3 - blue-500 (Khởi động)
+                'rgba(37, 99, 235, 1)',      // T4 - blue-700 (PEAK)
+                'rgba(37, 99, 235, 1)',      // T5 - blue-700 (PEAK)
+                'rgba(96, 165, 250, 0.8)',  // T6 - blue-500
+                'rgba(96, 165, 250, 0.8)',  // T7 - blue-500
+                'rgba(96, 165, 250, 0.8)',  // T8 - blue-500
+                'rgba(147, 197, 253, 0.8)', // T9 - blue-300
+                'rgba(147, 197, 253, 0.8)', // T10 - blue-300
+                'rgba(147, 197, 253, 0.8)', // T11 - blue-300
+                'rgba(147, 197, 253, 0.8)'  // T12 - blue-300
+            ];
+
+            const monthlySalesCtx = document.getElementById('monthlySalesChart');
+            if (monthlySalesCtx) {
+                createSalesChart(monthlySalesCtx, 'bar', monthlyLabels, monthlyData, monthlyColors, 'Tổng Mục tiêu: 18.7 Tỷ VNĐ (Theo Tháng)');
+            }
+            
+            const setupTabs = (btnClass, contentClass, activeClass) => {
+                const tabButtons = document.querySelectorAll(btnClass);
+                const tabContents = document.querySelectorAll(contentClass);
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tabId = button.getAttribute('data-tab');
+
+                        tabButtons.forEach(btn => btn.classList.remove(activeClass.replace('.', '')));
+                        button.classList.add(activeClass.replace('.', ''));
+
+                        tabContents.forEach(content => {
+                            if (content.id === tabId) {
+                                content.classList.remove('hidden');
+                            } else {
+                                content.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            };
+
+            setupTabs('.tab-btn', '.ops-tab-content', 'active');
+            setupTabs('.timeline-tab-btn', '.timeline-tab-content', 'active');
+
+        });
+    </script>
+
+</body>
+</html>
