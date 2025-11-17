@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng quan JD & KPI - Showroom Q12</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional (Nền xám nhạt, Thẻ màu trắng, Chữ đen/xám đậm, điểm nhấn Tiêu đề màu Xanh (Teal/Blue)) -->
+    <!-- Application Structure Plan: Trang báo cáo tĩnh. Cấu trúc được chia làm 2 phần. Phần 1 (JD) dùng lưới 2 cột. Bên trong mỗi cột, các mục (Mục tiêu, Nhiệm vụ, Yêu cầu, Quyền lợi) được tách thành các thẻ (card) riêng biệt, có icon, để tăng tính trực quan. Phần 2 (KPI) cũng dùng lưới 2 cột, chia nhỏ "Chấm điểm" và "Cơ chế thưởng" thành các thẻ riêng. Phần 3 (Giám sát) được tách thành 2 thẻ song song. Cấu trúc này phá vỡ "khối văn bản khô khan" thành các đơn vị thông tin logic, trực quan. -->
+    <!-- Visualization & Content Choices: 1. Thông tin JD (Mục tiêu, v.v.) -> Mục tiêu: Thông báo -> Phương pháp: Các thẻ card (div bg-white) riêng biệt có icon (Unicode) và tiêu đề. Danh sách dùng <ul>/<li>. 2. Dữ liệu KPI Chấm điểm -> Mục tiêu: Trình bày -> Phương pháp: Lưới 4 thẻ (grid-cols-2) thể hiện 4 chỉ tiêu. 3. Dữ liệu Thưởng & Giám sát -> Mục tiêu: Trình bày -> Phương pháp: Bảng (table) trong các thẻ card. 4. Nhấn mạnh -> Mục tiêu: Nổi bật -> Phương pháp: Thẻ <strong>. -> Lý do: Tuân thủ yêu cầu "trực quan hơn", "dùng thẻ card", "dùng gạch đầu dòng". -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        thead th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        /* Đảm bảo list có gạch đầu dòng */
+        .card-column ul {
+            list-style-type: disc;
+            padding-left: 1.5rem; /* 24px */
+        }
+        /* Tách các card trong một cột */
+        .card-column > div + div {
+            margin-top: 1.5rem; /* 24px */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-12">
+        
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-gray-900">TÀI LIỆU TUYỂN DỤNG & CƠ CHẾ SHOWROOM Q12</h1>
+            <p class="text-xl text-gray-600 mt-2">Tổng quan trình Ban Lãnh đạo</p>
+        </header>
+
+        <!-- PHẦN 1: MÔ TẢ CÔNG VIỆC -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-semibold text-gray-800 border-b-2 border-gray-300 pb-3 mb-8">PHẦN 1: MÔ TẢ CÔNG VIỆC (JD)</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Cột Nhân viên Kho -->
+                <div class="card-column">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-5">1. Nhân viên Kho</h3>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">🎯</span> Mục tiêu công việc
+                        </h4>
+                        <p>Đảm bảo vận hành kho chính xác – an toàn – đúng quy trình; hỗ trợ showroom đạt hiệu suất bán hàng tối ưu.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">📋</span> Nhiệm vụ chính
+                        </h4>
+                        <ul class="space-y-1">
+                            <li>Tiếp nhận – kiểm đếm – đối chiếu chứng từ hàng nhập.</li>
+                            <li>Sắp xếp hàng hóa theo khu vực, nhóm sản phẩm.</li>
+                            <li>Soạn hàng theo phiếu xuất, phối hợp giao hàng với tài xế.</li>
+                            <li>Theo dõi và cập nhật tồn kho hằng ngày.</li>
+                            <li>Kiểm kê định kỳ và lập báo cáo tồn kho.</li>
+                            <li>Đảm bảo khu vực kho sạch sẽ, an toàn, đúng tiêu chuẩn PCCC.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">👤</span> Yêu cầu ứng viên
+                        </h4>
+                        <ul class="space-y-1">
+                            <li>Nam, sức khỏe tốt.</li>
+                            <li>Tuổi: 20 – 32.</li>
+                            <li>Trình độ học vấn: Tốt nghiệp THPT trở lên.</li>
+                            <li>Trung thực, cẩn thận, tinh thần trách nhiệm cao.</li>
+                            <li>Biết sử dụng Excel/Google Sheet cơ bản.</li>
+                            <li>Có kinh nghiệm làm kho từ 6 tháng – 1 năm, ưu tiên ứng viên từng làm kho ngành điện máy, thiết bị công nghiệp.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">⭐</span> Quyền lợi
+                        </h4>
+                        <ul class="space-y-1">
+                            <li><strong>Lương cứng: 8,000,000 VNĐ/tháng</strong>.</li>
+                            <li><strong>Thưởng hiệu suất KPI: 2,000,000 VNĐ/tháng</strong> (Chi tiết tại Phần 2).</li>
+                            <li><strong>Thưởng khuyến khích:</strong> Dựa trên kết quả kinh doanh chung của Showroom (sẽ được thông báo theo Quý/Năm).</li>
+                            <li><strong>Tổng thu nhập mục tiêu: 10,000,000 VNĐ/tháng + Thưởng doanh thu</strong>.</li>
+                            <li>Tham gia BHXH đầy đủ (trên lương cứng).</li>
+                            <li>Lương tháng 13.</li>
+                            <li>Môi trường làm việc ổn định, lâu dài.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cột Tài xế Giao hàng -->
+                <div class="card-column">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-5">2. Tài xế Giao hàng</h3>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">🎯</span> Mục tiêu công việc
+                        </h4>
+                        <p>Đảm bảo giao hàng nhanh (cam kết ≤ 4 giờ), an toàn, đúng hẹn; nâng cao trải nghiệm khách hàng của showroom.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">📋</span> Nhiệm vụ chính
+                        </h4>
+                        <ul class="space-y-1">
+                            <li>Giao hàng nội thành và các khu vực lân cận (TP.HCM – Bình Dương).</li>
+                            <li>Bốc xếp, kiểm đếm và bàn giao hàng hóa theo đúng quy trình.</li>
+                            <li>Kiểm tra xe, vệ sinh và báo cáo tình trạng phương tiện (xe công ty) hằng ngày.</li>
+                            <li>Hỗ trợ kho khi cần (soạn hàng, kiểm hàng).</li>
+                            <li>Giữ thái độ lịch sự, chuyên nghiệp với khách hàng.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">👤</span> Yêu cầu ứng viên
+                        </h4>
+                        <ul class="space-y-1">
+                            <li>Bằng lái B2 hoặc C.</li>
+                            <li>Tuổi: 20 - 45.</li>
+                            <li>Rành đường TP.HCM – Bình Dương.</li>
+                            <li>Trung thực, trách nhiệm, tác phong lịch sự.</li>
+                            <li>Có ý thức bảo quản, giữ gìn tài sản chung (xe công ty).</li>
+                            <li>Có kinh nghiệm giao hàng là lợi thế.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center">
+                            <span class="text-2xl mr-3">⭐</span> Quyền lợi
+                        </h4>
+                        <ul class="space-y-1">
+                            <li><strong>Lương cứng: 8,000,000 VNĐ/tháng</strong>.</li>
+                            <li><strong>Thưởng hiệu suất KPI: 2,000,000 VNĐ/tháng</strong> (Chi tiết tại Phần 2).</li>
+                            <li><strong>Tổng thu nhập mục tiêu: 10,000,000 VNĐ/tháng</strong>.</li>
+                            <li>Phụ cấp xăng/dầu (theo xe công ty) và điện thoại (trao đổi khi phỏng vấn).</li>
+                            <li>Tham gia BHXH đầy đủ (trên lương cứng).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 2: KPI & CƠ CHẾ THƯỞNG -->
+        <section>
+            <h2 class="text-3xl font-semibold text-gray-800 border-b-2 border-gray-300 pb-3 mb-8">PHẦN 2: KPI & CƠ CHẾ THƯỞNG</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Cột KPI Nhân viên Kho -->
+                <div class="card-column">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-5">1. KPI – Nhân viên Kho</h3>
+                    
+                    <div class="bg-teal-50 border border-teal-200 p-4 rounded-lg text-center shadow">
+                        <p class="text-lg font-semibold text-teal-800">Tổng quỹ thưởng KPI: <strong>2.000.000 VNĐ/tháng</strong></p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-4">1.1. Phương pháp chấm điểm (4 Chỉ tiêu)</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Độ chính xác</p>
+                                <p class="text-sm">Không sai lệch (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Soạn hàng</p>
+                                <p class="text-sm">≥ 95% đúng hạn (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Thất thoát</p>
+                                <p class="text-sm">0 (trong định mức) (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Cập nhật tồn</p>
+                                <p class="text-sm">Đúng & đủ mỗi ngày (1 điểm)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3">1.2. Cơ chế thưởng</h4>
+                        <p><strong>A. Thưởng Hiệu suất KPI (Quỹ thưởng 2.000.000 VNĐ)</strong></p>
+                        <table class="w-full my-3">
+                            <thead>
+                                <tr>
+                                    <th>Điểm KPI</th>
+                                    <th>Thưởng (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>4 điểm</td>
+                                    <td>2.000.000</td>
+                                </tr>
+                                <tr>
+                                    <td>3 điểm</td>
+                                    <td>1.500.000</td>
+                                </tr>
+                                <tr>
+                                    <td>2 điểm</td>
+                                    <td>1.000.000</td>
+                                </tr>
+                                <tr>
+                                    <td>&lt; 2 điểm</td>
+                                    <td>Không thưởng</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <p class="font-semibold"><strong>B. Thưởng Doanh Thu Showroom (Bổ sung)</strong></p>
+                        <ul class="space-y-1 mt-2">
+                            <li><strong>Mục tiêu:</strong> Ghi nhận đóng góp gián tiếp của bộ phận Kho vào kết quả kinh doanh chung, khuyến khích tinh thần hỗ trợ bán hàng.</li>
+                            <li><strong>Cơ chế:</strong> Dựa trên % vượt chỉ tiêu doanh thu của Showroom. Mức thưởng sẽ được thông báo theo Quý/Năm dưới dạng thưởng khuyến khích (không cố định).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cột KPI Tài xế Giao hàng -->
+                <div class="card-column">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-5">2. KPI – Tài xế Giao hàng</h3>
+
+                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg text-center shadow">
+                        <p class="text-lg font-semibold text-blue-800">Tổng quỹ thưởng KPI: <strong>2.000.000 VNĐ/tháng</strong></p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-4">2.1. Phương pháp chấm điểm (4 Chỉ tiêu)</h4>
+                         <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Giao đúng hẹn</p>
+                                <p class="text-sm">≥ 95% (≤ 4 giờ/đơn) (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Phản ánh KH</p>
+                                <p class="text-sm">0 (chính đáng) (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Hư hỏng hàng</p>
+                                <p class="text-sm">0 (lỗi chủ quan) (1 điểm)</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border text-center">
+                                <p class="font-semibold">Báo cáo</p>
+                                <p class="text-sm">Đầy đủ, đúng hạn (1 điểm)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-lg font-semibold mb-3">2.2. Cơ chế thưởng</h4>
+                        <p><strong>Thưởng Hiệu suất KPI (Quỹ thưởng 2.000.000 VNĐ)</strong></p>
+                        <table class="w-full my-3">
+                            <thead>
+                                <tr>
+                                    <th>Điểm KPI</th>
+                                    <th>Thưởng (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>4 điểm</td>
+                                    <td>2.000.000</td>
+                                </tr>
+                                <tr>
+                                    <td>3 điểm</td>
+                                    <td>1.500.000</td>
+                                </tr>
+                                <tr>
+                                    <td>2 điểm</td>
+                                    <td>1.000.000</td>
+                                </tr>
+                                <tr>
+                                    <td>&lt; 2 điểm</td>
+                                    <td>Không thưởng</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cơ chế Giám sát -->
+            <div class="mt-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-5 text-center">3. Cơ chế Giám sát & Tính điểm KPI (Thủ công)</h3>
+                <p class="mb-4 text-center max-w-3xl mx-auto">Để đảm bảo tính minh bạch khi hệ thống ERP chưa hoàn thiện, việc giám sát được thực hiện như sau:</p>
+                <div class="max-w-3xl mx-auto bg-gray-100 p-4 rounded-lg border mb-8">
+                    <ul class="flex flex-col sm:flex-row justify-around text-center sm:text-left" style="list-style-type: none; padding-left: 0;">
+                        <li class="mb-2 sm:mb-0"><strong>Người giám sát:</strong> Quản lý Showroom (QLSR)</li>
+                        <li class="mb-2 sm:mb-0"><strong>Người duyệt thưởng:</strong> Kế toán & Ban Giám đốc</li>
+                        <li><strong>Chu kỳ:</strong> Hàng tháng</li>
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-4 text-teal-700">3.1. Giám sát KPI Nhân viên Kho</h4>
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Chỉ tiêu</th>
+                                    <th>Phương pháp giám sát (Thủ công)</th>
+                                    <th>Nguồn dữ liệu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Độ chính xác nhập/xuất</strong></td>
+                                    <td>QLSR kiểm tra ngẫu nhiên 10-15% phiếu. Đối chiếu thực tế với chứng từ.</td>
+                                    <td>Phiếu nhập/xuất kho</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Soạn hàng đúng hạn</strong></td>
+                                    <td>QLSR/Kế toán ghi nhận thời gian (theo sổ) từ lúc nhận phiếu đến lúc báo "Sẵn sàng".</td>
+                                    <td>File/Sổ theo dõi phiếu xuất</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Không thất thoát kho</strong></td>
+                                    <td>Kiểm kê định kỳ (cuối tháng). Đối chiếu tồn kho thực tế với File Excel/Sheet.</td>
+                                    <td>Biên bản kiểm kê kho</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cập nhật tồn kho đầy đủ</strong></td>
+                                    <td>QLSR kiểm tra File Excel/Sheet tồn kho vào 9:00 sáng hôm sau.</td>
+                                    <td>File Excel/Sheet tồn kho</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h4 class="text-xl font-semibold mb-4 text-blue-700">3.2. Giám sát KPI Tài xế Giao hàng</h4>
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Chỉ tiêu</th>
+                                    <th>Phương pháp giám sát (Thủ công)</th>
+                                    <th>Nguồn dữ liệu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Giao đúng hẹn</strong></td>
+                                    <td>QLSR/Điều phối gọi điện (check ngẫu nhiên) hoặc Zalo cho 10-15% khách hàng.</td>
+                                    <td>Biên bản giao hàng (ký nhận)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Không phản ánh khách hàng</strong></td>
+                                    <td>Tổng hợp từ các kênh: Zalo/SĐT (QLSR/CSKH), phản ánh trực tiếp.</td>
+                                    <td>File theo dõi phản ánh KH</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Không làm hư hỏng hàng</strong></td>
+                                    <td>Ghi nhận dựa trên biên bản giao hàng (khách từ chối nhận) và báo cáo của Tài xế.</td>
+                                    <td>Biên bản giao hàng</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Báo cáo lộ trình – nhiên liệu</strong></td>
+                                    <td>Tài xế nộp Báo cáo lộ trình (sổ tay/Excel) + hóa đơn xăng dầu cho Kế toán/QLSR.</td>
+                                    <td>Báo cáo của tài xế, Hóa đơn</td>
+                                route>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
