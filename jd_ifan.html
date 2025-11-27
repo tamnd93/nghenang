@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Thông Tin JD Showroom iFan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Warm Neutrals (Stone/Orange/Blue) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        ifan: {
+                            orange: '#ea580c', // Orange 600
+                            blue: '#0284c7',   // Sky 600
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f5f5f4; /* Stone 100 */
+        }
+        .node-connector::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            width: 2px;
+            height: 20px;
+            background-color: #d6d3d1;
+            transform: translateX(-50%);
+        }
+        .node-connector-parent::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            width: 2px;
+            height: 20px;
+            background-color: #d6d3d1;
+            transform: translateX(-50%);
+        }
+        .horizontal-bar {
+            position: absolute;
+            top: -20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background-color: #d6d3d1;
+        }
+        .active-role {
+            border-color: #ea580c !important;
+            background-color: #fff7ed !important; /* Orange 50 */
+            box-shadow: 0 4px 6px -1px rgba(234, 88, 12, 0.2);
+        }
+        .task-item::before {
+            content: "•";
+            color: #ea580c;
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="text-stone-800 font-sans p-4 md:p-8 max-w-7xl mx-auto">
+
+    <!-- Header Section -->
+    <header class="mb-10 border-b border-stone-300 pb-6 flex flex-col md:flex-row justify-between items-start md:items-end">
+        <div>
+            <h1 class="text-3xl font-bold text-stone-900 tracking-tight mb-2">Bộ Mô Tả Công Việc (JD) <span class="text-ifan-orange">Showroom iFan</span></h1>
+            <p class="text-stone-600 text-sm max-w-2xl">
+                Hệ thống chuẩn hóa trách nhiệm, quyền hạn và tiêu chí đánh giá cho nhân sự khối Showroom.
+            </p>
+        </div>
+        <div class="mt-4 md:mt-0 text-right text-sm text-stone-500 bg-white p-3 rounded-lg border border-stone-200 shadow-sm">
+            <div><span class="font-semibold text-stone-700">Hiệu lực:</span> 01/01/2026</div>
+            <div><span class="font-semibold text-stone-700">Đề xuất:</span> Trưởng phòng KD</div>
+            <div><span class="font-semibold text-stone-700">Phê duyệt:</span> Tổng Giám Đốc</div>
+        </div>
+    </header>
+
+    <!-- Context Section: Org Chart Navigation -->
+    <section class="mb-12">
+        <div class="mb-4">
+            <h2 class="text-xl font-bold text-ifan-dark border-l-4 border-ifan-orange pl-3">1. Cấu Trúc Tổ Chức & Điều Hành</h2>
+            <p class="mt-2 text-stone-600">
+                Sơ đồ dưới đây thể hiện mối quan hệ báo cáo. Nhấp vào từng <span class="font-bold text-ifan-orange">vị trí</span> để xem chi tiết JD.
+            </p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center py-6 overflow-x-auto">
+            <!-- Level 1: Sales Manager (Context only) -->
+            <div class="mb-10 relative node-connector-parent">
+                <div class="bg-stone-800 text-white px-6 py-3 rounded-lg shadow-md font-bold text-center w-64 border-2 border-stone-800">
+                    Trưởng Phòng Kinh Doanh
+                    <div class="text-xs font-normal text-stone-400 mt-1">Người quản lý trực tiếp</div>
+                </div>
+            </div>
+
+            <!-- Level 2: Store Manager -->
+            <div class="mb-10 relative node-connector node-connector-parent group">
+                <button onclick="loadRole('manager')" id="btn-manager" class="role-btn bg-white hover:border-ifan-orange text-stone-900 px-6 py-3 rounded-lg shadow-sm border-2 border-stone-200 font-bold text-center w-64 transition-all duration-200 active-role">
+                    Cửa Hàng Trưởng
+                    <div class="text-xs font-normal text-stone-500 mt-1">Quản lý Showroom</div>
+                </button>
+            </div>
+
+            <!-- Level 3: Staff -->
+            <div class="relative w-full max-w-5xl">
+                <!-- Horizontal Connecting Line -->
+                <div class="horizontal-bar"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+                    <!-- Staff 1 -->
+                    <div class="relative node-connector flex justify-center">
+                        <button onclick="loadRole('sales_b2b')" id="btn-sales_b2b" class="role-btn bg-white hover:border-ifan-orange text-stone-900 px-4 py-3 rounded-lg shadow-sm border-2 border-stone-200 font-semibold text-center w-full transition-all duration-200">
+                            NV KD Thị Trường
+                            <div class="text-xs font-normal text-stone-500 mt-1">B2B / Dự án</div>
+                        </button>
+                    </div>
+                    <!-- Staff 2 -->
+                    <div class="relative node-connector flex justify-center">
+                        <button onclick="loadRole('sales_admin')" id="btn-sales_admin" class="role-btn bg-white hover:border-ifan-orange text-stone-900 px-4 py-3 rounded-lg shadow-sm border-2 border-stone-200 font-semibold text-center w-full transition-all duration-200">
+                            NV Bán Hàng (Showroom)
+                            <div class="text-xs font-normal text-stone-500 mt-1">Sales Admin</div>
+                        </button>
+                    </div>
+                    <!-- Staff 3 -->
+                    <div class="relative node-connector flex justify-center">
+                        <button onclick="loadRole('warehouse')" id="btn-warehouse" class="role-btn bg-white hover:border-ifan-orange text-stone-900 px-4 py-3 rounded-lg shadow-sm border-2 border-stone-200 font-semibold text-center w-full transition-all duration-200">
+                            Nhân Viên Kho
+                            <div class="text-xs font-normal text-stone-500 mt-1">Thủ kho</div>
+                        </button>
+                    </div>
+                    <!-- Staff 4 -->
+                    <div class="relative node-connector flex justify-center">
+                        <button onclick="loadRole('driver')" id="btn-driver" class="role-btn bg-white hover:border-ifan-orange text-stone-900 px-4 py-3 rounded-lg shadow-sm border-2 border-stone-200 font-semibold text-center w-full transition-all duration-200">
+                            Tài Xế Giao Hàng
+                            <div class="text-xs font-normal text-stone-500 mt-1">Kiêm bốc xếp</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detail View Section -->
+    <section id="role-detail-view" class="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
+        
+        <!-- Left Col: Strategic Profile & Viz -->
+        <div class="lg:col-span-1 space-y-6">
+            
+            <!-- Strategic Profile Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-ifan-blue bg-blue-50 px-2 py-1 rounded">Vị trí đang chọn</span>
+                    <h2 id="role-title" class="text-2xl font-bold text-stone-900 mt-2">Cửa Hàng Trưởng</h2>
+                </div>
+                
+                <div class="space-y-4 text-sm">
+                    <div>
+                        <span class="text-stone-500 block mb-1">Báo cáo trực tiếp cho:</span>
+                        <div id="reports-to" class="font-semibold text-stone-800 flex items-center">
+                            <span class="w-2 h-2 bg-stone-800 rounded-full mr-2"></span>
+                            Trưởng phòng Kinh Doanh
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-stone-500 block mb-1">Phạm vi hoạt động:</span>
+                        <div id="scope" class="font-semibold text-stone-800 flex items-center">
+                            <span class="w-2 h-2 bg-ifan-orange rounded-full mr-2"></span>
+                            Showroom & Quản lý đội nhóm
+                        </div>
+                    </div>
+                    <div class="bg-stone-50 p-3 rounded border border-stone-100">
+                        <span class="text-stone-500 block mb-1 font-bold">Mục tiêu cốt lõi:</span>
+                        <p id="core-goal" class="text-stone-700 italic">
+                            Chịu trách nhiệm cuối cùng về Doanh số, Hàng hóa và Hình ảnh tại Showroom.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Allocation Viz (Cards instead of Chart) -->
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <h3 class="font-bold text-stone-800 mb-4 border-b pb-2">Trọng Số Công Việc</h3>
+                
+                <!-- Cards Container -->
+                <div id="distribution-cards" class="space-y-3">
+                    <!-- Dynamic cards will be injected here -->
+                </div>
+                
+                <p class="text-xs text-center text-stone-500 mt-4">Tỷ lệ thời gian làm việc gợi ý.</p>
+            </div>
+
+        </div>
+
+        <!-- Right Col: Detailed Responsibilities & KPIs -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Tasks Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <h3 class="text-xl font-bold text-ifan-dark mb-4 flex items-center">
+                    <span class="bg-ifan-orange text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">✓</span>
+                    Nhiệm Vụ & Trách Nhiệm Chi Tiết
+                </h3>
+                <p class="mb-6 text-stone-600 text-sm">Dưới đây là các đầu việc cụ thể cần thực hiện hàng ngày/tuần.</p>
+
+                <div id="tasks-container" class="space-y-6">
+                    <!-- Dynamic Content will be injected here -->
+                </div>
+            </div>
+
+            <!-- KPI Section -->
+            <div>
+                <h3 class="text-xl font-bold text-ifan-dark mb-4 flex items-center">
+                    <span class="bg-ifan-blue text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">📊</span>
+                    Tiêu Chí Đánh Giá (KPIs)
+                </h3>
+                <div id="kpi-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Dynamic KPIs -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-stone-400 text-sm py-8 border-t border-stone-200">
+        <p>© 2026 iFan Internal Document. Confidential.</p>
+    </footer>
+
+    <!-- DATA & LOGIC -->
+    <script>
+        // --- DATA STORE ---
+        const rolesData = {
+            manager: {
+                title: "Cửa Hàng Trưởng",
+                reportsTo: "Trưởng phòng Kinh Doanh",
+                scope: "Tại Showroom & Quản lý đội nhóm",
+                goal: "Chịu trách nhiệm cuối cùng về Doanh số, Hàng hóa và Hình ảnh tại Showroom.",
+                distribution: [40, 30, 30], // % for cards
+                distributionLabels: ["Quản lý Kinh doanh", "Vận hành & Hàng hóa", "Quản lý Nhân sự"],
+                tasks: [
+                    {
+                        category: "Quản lý kinh doanh (40%)",
+                        items: [
+                            "Lập kế hoạch bán hàng tuần/tháng dựa trên chỉ tiêu Phòng Kinh Doanh giao.",
+                            "Trực tiếp tư vấn và chốt các đơn hàng lớn, khách công trình/dự án ghé thăm.",
+                            "<strong>Quyền Duyệt Giá Nhanh:</strong> Quyết định giảm giá tối đa <strong>5-7%</strong> để chốt đơn ngay mà không cần xin ý kiến."
+                        ]
+                    },
+                    {
+                        category: "Quản lý vận hành & Hàng hóa (30%)",
+                        items: [
+                            "Kiểm soát tồn kho thực tế và trên sổ sách (tránh mất mát, lệch kho).",
+                            "Chịu trách nhiệm đặt hàng dự trữ (Forecast) về kho showroom cho mùa cao điểm.",
+                            "Quản lý tiền mặt/công nợ, nộp về Kế toán đúng quy định (trong 24h)."
+                        ]
+                    },
+                    {
+                        category: "Quản lý nhân sự (30%)",
+                        items: [
+                            "Sắp xếp ca làm việc, chấm công nhân viên.",
+                            "Đào tạo nhân viên mới (Kiến thức sản phẩm & Kỹ năng bán hàng)."
+                        ]
+                    }
+                ],
+                kpis: [
+                    "Tổng doanh thu Showroom (% so với Mục tiêu)",
+                    "Tỷ lệ thất thoát hàng hóa/tiền mặt (Mục tiêu: 0%)",
+                    "Điểm đánh giá tuân thủ quy trình & vệ sinh (Audit)"
+                ]
+            },
+            sales_b2b: {
+                title: "NV Kinh Doanh Thị Trường",
+                reportsTo: "Cửa Hàng Trưởng",
+                scope: "Bên ngoài (Công trình, KCN, Nhà xưởng)",
+                goal: "Tìm kiếm khách hàng dự án mới và phủ sóng hình ảnh iFan tại các công trình.",
+                distribution: [70, 30],
+                distributionLabels: ["Phát triển thị trường", "Chăm sóc khách hàng"],
+                tasks: [
+                    {
+                        category: "Phát triển thị trường (70%)",
+                        items: [
+                            "Mang Catalog/hồ sơ năng lực chào trực tiếp tại công trình xây dựng, nhà xưởng.",
+                            "Tìm kiếm, tạo quan hệ với thầu điện nước, thầu xây dựng nhỏ lẻ.",
+                            "Thu thập thông tin dự án mới báo cáo về Trưởng phòng KD/Cửa hàng trưởng."
+                        ]
+                    },
+                    {
+                        category: "Chăm sóc khách hàng (30%)",
+                        items: [
+                            "Theo dõi tiến độ giao hàng, lắp đặt cho khách.",
+                            "Hỗ trợ kế toán thu hồi công nợ các đơn hàng mình phụ trách."
+                        ]
+                    }
+                ],
+                kpis: [
+                    "Doanh số cá nhân",
+                    "Số lượng khách hàng mới (New Accounts)",
+                    "Số lượt đi gặp khách hàng/tuần (Visit counts)"
+                ]
+            },
+            sales_admin: {
+                title: "NV Bán Hàng (Tại Showroom)",
+                reportsTo: "Cửa Hàng Trưởng",
+                scope: "Tại Showroom & Online",
+                goal: "Đảm bảo trải nghiệm khách hàng tại điểm bán và hỗ trợ hành chính.",
+                distribution: [50, 50],
+                distributionLabels: ["Bán hàng & Tiếp khách", "Hành chính & Hậu cần"],
+                tasks: [
+                    {
+                        category: "Bán hàng & Tiếp khách (50%)",
+                        items: [
+                            "Đón tiếp khách, tư vấn sản phẩm và chốt đơn tại chỗ.",
+                            "Trực điện thoại, trả lời tin nhắn Zalo/Fanpage nhanh chóng."
+                        ]
+                    },
+                    {
+                        category: "Hành chính & Hậu cần (50%)",
+                        items: [
+                            "Soạn thảo báo giá, hợp đồng, phiếu xuất kho trên phần mềm.",
+                            "Vệ sinh hàng hóa trưng bày, đảm bảo máy sạch, điện/nước sẵn sàng.",
+                            "Tổng hợp báo cáo doanh số ngày gửi Cửa hàng trưởng lúc 17:00."
+                        ]
+                    }
+                ],
+                kpis: [
+                    "Doanh số cá nhân (hoặc nhóm)",
+                    "Tỷ lệ phản hồi tin nhắn (Response rate)",
+                    "Sự chính xác của chứng từ (không sai giá, mã hàng)"
+                ]
+            },
+            warehouse: {
+                title: "Nhân Viên Kho",
+                reportsTo: "Cửa Hàng Trưởng",
+                scope: "Kho Showroom",
+                goal: "Đảm bảo độ chính xác tồn kho và tốc độ soạn hàng.",
+                distribution: [60, 40],
+                distributionLabels: ["Quản lý Xuất - Nhập", "Quản lý Tồn kho"],
+                tasks: [
+                    {
+                        category: "Quản lý Xuất - Nhập (60%)",
+                        items: [
+                            "Nhập hàng từ Nhà máy (kiểm đếm, kiểm tra ngoại quan).",
+                            "Soạn hàng, đóng gói theo Phiếu xuất kho từ Sales."
+                        ]
+                    },
+                    {
+                        category: "Quản lý Tồn kho (40%)",
+                        items: [
+                            "Sắp xếp kho gọn gàng theo nguyên tắc Nhập trước - Xuất trước (FIFO).",
+                            "Kiểm kê định kỳ tuần/tháng.",
+                            "Báo cáo sản phẩm hỏng hóc, trầy xước."
+                        ]
+                    }
+                ],
+                kpis: [
+                    "Độ chính xác tồn kho (Thực tế vs Sổ sách)",
+                    "Thời gian soạn hàng (Tốc độ)",
+                    "Tỷ lệ hư hỏng, mất mát trong kho"
+                ]
+            },
+            driver: {
+                title: "Tài Xế Kiêm Giao Hàng",
+                reportsTo: "Cửa Hàng Trưởng",
+                scope: "Vận chuyển & Kho",
+                goal: "Giao hàng an toàn, đúng giờ và hỗ trợ bốc xếp.",
+                distribution: [50, 40, 10],
+                distributionLabels: ["Vận chuyển", "Bốc xếp & Giao nhận", "Thu tiền"],
+                tasks: [
+                    {
+                        category: "Vận chuyển (50%)",
+                        items: [
+                            "Lái xe giao hàng theo lộ trình phân công.",
+                            "Bảo quản hàng hóa an toàn, chằng buộc kỹ.",
+                            "Bảo dưỡng xe định kỳ (rửa xe, thay nhớt)."
+                        ]
+                    },
+                    {
+                        category: "Bốc xếp & Giao nhận (40%)",
+                        items: [
+                            "<strong>Trực tiếp bốc vác</strong> hàng hóa lên/xuống xe (tại kho và nhà khách).",
+                            "Lắp đặt cơ bản (bánh xe) và hướng dẫn khách sử dụng.",
+                            "Lấy chữ ký biên bản bàn giao."
+                        ]
+                    },
+                    {
+                        category: "Thu tiền (10%)",
+                        items: [
+                            "Thu hộ tiền mặt (COD) và nộp lại ngay cho Cửa hàng trưởng."
+                        ]
+                    }
+                ],
+                kpis: [
+                    "Số chuyến giao thành công",
+                    "Giao hàng đúng giờ",
+                    "Không làm hư hỏng hàng hóa khi vận chuyển"
+                ]
+            }
+        };
+
+        // --- FUNCTIONS ---
+        function loadRole(roleId) {
+            const data = rolesData[roleId];
+            if (!data) return;
+
+            // 1. Update Active Button State
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('active-role');
+            });
+            document.getElementById(`btn-${roleId}`).classList.add('active-role');
+
+            // 2. Update Text Info
+            document.getElementById('role-title').innerText = data.title;
+            document.getElementById('reports-to').innerHTML = `<span class="w-2 h-2 bg-stone-800 rounded-full mr-2"></span>${data.reportsTo}`;
+            document.getElementById('scope').innerHTML = `<span class="w-2 h-2 bg-ifan-orange rounded-full mr-2"></span>${data.scope}`;
+            document.getElementById('core-goal').innerText = data.goal;
+
+            // 3. Render Tasks
+            const taskContainer = document.getElementById('tasks-container');
+            taskContainer.innerHTML = '';
+            data.tasks.forEach(group => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'border-l-4 border-stone-300 pl-4 py-1';
+                
+                const header = document.createElement('h4');
+                header.className = 'font-bold text-stone-800 mb-2';
+                header.innerText = group.category;
+                
+                const ul = document.createElement('ul');
+                ul.className = 'pl-5 text-stone-600 space-y-2';
+                
+                group.items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'task-item pl-0';
+                    li.innerHTML = item; // Allow HTML for bold tags
+                    ul.appendChild(li);
+                });
+
+                groupDiv.appendChild(header);
+                groupDiv.appendChild(ul);
+                taskContainer.appendChild(groupDiv);
+            });
+
+            // 4. Render KPIs
+            const kpiContainer = document.getElementById('kpi-container');
+            kpiContainer.innerHTML = '';
+            data.kpis.forEach(kpi => {
+                const card = document.createElement('div');
+                card.className = 'bg-stone-50 border border-stone-200 p-4 rounded-lg flex items-start';
+                card.innerHTML = `
+                    <div class="text-ifan-blue mr-3 mt-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <span class="text-stone-700 font-medium text-sm">${kpi}</span>
+                `;
+                kpiContainer.appendChild(card);
+            });
+
+            // 5. Render Allocation Cards (New Feature)
+            renderDistributionCards(data.distribution, data.distributionLabels);
+        }
+
+        function renderDistributionCards(dataPoints, labels) {
+            const container = document.getElementById('distribution-cards');
+            container.innerHTML = '';
+
+            // Colors for variety (Orange, Blue, Stone)
+            const colors = ['border-ifan-orange', 'border-ifan-blue', 'border-stone-500'];
+            const textColors = ['text-ifan-orange', 'text-ifan-blue', 'text-stone-600'];
+
+            dataPoints.forEach((value, index) => {
+                const card = document.createElement('div');
+                // Use modulus to cycle colors
+                const colorClass = colors[index % colors.length];
+                const textColorClass = textColors[index % textColors.length];
+
+                card.className = `bg-stone-50 p-3 rounded-lg border-l-4 ${colorClass} shadow-sm flex justify-between items-center transition hover:bg-white`;
+                
+                card.innerHTML = `
+                    <span class="text-sm font-semibold text-stone-700">${labels[index]}</span>
+                    <span class="text-xl font-bold ${textColorClass}">${value}%</span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRole('manager'); // Load Store Manager by default
+        });
+
+    </script>
+</body>
+</html>
