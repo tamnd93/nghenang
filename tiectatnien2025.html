@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year-End Party & Honors 2025 - Nghệ Năng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* 1. THE SETUP */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a1a;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 0;
+  place-items: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Slide Container: 1280x720 Fixed */
+.slide-container {
+  align-items: center;
+  background: radial-gradient(circle at top right, #064e3b, #022c22); /* Dark Green Theme */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  height: 720px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px;
+  position: relative;
+  width: 1280px;
+}
+
+/* Background overlay for pattern */
+.slide-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fbbf24' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 0;
+  pointer-events: none;
+}
+
+.slide-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 2. TYPOGRAPHY UPDATED */
+.slide-container h1,
+.slide-container h2,
+.slide-container h3,
+.slide-container .slide-title,
+.slide-container th,
+.slide-container .highlight-number,
+.slide-container .bar-label,
+.slide-container .timeline-time,
+.slide-container .timeline-dot,
+.slide-container strong { 
+  color: #fbbf24; /* Gold */
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container td,
+.slide-container .subtitle,
+.slide-container .label,
+.slide-container .chart-summary,
+.slide-container .highlight-label {
+  color: #ecfdf5; /* Mint Cream */
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Specific Adjustments */
+.slide-container h1 {
+  font-size: 80px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  line-height: 1.1;
+}
+
+.slide-container .slide-title {
+  font-size: 48px;
+  margin-bottom: 40px;
+  text-align: left;
+  width: 100%;
+  border-bottom: 3px solid #fbbf24;
+  padding-bottom: 15px;
+}
+
+.slide-container h3 {
+  font-size: 28px;
+  color: #fcd34d;
+  margin-bottom: 15px;
+}
+
+.slide-container .subtitle {
+  font-size: 24px;
+  color: #d1fae5;
+  margin-top: 10px;
+  text-transform: none;
+}
+
+/* 3. LAYOUTS */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Title Layout */
+.title-layout {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* Darken overlay for better text contrast on image */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.title-layout hr {
+    width: 200px;
+    border: 2px solid #fbbf24;
+    margin: 20px 0;
+}
+
+/* Two Column */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+
+/* Image Wrapper */
+.image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  border: 2px solid #fbbf24;
+  height: 400px;
+  width: 100%;
+  position: relative;
+  background: #022c22;
+}
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.two-column .image-wrapper img {
+    object-fit: cover; 
+}
+
+/* Fallback Icon */
+.fallback-icon {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fbbf24;
+    background: rgba(255,255,255,0.05);
+}
+.fallback-icon i {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+/* Tiled Content */
+.tiled-content {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  align-items: stretch;
+}
+.tile {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+  padding: 30px;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tile .icon {
+  font-size: 48px;
+  color: #fbbf24;
+  margin-bottom: 20px;
+}
+.tile h3 {
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Highlight Numbers */
+.highlight-numbers-layout {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  text-align: center;
+}
+.highlight-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.highlight-number {
+  font-size: 100px;
+  font-weight: 700;
+  color: #fbbf24;
+  line-height: 1;
+}
+.highlight-label {
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 10px;
+  font-family: 'Arial', sans-serif; 
+}
+
+/* Timeline */
+.timeline-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+}
+.timeline-line {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(251, 191, 36, 0.3);
+  z-index: 0;
+}
+.timeline-item {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  flex: 1;
+  padding: 0 10px;
+}
+.timeline-dot {
+  width: 40px;
+  height: 40px;
+  background: #fbbf24;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  border: 4px solid #064e3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #064e3b;
+  font-family: 'Oswald', sans-serif;
+}
+.timeline-time {
+    font-weight: 700;
+    color: #fbbf24;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+/* Table */
+.table-layout table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.table-layout th {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  font-weight: 700;
+  text-align: left;
+  padding: 15px;
+  font-size: 22px;
+  border-bottom: 2px solid #fbbf24;
+}
+.table-layout td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 19px;
+  font-family: 'Arial', sans-serif;
+}
+.table-layout tr:last-child td {
+  border-bottom: none;
+}
+
+/* Bleed Image */
+.slide-container.bleed-image-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  padding: 0;
+  gap: 0;
+}
+.slide-container.bleed-image-layout .content-container {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.slide-container.bleed-image-layout .image-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: #022c22;
+}
+.slide-container.bleed-image-layout img.bleed-image-side {
+  width: 100%;
+  height: 100%;
+  max-height: 720px;
+  object-fit: cover;
+}
+
+/* Bar Chart */
+.chart-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.bar-label {
+  width: 200px;
+  text-align: right;
+  font-weight: 700;
+  color: #d1fae5;
+  font-size: 20px;
+}
+.bar-track {
+  flex-grow: 1;
+  background: rgba(255,255,255,0.1);
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 15px;
+  color: #064e3b;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Full Background */
+.full-bg-image {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.full-bg-image .content-overlay {
+  background: rgba(6, 78, 59, 0.9);
+  padding: 50px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid #fbbf24;
+  position: relative;
+  z-index: 2;
+}
+
+/* Styled Lists */
+.styled-list ul {
+  list-style: none;
+  padding: 0;
+}
+.styled-list li {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+}
+.styled-list li i {
+  color: #fbbf24;
+  margin-right: 15px;
+  margin-top: 5px;
+}
+.styled-list li strong {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.5px;
+    margin-right: 5px;
+}
+
+    </style>
+</head>
+<body>
+
+
+<!-- SLIDE 1: Updated with Background Image -->
+<div class="slide-container full-bg-image" id="slide1" style="background-image: url('http://googleusercontent.com/image_generation_content/0');">
+    <div class="title-layout">
+        <p class="subtitle" style="text-transform: uppercase; font-family: 'Oswald', sans-serif;">Công Ty TNHH Công Nghiệp Nghệ Năng</p>
+        <hr>
+        <h1>Tiệc Tất Niên &<br>Vinh Danh Năm 2025</h1>
+        <h2>Vững Nền Tảng - Sáng Tương Lai</h2>
+        <p class="subtitle" style="margin-top:30px;"><i class="fa-solid fa-calendar-days"></i> Early 2025 &nbsp;|&nbsp; <i class="fa-solid fa-location-dot"></i> Thuận An, Bình Dương</p>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">Mục Tiêu Chương Trình</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Tổng Kết & Vinh Danh</h3>
+                <p>Tổng kết hoạt động 2025, vinh danh tập thể, cá nhân và đối tác xuất sắc đã đồng hành cùng công ty.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-handshake"></i></div>
+                <h3>Gắn Kết Đội Ngũ</h3>
+                <p>Tăng cường sự gắn kết nội bộ, tri ân Nhà phân phối, xây dựng niềm tin và sức mạnh tập thể.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-rocket"></i></div>
+                <h3>Định Hướng 2026</h3>
+                <p>Truyền tải thông điệp "Vững nền tảng - Sáng tương lai", tạo động lực bứt phá cho toàn hệ thống.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- SLIDE 3: Updated Image -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">Chủ Đề & Ý Tưởng</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="styled-list">
+                <h3>Vững Nền Tảng - Sáng Tương Lai</h3>
+                <p>Khẳng định sự bền vững sau năm 2025 nhiều thách thức, sẵn sàng mở rộng thị phần.</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle"></i> <strong>Xanh Lá:</strong> Biểu tượng của sức sống, sự bền vững và môi trường.</li>
+                    <li><i class="fa-solid fa-circle" style="color:#fbbf24;"></i> <strong>Vàng Kim:</strong> Biểu tượng của sự thịnh vượng, phát triển và vinh quang.</li>
+                    <li><i class="fa-solid fa-quote-left"></i> <strong>Thông điệp:</strong> "Năng suất vững – Gió mát lành – Nhà ấm êm"</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_generation_content/0" alt="Luxurious corporate party stage with green and gold theme" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="fallback-icon">
+                    <i class="fa-solid fa-palette"></i>
+                    <span>Sân khấu chủ đạo: Xanh & Vàng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">Thông Tin Tổ Chức</h2>
+    <div class="content-area">
+        <div class="highlight-numbers-layout">
+            <div class="highlight-item">
+                <div class="highlight-number">160</div>
+                <div class="highlight-label">Khách Tham Dự<br>(130 NV + 30 Khách Mời)</div>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-number">220</div>
+                <div class="highlight-label">Triệu VNĐ<br>Ngân Sách Dự Kiến</div>
+            </div>
+            <div class="highlight-item">
+                <div class="highlight-number"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div class="highlight-label">Thuận An<br>Bình Dương</div>
+            </div>
+        </div>
+        <p class="chart-summary" style="text-align:center; margin-top:50px;">Địa điểm ưu tiên: Nhà hàng/Trung tâm hội nghị cao cấp tuyến Quốc lộ 13 (tương đương Vạn Lộc Phát Palace).</p>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">Khung Chương Trình (17:30 - 21:50)</h2>
+    <div class="content-area">
+        <div class="timeline-layout">
+            <div class="timeline-line"></div>
+            <div class="timeline-item">
+                <div class="timeline-dot">01</div>
+                <div class="timeline-time">17:30</div>
+                <h3>Đón Khách</h3>
+                <p>Check-in & Clip Mở Màn</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">02</div>
+                <div class="timeline-time">18:30</div>
+                <h3>Khai Mạc</h3>
+                <p>Phát biểu Lãnh đạo</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">03</div>
+                <div class="timeline-time">19:00</div>
+                <h3>Vinh Danh</h3>
+                <p>Trao giải NV & NPP Xuất sắc</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">04</div>
+                <div class="timeline-time">20:20</div>
+                <h3>Văn Nghệ & Game</h3>
+                <p>Nghệ Năng Talent & Bốc thăm</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">05</div>
+                <div class="timeline-time">21:35</div>
+                <h3>Bế Mạc</h3>
+                <p>Trao quà & Tiễn khách</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- SLIDE 6: Image with Fallback -->
+<div class="slide-container bleed-image-layout" id="slide6">
+    <div class="content-container">
+        <h2 class="slide-title">Hạng Mục Vinh Danh</h2>
+        <div class="styled-list">
+            <ul>
+                <li><i class="fa-solid fa-trophy"></i> <strong>Kênh Dự Án (Project):</strong> 1 Cá nhân + 1 Tập thể</li>
+                <li><i class="fa-solid fa-trophy"></i> <strong>Kênh OEM:</strong> 1 Cá nhân + 1 Tập thể</li>
+                <li><i class="fa-solid fa-trophy"></i> <strong>Kênh Đại Lý (GT):</strong> 1 Cá nhân + 1 Tập thể</li>
+                <li><i class="fa-solid fa-trophy"></i> <strong>Kênh Showroom/VP:</strong> 1 Cá nhân + 1 Tập thể</li>
+                <li><i class="fa-solid fa-medal"></i> <strong>Nhà Phân Phối Tiêu Biểu:</strong> 2-3 Đối tác xuất sắc nhất</li>
+            </ul>
+            <p><strong>Cơ cấu:</strong> Cúp pha lê cao cấp + Bằng khen + Hoa.</p>
+        </div>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/10045245357726511439" alt="Crystal awards on stage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="fallback-icon">
+            <i class="fa-solid fa-award"></i>
+            <span>Cúp Vinh Danh & Bằng Khen</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">Hoạt Động Gắn Kết</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-flag-checkered"></i></div>
+                <h3>Game 1: Thách Thức Đội Kênh</h3>
+                <p>Thi đua kiến thức giữa 4 đội kênh. Giải thưởng tiền mặt và quà tặng nhỏ. Mục tiêu tăng tương tác đầu tiệc.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-music"></i></div>
+                <h3>Nghệ Năng Talent</h3>
+                <p>3 Tiết mục văn nghệ nội bộ chất lượng cao (Đơn ca/Song ca) được tuyển chọn kỹ lưỡng.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                <h3>Game 2: Lì Xì May Mắn</h3>
+                <p>50 phong bì lì xì (200k/phần) cho khách may mắn. Bốc thăm số thứ tự ngẫu nhiên tạo sự hồi hộp.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">Cơ Cấu Giải Thưởng (Rút Thăm)</h2>
+    <div class="content-area">
+        <div class="table-layout">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Giải Thưởng</th>
+                        <th>Số Lượng</th>
+                        <th>Sản Phẩm</th>
+                        <th>Giá Trị Ước Tính</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:#fbbf24; font-family: 'Oswald', sans-serif; text-transform:uppercase;"><i class="fa-solid fa-star"></i> Đặc Biệt</td>
+                        <td>01</td>
+                        <td>Smart TV 55–65 inch</td>
+                        <td>15.000.000 VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Giải Nhất</strong></td>
+                        <td>02</td>
+                        <td>Điều hoà Inverter 12.000 BTU</td>
+                        <td>12.000.000 VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Giải Nhì</strong></td>
+                        <td>03</td>
+                        <td>Tủ lạnh Inverter 200–220L</td>
+                        <td>15.000.000 VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Giải Ba</strong></td>
+                        <td>04</td>
+                        <td>Máy giặt cửa trên 8kg</td>
+                        <td>16.000.000 VNĐ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Khuyến Khích</strong></td>
+                        <td>10</td>
+                        <td>Nồi cơm điện / Quạt điều hòa</td>
+                        <td>10.000.000 VNĐ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- SLIDE 9: Image with Fallback -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">Quà Tặng Door Gift</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="styled-list">
+                <h3><i class="fa-solid fa-user-group"></i> Set Tết An Khang (CBNV)</h3>
+                <ul>
+                    <li>Bánh quy bơ cao cấp</li>
+                    <li>Dầu ăn sức khỏe (Oliu/Gạo lứt)</li>
+                    <li>Hạt dinh dưỡng & Trà thảo mộc</li>
+                    <li><em>Định mức: 380k - 400k/set</em></li>
+                </ul>
+                <h3 style="margin-top:30px;"><i class="fa-solid fa-handshake-simple"></i> Set Tri Ân (Đối Tác)</h3>
+                <ul>
+                    <li>Rượu vang đỏ cao cấp</li>
+                    <li>Yến chưng hoặc Đông trùng hạ thảo</li>
+                    <li>Hạt nhập khẩu & Thiệp chúc mừng</li>
+                    <li><em>Định mức: 750k/set</em></li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/12812106948860927635" alt="Premium Lunar New Year Gift Set" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                 <div class="fallback-icon">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>Set Quà Tết & Rượu Vang</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide10">
+    <h2 class="slide-title">Phân Bổ Ngân Sách (Dự Kiến: 220 Tr)</h2>
+    <div class="content-area">
+        <div class="chart-container">
+            <div class="bar-row">
+                <div class="bar-label">Quà Tặng (Door Gift)</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 34%;">74 Tr</div>
+                </div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">Giải Thưởng & Quà</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 31%;">67 Tr</div>
+                </div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">Tiệc Ăn Uống</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 30%;">65 Tr</div>
+                </div>
+            </div>
+            <div class="bar-row">
+                <div class="bar-label">Setup & Media</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 10%;">21 Tr</div>
+                </div>
+            </div>
+             <div class="bar-row">
+                <div class="bar-label">Dự Phòng</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 6%;">12 Tr</div>
+                </div>
+            </div>
+        </div>
+        <p class="chart-summary" style="text-align:center; margin-top:30px; font-size:16px;">* Ngân sách chưa bao gồm VAT. Đã bao gồm dự phòng 5% cho phát sinh.</p>
+    </div>
+</div>
+
+
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">Tiến Độ Thực Hiện</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="styled-list">
+                <h3>Trước Sự Kiện</h3>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> <strong>Trước 10 ngày:</strong> Chốt địa điểm, gửi thư mời, book MC/Media.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Trước 7 ngày:</strong> Duyệt văn nghệ, quay clip mở màn, in ấn phẩm.</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>Trước 3 ngày:</strong> Chốt số lượng khách, test thiết bị kỹ thuật.</li>
+                </ul>
+            </div>
+             <div class="styled-list">
+                <h3>Ngày Sự Kiện</h3>
+                <ul>
+                    <li><i class="fa-solid fa-clock"></i> <strong>14h00:</strong> Setup quà tặng, sân khấu, tổng duyệt lần cuối.</li>
+                    <li><i class="fa-solid fa-clock"></i> <strong>17h30:</strong> Đón khách & Check-in.</li>
+                    <li><i class="fa-solid fa-clock"></i> <strong>21h30:</strong> Kết thúc, báo cáo & dọn dẹp.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- SLIDE 12: Updated Background -->
+<div class="slide-container full-bg-image" id="slide12" style="background-image: url('http://googleusercontent.com/image_generation_content/0');">
+    <div class="content-overlay">
+        <h1>Sẵn Sàng Bứt Phá 2026</h1>
+        <p style="font-size: 24px; margin-bottom: 30px;">Kính trình Ban Lãnh Đạo xem xét và phê duyệt ngân sách để triển khai.</p>
+        <h2 style="color: #fbbf24; border:none; text-transform: uppercase;">Xin Cảm Ơn!</h2>
+    </div>
+</div>
+
+</body>
+</html>
+```
