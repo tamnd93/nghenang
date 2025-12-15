@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Mời Tất Niên 2025 - Công ty TNHH Công Nghiệp Nghệ Năng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#10b981', 
+                        'brand-dark': '#064e3b',
+                        'brand-gold': '#d97706',
+                        'brand-gold-light': '#fef3c7', 
+                        'brand-bg-light': '#f0fdf4',
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=2070&auto=format&fit=crop')",
+                    },
+                    boxShadow: {
+                        'gold': '0 4px 14px 0 rgba(217, 119, 6, 0.39)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .text-gradient-gold {
+            background: linear-gradient(to right, #b45309, #d97706, #f59e0b, #d97706, #b45309);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        html { scroll-behavior: smooth; }
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        .gold-border { border: 1px solid rgba(217, 119, 6, 0.3); }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        
+        /* Loading Spinner */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #d97706;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 overflow-x-hidden font-sans">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-serif font-bold text-brand-dark tracking-widest">NGHỆ NĂNG</div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-gray-600">
+                <a href="#about" class="hover:text-brand-green transition-colors">THÔNG ĐIỆP</a>
+                <a href="#timeline" class="hover:text-brand-green transition-colors">CHƯƠNG TRÌNH</a>
+                <a href="#location" class="hover:text-brand-green transition-colors">ĐỊA ĐIỂM</a>
+                <a href="#rsvp" class="px-6 py-2 bg-brand-dark text-white hover:bg-brand-green transition-all rounded-full shadow-lg">XÁC NHẬN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-20"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-brand-bg-light"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto fade-in-up pt-16">
+            <p class="text-brand-green font-bold uppercase tracking-[0.3em] text-sm md:text-base mb-4">Trân trọng kính mời Quý Đối tác & Cán bộ nhân viên</p>
+            <h1 class="text-6xl md:text-8xl font-serif font-bold mb-6 text-brand-dark leading-tight drop-shadow-sm">
+                YEAR END <span class="text-gradient-gold">PARTY</span><br>
+                <span class="text-4xl md:text-6xl text-gray-800">2025</span>
+            </h1>
+            <div class="h-1 w-24 bg-brand-gold mx-auto mb-8 rounded-full"></div>
+            <h2 class="text-2xl md:text-4xl font-light text-brand-dark mb-3 font-serif italic">"Vững Nền Tảng – Sáng Tương Lai"</h2>
+            <p class="text-gray-500 text-sm md:text-lg mb-12 italic font-medium">Năng suất vững – Gió mát lành – Nhà ấm êm</p>
+            
+            <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+                <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-lg border border-gray-100 float-anim" style="animation-delay: 0s;">
+                    <span id="days" class="text-3xl md:text-5xl font-bold font-serif text-brand-dark">00</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-bold">Ngày</span>
+                </div>
+                <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-lg border border-gray-100 float-anim" style="animation-delay: 0.2s;">
+                    <span id="hours" class="text-3xl md:text-5xl font-bold font-serif text-brand-dark">00</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-bold">Giờ</span>
+                </div>
+                <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-lg border border-gray-100 float-anim" style="animation-delay: 0.4s;">
+                    <span id="minutes" class="text-3xl md:text-5xl font-bold font-serif text-brand-dark">00</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-bold">Phút</span>
+                </div>
+                <div class="flex flex-col items-center bg-white p-4 rounded-xl shadow-lg border border-gray-100 float-anim" style="animation-delay: 0.6s;">
+                    <span id="seconds" class="text-3xl md:text-5xl font-bold font-serif text-brand-gold">00</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-bold">Giây</span>
+                </div>
+            </div>
+
+            <a href="#rsvp" class="inline-block px-12 py-4 bg-gradient-to-r from-brand-dark to-brand-green text-white font-bold text-lg rounded-full hover:shadow-gold transition-all transform hover:-translate-y-1">
+                THAM GIA NGAY
+            </a>
+        </div>
+    </header>
+
+    <!-- Intro/Message Section -->
+    <section id="about" class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute -right-20 top-20 w-96 h-96 bg-brand-gold-light rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+        <div class="absolute -left-20 bottom-20 w-96 h-96 bg-brand-bg-light rounded-full mix-blend-multiply filter blur-3xl opacity-70"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="w-full md:w-1/2 fade-in-up group">
+                    <div class="relative">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-brand-gold to-brand-green rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="Party Vibes" class="relative rounded-xl shadow-2xl transition-transform duration-500 transform group-hover:scale-[1.01]">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 fade-in-up delay-200">
+                    <h3 class="text-brand-gold text-lg uppercase tracking-widest mb-2 font-bold">Thư Ngỏ</h3>
+                    <h2 class="text-4xl md:text-5xl font-serif text-brand-dark mb-8 leading-tight">Lời Tri Ân <br>Từ Ban Lãnh Đạo</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed text-justify text-lg">
+                        Năm 2025 khép lại với những thách thức đã vượt qua và những thành tựu đáng tự hào. Để tri ân sự cống hiến của tập thể CBNV và sự đồng hành quý báu của Quý Đối tác, Công ty TNHH Công Nghiệp Nghệ Năng trân trọng kính mời Quý vị đến tham dự buổi tiệc Tất niên 2025.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed text-justify text-lg">
+                        Với chủ đề <strong class="text-brand-green">"Vững Nền Tảng – Sáng Tương Lai"</strong>, chúng ta sẽ cùng nhau nhìn lại chặng đường đã qua, vinh danh những cá nhân xuất sắc và cùng nâng ly chúc mừng cho một năm 2026 rực rỡ hơn.
+                    </p>
+                    <div class="flex items-center gap-5 p-4 bg-brand-bg-light rounded-lg border border-emerald-100">
+                        <div class="w-14 h-14 bg-brand-dark rounded-full flex items-center justify-center text-white text-xl">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <p class="text-base font-bold text-brand-dark">TRƯỞNG PHÒNG KINH DOANH IFAN</p>
+                            <p class="text-sm text-brand-green font-medium">Trưởng Ban Tổ Chức</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="py-24 bg-brand-bg-light relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 fade-in-up">
+                <span class="text-brand-gold font-bold tracking-wider uppercase text-sm">Agenda</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-dark mt-2 mb-4">Lịch Trình Sự Kiện</h2>
+                <div class="h-1 w-20 bg-brand-dark mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gray-200 hidden md:block"></div>
+                <!-- Timeline Items -->
+                <div class="flex flex-col md:flex-row items-center justify-between mb-16 fade-in-up group">
+                    <div class="w-full md:w-5/12 text-center md:text-right px-4 order-2 md:order-1">
+                        <h3 class="text-2xl font-serif text-brand-dark group-hover:text-brand-green transition-colors">Đón Khách & Check-in</h3>
+                        <p class="text-gray-500 text-base mt-2">Chụp hình thảm đỏ, Nhận phiếu bốc thăm</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-4 border-brand-green z-10 order-1 md:order-2 mb-6 md:mb-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-camera text-brand-dark text-lg"></i>
+                    </div>
+                    <div class="w-full md:w-5/12 px-4 order-3 text-center md:text-left">
+                        <span class="text-4xl font-bold text-gray-200 group-hover:text-brand-gold transition-colors duration-300">17:00</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between mb-16 fade-in-up group">
+                    <div class="w-full md:w-5/12 px-4 order-2 md:order-1 text-center md:text-right">
+                        <span class="text-4xl font-bold text-gray-200 group-hover:text-brand-gold transition-colors duration-300">18:00</span>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-4 border-brand-green z-10 order-1 md:order-2 mb-6 md:mb-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-glass-cheers text-brand-dark text-lg"></i>
+                    </div>
+                    <div class="w-full md:w-5/12 text-center md:text-left px-4 order-3">
+                        <h3 class="text-2xl font-serif text-brand-dark group-hover:text-brand-green transition-colors">Khai Mạc & Phát Biểu</h3>
+                        <p class="text-gray-500 text-base mt-2">Nghi thức trang trọng, Định hướng 2026</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between mb-16 fade-in-up group">
+                    <div class="w-full md:w-5/12 text-center md:text-right px-4 order-2 md:order-1">
+                        <h3 class="text-2xl font-serif text-brand-dark group-hover:text-brand-green transition-colors">Vinh Danh & Khai Tiệc</h3>
+                        <p class="text-gray-500 text-base mt-2">Trao giải CBNV/NPP xuất sắc & Dùng tiệc tối</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-4 border-brand-green z-10 order-1 md:order-2 mb-6 md:mb-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-medal text-brand-dark text-lg"></i>
+                    </div>
+                    <div class="w-full md:w-5/12 px-4 order-3 text-center md:text-left">
+                        <span class="text-4xl font-bold text-gray-200 group-hover:text-brand-gold transition-colors duration-300">18:30</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between fade-in-up group">
+                    <div class="w-full md:w-5/12 px-4 order-2 md:order-1 text-center md:text-right">
+                        <span class="text-4xl font-bold text-gray-200 group-hover:text-brand-gold transition-colors duration-300">21:00</span>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-4 border-brand-green z-10 order-1 md:order-2 mb-6 md:mb-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-gift text-brand-dark text-lg"></i>
+                    </div>
+                    <div class="w-full md:w-5/12 text-center md:text-left px-4 order-3">
+                        <h3 class="text-2xl font-serif text-brand-dark group-hover:text-brand-green transition-colors">Giải Đặc Biệt & Bế Mạc</h3>
+                        <p class="text-gray-500 text-base mt-2">Bốc thăm may mắn & Trao quà Door Gift</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Grid -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-10 bg-white border border-gray-100 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in-up">
+                    <div class="w-16 h-16 bg-brand-bg-light rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-map-marker-alt text-3xl text-brand-green"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-brand-dark">ĐỊA ĐIỂM</h3>
+                    <p class="text-gray-500 leading-relaxed">Kim Cương Plaza<br>188 Đại lộ Bình Dương, Thuận An</p>
+                </div>
+                <div class="p-10 bg-white border border-gray-100 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in-up delay-100">
+                    <div class="w-16 h-16 bg-brand-bg-light rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-tshirt text-3xl text-brand-green"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-brand-dark">DRESS CODE</h3>
+                    <p class="text-gray-500 leading-relaxed">Sang trọng / Dạ hội<br>Màu: Xanh, Vàng, Trắng, Đen</p>
+                </div>
+                <div class="p-10 bg-white border border-gray-100 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 fade-in-up delay-200">
+                    <div class="w-16 h-16 bg-brand-bg-light rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-calendar-alt text-3xl text-brand-green"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-brand-dark">THỜI GIAN</h3>
+                    <p class="text-gray-500 leading-relaxed">17:00 - 21:30<br>Tháng 01 / 2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section id="rsvp" class="py-24 relative bg-[url('https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-fixed">
+        <div class="absolute inset-0 bg-brand-dark/80 backdrop-blur-[2px]"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto bg-white/10 backdrop-blur-md p-8 md:p-14 rounded-3xl border border-white/20 shadow-2xl fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-serif text-center text-white mb-2">Xác Nhận Tham Dự</h2>
+                <p class="text-center text-gray-200 mb-10 text-sm md:text-base">Vui lòng phản hồi trước ngày 10/01/2026 để BTC chuẩn bị chu đáo nhất.</p>
+                
+                <!-- Updated Form Structure -->
+                <form id="rsvp-form" class="space-y-6">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brand-gold-light mb-2 font-bold">Họ và Tên</label>
+                        <!-- Added name attribute to match Google Script -->
+                        <input type="text" name="Họ tên" required class="w-full bg-white/90 border-none rounded-lg p-4 text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all font-medium placeholder-gray-400" placeholder="Nhập tên của bạn">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brand-gold-light mb-2 font-bold">Số điện thoại</label>
+                            <!-- Added name attribute -->
+                            <input type="tel" name="Số điện thoại" required class="w-full bg-white/90 border-none rounded-lg p-4 text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all font-medium placeholder-gray-400" placeholder="0909xxxxxx">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-brand-gold-light mb-2 font-bold">Số lượng người</label>
+                            <!-- Added name attribute -->
+                            <select name="Số lượng" class="w-full bg-white/90 border-none rounded-lg p-4 text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all font-medium">
+                                <option value="1 Người">1 Người</option>
+                                <option value="2 Người">2 Người</option>
+                                <option value="Đi cùng trẻ em">Đi cùng trẻ em</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-brand-gold-light mb-2 font-bold">Lời nhắn (Nếu có)</label>
+                        <!-- Added name attribute -->
+                        <textarea name="Lời nhắn" class="w-full bg-white/90 border-none rounded-lg p-4 text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all font-medium placeholder-gray-400" rows="3" placeholder="Yêu cầu về món ăn, dị ứng..."></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-brand-gold to-yellow-500 text-white font-bold py-4 rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all uppercase tracking-widest text-sm md:text-base shadow-gold flex justify-center items-center">
+                        Gửi Xác Nhận
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="location" class="h-96 w-full relative">
+        <iframe 
+            src="https://maps.google.com/maps?q=188+Đại+lộ+Bình+Dương,+Thuận+Giao,+Thuận+An,+Bình+Dương,+Vietnam&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        
+        <div class="absolute top-4 left-4 bg-white p-6 rounded-xl border border-gray-100 shadow-xl max-w-sm">
+            <h3 class="text-brand-dark font-bold text-lg">Kim Cương Plaza</h3>
+            <p class="text-sm text-gray-500 mt-1"><i class="fas fa-map-pin mr-2 text-brand-green"></i>188 Đại lộ Bình Dương, Thuận Giao, Thuận An</p>
+            <a href="https://maps.app.goo.gl/m8FH5QFqwJZNiex78" target="_blank" class="text-brand-green text-xs font-bold mt-2 inline-block hover:underline">Xem trên Google Maps &rarr;</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 py-12 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center">
+            <div class="text-3xl font-serif font-bold text-brand-dark tracking-widest mb-4">NGHỆ NĂNG</div>
+            <p class="text-gray-500 text-sm mb-6">© 2025 Công ty TNHH Công Nghiệp Nghệ Năng. All rights reserved.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-400 hover:text-brand-green hover:shadow-lg transition-all"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-400 hover:text-brand-green hover:shadow-lg transition-all"><i class="fas fa-globe"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-gray-400 hover:text-brand-green hover:shadow-lg transition-all"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ----- GOOGLE SHEETS CONNECTION START -----
+            
+            // UPDATED: URL App Script đã được cập nhật
+            const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSneRU3hj2pvKgvQmSYt7lWMa5L_saEPnnQ6_XWg7F1jAwtE0u8ZQ-yoCpqDrDKZpJ/exec";
+
+            const form = document.getElementById('rsvp-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (form) {
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+                    
+                    // Show Loading State
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<div class="loader"></div> Đang gửi...';
+
+                    // Prepare data
+                    const formData = new FormData(form);
+
+                    fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData})
+                        .then(response => {
+                            alert('Cảm ơn bạn đã xác nhận tham dự! BTC sẽ liên hệ sớm nhất.');
+                            form.reset();
+                        })
+                        .catch(error => {
+                            console.error('Error!', error.message);
+                            alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+                        })
+                        .finally(() => {
+                            // Reset Button
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalBtnText;
+                        });
+                });
+            }
+            // ----- GOOGLE SHEETS CONNECTION END -----
+
+
+            // Countdown Timer
+            const countDownDate = new Date("Jan 15, 2026 17:00:00").getTime();
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const elDays = document.getElementById("days");
+                const elHours = document.getElementById("hours");
+                const elMinutes = document.getElementById("minutes");
+                const elSeconds = document.getElementById("seconds");
+
+                if (elDays) elDays.innerText = days < 10 ? "0" + days : days;
+                if (elHours) elHours.innerText = hours < 10 ? "0" + hours : hours;
+                if (elMinutes) elMinutes.innerText = minutes < 10 ? "0" + minutes : minutes;
+                if (elSeconds) elSeconds.innerText = seconds < 10 ? "0" + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    if (elDays) document.getElementById("days").innerText = "00";
+                }
+            }, 1000);
+
+            // Simple Intersection Observer
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
