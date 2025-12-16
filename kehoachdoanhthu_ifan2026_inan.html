@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kế Hoạch Kinh Doanh iFan 2026 - Bản In</title>
+    <title>Kế Hoạch Kinh Doanh iFan 2026 - Bản Full</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@
         .chart-container {
             position: relative;
             width: 100%;
-            height: 300px; /* Giảm chiều cao một chút để vừa vặn hơn khi in */
+            height: 350px;
         }
         .card {
             background-color: white;
@@ -69,35 +69,34 @@
         /* --- PRINT SPECIFIC STYLES --- */
         @media print {
             @page {
-                margin: 1cm;
+                margin: 0.5cm; /* Lề nhỏ để tận dụng diện tích giấy */
                 size: A4;
             }
             body {
                 background-color: white;
                 padding: 0;
             }
-            .no-print {
-                display: none !important;
-            }
             .card {
                 box-shadow: none;
                 border: 1px solid #e5e7eb;
-                break-inside: avoid; /* Quan trọng: Không ngắt trang giữa chừng thẻ */
+                break-inside: avoid; /* Không ngắt trang giữa chừng thẻ */
                 margin-bottom: 1cm;
             }
-            /* Đảm bảo bảng hiển thị hết, không cuộn */
             .overflow-x-auto, .custom-scroll {
                 overflow: visible !important;
             }
-            /* Ngắt trang thông minh */
             h1, h2, h3 {
                 break-after: avoid;
             }
             img, canvas, tr {
                 break-inside: avoid;
             }
-            /* Ẩn các nút tab */
-            .tab-navigation {
+            /* Ẩn các nút tab điều hướng */
+            .tab-nav-container {
+                display: none;
+            }
+            /* Ẩn các hướng dẫn tương tác */
+            .interactive-guide {
                 display: none;
             }
         }
@@ -118,7 +117,7 @@
         </div>
     </header>
 
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="card p-6 border-l-4 border-ifan-navy">
             <h3 class="text-sm uppercase text-warm-500 font-bold mb-2">Chiến Lược Chủ Đạo</h3>
             <p class="text-lg font-semibold text-warm-800">"Đánh Nhanh Thắng Lớn"</p>
@@ -146,8 +145,12 @@
         </div>
     </section>
 
-    <section class="mb-8 card p-6 break-inside-avoid">
+    <section class="mb-10 card p-6 break-inside-avoid">
         <h2 class="text-xl font-bold text-warm-800 mb-4 border-l-4 border-warm-500 pl-3">Phân Tích & Phân Bổ Doanh Thu</h2>
+        <p class="mb-6 text-warm-600 max-w-4xl interactive-guide">
+            Biểu đồ dưới đây thể hiện phân bổ doanh thu theo từng tháng.
+        </p>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2">
                 <h3 class="text-sm font-semibold text-warm-500 mb-4">Biểu Đồ Phân Bổ Doanh Thu (Triệu VNĐ)</h3>
@@ -156,270 +159,347 @@
                 </div>
             </div>
 
-            <div class="bg-warm-50 border border-warm-200 p-4 rounded flex flex-col justify-center">
-                <h3 class="text-lg font-bold text-warm-900 mb-2">Tổng Quan Năm 2026</h3>
-                <p class="text-sm text-warm-600 mb-4">
-                    Kế hoạch tập trung tối đa nguồn lực vào Quý 2. Tận dụng nguồn cung từ nhà máy Nghệ Năng để tối ưu hóa tồn kho và lợi nhuận.
-                </p>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between border-b border-warm-200 pb-2">
-                        <span>Dự Án (B2B):</span>
-                        <span class="font-bold text-ifan-blue">17.500 Tr</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Bán Lẻ (B2C):</span>
-                        <span class="font-bold text-ifan-orange">7.500 Tr</span>
+            <div class="bg-warm-50 border border-warm-200 p-6 rounded flex flex-col justify-center">
+                <div>
+                    <h3 class="text-lg font-bold text-warm-900 mb-2">Tổng Quan Năm 2026</h3>
+                    <div class="text-3xl font-bold text-ifan-blue mb-4">25.000 <span class="text-base text-warm-500 font-normal">Triệu VNĐ</span></div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase text-warm-400">Giai Đoạn</span>
+                            <p class="font-medium text-warm-800">Toàn Trình</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase text-warm-400">Trọng Tâm Hành Động</span>
+                            <p class="text-sm text-warm-600 leading-relaxed">
+                                Kế hoạch tập trung tối đa nguồn lực vào Quý 2. Tận dụng nguồn cung từ nhà máy Nghệ Năng để tối ưu hóa tồn kho và lợi nhuận.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-warm-200 mt-2">
+                             <div class="flex justify-between text-sm">
+                                 <span class="text-ifan-blue font-semibold">Dự Án: 17.500</span>
+                                 <span class="text-ifan-orange font-semibold">Bán Lẻ: 7.500</span>
+                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="mb-8">
-        <h2 class="text-xl font-bold text-warm-800 mb-6 border-l-4 border-warm-500 pl-3">Chi Tiết Hành Động (Checklist)</h2>
+    <section class="mb-10">
+        <h2 class="text-xl font-bold text-warm-800 mb-4 border-l-4 border-warm-500 pl-3">Chi Tiết Hành Động (Checklist)</h2>
         
-        <div class="card p-6 mb-6 break-inside-avoid border border-warm-200">
-            <div class="flex items-center mb-4 border-b border-warm-100 pb-4">
+        <div class="card p-6 md:p-8 mb-6 break-inside-avoid">
+            <div class="flex items-center mb-6 border-b border-warm-200 pb-3">
                 <div class="bg-warm-200 text-warm-800 font-bold px-3 py-1 rounded text-sm mr-3">Tháng 1 - Tháng 3</div>
                 <h3 class="text-xl font-bold text-warm-900">Giai Đoạn 1: Kiến Tạo Nền Tảng & Chạy Đà</h3>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h4 class="font-bold text-ifan-orange mb-3 uppercase text-sm">🎯 Showroom & Bán Lẻ</h4>
-                    <p class="font-semibold text-warm-800 mb-1 text-sm">1. Chiến dịch Pre-order (Tháng 3)</p>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li><strong>Tên:</strong> "Đặt Gạch Sớm - Đón Mát Lạnh".</li>
-                        <li><strong>Cơ chế:</strong> Cọc 30% trước 31/03 -> Giảm 5-7%.</li>
-                        <li><strong>Cam kết:</strong> Giữ giá, miễn phí lưu kho đến 15/04.</li>
+                    <h4 class="font-bold text-ifan-orange mb-3 uppercase text-sm border-b border-warm-200 pb-2">🎯 Showroom & Bán Lẻ</h4>
+                    <p class="font-semibold text-warm-800 mb-2">1. Chiến dịch Pre-order (Tháng 3)</p>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Tên chương trình:</strong> "Đặt Gạch Sớm - Đón Mát Lạnh".</li>
+                        <li><strong>Cơ chế:</strong> Đặt cọc 30% giá trị đơn trước 31/03 -> Giảm trực tiếp 5-7%.</li>
+                        <li><strong>Cam kết:</strong> Giữ giá cố định (không tăng giá mùa vụ), miễn phí lưu kho đến 15/04.</li>
+                        <li><strong>Quà tặng:</strong> Tặng gói bảo dưỡng miễn phí 1 năm đầu cho khách Pre-order.</li>
                     </ul>
-                    <p class="font-semibold text-warm-800 mb-1 mt-3 text-sm">2. Setup Showroom (Xong 15/03)</p>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li>Ưu tiên 70% mặt tiền cho Model Key công nghiệp.</li>
-                        <li>100% máy trưng bày có điện/nước.</li>
+                    
+                    <p class="font-semibold text-warm-800 mb-2 mt-4">2. Setup Showroom (Hoàn tất 15/03)</p>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Layout:</strong> Dành 70% diện tích mặt tiền ("vị trí mắt thần") cho các dòng máy làm mát công nghiệp và quạt công nghiệp (Model Key).</li>
+                        <li><strong>Demo sẵn sàng:</strong> 100% máy trưng bày phải được đổ nước, cắm điện, khách vào bật công tắc là chạy ngay.</li>
+                        <li><strong>POSM:</strong> Treo phướn/Standee "Tổng kho máy làm mát" trước cửa hàng để thu hút khách vãng lai.</li>
                     </ul>
                 </div>
+                
                 <div>
-                    <h4 class="font-bold text-ifan-blue mb-3 uppercase text-sm">🏢 Khách Hàng Dự Án (B2B)</h4>
-                    <p class="font-semibold text-warm-800 mb-1 text-sm">1. Tuyển Dụng & Đào Tạo</p>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li><strong>T2:</strong> Tuyển gấp 02 NV Kinh doanh B2B/CTV.</li>
-                        <li><strong>T3:</strong> Training kỹ thuật & kỹ năng chào hàng công trường.</li>
+                    <h4 class="font-bold text-ifan-blue mb-3 uppercase text-sm border-b border-warm-200 pb-2">🏢 Khách Hàng Dự Án (B2B)</h4>
+                    <p class="font-semibold text-warm-800 mb-2">1. Tuyển Dụng & Đào Tạo (Ưu Tiên)</p>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Thực trạng:</strong> Hiện tại chỉ có CHT & Admin (ngồi showroom), thiếu người đi thị trường.</li>
+                        <li><strong>Tuyển dụng (T2):</strong> Tuyển gấp <strong>02 NV Kinh doanh B2B</strong> (hoặc Cộng tác viên mùa vụ) chuyên chạy công trình.</li>
+                        <li><strong>Training (T3):</strong> Đào tạo cấp tốc về kỹ thuật quạt công nghiệp & kỹ năng chào hàng tại công trường.</li>
                     </ul>
-                    <p class="font-semibold text-warm-800 mb-1 mt-3 text-sm">2. Tiếp cận thầu M&E</p>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li>Gửi Catalog/Chính sách 2026 cho Top 50 đối tác.</li>
-                        <li>Gói "Hỗ trợ thiết kế thông gió miễn phí".</li>
+                    <p class="font-semibold text-warm-800 mb-2 mt-4">2. Tiếp cận thầu M&E (Tháng 1-2)</p>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Gửi bộ Kit 2026:</strong> Catalog mới + Chính sách giá Thầu cập nhật qua Zalo/Email cho Top 50 đối tác cũ.</li>
+                        <li><strong>Chính sách mở đường:</strong> Tung gói "Hỗ trợ thiết kế hệ thống thông gió miễn phí" cho các dự án khảo sát trong Q1.</li>
                     </ul>
                 </div>
+
                 <div>
-                    <h4 class="font-bold text-warm-800 mb-3 uppercase text-sm">📦 Nguồn Hàng & Nhà Máy</h4>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li><strong>T1:</strong> Lệnh sản xuất (Internal PO) cho nhà máy Nghệ Năng.</li>
-                        <li><strong>T2:</strong> Chốt giá cước thuê xe tải ngoài (Logistics).</li>
-                        <li><strong>T3:</strong> Nhập kho iFan đủ 100% Stock buffer cho T4.</li>
+                    <h4 class="font-bold text-warm-800 mb-3 uppercase text-sm border-b border-warm-200 pb-2">📦 Nguồn Hàng & Nhà Máy</h4>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Tháng 1:</strong> Phát hành Lệnh sản xuất (Internal PO) gửi nhà máy Nghệ Năng dựa trên Forecast vụ mùa.</li>
+                        <li><strong>Tháng 2:</strong> Họp với bên Vận tải/Logistics để chốt giá cước thuê xe tải ngoài (cho trường hợp quá tải xe nhà).</li>
+                        <li><strong>Tháng 3:</strong> Nhập kho iFan đủ 100% cơ số hàng dự trữ (Stock buffer) cho tháng 4.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="card p-6 mb-6 break-inside-avoid border border-red-200 bg-red-50/30">
-            <div class="flex items-center mb-4 border-b border-red-100 pb-4">
+        <div class="card p-6 md:p-8 mb-6 break-inside-avoid border-l-4 border-red-500 bg-red-50/20">
+            <div class="flex items-center mb-6 border-b border-red-200 pb-3">
                 <div class="bg-red-100 text-red-800 font-bold px-3 py-1 rounded text-sm mr-3">Tháng 4 - Tháng 6</div>
-                <h3 class="text-xl font-bold text-red-700">Giai Đoạn 2: Cao Điểm & Bùng Nổ</h3>
+                <h3 class="text-xl font-bold text-red-700">Giai Đoạn 2: Cao Điểm & Tốc Độ (Fast-Track)</h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h4 class="font-bold text-red-600 mb-3 text-sm uppercase">🔥 Quy Trình Fast-Track (Duyệt Nhanh)</h4>
-                    <ul class="list-none space-y-2 text-sm">
+                <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <h4 class="font-bold text-red-600 mb-3 text-lg border-b border-red-200 pb-2">🔥 Quy Trình Fast-Track (Duyệt Nhanh)</h4>
+                    <ul class="list-none space-y-4">
                         <li class="flex flex-col">
-                            <span class="font-bold text-red-800">⚡ Ma Trận Phân Quyền:</span>
-                            <span class="text-warm-700 pl-4">- CHT: Duyệt 5-7%.</span>
-                            <span class="text-warm-700 pl-4">- Trưởng Phòng: Duyệt 8-15% (15 phút).</span>
-                            <span class="text-warm-700 pl-4">- CEO: Duyệt > 15%.</span>
+                            <span class="text-sm font-bold text-red-800 flex items-center"><span class="mr-2">⚡</span> Ma Trận Phân Quyền Giảm Giá:</span>
+                            <span class="text-sm text-warm-700 pl-6 mt-1">- <strong>Cửa Hàng Trưởng:</strong> Duyệt tối đa <strong>5-7%</strong> (tùy biên độ lãi gộp) để chốt khách ngay, không cần thông qua Trưởng Phòng Kinh Doanh.</span>
+                            <span class="text-sm text-warm-700 pl-6 mt-1">- <strong>Trưởng Phòng Kinh Doanh:</strong> Duyệt mức <strong>8-15%</strong> (Cam kết phản hồi trong 15 phút qua Zalo/Call).</span>
+                            <span class="text-sm text-warm-700 pl-6 mt-1">- <strong>CEO:</strong> Duyệt mức <strong>> 15%</strong> (Dành cho đơn dự án trọng điểm hoặc xả hàng tồn kho lâu năm).</span>
                         </li>
                         <li class="flex flex-col">
-                            <span class="font-bold text-red-800">🚛 Giao Hàng Siêu Tốc:</span>
-                            <span class="text-warm-700 pl-4">- 4h nội thành cho đơn Showroom.</span>
-                            <span class="text-warm-700 pl-4">- Kích hoạt đội xe thuê ngoài.</span>
+                            <span class="text-sm font-bold text-red-800 flex items-center"><span class="mr-2">🚛</span> Giao Hàng Siêu Tốc:</span>
+                            <span class="text-sm text-warm-700 pl-6">- Cam kết giao trong 4h nội thành cho đơn hàng Showroom.</span>
+                            <span class="text-sm text-warm-700 pl-6">- Kích hoạt đội xe tải thuê ngoài (3rd Party) đã deal giá từ tháng 2 để hỗ trợ khi xe công ty full chuyến.</span>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-warm-800 mb-3 text-sm uppercase">📢 Marketing & Sales B2B</h4>
+                    <h4 class="font-bold text-warm-800 mb-3 text-lg border-b border-warm-200 pb-2">📢 Marketing & Sales B2B</h4>
                     <ul class="detail-list text-sm text-warm-600">
-                        <li><strong>Target Ads:</strong> Bán kính 10km quanh KCN (Chủ xưởng, quản lý).</li>
-                        <li><strong>Thông điệp:</strong> "Lắp đặt trong ngày".</li>
-                        <li><strong>Direct Sales:</strong> Mang máy demo chào trực tiếp công trình.</li>
-                        <li><strong>Báo cáo:</strong> Cập nhật doanh số 17:00 hàng ngày.</li>
+                        <li><strong>Target Ads:</strong> Chạy quảng cáo Facebook nhắm vào bán kính 10km quanh các KCN (Mục tiêu: chủ xưởng, quản lý kho).</li>
+                        <li><strong>Thông điệp:</strong> "Làm mát nhà xưởng cấp tốc - Lắp đặt trong ngày".</li>
+                        <li><strong>Direct Sales (Biệt đội mới):</strong> Nhân sự B2B mới tuyển chịu trách nhiệm mang máy demo đi chào trực tiếp tại các công trình đang hoàn thiện phần thô.</li>
+                        <li><strong>Báo cáo ngày:</strong> Cập nhật doanh số vào 17:00 hàng ngày lên nhóm Zalo chung để điều phối hàng.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="card p-6 break-inside-avoid border border-warm-200">
-            <div class="flex items-center mb-4 border-b border-warm-100 pb-4">
+        <div class="card p-6 md:p-8 mb-6 break-inside-avoid">
+            <div class="flex items-center mb-6 border-b border-warm-200 pb-3">
                 <div class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded text-sm mr-3">Tháng 7 - Tháng 12</div>
-                <h3 class="text-xl font-bold text-blue-900">Giai Đoạn 3: Duy Trì & Về Đích</h3>
+                <h3 class="text-xl font-bold text-blue-900">Giai Đoạn 3: Duy Trì & Chuyển Dịch Cơ Cấu</h3>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h4 class="font-bold text-warm-800 mb-2 uppercase text-sm">🔄 Sản Phẩm</h4>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li>Dừng nhập Máy làm mát dân dụng.</li>
-                        <li>Đẩy mạnh <strong>Quạt công nghiệp/hút Composite</strong> cho dự án cuối năm.</li>
-                        <li>Xả hàng mẫu (Clearance) T11-12.</li>
+                    <h4 class="font-bold text-warm-800 mb-3 uppercase text-sm border-b border-warm-200 pb-2">🔄 Sản Phẩm</h4>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li>Dừng nhập hàng Máy làm mát dân dụng.</li>
+                        <li>Đẩy mạnh tồn kho <strong>Quạt công nghiệp, Quạt hút Composite</strong> cho các dự án xây dựng cuối năm.</li>
+                        <li>Xả hàng mẫu trưng bày (Clearance) vào tháng 11-12.</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-warm-800 mb-2 uppercase text-sm">💰 Tài Chính</h4>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li>Họp công nợ ngày 5 hàng tháng. Xử lý nợ > 45 ngày.</li>
-                        <li>Làm hồ sơ nghiệm thu để xuất hóa đơn ghi nhận doanh thu.</li>
+                    <h4 class="font-bold text-warm-800 mb-3 uppercase text-sm border-b border-warm-200 pb-2">💰 Tài Chính</h4>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li><strong>Review công nợ:</strong> Họp rà soát công nợ vào ngày 5 hàng tháng. Tập trung xử lý các khoản nợ quá hạn > 45 ngày.</li>
+                        <li>Đẩy mạnh làm hồ sơ nghiệm thu cho các dự án đã lắp đặt xong để xuất hóa đơn ghi nhận doanh thu năm.</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-warm-800 mb-2 uppercase text-sm">📈 Quản Trị</h4>
-                    <ul class="detail-list text-xs text-warm-600">
-                        <li>Đánh giá KPI nhân sự 9 tháng.</li>
-                        <li>Lên kế hoạch vụ mùa 2027.</li>
+                    <h4 class="font-bold text-warm-800 mb-3 uppercase text-sm border-b border-warm-200 pb-2">📈 Quản Trị</h4>
+                    <ul class="detail-list text-sm text-warm-600">
+                        <li>Đánh giá KPI nhân sự 9 tháng đầu năm.</li>
+                        <li>Lên ngân sách và kế hoạch nhập hàng cho vụ mùa 2027.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="mb-8 card p-0 overflow-hidden break-inside-avoid">
-        <div class="p-4 bg-warm-50 border-b border-warm-200">
-             <h2 class="text-lg font-bold text-warm-800">Dữ Liệu Phân Bổ Chi Tiết</h2>
+    <section class="mb-10 card p-0 overflow-hidden break-inside-avoid">
+        <div class="p-4 border-b border-warm-200 bg-warm-50">
+            <h2 class="text-xl font-bold text-warm-800 pl-3 border-l-4 border-warm-500">Dữ Liệu Phân Bổ Chi Tiết</h2>
         </div>
         <div class="overflow-visible">
-            <table class="min-w-full text-xs md:text-sm text-left">
+            <table class="min-w-full text-sm text-left">
                 <thead class="bg-warm-100 text-warm-800 font-bold uppercase text-xs">
                     <tr>
-                        <th class="px-4 py-2">Tháng</th>
-                        <th class="px-4 py-2 text-center">Tỷ Trọng</th>
-                        <th class="px-4 py-2 text-right">Tổng Mục Tiêu</th>
-                        <th class="px-4 py-2 text-right text-ifan-blue">Dự Án</th>
-                        <th class="px-4 py-2 text-right text-ifan-orange">Bán Lẻ</th>
-                        <th class="px-4 py-2">Ghi Chú</th>
+                        <th class="px-6 py-3">Tháng</th>
+                        <th class="px-6 py-3 text-center">Tỷ Trọng</th>
+                        <th class="px-6 py-3 text-right">Tổng Mục Tiêu</th>
+                        <th class="px-6 py-3 text-right text-ifan-blue">Dự Án (70%)</th>
+                        <th class="px-6 py-3 text-right text-ifan-orange">Bán Lẻ (30%)</th>
+                        <th class="px-6 py-3">Ghi Chú Trọng Tâm</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-warm-200" id="dataTableBody">
                     </tbody>
                 <tfoot class="bg-warm-50 font-bold text-warm-900">
                     <tr>
-                        <td class="px-4 py-2">TỔNG NĂM</td>
-                        <td class="px-4 py-2 text-center">100%</td>
-                        <td class="px-4 py-2 text-right">25.000</td>
-                        <td class="px-4 py-2 text-right text-ifan-blue">17.500</td>
-                        <td class="px-4 py-2 text-right text-ifan-orange">7.500</td>
-                        <td class="px-4 py-2"></td>
+                        <td class="px-6 py-3">TỔNG NĂM</td>
+                        <td class="px-6 py-3 text-center">100%</td>
+                        <td class="px-6 py-3 text-right">25.000</td>
+                        <td class="px-6 py-3 text-right text-ifan-blue">17.500</td>
+                        <td class="px-6 py-3 text-right text-ifan-orange">7.500</td>
+                        <td class="px-6 py-3"></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </section>
 
-    <section class="mb-8 break-inside-avoid">
+    <section class="mb-10 break-inside-avoid">
         <h2 class="text-xl font-bold text-warm-800 mb-4 border-l-4 border-warm-500 pl-3">Mô Hình Cung Ứng & Nguồn Lực</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="card p-6 border border-warm-200 mb-0">
-                <h3 class="text-sm font-bold uppercase text-warm-500 mb-4">Quy Trình Nguồn Hàng</h3>
-                <div class="flex flex-col space-y-3">
+            
+            <div class="card p-6">
+                <h3 class="text-sm font-bold uppercase text-warm-500 mb-4">Quy Trình Nguồn Hàng (Nghệ Năng -> iFan)</h3>
+                <div class="flex flex-col space-y-4">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-warm-200 flex items-center justify-center text-sm font-bold text-warm-600">1</div>
-                        <div class="ml-3"><span class="font-bold text-sm">PO Nội Bộ (T1):</span> <span class="text-xs text-warm-600">Gửi lệnh SX dựa trên Forecast.</span></div>
+                        <div class="w-12 h-12 rounded-full bg-warm-200 flex items-center justify-center text-xl font-bold text-warm-600 z-10">1</div>
+                        <div class="ml-4 flex-1 border border-warm-300 p-3 rounded bg-white relative">
+                            <h4 class="font-bold text-warm-800">Dự Báo & PO Nội Bộ</h4>
+                            <p class="text-xs text-warm-500">Tháng 1: Gửi lệnh sản xuất dựa trên Forecast vụ mùa.</p>
+                            <div class="absolute left-[-22px] top-1/2 w-4 h-[2px] bg-warm-300 hidden md:block"></div>
+                        </div>
                     </div>
-                    <div class="w-[2px] h-3 bg-warm-300 ml-4"></div>
+                    <div class="w-[2px] h-4 bg-warm-300 ml-6 -my-2 z-0"></div>
+                    
                     <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-warm-200 flex items-center justify-center text-sm font-bold text-warm-600">2</div>
-                        <div class="ml-3"><span class="font-bold text-sm">Sản Xuất:</span> <span class="text-xs text-warm-600">Nhà máy Nghệ Năng chạy máy.</span></div>
+                        <div class="w-12 h-12 rounded-full bg-warm-200 flex items-center justify-center text-xl font-bold text-warm-600 z-10">2</div>
+                        <div class="ml-4 flex-1 border border-warm-300 p-3 rounded bg-white">
+                            <h4 class="font-bold text-warm-800">Nhà Máy Sản Xuất</h4>
+                            <p class="text-xs text-warm-500">Chủ động nguyên liệu, lịch chạy máy theo PO.</p>
+                        </div>
                     </div>
-                    <div class="w-[2px] h-3 bg-warm-300 ml-4"></div>
+                     <div class="w-[2px] h-4 bg-warm-300 ml-6 -my-2 z-0"></div>
+
                     <div class="flex items-center">
-                        <div class="w-8 h-8 rounded-full bg-ifan-blue text-white flex items-center justify-center text-sm font-bold">3</div>
-                        <div class="ml-3"><span class="font-bold text-sm text-ifan-blue">Kho iFan (Trước 15/03):</span> <span class="text-xs text-warm-600">Full hàng mùa vụ.</span></div>
+                        <div class="w-12 h-12 rounded-full bg-ifan-blue text-white flex items-center justify-center text-xl font-bold z-10">3</div>
+                        <div class="ml-4 flex-1 border border-ifan-blue p-3 rounded bg-blue-50 shadow-sm">
+                            <h4 class="font-bold text-ifan-blue">Kho iFan (Sẵn Sàng)</h4>
+                            <p class="text-xs text-blue-800">Hàng về kho trước 15/03. Sẵn sàng cho mùa cao điểm.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card p-6 border border-warm-200 mb-0">
-                <h3 class="text-sm font-bold uppercase text-warm-500 mb-4">Đề Xuất Phê Duyệt</h3>
-                <div class="space-y-3">
-                    <div class="flex items-start">
-                        <span class="mr-2">🏭</span>
-                        <div><h4 class="font-bold text-sm">Hạn Mức Tồn Kho:</h4><p class="text-xs text-warm-600">Phê duyệt Stock Limit tại kho iFan.</p></div>
-                    </div>
-                    <div class="flex items-start">
-                        <span class="mr-2">👥</span>
-                        <div><h4 class="font-bold text-sm">Định Biên Nhân Sự:</h4><p class="text-xs text-warm-600">Thêm 02 Sales B2B chạy thị trường.</p></div>
-                    </div>
-                    <div class="flex items-start">
-                        <span class="mr-2">💰</span>
-                        <div><h4 class="font-bold text-sm">Thưởng & Ads:</h4><p class="text-xs text-warm-600">Ngân sách Ads và thưởng nóng T4-T6.</p></div>
+            <div class="card p-6 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-sm font-bold uppercase text-warm-500 mb-4">Đề Xuất Nguồn Lực Thiết Yếu</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-3">🏭</span>
+                            <div>
+                                <h4 class="font-bold text-warm-800">Hạn Mức Tồn Kho</h4>
+                                <p class="text-sm text-warm-600">Phê duyệt Stock Limit tại kho iFan. Ưu tiên năng lực sản xuất của nhà máy cho iFan trong tháng 4-5-6.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-3">👥</span>
+                            <div>
+                                <h4 class="font-bold text-warm-800">Định Biên Nhân Sự</h4>
+                                <p class="text-sm text-warm-600">Phê duyệt tuyển thêm 02 Sales B2B (hoặc CTV) để chạy thị trường, do hiện tại Showroom chỉ có Admin & CHT.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-3">💰</span>
+                            <div>
+                                <h4 class="font-bold text-warm-800">Marketing & Thưởng</h4>
+                                <p class="text-sm text-warm-600">Ngân sách Ads tháng 4-5 và cơ chế thưởng nóng theo ngày để khích lệ tinh thần.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="text-center text-warm-400 text-xs py-4 border-t border-warm-200">
+    <footer class="text-center text-warm-400 text-sm py-8 border-t border-warm-200">
         <p>© 2026 iFan Business Plan. Internal Use Only.</p>
     </footer>
 
     <script>
+        // --- DATA STORAGE (UNCHANGED) ---
         const planData = [
-            { month: 1, name: "Tháng 1", weight: "5%", total: 1250, project: 875, retail: 375, note: "Gửi PO nội bộ. Thu hồi công nợ.", phase: "Chuẩn Bị" },
-            { month: 2, name: "Tháng 2", weight: "4%", total: 1000, project: 700, retail: 300, note: "Nghỉ Tết. Chào dự án đầu năm.", phase: "Chuẩn Bị" },
-            { month: 3, name: "Tháng 3", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Pre-order. Nhập kho iFan.", phase: "Chuẩn Bị" },
-            { month: 4, name: "Tháng 4", weight: "13%", total: 3250, project: 2275, retail: 975, note: "CAO ĐIỂM. Giao hàng 4h.", phase: "Bùng Nổ" },
-            { month: 5, name: "Tháng 5", weight: "14%", total: 3500, project: 2450, retail: 1050, note: "ĐỈNH DỊCH. Fast-track giá.", phase: "Bùng Nổ" },
-            { month: 6, name: "Tháng 6", weight: "13%", total: 3250, project: 2275, retail: 975, note: "CUỐI VỤ. Xả tồn kho.", phase: "Bùng Nổ" },
-            { month: 7, name: "Tháng 7", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Chăm sóc sau bán.", phase: "Về Đích" },
-            { month: 8, name: "Tháng 8", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Đẩy mạnh quạt CN mùa mưa.", phase: "Về Đích" },
-            { month: 9, name: "Tháng 9", weight: "6%", total: 1500, project: 1050, retail: 450, note: "Rà soát KPI 9 tháng.", phase: "Về Đích" },
-            { month: 10, name: "Tháng 10", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Khách công nghiệp hoàn thiện.", phase: "Về Đích" },
-            { month: 11, name: "Tháng 11", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Nghiệm thu, xuất hóa đơn.", phase: "Về Đích" },
-            { month: 12, name: "Tháng 12", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Tổng kết, xả mẫu, thu nợ.", phase: "Về Đích" }
+            { month: 1, name: "Tháng 1", weight: "5%", total: 1250, project: 875, retail: 375, note: "Gửi Lệnh sản xuất (PO nội bộ). Thu hồi công nợ.", phase: "Chuẩn Bị" },
+            { month: 2, name: "Tháng 2", weight: "4%", total: 1000, project: 700, retail: 300, note: "Nghỉ Tết. Gửi hồ sơ chào dự án đầu năm.", phase: "Chuẩn Bị" },
+            { month: 3, name: "Tháng 3", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Chạy Pre-order (Cọc 30% giảm 5-7%). Nhập kho iFan.", phase: "Chuẩn Bị" },
+            { month: 4, name: "Tháng 4", weight: "13%", total: 3250, project: 2275, retail: 975, note: "CAO ĐIỂM. Kích hoạt giao hàng 4h. Sales B2B đi thị trường.", phase: "Bùng Nổ" },
+            { month: 5, name: "Tháng 5", weight: "14%", total: 3500, project: 2450, retail: 1050, note: "ĐỈNH DỊCH. Áp dụng Fast-track duyệt giá tại chỗ.", phase: "Bùng Nổ" },
+            { month: 6, name: "Tháng 6", weight: "13%", total: 3250, project: 2275, retail: 975, note: "CUỐI VỤ. Xả hàng tồn kho mùa nóng.", phase: "Bùng Nổ" },
+            { month: 7, name: "Tháng 7", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Chăm sóc sau bán. Chào dự án thông gió.", phase: "Về Đích" },
+            { month: 8, name: "Tháng 8", weight: "8%", total: 2000, project: 1400, retail: 600, note: "Đẩy mạnh quạt công nghiệp mùa mưa.", phase: "Về Đích" },
+            { month: 9, name: "Tháng 9", weight: "6%", total: 1500, project: 1050, retail: 450, note: "Rà soát KPI 9 tháng. Lên phương án Q4.", phase: "Về Đích" },
+            { month: 10, name: "Tháng 10", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Tập trung khách hàng công nghiệp hoàn thiện.", phase: "Về Đích" },
+            { month: 11, name: "Tháng 11", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Nghiệm thu dự án ghi nhận doanh thu.", phase: "Về Đích" },
+            { month: 12, name: "Tháng 12", weight: "7%", total: 1750, project: 1225, retail: 525, note: "Tổng kết, xả mẫu cũ, thu hồi công nợ.", phase: "Về Đích" }
         ];
 
+        // --- CHART JS CONFIG ---
         document.addEventListener('DOMContentLoaded', function() {
-            // Chart setup
             const ctx = document.getElementById('monthlyChart').getContext('2d');
+            
+            const labels = planData.map(d => d.name);
+            const projectData = planData.map(d => d.project);
+            const retailData = planData.map(d => d.retail);
+
             const monthlyChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: planData.map(d => d.name),
+                    labels: labels,
                     datasets: [
-                        { label: 'Dự Án', data: planData.map(d => d.project), backgroundColor: '#0ea5e9', stack: 'Stack 0' },
-                        { label: 'Bán Lẻ', data: planData.map(d => d.retail), backgroundColor: '#f97316', stack: 'Stack 0' }
+                        {
+                            label: 'Kênh Dự Án (B2B)',
+                            data: projectData,
+                            backgroundColor: '#0ea5e9', // Blue
+                            stack: 'Stack 0',
+                            borderRadius: 4,
+                        },
+                        {
+                            label: 'Kênh Bán Lẻ (B2C)',
+                            data: retailData,
+                            backgroundColor: '#f97316', // Orange
+                            stack: 'Stack 0',
+                            borderRadius: 4,
+                        }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animation: false, // Disable animation for printing
-                    plugins: { legend: { position: 'bottom' } },
+                    animation: false, // Tắt animation để in đẹp hơn
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { family: 'Noto Sans' }
+                            }
+                        }
+                    },
                     scales: {
-                        x: { grid: { display: false } },
-                        y: { ticks: { callback: v => v } }
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { borderDash: [2, 2] },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' Tr';
+                                }
+                            }
+                        }
                     }
                 }
             });
 
-            // Table Population
+            // --- POPULATE TABLE ---
             const tableBody = document.getElementById('dataTableBody');
             planData.forEach(row => {
                 const tr = document.createElement('tr');
-                // Use standard simple classes for print clarity
-                tr.className = "break-inside-avoid"; 
+                tr.className = row.month >= 4 && row.month <= 6 ? "bg-red-50" : "hover:bg-warm-50";
+                // Added break-inside-avoid for rows
+                tr.style.breakInside = "avoid";
                 tr.innerHTML = `
-                    <td class="px-4 py-2 font-medium text-warm-900">${row.name}</td>
-                    <td class="px-4 py-2 text-center text-warm-600">${row.weight}</td>
-                    <td class="px-4 py-2 text-right font-bold text-warm-900">${new Intl.NumberFormat('vi-VN').format(row.total)}</td>
-                    <td class="px-4 py-2 text-right text-ifan-blue">${new Intl.NumberFormat('vi-VN').format(row.project)}</td>
-                    <td class="px-4 py-2 text-right text-ifan-orange">${new Intl.NumberFormat('vi-VN').format(row.retail)}</td>
-                    <td class="px-4 py-2 text-xs text-warm-600">${row.note}</td>
+                    <td class="px-6 py-4 font-medium text-warm-900">${row.name}</td>
+                    <td class="px-6 py-4 text-center text-warm-600">${row.weight}</td>
+                    <td class="px-6 py-4 text-right font-bold text-warm-900">${new Intl.NumberFormat('vi-VN').format(row.total)}</td>
+                    <td class="px-6 py-4 text-right text-ifan-blue">${new Intl.NumberFormat('vi-VN').format(row.project)}</td>
+                    <td class="px-6 py-4 text-right text-ifan-orange">${new Intl.NumberFormat('vi-VN').format(row.retail)}</td>
+                    <td class="px-6 py-4 text-sm text-warm-600">${row.note}</td>
                 `;
                 tableBody.appendChild(tr);
             });
