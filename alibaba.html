@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Hoạch Chiến Lược Alibaba 2026 - Nghệ Năng (iFan)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 40px;
+            height: 3px;
+            background-color: #f97316; /* Orange Alibaba */
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // --- INTERNAL ICON SYSTEM ---
+        const IconBase = ({ children, className = "", ...props }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className} 
+                {...props}
+            >
+                {children}
+            </svg>
+        );
+
+        const Icons = {
+            BarChart3: (props) => (
+                <IconBase {...props}>
+                    <path d="M3 3v18h18" />
+                    <path d="M18 17V9" />
+                    <path d="M13 17V5" />
+                    <path d="M8 17v-3" />
+                </IconBase>
+            ),
+            Globe: (props) => (
+                <IconBase {...props}>
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    <path d="M2 12h20" />
+                </IconBase>
+            ),
+            ShieldCheck: (props) => (
+                <IconBase {...props}>
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                    <path d="m9 12 2 2 4-4" />
+                </IconBase>
+            ),
+            Truck: (props) => (
+                <IconBase {...props}>
+                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+                    <path d="M15 18H9" />
+                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+                    <circle cx="17" cy="18" r="2" />
+                    <circle cx="7" cy="18" r="2" />
+                </IconBase>
+            ),
+            Clock: (props) => (
+                <IconBase {...props}>
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </IconBase>
+            ),
+            AlertTriangle: (props) => (
+                <IconBase {...props}>
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                    <path d="M12 9v4" />
+                    <path d="M12 17h.01" />
+                </IconBase>
+            ),
+            Target: (props) => (
+                <IconBase {...props}>
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                </IconBase>
+            ),
+            DollarSign: (props) => (
+                <IconBase {...props}>
+                    <line x1="12" x2="12" y1="2" y2="22" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </IconBase>
+            ),
+            ArrowRight: (props) => (
+                <IconBase {...props}>
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                </IconBase>
+            ),
+            CheckCircle2: (props) => (
+                <IconBase {...props}>
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m9 12 2 2 4-4" />
+                </IconBase>
+            ),
+            TrendingUp: (props) => (
+                <IconBase {...props}>
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    <polyline points="16 7 22 7 22 13" />
+                </IconBase>
+            ),
+            LayoutDashboard: (props) => (
+                <IconBase {...props}>
+                    <rect width="7" height="9" x="3" y="3" rx="1" />
+                    <rect width="7" height="5" x="14" y="3" rx="1" />
+                    <rect width="7" height="9" x="14" y="12" rx="1" />
+                    <rect width="7" height="5" x="3" y="16" rx="1" />
+                </IconBase>
+            ),
+            Menu: (props) => (
+                <IconBase {...props}>
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </IconBase>
+            ),
+            X: (props) => (
+                <IconBase {...props}>
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </IconBase>
+            )
+        };
+
+        const { 
+            BarChart3, Globe, ShieldCheck, Truck, Clock, AlertTriangle, 
+            Target, DollarSign, ArrowRight, CheckCircle2, 
+            TrendingUp, LayoutDashboard, Menu, X 
+        } = Icons;
+
+        // Dữ liệu đã được Việt hóa và chuẩn hóa
+        const strategicData = {
+            summary: {
+                title: "Kế Hoạch Xuất Khẩu Alibaba 2026",
+                subtitle: "Chiếm lĩnh thị phần ngách Quạt Công Nghiệp",
+                insight: "Quạt hướng trục (Axial Flow Fans): Nhu cầu gấp 3.5 lần Nguồn cung",
+                targets: ["$500k Doanh thu", "3 Thị trường", "Đạt chuẩn 2 Sao"]
+            },
+            swot: {
+                strengths: [
+                    "Thương hiệu Quốc gia (Vietnam Pavilion)",
+                    "Dữ liệu từ Công cụ phân tích (Analytics Pro)",
+                    "Bảo hiểm thanh toán (Trade Assurance)",
+                    "Hệ thống Vận chuyển tích hợp (Online Logistics)"
+                ],
+                weaknesses: [
+                    "Vận hành 24/7 (Yêu cầu phản hồi < 4 giờ)",
+                    "Thời gian thiết lập gian hàng (Onboarding: 35-50 ngày)",
+                    "Dòng tiền trả trước (Phí thành viên & Quảng cáo)"
+                ],
+                opportunities: [
+                    "Chênh lệch Cung < Cầu (Quạt hướng trục - Axial Fans)",
+                    "Thị trường Mỹ (Chiếm 32% nhu cầu)",
+                    "Thị trường mới nổi (Ấn Độ, Philippines)"
+                ],
+                threats: [
+                    "Đối thủ hiện hữu (Tomeco, San Kyo)",
+                    "Áp lực duy trì Xếp hạng sao (Star Rating)"
+                ]
+            },
+            roadmap: [
+                {
+                    quarter: "Quý 1",
+                    title: "Khởi động & Thiết lập",
+                    focus: "Hoàn tất gian hàng (<40 ngày)",
+                    tasks: [
+                        "Ký HĐ & Xác thực doanh nghiệp (Business Verification)",
+                        "Thiết kế Minisite chuẩn ISO/CE",
+                        "Đăng 100 sản phẩm tối ưu từ khóa (SEO)",
+                        "Đào tạo nhân sự & Kích hoạt tài khoản"
+                    ]
+                },
+                {
+                    quarter: "Quý 2",
+                    title: "Tăng tốc & Tối ưu",
+                    focus: "Lấy Traffic & Đơn hàng mẫu",
+                    tasks: [
+                        "Chạy quảng cáo từ khóa (KWA) thị trường Mỹ",
+                        "Dùng Smart Marketing điều chỉnh giá thầu",
+                        "Thiết lập trực chat 24/7",
+                        "Gửi 30 báo giá (RFQ) mỗi tháng"
+                    ]
+                },
+                {
+                    quarter: "Quý 3",
+                    title: "Mở rộng & Bứt phá",
+                    focus: "Sự kiện Super September",
+                    tasks: [
+                        "Tham gia khuyến mãi Super September",
+                        "Livestream giới thiệu nhà máy (Factory Tour)",
+                        "Chiến dịch xin đánh giá 5 sao",
+                        "Cập nhật hồ sơ năng lực xuất khẩu"
+                    ]
+                },
+                {
+                    quarter: "Quý 4",
+                    title: "Ổn định & Tái đầu tư",
+                    focus: "Đạt chuẩn 2-3 Sao & Tái ký",
+                    tasks: [
+                        "Dùng Analytics Pro lọc bỏ sản phẩm yếu",
+                        "Tối ưu chi phí Logistics",
+                        "Đánh giá hiệu quả (ROI) & Kế hoạch 2027",
+                        "Cân nhắc nâng cấp Verified Supplier"
+                    ]
+                }
+            ],
+            risks: [
+                { name: "Thiếu lượt truy cập (Traffic)", level: "Cao", mitigation: "Tối ưu từ khóa ngách, tăng ngân sách KWA" },
+                { name: "Tỷ lệ chuyển đổi thấp", level: "Trung bình", mitigation: "Rà soát giá bán, cải thiện hình ảnh/video" },
+                { name: "Nhân sự nghỉ việc", level: "Trung bình", mitigation: "Tài liệu hóa quy trình (SOP)" },
+                { name: "Rủi ro thanh toán", level: "Thấp", mitigation: "100% qua Trade Assurance" }
+            ]
+        };
+
+        // UI Components
+        const Section = ({ id, title, children, className = "" }) => (
+            <section id={id} className={`py-16 px-4 md:px-8 max-w-7xl mx-auto ${className}`}>
+                <h2 className="text-3xl font-bold text-slate-800 section-title">{title}</h2>
+                {children}
+            </section>
+        );
+
+        const Card = ({ children, className = "" }) => (
+            <div className={`glass-panel rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}>
+                {children}
+            </div>
+        );
+
+        const Badge = ({ type }) => {
+            const colors = {
+                "Cao": "bg-red-100 text-red-700 border-red-200",
+                "Trung bình": "bg-yellow-100 text-yellow-700 border-yellow-200",
+                "Thấp": "bg-green-100 text-green-700 border-green-200"
+            };
+            return (
+                <span className={`px-2 py-1 rounded text-xs font-semibold border ${colors[type] || "bg-gray-100"}`}>
+                    {type}
+                </span>
+            );
+        };
+
+        const IconBox = ({ icon: Icon, color = "text-orange-500", bg = "bg-orange-50" }) => (
+            <div className={`p-3 rounded-lg ${bg} w-fit mb-4`}>
+                <Icon className={`w-6 h-6 ${color}`} />
+            </div>
+        );
+
+        // Main Application
+        const App = () => {
+            const [activeTab, setActiveTab] = useState("Quý 1");
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const menuItems = [
+                { id: 'dashboard', label: 'Tổng quan' },
+                { id: 'swot', label: 'SWOT' },
+                { id: 'objectives', label: 'Mục tiêu' },
+                { id: 'roadmap', label: 'Lộ trình' },
+                { id: 'risks', label: 'Rủi ro' }
+            ];
+
+            const scrollTo = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+                setIsMenuOpen(false);
+            };
+
+            return (
+                <div className="min-h-screen text-slate-600">
+                    {/* Navigation */}
+                    <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between h-16 items-center">
+                                <div className="flex items-center gap-2">
+                                    <div className="bg-orange-500 text-white p-1.5 rounded font-bold">iFan</div>
+                                    <span className="font-bold text-xl text-slate-800 hidden md:block">Chiến Lược Alibaba</span>
+                                    <span className="font-bold text-xl text-slate-800 md:hidden">Kế Hoạch 2026</span>
+                                </div>
+                                
+                                {/* Desktop Menu */}
+                                <div className="hidden md:flex space-x-8">
+                                    {menuItems.map((item) => (
+                                        <button key={item.id} onClick={() => scrollTo(item.id)} className="text-sm font-medium hover:text-orange-600 transition-colors">
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Mobile Menu Button */}
+                                <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                    {isMenuOpen ? <X /> : <Menu />}
+                                </button>
+                            </div>
+                        </div>
+                        
+                        {/* Mobile Menu */}
+                        {isMenuOpen && (
+                            <div className="md:hidden bg-white border-b border-slate-200 p-4">
+                                {menuItems.map((item) => (
+                                    <button key={item.id} onClick={() => scrollTo(item.id)} className="block w-full text-left py-2 font-medium">
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </nav>
+
+                    {/* Hero / Dashboard Summary */}
+                    <div id="dashboard" className="pt-24 pb-12 bg-gradient-to-br from-slate-50 to-blue-50">
+                        <div className="max-w-7xl mx-auto px-4 md:px-8">
+                            <div className="grid md:grid-cols-2 gap-12 items-center">
+                                <div className="animate-fade-in">
+                                    <span className="text-orange-600 font-semibold tracking-wider text-sm uppercase mb-2 block">Kế hoạch 2026</span>
+                                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                                        Chiến Lược Tăng Trưởng <br/>
+                                        <span className="text-orange-500">Xuất Khẩu B2B</span>
+                                    </h1>
+                                    <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                                        Gia nhập thị trường toàn cầu. Tận dụng dữ liệu để chiếm lĩnh thị phần ngách <strong className="text-slate-800">Quạt Công Nghiệp</strong> khi Nhu cầu (Demand) vượt Nguồn cung (Supply) gấp 3.5 lần.
+                                    </p>
+                                    <div className="flex gap-4">
+                                        <button onClick={() => scrollTo('roadmap')} className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-orange-200 flex items-center gap-2">
+                                            Xem Lộ Trình <ArrowRight size={18}/>
+                                        </button>
+                                        <button onClick={() => scrollTo('swot')} className="px-6 py-3 bg-white border border-slate-300 hover:border-orange-500 text-slate-700 rounded-lg font-medium transition-colors">
+                                            Phân Tích SWOT
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4 animate-fade-in" style={{animationDelay: '0.2s'}}>
+                                    <Card className="bg-white border-l-4 border-l-blue-500">
+                                        <div className="text-sm text-slate-500 mb-1">Cơ Hội Thị Trường</div>
+                                        <div className="text-2xl font-bold text-slate-800">Cầu > 3.5x Cung</div>
+                                        <div className="text-xs text-green-600 mt-2 flex items-center gap-1"><TrendingUp size={12}/> Quạt hướng trục (Axial)</div>
+                                    </Card>
+                                    <Card className="bg-white border-l-4 border-l-indigo-500">
+                                        <div className="text-sm text-slate-500 mb-1">Thị Trường Mục Tiêu</div>
+                                        <div className="text-2xl font-bold text-slate-800">Hoa Kỳ (32%)</div>
+                                        <div className="text-xs text-indigo-600 mt-2">Dẫn đầu về Nhu cầu</div>
+                                    </Card>
+                                    <Card className="bg-white border-l-4 border-l-orange-500">
+                                        <div className="text-sm text-slate-500 mb-1">Mục Tiêu Doanh Số</div>
+                                        <div className="text-2xl font-bold text-slate-800">$500,000</div>
+                                        <div className="text-xs text-orange-600 mt-2">Năm tài chính 2026</div>
+                                    </Card>
+                                    <Card className="bg-white border-l-4 border-l-green-500">
+                                        <div className="text-sm text-slate-500 mb-1">KPI Vận Hành</div>
+                                        <div className="text-2xl font-bold text-slate-800">&lt; 4 Giờ</div>
+                                        <div className="text-xs text-green-600 mt-2">Tốc độ phản hồi</div>
+                                    </Card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* SWOT Analysis */}
+                    <Section id="swot" title="Phân Tích SWOT">
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {/* Strengths */}
+                            <Card className="bg-blue-50/50 border-blue-100">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <IconBox icon={ShieldCheck} bg="bg-blue-100" color="text-blue-600" />
+                                    <h3 className="text-xl font-bold text-blue-900">Điểm Mạnh (Strengths)</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {strategicData.swot.strengths.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                                            <CheckCircle2 className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+
+                            {/* Weaknesses */}
+                            <Card className="bg-yellow-50/50 border-yellow-100">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <IconBox icon={Clock} bg="bg-yellow-100" color="text-yellow-600" />
+                                    <h3 className="text-xl font-bold text-yellow-900">Điểm Yếu (Weaknesses)</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {strategicData.swot.weaknesses.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                                            <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+
+                            {/* Opportunities */}
+                            <Card className="bg-green-50/50 border-green-100">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <IconBox icon={TrendingUp} bg="bg-green-100" color="text-green-600" />
+                                    <h3 className="text-xl font-bold text-green-900">Cơ Hội (Opportunities)</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {strategicData.swot.opportunities.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                                            <Globe className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+
+                             {/* Threats */}
+                             <Card className="bg-red-50/50 border-red-100">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <IconBox icon={Target} bg="bg-red-100" color="text-red-600" />
+                                    <h3 className="text-xl font-bold text-red-900">Thách Thức (Threats)</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {strategicData.swot.threats.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                                            <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+                        </div>
+                    </Section>
+
+                    {/* OKRs / Objectives */}
+                    <div id="objectives" className="bg-slate-900 text-white py-16">
+                        <div className="max-w-7xl mx-auto px-4 md:px-8">
+                            <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
+                                <Target className="text-orange-500" /> Mục Tiêu OKRs 2026
+                            </h2>
+                            <div className="grid md:grid-cols-4 gap-8">
+                                <div className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:border-orange-500 transition-colors">
+                                    <DollarSign className="w-10 h-10 mx-auto text-green-400 mb-4" />
+                                    <div className="text-4xl font-bold mb-2">300-500k</div>
+                                    <div className="text-slate-400 text-sm">Doanh Thu (USD)</div>
+                                </div>
+                                <div className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:border-orange-500 transition-colors">
+                                    <Globe className="w-10 h-10 mx-auto text-blue-400 mb-4" />
+                                    <div className="text-4xl font-bold mb-2">3</div>
+                                    <div className="text-slate-400 text-sm">Thị Trường Trọng Điểm</div>
+                                    <div className="text-xs text-slate-500 mt-1">Mỹ, Philippines, Ấn Độ</div>
+                                </div>
+                                <div className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:border-orange-500 transition-colors">
+                                    <LayoutDashboard className="w-10 h-10 mx-auto text-yellow-400 mb-4" />
+                                    <div className="text-4xl font-bold mb-2">2 Sao</div>
+                                    <div className="text-slate-400 text-sm">Xếp Hạng Gian Hàng</div>
+                                    <div className="text-xs text-slate-500 mt-1">Đạt sau 6 tháng</div>
+                                </div>
+                                <div className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:border-orange-500 transition-colors">
+                                    <Clock className="w-10 h-10 mx-auto text-red-400 mb-4" />
+                                    <div className="text-4xl font-bold mb-2">95%</div>
+                                    <div className="text-slate-400 text-sm">Phản Hồi &lt; 4 Giờ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Roadmap Timeline */}
+                    <Section id="roadmap" title="Lộ Trình Triển Khai">
+                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div className="flex border-b border-slate-200 overflow-x-auto">
+                                {strategicData.roadmap.map((q) => (
+                                    <button
+                                        key={q.quarter}
+                                        onClick={() => setActiveTab(q.quarter)}
+                                        className={`flex-1 py-4 px-6 text-sm md:text-base font-semibold whitespace-nowrap transition-colors ${
+                                            activeTab === q.quarter 
+                                            ? 'bg-orange-50 text-orange-600 border-b-2 border-orange-500' 
+                                            : 'text-slate-500 hover:text-slate-800'
+                                        }`}
+                                    >
+                                        <span className="text-xs block uppercase font-bold opacity-70 mb-1">Giai đoạn</span>
+                                        {q.quarter}: {q.title}
+                                    </button>
+                                ))}
+                            </div>
+                            
+                            <div className="p-8 min-h-[300px]">
+                                {strategicData.roadmap.map((q) => (
+                                    activeTab === q.quarter && (
+                                        <div key={q.quarter} className="animate-fade-in">
+                                            <div className="flex flex-col md:flex-row gap-8">
+                                                <div className="md:w-1/3">
+                                                    <div className="text-9xl font-bold text-slate-100 leading-none -ml-4 -mt-4 absolute select-none pointer-events-none">
+                                                        {q.quarter}
+                                                    </div>
+                                                    <div className="relative z-10">
+                                                        <h3 className="text-2xl font-bold text-slate-800 mb-2">{q.title}</h3>
+                                                        <div className="inline-block bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                                                            Trọng tâm: {q.focus}
+                                                        </div>
+                                                        <p className="text-slate-600 text-sm">
+                                                            Các đầu việc ưu tiên nhằm đảm bảo tiến độ và đạt KPI của giai đoạn.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="md:w-2/3 border-l-2 border-slate-100 pl-8">
+                                                    <h4 className="text-sm font-bold text-slate-400 uppercase mb-4">Danh sách công việc chính (To-Do List)</h4>
+                                                    <div className="space-y-4">
+                                                        {q.tasks.map((task, i) => (
+                                                            <div key={i} className="flex items-center gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100 hover:border-orange-200 transition-colors">
+                                                                <div className="w-8 h-8 rounded-full bg-white border-2 border-orange-200 flex items-center justify-center text-orange-600 font-bold text-xs shadow-sm">
+                                                                    {i + 1}
+                                                                </div>
+                                                                <span className="text-slate-700 font-medium">{task}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                    </Section>
+
+                    {/* Risk Management */}
+                    <Section id="risks" title="Quản Trị Rủi Ro">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                                <thead className="bg-slate-50 border-b border-slate-200">
+                                    <tr>
+                                        <th className="p-4 font-semibold text-slate-600 text-sm">Rủi Ro Tiềm Ẩn</th>
+                                        <th className="p-4 font-semibold text-slate-600 text-sm">Mức Độ</th>
+                                        <th className="p-4 font-semibold text-slate-600 text-sm">Giải Pháp Phòng Ngừa</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {strategicData.risks.map((risk, index) => (
+                                        <tr key={index} className="hover:bg-slate-50/50">
+                                            <td className="p-4 font-medium text-slate-800">{risk.name}</td>
+                                            <td className="p-4"><Badge type={risk.level} /></td>
+                                            <td className="p-4 text-slate-600 text-sm">{risk.mitigation}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </Section>
+
+                    {/* Footer */}
+                    <footer className="bg-slate-900 text-slate-300 py-12 mt-12 border-t border-slate-800">
+                        <div className="max-w-7xl mx-auto px-4 md:px-8 text-center">
+                            <h2 className="text-2xl font-bold text-white mb-6">Sẵn sàng triển khai?</h2>
+                            <div className="flex flex-col md:flex-row justify-center gap-8 mb-8">
+                                <div>
+                                    <div className="text-sm text-slate-500 uppercase mb-1">Nhân Sự Dự Kiến</div>
+                                    <div className="font-semibold text-white">01 Leader + 02 Sales/CS</div>
+                                </div>
+                                <div>
+                                    <div className="text-sm text-slate-500 uppercase mb-1">Ngân Sách Marketing Q1</div>
+                                    <div className="font-semibold text-white">$1,000 - $3,000</div>
+                                </div>
+                                <div>
+                                    <div className="text-sm text-slate-500 uppercase mb-1">Thời Gian Lead Time</div>
+                                    <div className="font-semibold text-white">35-40 Ngày</div>
+                                </div>
+                            </div>
+                            <div className="border-t border-slate-800 pt-8 text-sm">
+                                <p className="font-semibold text-white text-base">Người lập kế hoạch: Nguyễn Đức Tâm - Trưởng Phòng Kinh Doanh iFan</p>
+                                <p className="mt-2 text-slate-500">Tài liệu lưu hành nội bộ - Ngày lập: 18/12/2025</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
