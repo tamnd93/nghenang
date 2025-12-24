@@ -1,0 +1,680 @@
+import React, { useState, useMemo } from 'react';
+import { Search, Download, ChevronDown, ChevronUp, Tag, Package, Database, AlertCircle, Filter } from 'lucide-react';
+
+const CATEGORIES = [
+  { id: 'all', name: 'TẤT CẢ', color: 'bg-gray-800' },
+  { id: 'ifan_pro', name: 'iFan CAO CẤP & DỰ ÁN', color: 'bg-blue-700' },
+  { id: 'ifan_std', name: 'iFan PHỔ THÔNG', color: 'bg-blue-500' },
+  { id: 'efan', name: 'THÀNH PHẨM eFan', color: 'bg-green-600' },
+  { id: 'frame', name: 'KHUNG MÀN NƯỚC', color: 'bg-teal-600' },
+  { id: 'part_motor', name: 'MOTOR & LINH KIỆN ĐIỆN', color: 'bg-orange-700' },
+  { id: 'part_mech', name: 'LINH KIỆN CƠ KHÍ & VỎ', color: 'bg-orange-500' },
+];
+
+const i = (cat, model, name, spec, unit, p1, p2, p3, note = '') => ({
+  cat, model, name, spec, unit, p_list: p1, p_agent: p2, p_dist: p3, note
+});
+
+const RAW_DATA = [
+  // --- FILE 3: IFAN CAO CẤP (QUẠT VUÔNG TRỰC TIẾP) ---
+  i('ifan_pro', 'IFAN-36C', 'Quạt vuông Trực tiếp C', '900x900 | 0.37kw-4P', 'Cái', 5180000, 3988600, 3626000, '27000 m3/h'),
+  i('ifan_pro', 'IFAN-42C', 'Quạt vuông Trực tiếp C', '1060x1060 | 0.55kw-4P', 'Cái', 5780000, 4450600, 4046000, '30000 m3/h'),
+  i('ifan_pro', 'IFAN-48C', 'Quạt vuông Trực tiếp C', '1220x1220 | 0.75kw-4P', 'Cái', 6180000, 4758600, 4326000, '37000 m3/h'),
+  i('ifan_pro', 'IFAN-54C', 'Quạt vuông Trực tiếp C', '1380x1380 | 1.1kw-4P', 'Cái', 6580000, 5066600, 4606000, '44500 m3/h'),
+  i('ifan_pro', 'IFAN-60C', 'Quạt vuông Trực tiếp C', '1530x1530 | 1.5kw-4P', 'Cái', 9080000, 6991600, 6356000, '58000 m3/h'),
+  
+  // --- FILE 3: IFAN CAO CẤP (QUẠT VUÔNG GIÁN TIẾP) ---
+  i('ifan_pro', 'IFAN-36D', 'Quạt vuông Gián tiếp D', '900x900 | 0.37kw-4P', 'Cái', 5180000, 3988600, 3626000, 'Truyền động dây đai'),
+  i('ifan_pro', 'IFAN-42D', 'Quạt vuông Gián tiếp D', '1060x1060 | 0.55kw-4P', 'Cái', 5780000, 4450600, 4046000, 'Truyền động dây đai'),
+  i('ifan_pro', 'IFAN-48D', 'Quạt vuông Gián tiếp D', '1220x1220 | 0.75kw-4P', 'Cái', 6180000, 4758600, 4326000, 'Truyền động dây đai'),
+  i('ifan_pro', 'IFAN-54D', 'Quạt vuông Gián tiếp D', '1380x1380 | 1.1kw-4P', 'Cái', 6580000, 5066600, 4606000, 'Truyền động dây đai'),
+
+  // --- FILE 3: IFAN CAO CẤP (DÒNG A - ĐA TỐC ĐỘ) ---
+  i('ifan_pro', 'IFAN-20A', 'Quạt vuông Cao tốc A', '480x480 | 0.25kw-4P', 'Cái', 3080000, 2371600, 2156000, '1400 rpm'),
+  i('ifan_pro', 'IFAN-24A', 'Quạt vuông Cao tốc A', '580x580 | 0.37kw-4P', 'Cái', 3380000, 2602600, 2366000, '1400 rpm'),
+  i('ifan_pro', 'IFAN-28A', 'Quạt vuông Cao tốc A', '680x680 | 0.55kw-4P', 'Cái', 3680000, 2833600, 2576000, '1400 rpm'),
+  i('ifan_pro', 'IFAN-30A', 'Quạt vuông Cao tốc A', '740x740 | 0.55kw-4P', 'Cái', 4080000, 3141600, 2856000, '1400 rpm'),
+  i('ifan_pro', 'IFAN-36A', 'Quạt vuông Chậm tốc A', '900x900 | 0.37kw-8P', 'Cái', 6880000, 5297600, 4816000, '720 rpm (Siêu êm)'),
+  i('ifan_pro', 'IFAN-42A', 'Quạt vuông Chậm tốc A', '1060x1060 | 0.55kw-10P', 'Cái', 7280000, 5605600, 5096000, '580 rpm (Siêu êm)'),
+  i('ifan_pro', 'IFAN-48A', 'Quạt vuông Chậm tốc A', '1220x1220 | 0.75kw-10P', 'Cái', 7680000, 5913600, 5376000, '580 rpm (Siêu êm)'),
+  i('ifan_pro', 'IFAN-54A', 'Quạt vuông Chậm tốc A', '1380x1380 | 1.1kw-10P', 'Cái', 8080000, 6221600, 5656000, '580 rpm (Siêu êm)'),
+
+  // --- FILE 3: QUẠT LOA COMPOSITE & TRANG TRẠI ---
+  i('ifan_pro', 'IFAN-10C', 'Quạt Loa Gián tiếp', '1100x1100 | 0.55kw', 'Cái', 6380000, 4912600, 4466000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-12C', 'Quạt Loa Gián tiếp', '1200x1200 | 0.75kw', 'Cái', 7980000, 6144600, 5586000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-14C', 'Quạt Loa Gián tiếp', '1400x1400 | 1.1kw', 'Cái', 9280000, 7145600, 6496000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-85A', 'Quạt Loa Trực tiếp', '850x850 | 0.37kw-8P', 'Cái', 6880000, 5297600, 4816000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-106A', 'Quạt Loa Trực tiếp', '1060x1060 | 0.55kw-10P', 'Cái', 7380000, 5682600, 5166000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-126A', 'Quạt Loa Trực tiếp', '1260x1260 | 0.75kw-10P', 'Cái', 7680000, 5913600, 5376000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-146A', 'Quạt Loa Trực tiếp', '1460x1460 | 1.1kw-10P', 'Cái', 8080000, 6221600, 5656000, 'Vỏ Composite'),
+  i('ifan_pro', 'IFAN-106C', 'Quạt Loa Trực tiếp (Mới)', '1060x1060 | 0.55kw-4P', 'Cái', 9050400, 6968808, 6335280, 'Dòng C mới'),
+  i('ifan_pro', 'IFAN-126C', 'Quạt Loa Trực tiếp (Mới)', '1260x1260 | 0.75kw-4P', 'Cái', 9374400, 7218288, 6562080, 'Dòng C mới'),
+  i('ifan_pro', 'IFAN-146C', 'Quạt Loa Trực tiếp (Mới)', '1460x1460 | 1.1kw-4P', 'Cái', 9806400, 7550928, 6864480, 'Dòng C mới'),
+  i('ifan_pro', 'SMC-38', 'Quạt Trang Trại', '1060x1060 | 0.55kw', 'Cái', 12180000, 9378600, 8526000, 'Tôn mạ kẽm'),
+  i('ifan_pro', 'SMC-50', 'Quạt Trang Trại', '1460x1460 | 1.1kw', 'Cái', 13780000, 10610600, 9646000, 'Tôn mạ kẽm'),
+
+  // --- FILE 3: MÁY LÀM MÁT (MLM) ---
+  i('ifan_pro', 'IFAN-6000A', 'MLM Di Động Dân Dụng', '6000m3/h | 160W', 'Cái', 4980000, 0, 1743000, 'Giá NPP Ưu đãi'),
+  i('ifan_pro', 'IFAN-10000A', 'MLM Di Động Dân Dụng', '10000m3/h | 360W', 'Cái', 7280000, 0, 2548000, 'Giá NPP Ưu đãi'),
+  i('ifan_pro', 'IFAN-18000A', 'MLM Di Động Dân Dụng', '18000m3/h | 480W', 'Cái', 10580000, 0, 3703000, 'Giá NPP Ưu đãi'),
+  i('ifan_pro', 'IFAN-12000A', 'MLM Di Động', '12000m3/h | 250W', 'Cái', 19580000, 9790000, 8811000, ''),
+  i('ifan_pro', 'IFAN-24000A', 'MLM Di Động', '24000m3/h | 250W*2', 'Cái', 31680000, 15840000, 14256000, '2 Motor'),
+  i('ifan_pro', 'IFAN-1600A', 'MLM Di Động', '16000m3/h | 750W', 'Cái', 18480000, 9240000, 8316000, ''),
+  i('ifan_pro', 'IFAN-16000A', 'MLM Di Động', '16000m3/h | 900W', 'Cái', 26180000, 13090000, 11781000, ''),
+  i('ifan_pro', 'IFAN-20000A', 'MLM Di Động', '20000m3/h | 1100W', 'Cái', 29480000, 14740000, 13266000, ''),
+  
+  // --- MLM CÔNG NGHIỆP DI ĐỘNG & CỐ ĐỊNH (FILE 3) ---
+  i('ifan_pro', 'MAB1B-18MR', 'MLM CN Di động', '18000m3/h | 1.1kw | Thổi dưới', 'Cái', 13580000, 10456600, 9506000, ''),
+  i('ifan_pro', 'MAB1B-18MQ', 'MLM CN Di động', '18000m3/h | 1.1kw | Thổi ngang', 'Cái', 14280000, 10995600, 9996000, ''),
+  i('ifan_pro', 'MAB1B-18ER', 'MLM CN Di động', '18000m3/h | 1.1kw | Thổi trên', 'Cái', 14480000, 11149600, 10136000, ''),
+  i('ifan_pro', 'MAB1B-18IQ', 'MLM CN Di động', '18000m3/h | 1.1kw | Inverter', 'Cái', 16780000, 12920600, 11746000, ''),
+  i('ifan_pro', 'MAB1-18MR', 'MLM CN Di động Cao', '18000m3/h | 1.1kw | H=1940', 'Cái', 15480000, 11919600, 10836000, ''),
+  i('ifan_pro', 'MAB2-18MR', 'MLM CN Di động Cao', '18000m3/h | 1.1kw | Vỏ nhựa', 'Cái', 16880000, 12997600, 11816000, ''),
+  i('ifan_pro', 'MAB4-18MR', 'MLM CN Di động Thấp', '18000m3/h | 1.1kw | H=1700', 'Cái', 16880000, 12997600, 11816000, ''),
+  i('ifan_pro', 'FAB/D/U-18CT', 'MLM CN Cố định', '18000m3/h | 1.1kw | 1 Tốc', 'Cái', 11680000, 8993600, 8176000, ''),
+  i('ifan_pro', 'FAB/D/U-18MR', 'MLM CN Cố định', '18000m3/h | 1.1kw | Remote', 'Cái', 12380000, 9532600, 8666000, ''),
+  i('ifan_pro', 'FAB/D/U-18IQ', 'MLM CN Cố định', '18000m3/h | 1.1kw | Inverter', 'Cái', 15380000, 11842600, 10766000, ''),
+  i('ifan_pro', 'FAB/D/U-23CT', 'MLM CN Cố định', '23000m3/h | 1.5kw | 1 Tốc', 'Cái', 13280000, 10225600, 9296000, ''),
+  i('ifan_pro', 'FAB/D/U-23IQ', 'MLM CN Cố định', '23000m3/h | 1.5kw | Inverter', 'Cái', 17080000, 13151600, 11956000, ''),
+  i('ifan_pro', 'FAD/U-30CT', 'MLM CN Cố định', '30000m3/h | 3.0kw | 1 Tốc', 'Cái', 24280000, 18695600, 16996000, ''),
+  i('ifan_pro', 'FAD/U-30IQ', 'MLM CN Cố định', '30000m3/h | 3.0kw | Inverter', 'Cái', 31680000, 24393600, 22176000, ''),
+  i('ifan_pro', 'FAD/U-35CT', 'MLM CN Cố định', '35000m3/h | 3.5kw | 1 Tốc', 'Cái', 30780000, 23700600, 21546000, ''),
+  i('ifan_pro', 'FAD/U-35IQ', 'MLM CN Cố định', '35000m3/h | 3.5kw | Inverter', 'Cái', 38180000, 29398600, 26726000, ''),
+  i('ifan_pro', 'FAD/U-50CT', 'MLM CN Cố định', '50000m3/h | 5.0kw | 1 Tốc', 'Cái', 45180000, 34788600, 31626000, ''),
+  i('ifan_pro', 'FAD/U-50IQ', 'MLM CN Cố định', '50000m3/h | 5.0kw | Inverter', 'Cái', 56680000, 43643600, 39676000, ''),
+
+  // --- FILE 9: PCCC (CHỊU NHIỆT) ---
+  i('ifan_pro', 'PCCC-36A', 'Quạt Hút Khói PCCC', '900x900 | 0.37kw | 300°C/2h', 'Cái', 14900000, 8940000, 7450000, 'Motor chịu nhiệt'),
+  i('ifan_pro', 'PCCC-42A', 'Quạt Hút Khói PCCC', '1060x1060 | 0.55kw | 300°C/2h', 'Cái', 17100000, 10260000, 8550000, 'Motor chịu nhiệt'),
+  i('ifan_pro', 'PCCC-48A', 'Quạt Hút Khói PCCC', '1220x1220 | 0.75kw | 300°C/2h', 'Cái', 20500000, 12300000, 10250000, 'Motor chịu nhiệt'),
+  i('ifan_pro', 'PCCC-54A', 'Quạt Hút Khói PCCC', '1380x1380 | 1.1kw | 300°C/2h', 'Cái', 27000000, 16200000, 13500000, 'Motor chịu nhiệt'),
+
+  // --- FILE 11: JETFAN ---
+  i('ifan_pro', 'AFS08', 'Quạt Jetfan', '150W | 1200 m3/h', 'Cái', 10580000, 8464000, 0, ''),
+  i('ifan_pro', 'AFS10', 'Quạt Jetfan', '250W | 1998 m3/h', 'Cái', 12780000, 10224000, 0, ''),
+  i('ifan_pro', 'AFS15', 'Quạt Jetfan', '300W | 3058 m3/h', 'Cái', 21380000, 17104000, 0, ''),
+
+  // --- FILE 13: MÁY HÚT BỤI ---
+  i('ifan_pro', '1-911', 'Máy Hút Bụi Túi Vải', '1.5kw | 1 Túi', 'Cái', 11180000, 8385000, 7630350, ''),
+  i('ifan_pro', '1-921', 'Máy Hút Bụi Túi Vải', '2.2kw | 1 Túi', 'Cái', 11680000, 8760000, 7971600, ''),
+  i('ifan_pro', '1-942', 'Máy Hút Bụi Túi Vải', '4.0kw | 2 Túi', 'Cái', 16780000, 12585000, 11452350, ''),
+  i('ifan_pro', '1-952', 'Máy Hút Bụi Túi Vải', '5.5kw | 2 Túi', 'Cái', 19380000, 14535000, 13226850, ''),
+  i('ifan_pro', '1-953', 'Máy Hút Bụi Túi Vải', '5.5kw | 3 Túi', 'Cái', 20880000, 15660000, 14250600, ''),
+  i('ifan_pro', '1-973', 'Máy Hút Bụi Túi Vải', '7.5kw | 3 Túi', 'Cái', 21580000, 16185000, 14728350, ''),
+  i('ifan_pro', '1-974', 'Máy Hút Bụi Túi Vải', '7.5kw | 4 Túi', 'Cái', 32680000, 24510000, 22304100, ''),
+  i('ifan_pro', '1-9114', 'Máy Hút Bụi Túi Vải', '11kw | 4 Túi', 'Cái', 37580000, 28185000, 25648350, ''),
+  i('ifan_pro', '1-9154', 'Máy Hút Bụi Túi Vải', '15kw | 4 Túi', 'Cái', 39080000, 29310000, 26672100, ''),
+
+  // --- FILE 5: QUẠT TRẦN IFAN ---
+  i('ifan_pro', 'WYDS-A1500M', 'Quạt Trần Motor DC', 'Sải 1.5M | 110W', 'Cái', 22480000, 14612000, 0, 'Nam châm vĩnh cửu'),
+  i('ifan_pro', 'WYDS-A1800M', 'Quạt Trần Motor DC', 'Sải 1.8M | 150W', 'Cái', 23580000, 15327000, 0, 'Nam châm vĩnh cửu'),
+  i('ifan_pro', 'WYDS-A2100M', 'Quạt Trần Motor DC', 'Sải 2.1M | 280W', 'Cái', 24680000, 16042000, 0, 'Nam châm vĩnh cửu'),
+  i('ifan_pro', 'YS-YCWZ260CM', 'Quạt Trần HVLS', 'Sải 2.6M | 0.6KW', 'Cái', 18180000, 13635000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ320CM', 'Quạt Trần HVLS', 'Sải 3.2M | 0.6KW', 'Cái', 19380000, 14535000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ380CM', 'Quạt Trần HVLS', 'Sải 3.8M | 0.6KW', 'Cái', 20480000, 15360000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ420CM', 'Quạt Trần HVLS', 'Sải 4.2M | 1.0KW', 'Cái', 25080000, 18810000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ530CM', 'Quạt Trần HVLS', 'Sải 5.3M | 1.2KW', 'Cái', 33180000, 24885000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ630CM', 'Quạt Trần HVLS', 'Sải 6.3M | 1.5KW', 'Cái', 36580000, 27435000, 0, 'Quay vỏ ngoài'),
+  i('ifan_pro', 'YS-YCWZ730M', 'Quạt Trần HVLS', 'Sải 7.3M | 1.8KW', 'Cái', 43480000, 32610000, 0, 'Quay vỏ ngoài'),
+
+  // --- FILE 1: IFAN PHỔ THÔNG (STANDARD) ---
+  i('ifan_std', 'NB-50 3 lá', 'Quạt treo CN Phổ thông', 'Sải 500 | 130W', 'Cái', 1780000, 1335000, 1214850, '3 lá'),
+  i('ifan_std', 'NB-65 3 lá', 'Quạt treo CN Phổ thông', 'Sải 650 | 150W', 'Cái', 1880000, 1410000, 1283100, '3 lá'),
+  i('ifan_std', 'NB-75 3 lá', 'Quạt treo CN Phổ thông', 'Sải 750 | 180W', 'Cái', 1980000, 1485000, 1351350, '3 lá'),
+  i('ifan_std', 'NS-50 3 lá', 'Quạt đứng CN Phổ thông', 'Sải 500 | 130W', 'Cái', 1980000, 1485000, 1351350, '3 lá'),
+  i('ifan_std', 'NS-65 3 lá', 'Quạt đứng CN Phổ thông', 'Sải 650 | 150W', 'Cái', 2180000, 1635000, 1487850, '3 lá'),
+  i('ifan_std', 'NS-75 3 lá', 'Quạt đứng CN Phổ thông', 'Sải 750 | 180W', 'Cái', 2280000, 1710000, 1556100, '3 lá'),
+  i('ifan_std', 'NB-50 PLUS', 'Quạt treo CN Plus', 'Sải 500 | 150W', 'Cái', 2580000, 1935000, 1760850, 'Plus'),
+  i('ifan_std', 'NB-65 PLUS', 'Quạt treo CN Plus', 'Sải 650 | 200W', 'Cái', 2680000, 2010000, 1829100, 'Plus'),
+  i('ifan_std', 'NB-75 PLUS', 'Quạt treo CN Plus', 'Sải 750 | 250W', 'Cái', 2880000, 2160000, 1965600, 'Plus'),
+  i('ifan_std', 'NS-50 PLUS', 'Quạt đứng CN Plus', 'Sải 500 | 150W', 'Cái', 2680000, 2010000, 1829100, 'Plus'),
+  i('ifan_std', 'NS-65 PLUS', 'Quạt đứng CN Plus', 'Sải 650 | 200W', 'Cái', 2880000, 2160000, 1965600, 'Plus'),
+  i('ifan_std', 'NS-75 PLUS', 'Quạt đứng CN Plus', 'Sải 750 | 250W', 'Cái', 2980000, 2235000, 2033850, 'Plus'),
+  i('ifan_std', 'FAL-30-4', 'Quạt Tai Voi', '355x355 | 45W', 'Cái', 780000, 585000, 526500, 'Không lá sách'),
+  i('ifan_std', 'FAD 40-4', 'Quạt Tai Voi', '480x480 | 90W', 'Cái', 1280000, 960000, 864000, 'Không lá sách'),
+  i('ifan_std', 'FAD 50-4', 'Quạt Tai Voi', '600x600 | 130W', 'Cái', 1780000, 1335000, 1201500, 'Không lá sách'),
+  i('ifan_std', 'FAD 60-4', 'Quạt Tai Voi', '700x700 | 250W', 'Cái', 2880000, 2160000, 1944000, 'Không lá sách'),
+  i('ifan_std', 'FAD/S 30', 'Quạt Tai Voi', '355x355 | 45W', 'Cái', 1080000, 810000, 729000, 'Có lá sách'),
+  i('ifan_std', 'FAD/S 40', 'Quạt Tai Voi', '480x480 | 90W', 'Cái', 1780000, 1335000, 1201500, 'Có lá sách'),
+  i('ifan_std', 'FAD/S 50', 'Quạt Tai Voi', '600x600 | 130W', 'Cái', 2680000, 2010000, 1809000, 'Có lá sách'),
+  i('ifan_std', 'SHT-25', 'Quạt Xách Tay', 'D250 | 320W', 'Cái', 2680000, 2010000, 1829100, ''),
+  i('ifan_std', 'SHT-30', 'Quạt Xách Tay', 'D300 | 520W', 'Cái', 3180000, 2385000, 2170350, ''),
+  i('ifan_std', 'SHT-35', 'Quạt Xách Tay', 'D350 | 750W', 'Cái', 4880000, 3660000, 3330600, ''),
+  i('ifan_std', 'SHT-40', 'Quạt Xách Tay', 'D400 | 1100W', 'Cái', 5580000, 4185000, 3808350, ''),
+  i('ifan_std', 'OLX-250', 'Ống Lò Xo', 'D250 x 5M', 'Cái', 1480000, 1110000, 1010100, ''),
+  i('ifan_std', 'OLX-300', 'Ống Lò Xo', 'D300 x 5M', 'Cái', 1580000, 1185000, 1078350, ''),
+  i('ifan_std', 'OLX-350', 'Ống Lò Xo', 'D350 x 5M', 'Cái', 1680000, 1260000, 1146600, ''),
+  i('ifan_std', 'OLX-400', 'Ống Lò Xo', 'D400 x 5M', 'Cái', 1980000, 1485000, 1351350, ''),
+  i('ifan_std', 'TA-3B', 'Quạt Hướng Trục', 'D300 | 250W-220V', 'Cái', 1780000, 1335000, 1201500, ''),
+  i('ifan_std', 'TA-4B', 'Quạt Hướng Trục', 'D400 | 370W-220V', 'Cái', 2680000, 2010000, 1809000, ''),
+  i('ifan_std', 'TA-5B', 'Quạt Hướng Trục', 'D500 | 450W-220V', 'Cái', 3180000, 2385000, 2146500, ''),
+  i('ifan_std', 'TA-6B', 'Quạt Hướng Trục', 'D600 | 550W-220V', 'Cái', 3780000, 2835000, 2551500, ''),
+  i('ifan_std', 'TA-3G', 'Quạt Hướng Trục', 'D300 | 370W-380V', 'Cái', 2480000, 1860000, 1674000, ''),
+  i('ifan_std', 'TA-4G', 'Quạt Hướng Trục', 'D400 | 550W-380V', 'Cái', 3380000, 2535000, 2281500, ''),
+  i('ifan_std', 'TA-5G', 'Quạt Hướng Trục', 'D500 | 750W-380V', 'Cái', 3980000, 2985000, 2686500, ''),
+  i('ifan_std', 'TA-6G', 'Quạt Hướng Trục', 'D600 | 1500W-380V', 'Cái', 6480000, 4860000, 4374000, ''),
+  i('ifan_std', 'IFAN-48CSA', 'Quạt Vuông Phổ thông', '480x480 | 0.25kw', 'Cái', 2480000, 1810400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-58CSA', 'Quạt Vuông Phổ thông', '580x580 | 0.37kw', 'Cái', 2680000, 1956400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-68CSA', 'Quạt Vuông Phổ thông', '680x680 | 0.55kw', 'Cái', 2880000, 2102400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-74CSA', 'Quạt Vuông Phổ thông', '740x740 | 0.55kw', 'Cái', 3080000, 2248400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-90CSA', 'Quạt Vuông Phổ thông', '900x900 | 0.37kw', 'Cái', 5280000, 3854400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-106CSA', 'Quạt Vuông Phổ thông', '1060x1060 | 0.55kw', 'Cái', 5480000, 4000400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-122CSA', 'Quạt Vuông Phổ thông', '1220x1220 | 0.75kw', 'Cái', 5780000, 4219400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-138CSA', 'Quạt Vuông Phổ thông', '1380x1380 | 1.1kw', 'Cái', 6080000, 4438400, 0, 'Dòng CSA'),
+  i('ifan_std', 'IFAN-90CSC', 'Quạt Vuông Gián tiếp', '900x900 | 0.37kw', 'Cái', 4580000, 3435000, 0, 'Dòng CSC'),
+  i('ifan_std', 'IFAN-106CSC', 'Quạt Vuông Gián tiếp', '1060x1060 | 0.55kw', 'Cái', 4680000, 3510000, 0, 'Dòng CSC'),
+  i('ifan_std', 'IFAN-122CSC', 'Quạt Vuông Gián tiếp', '1220x1220 | 0.75kw', 'Cái', 4880000, 3660000, 0, 'Dòng CSC'),
+  i('ifan_std', 'IFAN-138CSC', 'Quạt Vuông Gián tiếp', '1380x1380 | 1.1kw', 'Cái', 5080000, 3810000, 0, 'Dòng CSC'),
+  i('ifan_std', 'IFAN-106CSC-Loa', 'Quạt Loa Gián tiếp', '1060x1060 | 0.55kw', 'Cái', 7380000, 5387400, 0, 'Dòng CSC Loa'),
+  i('ifan_std', 'IFAN-126CSC-Loa', 'Quạt Loa Gián tiếp', '1260x1260 | 0.75kw', 'Cái', 7880000, 5752400, 0, 'Dòng CSC Loa'),
+  i('ifan_std', 'IFAN-146CSC-Loa', 'Quạt Loa Gián tiếp', '1460x1460 | 1.1kw', 'Cái', 8180000, 5971400, 0, 'Dòng CSC Loa'),
+  i('ifan_std', 'IFAN-85CSA-Loa', 'Quạt Loa Trực tiếp', '850x850 | 0.37kw', 'Cái', 4580000, 3435000, 0, 'Dòng CSA Loa'),
+  i('ifan_std', 'IFAN-106CSA-Loa', 'Quạt Loa Trực tiếp', '1060x1060 | 0.55kw', 'Cái', 4880000, 3660000, 0, 'Dòng CSA Loa'),
+  i('ifan_std', 'IFAN-126CSA-Loa', 'Quạt Loa Trực tiếp', '1260x1260 | 0.75kw', 'Cái', 5180000, 3885000, 0, 'Dòng CSA Loa'),
+  i('ifan_std', 'IFAN-146CSA-Loa', 'Quạt Loa Trực tiếp', '1460x1460 | 1.1kw', 'Cái', 5480000, 4110000, 0, 'Dòng CSA Loa'),
+
+  // --- FILE 7: SẢN PHẨM EFAN ---
+  i('efan', 'FE-40', 'Quạt sàn eFan', 'Sải 400 | 130W', 'Cái', 968000, 871200, 784080, ''),
+  i('efan', 'FE-45', 'Quạt sàn eFan', 'Sải 450 | 140W', 'Cái', 1038000, 934200, 840780, ''),
+  i('efan', 'FE-50', 'Quạt sàn eFan', 'Sải 500 | 150W', 'Cái', 1138000, 1024200, 921780, ''),
+  i('efan', 'EF-E50-3', 'Quạt treo eFan', 'Sải 500 | 130W', 'Cái', 988000, 889200, 800280, ''),
+  i('efan', 'EF-E65-3', 'Quạt treo eFan', 'Sải 650 | 150W', 'Cái', 1008000, 907200, 816480, ''),
+  i('efan', 'EF-E75-3', 'Quạt treo eFan', 'Sải 750 | 180W', 'Cái', 1078000, 970200, 873180, ''),
+  i('efan', 'EF-D50-3', 'Quạt đứng eFan', 'Sải 500 | 130W', 'Cái', 1008000, 907200, 816480, ''),
+  i('efan', 'EF-D65-3', 'Quạt đứng eFan', 'Sải 650 | 150W', 'Cái', 1078000, 1051200, 873180, ''),
+  i('efan', 'EF-D75-3', 'Quạt đứng eFan', 'Sải 750 | 180W', 'Cái', 1168000, 1051200, 946080, ''),
+  i('efan', 'EF-G-30E', 'Quạt Tai Voi eFan', '355x355 | 45W', 'Cái', 508000, 457200, 411480, 'Không lá sách'),
+  i('efan', 'EF-G-40E', 'Quạt Tai Voi eFan', '480x480 | 90W', 'Cái', 868000, 781200, 703080, 'Không lá sách'),
+  i('efan', 'EF-G-50E', 'Quạt Tai Voi eFan', '600x600 | 130W', 'Cái', 1208100, 1087200, 978480, 'Không lá sách'),
+  i('efan', 'EF-G-60E', 'Quạt Tai Voi eFan', '700x700 | 250W', 'Cái', 1908000, 1717200, 1545480, 'Không lá sách'),
+  i('efan', 'EF-G-30ES', 'Quạt Tai Voi eFan', '355x355 | 45W', 'Cái', 648000, 583200, 524880, 'Có lá sách'),
+  i('efan', 'EF-G-40ES', 'Quạt Tai Voi eFan', '480x480 | 90W', 'Cái', 1128000, 1015200, 913680, 'Có lá sách'),
+  i('efan', 'EF-G-50ES', 'Quạt Tai Voi eFan', '600x600 | 130W', 'Cái', 1738000, 1564200, 1407780, 'Có lá sách'),
+  i('efan', 'EF-G-25XT', 'Quạt Xách Tay eFan', 'D250 | 320W', 'Cái', 1998000, 1798200, 1618380, ''),
+  i('efan', 'EF-G-30XT', 'Quạt Xách Tay eFan', 'D300 | 520W', 'Cái', 2358000, 2122200, 1909980, ''),
+  i('efan', 'EF-G-35XT', 'Quạt Xách Tay eFan', 'D350 | 750W', 'Cái', 2968000, 2671200, 2404080, ''),
+  i('efan', 'EF-G-40XT', 'Quạt Xách Tay eFan', 'D400 | 1100W', 'Cái', 3678000, 3310200, 2979180, ''),
+  i('efan', 'EF-ONG-25SXT', 'Ống mềm eFan', 'D250 x 5M', 'Cái', 1128000, 1015200, 913680, ''),
+  i('efan', 'EF-ONG-30SXT', 'Ống mềm eFan', 'D300 x 5M', 'Cái', 1208000, 1087200, 978480, ''),
+  i('efan', 'EF-ONG-35SXT', 'Ống mềm eFan', 'D350 x 5M', 'Cái', 1298000, 1168200, 1051380, ''),
+  i('efan', 'EF-ONG-40SXT', 'Ống mềm eFan', 'D400 x 5M', 'Cái', 1468000, 1321200, 1189080, ''),
+  i('efan', 'EF-G-30BTM', 'Quạt Hướng Trục', 'D300 | 250W-220V', 'Cái', 1208000, 1087200, 978480, 'eFan'),
+  i('efan', 'EF-G-40BTM', 'Quạt Hướng Trục', 'D400 | 370W-220V', 'Cái', 1568000, 1411200, 1270080, 'eFan'),
+  i('efan', 'EF-G-50BTM', 'Quạt Hướng Trục', 'D500 | 450W-220V', 'Cái', 2088000, 1879200, 1691280, 'eFan'),
+  i('efan', 'EF-G-60BTM', 'Quạt Hướng Trục', 'D600 | 550W-220V', 'Cái', 2528000, 2275200, 2047680, 'eFan'),
+  i('efan', 'EF-G-30TMG', 'Quạt Hướng Trục', 'D300 | 370W-380V', 'Cái', 1658000, 1492200, 1342980, 'eFan'),
+  i('efan', 'EF-G-40TMG', 'Quạt Hướng Trục', 'D400 | 550W-380V', 'Cái', 1998000, 1798200, 1618380, 'eFan'),
+  i('efan', 'EF-G-50TMG', 'Quạt Hướng Trục', 'D500 | 750W-380V', 'Cái', 2528000, 2275200, 2047680, 'eFan'),
+  i('efan', 'EF-G-60TMG', 'Quạt Hướng Trục', 'D600 | 1500W-380V', 'Cái', 3488000, 3139200, 2825280, 'eFan'),
+  i('efan', 'EF-A-40A', 'Quạt Vuông eFan', '400x400 | 0.25kw', 'Cái', 1980000, 1782000, 1603800, ''),
+  i('efan', 'EF-A-50A', 'Quạt Vuông eFan', '500x500 | 0.37kw', 'Cái', 2180000, 1962000, 1765800, ''),
+  i('efan', 'EF-A-60A', 'Quạt Vuông eFan', '600x600 | 0.55kw', 'Cái', 2280000, 2052000, 1846800, ''),
+  i('efan', 'EF-A-70A', 'Quạt Vuông eFan', '700x700 | 0.37kw', 'Cái', 2480000, 2232000, 2008800, ''),
+  i('efan', 'EF-A-90AN', 'Quạt Vuông eFan', '900x900 | 0.37kw', 'Cái', 4180000, 3762000, 3385800, ''),
+  i('efan', 'EF-A-106AN', 'Quạt Vuông eFan', '1060x1060 | 0.55kw', 'Cái', 4380000, 3942000, 3547800, ''),
+  i('efan', 'EF-A-122AN', 'Quạt Vuông eFan', '1220x1220 | 0.75kw', 'Cái', 4580000, 4122000, 3709800, ''),
+  i('efan', 'EF-A-138AN', 'Quạt Vuông eFan', '1380x1380 | 1.1kw', 'Cái', 4880000, 4392000, 3952800, ''),
+  i('efan', 'EF-A-90C', 'Quạt Vuông eFan GT', '900x900 | 0.37kw', 'Cái', 3128000, 2815200, 2533680, ''),
+  i('efan', 'EF-A-106C', 'Quạt Vuông eFan GT', '1060x1060 | 0.55kw', 'Cái', 3488000, 3139200, 2825280, ''),
+  i('efan', 'EF-A-122C', 'Quạt Vuông eFan GT', '1220x1220 | 0.75kw', 'Cái', 3718000, 3346200, 3011580, ''),
+  i('efan', 'EF-A-138C', 'Quạt Vuông eFan GT', '1380x1380 | 1.1kw', 'Cái', 4008000, 3607200, 3246480, ''),
+  i('efan', 'EF-A-90D', 'Quạt Vuông eFan GT 2 Lưới', '900x900 | 0.37kw', 'Cái', 3748000, 3373200, 3035880, ''),
+  i('efan', 'EF-A-106D', 'Quạt Vuông eFan GT 2 Lưới', '1060x1060 | 0.55kw', 'Cái', 3938000, 3544200, 3189780, ''),
+  i('efan', 'EF-A-122D', 'Quạt Vuông eFan GT 2 Lưới', '1220x1220 | 0.75kw', 'Cái', 4138000, 3724200, 3351780, ''),
+  i('efan', 'EF-A-138D', 'Quạt Vuông eFan GT 2 Lưới', '1380x1380 | 1.1kw', 'Cái', 4328000, 3895200, 3505680, ''),
+  i('efan', 'EF-A-100E', 'Quạt Tiếp Gió eFan', '1100x1100 | 0.55kw', 'Cái', 4018000, 3616200, 3254580, ''),
+  i('efan', 'EF-A-120E', 'Quạt Tiếp Gió eFan', '1200x1200 | 0.75kw', 'Cái', 4898000, 4408200, 3967380, ''),
+  i('efan', 'EF-A-140E', 'Quạt Tiếp Gió eFan', '1400x1400 | 1.1kw', 'Cái', 5598000, 5038200, 4534380, ''),
+  i('efan', 'EF-N-85A', 'Quạt Loa eFan TT', '850x850 | 0.37kw', 'Cái', 4048000, 3521760, 3169584, ''),
+  i('efan', 'EF-N-106A', 'Quạt Loa eFan TT', '1060x1060 | 0.55kw', 'Cái', 4228000, 3678360, 3310524, ''),
+  i('efan', 'EF-N-126A', 'Quạt Loa eFan TT', '1260x1260 | 0.75kw', 'Cái', 4418000, 3843660, 3459294, ''),
+  i('efan', 'EF-N-146A', 'Quạt Loa eFan TT', '1460x1460 | 1.1kw', 'Cái', 4708000, 4095960, 3686364, ''),
+  i('efan', 'EF-N-106C', 'Quạt Loa eFan GT', '1060x1060 | 0.55kw', 'Cái', 5678000, 5110200, 4599180, ''),
+  i('efan', 'EF-N-126C', 'Quạt Loa eFan GT', '1260x1260 | 0.75kw', 'Cái', 5868000, 5281200, 4753080, ''),
+  i('efan', 'EF-N-146C', 'Quạt Loa eFan GT', '1460x1460 | 1.1kw', 'Cái', 6158000, 5542200, 4987980, ''),
+  i('efan', 'EF-1050', 'MLM eFan', '6000m3/h | 160W', 'Cái', 2238000, 2014200, 1812780, ''),
+  i('efan', 'EF-1380', 'MLM eFan', '10000m3/h | 360W', 'Cái', 3398000, 3058200, 2752380, ''),
+  i('efan', 'EF-R-TD18DKC', 'MLM Khủng Long eFan', '18000m3/h | 1.1kw', 'Cái', 5188000, 4669200, 4202280, ''),
+  i('efan', 'EF-R-MAB1B-18MR', 'MLM CN eFan', '18000m3/h | Thổi dưới', 'Cái', 11068000, 9961200, 8965080, ''),
+  i('efan', 'EF-R-MAB1B-18MQ', 'MLM CN eFan', '18000m3/h | Thổi ngang', 'Cái', 11638000, 10474200, 9426780, ''),
+  i('efan', 'EF-R-MAB1B-18ER', 'MLM CN eFan', '18000m3/h | Thổi trên', 'Cái', 13368000, 12031200, 10828080, ''),
+  i('efan', 'EF-R-MAB1B-18IQ', 'MLM CN eFan', '18000m3/h | Inverter', 'Cái', 13658000, 12292200, 11062980, ''),
+  i('efan', 'EF-R-MAB1-18MR', 'MLM CN eFan Cao', '18000m3/h | Thổi dưới', 'Cái', 10348000, 9313200, 8381880, ''),
+  i('efan', 'EF-R-MAB1-18MQ', 'MLM CN eFan Cao', '18000m3/h | Thổi ngang', 'Cái', 10918000, 9826200, 8843580, ''),
+  i('efan', 'EF-R-MAB1-18ER', 'MLM CN eFan Cao', '18000m3/h | Thổi trên', 'Cái', 12648000, 11383200, 10244880, ''),
+  i('efan', 'EF-R-MAB1-18IQ', 'MLM CN eFan Cao', '18000m3/h | Inverter', 'Cái', 12938000, 11644200, 10479780, ''),
+  i('efan', 'EF-R-FAB/D/U-18CT', 'MLM CN Cố định eFan', '18000m3/h | 1 Tốc', 'Cái', 6758000, 6082200, 5473980, ''),
+  i('efan', 'EF-R-FAB/D/U-18MR', 'MLM CN Cố định eFan', '18000m3/h | Remote', 'Cái', 8478000, 7630200, 6867180, ''),
+  i('efan', 'EF-R-FAB/D/U-18ER', 'MLM CN Cố định eFan', '18000m3/h | 1 Tốc', 'Cái', 9918000, 8926200, 8033580, ''),
+  i('efan', 'EF-R-FAB/D/U-18IQ', 'MLM CN Cố định eFan', '18000m3/h | Inverter', 'Cái', 11358000, 10222200, 9199980, ''),
+  i('efan', 'EF-R-FAB/D/U-23CT', 'MLM CN Cố định eFan', '23000m3/h | 1 Tốc', 'Cái', 8478000, 7630200, 6867180, ''),
+  i('efan', 'EF-R-FAB/D/U-23ER', 'MLM CN Cố định eFan', '23000m3/h | 1 Tốc', 'Cái', 11638000, 10474200, 9426780, ''),
+  i('efan', 'EF-R-FAB/D/U-23IQ', 'MLM CN Cố định eFan', '23000m3/h | Inverter', 'Cái', 13078000, 11770200, 10593180, ''),
+  i('efan', 'EF-R-FAD/U/B-25CT', 'MLM CN Cố định eFan', '25000m3/h | 1 Tốc', 'Cái', 10058000, 9052200, 8146980, ''),
+  i('efan', 'EF-R-FAD/U/B-25ER', 'MLM CN Cố định eFan', '25000m3/h | 1 Tốc', 'Cái', 13218000, 11896200, 10706580, ''),
+  i('efan', 'EF-R-FAD/U/B-25IQ', 'MLM CN Cố định eFan', '25000m3/h | Inverter', 'Cái', 16098000, 14488200, 13039380, ''),
+  i('efan', 'EF-R-FAD/U-30CT', 'MLM CN Cố định eFan', '30000m3/h | 1 Tốc', 'Cái', 12938000, 11644200, 10479780, ''),
+  i('efan', 'EF-R-FAD/U-30ER', 'MLM CN Cố định eFan', '30000m3/h | 1 Tốc', 'Cái', 16818000, 15136200, 13622580, ''),
+  i('efan', 'EF-R-FAD/U-30IQ', 'MLM CN Cố định eFan', '30000m3/h | Inverter', 'Cái', 20408000, 18367200, 16530480, ''),
+  i('efan', 'EF-R-FAD/U-35CT', 'MLM CN Cố định eFan', '35000m3/h | 1 Tốc', 'Cái', 21558000, 19402200, 17461980, ''),
+  i('efan', 'EF-R-FAD/U-35ER', 'MLM CN Cố định eFan', '35000m3/h | 1 Tốc', 'Cái', 25438000, 22894200, 20604780, ''),
+  i('efan', 'EF-R-FAD/U-35IQ', 'MLM CN Cố định eFan', '35000m3/h | Inverter', 'Cái', 31908000, 28717200, 25845480, ''),
+  i('efan', 'EF-R-FAD/U-50CT', 'MLM CN Cố định eFan', '50000m3/h | 1 Tốc', 'Cái', 29468000, 26521200, 23869080, ''),
+  i('efan', 'EF-R-FAD/U-50ER', 'MLM CN Cố định eFan', '50000m3/h | 1 Tốc', 'Cái', 31188000, 28069200, 25262280, ''),
+  i('efan', 'EF-R-FAD/U-50IQ', 'MLM CN Cố định eFan', '50000m3/h | Inverter', 'Cái', 37118000, 33406200, 30065580, ''),
+  i('efan', 'YT-1050', 'Quạt tròn nhựa Di động', '50000m3/h | D880', 'Cái', 5068000, 4561200, 4105080, ''),
+  i('efan', 'YT-1250', 'Quạt tròn nhựa Di động', '56000m3/h | D1050', 'Cái', 6818000, 6136200, 5522580, ''),
+  i('efan', 'YT-1450', 'Quạt tròn nhựa Di động', '62000m3/h | D1250', 'Cái', 7698000, 6928200, 6235380, ''),
+  i('efan', 'YT-1750', 'Quạt tròn nhựa Di động', '68000m3/h | D1550', 'Cái', 10318000, 9286200, 8357580, ''),
+  i('efan', 'YT-2050', 'Quạt tròn nhựa Di động', '74000m3/h | D1850', 'Cái', 14698000, 13228200, 11905380, ''),
+  i('efan', 'WYDS-A1500M', 'Quạt trần eFan DC', 'Sải 1.5M | 110W', 'Cái', 8728000, 7855200, 7069680, ''),
+  i('efan', 'WYDS-A1800M', 'Quạt trần eFan DC', 'Sải 1.8M | 150W', 'Cái', 9268000, 8341200, 7507080, ''),
+  i('efan', 'WYDS-A2100M', 'Quạt trần eFan DC', 'Sải 2.1M | 280W', 'Cái', 9508000, 8557200, 7701480, ''),
+  i('efan', 'YS-EF-YCWZ260CM', 'Quạt trần eFan HVLS', 'Sải 2.6M | 0.6KW', 'Cái', 18848000, 16963200, 15266880, ''),
+  i('efan', 'YS-EF-YCWZ320CM', 'Quạt trần eFan HVLS', 'Sải 3.2M | 0.6KW', 'Cái', 19788000, 17809200, 16028280, ''),
+  i('efan', 'YS-EF-YCWZ380CM', 'Quạt trần eFan HVLS', 'Sải 3.8M | 0.6KW', 'Cái', 20058000, 18052200, 16246980, ''),
+  i('efan', 'YS-EF-YCWZ420CM', 'Quạt trần eFan HVLS', 'Sải 4.2M | 1.0KW', 'Cái', 23548000, 21193200, 19073880, ''),
+  i('efan', 'YS-EF-YCWZ520CM', 'Quạt trần eFan HVLS', 'Sải 5.2M | 1.2KW', 'Cái', 24628000, 22165200, 19948680, ''),
+  i('efan', 'YS-EF-YCWZ630CM', 'Quạt trần eFan HVLS', 'Sải 6.3M | 1.5KW', 'Cái', 28948000, 26053200, 23447880, ''),
+  i('efan', 'YS-EF-YCWZ720CM', 'Quạt trần eFan HVLS', 'Sải 7.2M | 1.8KW', 'Cái', 31738000, 28564200, 25707780, ''),
+
+  // --- FILE 15: KHUNG MÀN NƯỚC IFAN ---
+  i('frame', 'ICP-1512', 'Khung Inox iFan 1500', '1500x1200x150', 'Bộ', 5080000, 3810000, 3429000, ''),
+  i('frame', 'ICP-1518', 'Khung Inox iFan 1500', '1500x1800x150', 'Bộ', 6980000, 5235000, 4711500, ''),
+  i('frame', 'ICP-1524', 'Khung Inox iFan 1500', '1500x2400x150', 'Bộ', 8980000, 6735000, 6061500, ''),
+  i('frame', 'ICP-1530', 'Khung Inox iFan 1500', '1500x3000x150', 'Bộ', 10780000, 8085000, 7276500, ''),
+  i('frame', 'ICP-1536', 'Khung Inox iFan 1500', '1500x3600x150', 'Bộ', 12680000, 9510000, 8559000, ''),
+  i('frame', 'ICP-1542', 'Khung Inox iFan 1500', '1500x4200x150', 'Bộ', 14580000, 10935000, 9841500, ''),
+  i('frame', 'ICP-1548', 'Khung Inox iFan 1500', '1500x4800x150', 'Bộ', 16380000, 12285000, 11056500, ''),
+  i('frame', 'ICP-1554', 'Khung Inox iFan 1500', '1500x5400x150', 'Bộ', 18280000, 13710000, 12339000, ''),
+  i('frame', 'ICP-1560', 'Khung Inox iFan 1500', '1500x6000x150', 'Bộ', 20800000, 15600000, 14040000, ''),
+  i('frame', 'ICP-1812', 'Khung Inox iFan 1800', '1800x1200x150', 'Bộ', 5580000, 4185000, 3766500, ''),
+  i('frame', 'ICP-1818', 'Khung Inox iFan 1800', '1800x1800x150', 'Bộ', 7580000, 5685000, 5116500, ''),
+  i('frame', 'ICP-1824', 'Khung Inox iFan 1800', '1800x2400x150', 'Bộ', 9480000, 7110000, 6399000, ''),
+  i('frame', 'ICP-1830', 'Khung Inox iFan 1800', '1800x3000x150', 'Bộ', 11480000, 8610000, 7749000, ''),
+  i('frame', 'ICP-1836', 'Khung Inox iFan 1800', '1800x3600x150', 'Bộ', 13380000, 10035000, 9031500, ''),
+  i('frame', 'ICP-1842', 'Khung Inox iFan 1800', '1800x4200x150', 'Bộ', 15380000, 11535000, 10381500, ''),
+  i('frame', 'ICP-1848', 'Khung Inox iFan 1800', '1800x4800x150', 'Bộ', 17380000, 13035000, 11731500, ''),
+  i('frame', 'ICP-1854', 'Khung Inox iFan 1800', '1800x5400x150', 'Bộ', 19480000, 14610000, 13149000, ''),
+  i('frame', 'ICP-1860', 'Khung Inox iFan 1800', '1800x6000x150', 'Bộ', 21280000, 15960000, 14364000, ''),
+  i('frame', 'ICP-2412', 'Khung Inox iFan 2400', '2400x1200x150', 'Bộ', 7080000, 5310000, 4779000, ''),
+  i('frame', 'ICP-2418', 'Khung Inox iFan 2400', '2400x1800x150', 'Bộ', 9580000, 7185000, 6466500, ''),
+  i('frame', 'ICP-2424', 'Khung Inox iFan 2400', '2400x2400x150', 'Bộ', 12080000, 9060000, 8154000, ''),
+  i('frame', 'ICP-2430', 'Khung Inox iFan 2400', '2400x3000x150', 'Bộ', 14580000, 10935000, 9841500, ''),
+  i('frame', 'ICP-2436', 'Khung Inox iFan 2400', '2400x3600x150', 'Bộ', 17680000, 13260000, 11934000, ''),
+  i('frame', 'ICP-2442', 'Khung Inox iFan 2400', '2400x4200x150', 'Bộ', 20080000, 15060000, 13554000, ''),
+  i('frame', 'ICP-2448', 'Khung Inox iFan 2400', '2400x4800x150', 'Bộ', 22580000, 16935000, 15241500, ''),
+  i('frame', 'ICP-2454', 'Khung Inox iFan 2400', '2400x5400x150', 'Bộ', 25380000, 19035000, 17131500, ''),
+  i('frame', 'ICP-2460', 'Khung Inox iFan 2400', '2400x6000x150', 'Bộ', 27580000, 20685000, 18616500, ''),
+
+  // --- FILE 17: KHUNG MÀN NƯỚC EFAN ---
+  i('frame', 'EF-ICP-1512', 'Khung Inox eFan 1500', '1500x1200x150', 'Bộ', 4480000, 3360000, 3024000, ''),
+  i('frame', 'EF-ICP-1518', 'Khung Inox eFan 1500', '1500x1800x150', 'Bộ', 6080000, 4560000, 4104000, ''),
+  i('frame', 'EF-ICP-1524', 'Khung Inox eFan 1500', '1500x2400x150', 'Bộ', 7780000, 5835000, 5251500, ''),
+  i('frame', 'EF-ICP-1530', 'Khung Inox eFan 1500', '1500x3000x150', 'Bộ', 9380000, 7035000, 6331500, ''),
+  i('frame', 'EF-ICP-1536', 'Khung Inox eFan 1500', '1500x3600x150', 'Bộ', 11080000, 8310000, 7479000, ''),
+  i('frame', 'EF-ICP-1542', 'Khung Inox eFan 1500', '1500x4200x150', 'Bộ', 12680000, 9510000, 8559000, ''),
+  i('frame', 'EF-ICP-1548', 'Khung Inox eFan 1500', '1500x4800x150', 'Bộ', 14280000, 10710000, 9639000, ''),
+  i('frame', 'EF-ICP-1554', 'Khung Inox eFan 1500', '1500x5400x150', 'Bộ', 15880000, 11910000, 10719000, ''),
+  i('frame', 'EF-ICP-1560', 'Khung Inox eFan 1500', '1500x6000x150', 'Bộ', 17480000, 13110000, 11799000, ''),
+  i('frame', 'EF-ICP-1812', 'Khung Inox eFan 1800', '1800x1200x150', 'Bộ', 4880000, 3660000, 3294000, ''),
+  i('frame', 'EF-ICP-1818', 'Khung Inox eFan 1800', '1800x1800x150', 'Bộ', 6580000, 4935000, 4441500, ''),
+  i('frame', 'EF-ICP-1824', 'Khung Inox eFan 1800', '1800x2400x150', 'Bộ', 8180000, 6135000, 5521500, ''),
+  i('frame', 'EF-ICP-1830', 'Khung Inox eFan 1800', '1800x3000x150', 'Bộ', 9980000, 7485000, 6736500, ''),
+  i('frame', 'EF-ICP-1836', 'Khung Inox eFan 1800', '1800x3600x150', 'Bộ', 11680000, 8760000, 7884000, ''),
+  i('frame', 'EF-ICP-1842', 'Khung Inox eFan 1800', '1800x4200x150', 'Bộ', 13380000, 10035000, 9031500, ''),
+  i('frame', 'EF-ICP-1848', 'Khung Inox eFan 1800', '1800x4800x150', 'Bộ', 15180000, 11385000, 10246500, ''),
+  i('frame', 'EF-ICP-1854', 'Khung Inox eFan 1800', '1800x5400x150', 'Bộ', 16980000, 12735000, 11461500, ''),
+  i('frame', 'EF-ICP-1860', 'Khung Inox eFan 1800', '1800x6000x150', 'Bộ', 18480000, 13860000, 12474000, ''),
+  i('frame', 'EF-ICP-2412', 'Khung Inox eFan 2400', '2400x1200x150', 'Bộ', 6180000, 4635000, 4171500, ''),
+  i('frame', 'EF-ICP-2418', 'Khung Inox eFan 2400', '2400x1800x150', 'Bộ', 8380000, 6285000, 5656500, ''),
+  i('frame', 'EF-ICP-2424', 'Khung Inox eFan 2400', '2400x2400x150', 'Bộ', 10480000, 7860000, 7074000, ''),
+  i('frame', 'EF-ICP-2430', 'Khung Inox eFan 2400', '2400x3000x150', 'Bộ', 12680000, 9510000, 8559000, ''),
+  i('frame', 'EF-ICP-2436', 'Khung Inox eFan 2400', '2400x3600x150', 'Bộ', 15380000, 11535000, 10381500, ''),
+  i('frame', 'EF-ICP-2442', 'Khung Inox eFan 2400', '2400x4200x150', 'Bộ', 17480000, 13110000, 11799000, ''),
+  i('frame', 'EF-ICP-2448', 'Khung Inox eFan 2400', '2400x4800x150', 'Bộ', 19680000, 14760000, 13284000, ''),
+  i('frame', 'EF-ICP-2454', 'Khung Inox eFan 2400', '2400x5400x150', 'Bộ', 22080000, 16560000, 14904000, ''),
+  i('frame', 'EF-ICP-2460', 'Khung Inox eFan 2400', '2400x6000x150', 'Bộ', 23980000, 17985000, 16186500, ''),
+
+  // --- FILE 30: MOTOR RỜI ---
+  i('part_motor', '3B-4', 'Motor TA-B', '250W-4p-220V', 'Cái', 748000, 486200, 0, ''),
+  i('part_motor', '4B-4', 'Motor TA-B', '370W-4p-220V', 'Cái', 1078000, 700700, 0, ''),
+  i('part_motor', '5B-4', 'Motor TA-B', '450W-4p-220V', 'Cái', 1188000, 772200, 0, ''),
+  i('part_motor', '6B-4', 'Motor TA-B', '550W-4p-220V', 'Cái', 1408000, 915200, 0, ''),
+  i('part_motor', '3G-4', 'Motor TA-G', '370W-4p-380V', 'Cái', 1078000, 700700, 0, ''),
+  i('part_motor', '4G-4', 'Motor TA-G', '550W-4p-380V', 'Cái', 1188000, 772200, 0, ''),
+  i('part_motor', '5G-4', 'Motor TA-G', '750W-4p-380V', 'Cái', 1408000, 915200, 0, ''),
+  i('part_motor', 'YSF-90L-4', 'Motor TA-G', '1500W-4p-380V', 'Cái', 3718000, 2416700, 0, ''),
+  i('part_motor', 'YY-712-4', 'Motor Vuông', '0.37kw-4p-220V', 'Cái', 1848000, 1201200, 0, ''),
+  i('part_motor', 'YY-712-4', 'Motor Vuông', '0.55kw-4p-220V', 'Cái', 2288000, 1487200, 0, ''),
+  i('part_motor', 'YY-802-4', 'Motor Vuông', '0.75kw-4p-220V', 'Cái', 2398000, 1558700, 0, ''),
+  i('part_motor', 'YY-902-4', 'Motor Vuông', '1.1kw-4p-220V', 'Cái', 3168000, 2059200, 0, ''),
+  i('part_motor', 'YSF712-4', 'Motor Vuông', '0.37kw-4p-380V', 'Cái', 1188000, 772200, 0, ''),
+  i('part_motor', 'YSF801-4', 'Motor Vuông', '0.55kw-4p-380V', 'Cái', 1518000, 986700, 0, ''),
+  i('part_motor', 'YSF802-4', 'Motor Vuông', '0.75kw-4p-380V', 'Cái', 1738000, 1129700, 0, ''),
+  i('part_motor', 'YSF90S-4', 'Motor Vuông', '1.1kw-4p-380V', 'Cái', 1958000, 1272700, 0, ''),
+  i('part_motor', 'YS-90S-8', 'Motor Vuông', '0.37kw-8p-380V', 'Cái', 2508000, 1630200, 0, ''),
+  i('part_motor', 'YS-100L1-10', 'Motor Vuông', '0.55kw-10p-380V', 'Cái', 2728000, 1773200, 0, ''),
+  i('part_motor', 'YS-100L2-10', 'Motor Vuông', '0.75kw-10p-380V', 'Cái', 2948000, 1916200, 0, ''),
+  i('part_motor', 'YS-100L2-10', 'Motor Vuông', '1.1kw-10p-380V', 'Cái', 3278000, 2130700, 0, ''),
+  i('part_motor', 'YS-90S-4', 'Motor MLM', '1.1kw-220v', 'Cái', 3278000, 2130700, 0, ''),
+  i('part_motor', 'YL139-1100-4HH', 'Motor MLM', '1.1kw-220v-3toc', 'Cái', 3718000, 2416700, 0, ''),
+  i('part_motor', 'YS-90S-4', 'Motor MLM', '1.1kw-4p-380v', 'Cái', 2398000, 1558700, 0, ''),
+  i('part_motor', 'YS-90L-4', 'Motor MLM', '1.5kw-4p-380v', 'Cái', 3168000, 2059200, 0, ''),
+  i('part_motor', 'YS-100L1-2', 'Motor MLM', '3.0kw-4p-380v', 'Cái', 5148000, 3346200, 0, ''),
+  i('part_motor', 'YS100L-4', 'Motor MLM', '3.5kw-4p-380v', 'Cái', 7018000, 4561700, 0, ''),
+  i('part_motor', 'YSF-112M-4', 'Motor MLM', '4.5kw-4p-380v', 'Cái', 7458000, 4847700, 0, ''),
+
+  // --- FILE 28: MIỆNG GIÓ ---
+  i('part_mech', 'D-640', 'Miệng gió D-640', '640x440mm', 'Cái', 968000, 677600, 0, ''),
+  i('part_mech', 'D-670', 'Miệng gió D-670', '670x670mm', 'Cái', 1628000, 1139600, 0, ''),
+  i('part_mech', 'D-800', 'Miệng gió D-800', '800X800mm', 'Cái', 2068000, 1447600, 0, ''),
+  i('part_mech', 'D-900', 'Miệng gió D-900', '900x500mm', 'Cái', 1628000, 1139600, 0, ''),
+  i('part_mech', 'MG-DON', 'Miệng gió đơn', '310x310mm', 'Cái', 198000, 138600, 0, 'Nhựa'),
+  i('part_mech', 'MG-DOI', 'Miệng gió đôi', '540x280mm', 'Cái', 418000, 292600, 0, 'Nhựa'),
+  i('part_mech', 'MG-8H', 'Miệng gió MG-8H', '670x670mm', 'Cái', 3498000, 2448600, 0, ''),
+  i('part_mech', 'MG-6H', 'Miệng gió MG-6H', '670x670mm', 'Cái', 3498000, 2448600, 0, ''),
+  i('part_mech', 'MG-4H-TAY', 'Miệng gió MG-4H', '670x670mm', 'Cái', 2398000, 1678600, 0, 'Đảo tay'),
+  i('part_mech', 'MG-4H-DAO', 'Miệng gió MG-4H', '670x670mm', 'Cái', 4708000, 3295600, 0, 'Có đảo'),
+
+  // --- FILE 26: LINH KIỆN QUẠT HƯỚNG TRỤC ---
+  i('part_mech', 'CANH-3B', 'Cánh Đỏ 3B', 'D289mm', 'Cái', 198000, 148500, 133650, ''),
+  i('part_mech', 'CANH-4B', 'Cánh Đỏ 4B', 'D393mm', 'Cái', 308000, 231000, 207900, ''),
+  i('part_mech', 'CANH-5B', 'Cánh Đỏ 5B', 'D483mm', 'Cái', 418000, 313500, 282150, ''),
+  i('part_mech', 'CANH-6B', 'Cánh Đỏ 6B', 'D580mm', 'Cái', 528000, 396000, 356400, ''),
+  i('part_mech', 'CANH-3G', 'Cánh Đỏ 3G', 'D289mm', 'Cái', 528000, 396000, 356400, ''),
+  i('part_mech', 'CANH-4G', 'Cánh Đỏ 4G', 'D290mm', 'Cái', 638000, 478500, 430650, ''),
+  i('part_mech', 'CANH-5G', 'Cánh Đỏ 5G', 'D480mm', 'Cái', 858000, 643500, 579150, ''),
+  i('part_mech', 'CANH-6G', 'Cánh Đỏ 6G', 'D580mm', 'Cái', 1408000, 1056000, 950400, ''),
+  i('part_mech', 'LUOI-3G', 'Lưới Tròn TA-3G', 'D300mm', 'Tấm', 110000, 82500, 74250, ''),
+  i('part_mech', 'LUOI-4G', 'Lưới Tròn TA-4G', 'D400mm', 'Tấm', 165000, 123750, 111375, ''),
+  i('part_mech', 'LUOI-5G', 'Lưới Tròn TA-5G', 'D500mm', 'Tấm', 275000, 206250, 185625, ''),
+  i('part_mech', 'LUOI-6G', 'Lưới Tròn TA-6G', 'D600mm', 'Tấm', 286000, 214500, 193050, ''),
+
+  // --- FILE 18: LINH KIỆN QUẠT ĐỨNG/TREO IFAN ---
+  i('part_mech', 'LUOI-500', 'Lồng lưới 500', 'Size 500', 'Bộ', 310000, 248000, 0, ''),
+  i('part_mech', 'LUOI-650', 'Lồng lưới 650', 'Size 650', 'Bộ', 363000, 290400, 0, ''),
+  i('part_mech', 'LUOI-750', 'Lồng lưới 750', 'Size 750', 'Bộ', 425000, 340000, 0, ''),
+  i('part_mech', 'VO-STATOR-650', 'Vỏ gan stator', 'Size 650', 'Cái', 185000, 148000, 0, ''),
+  i('part_mech', 'CAY-CHONG', 'Cây chống', 'Size 650', 'Cái', 267000, 213600, 0, ''),
+  i('part_mech', 'DE-NHUA', 'Đế nhựa', 'Size 650', 'Cái', 218000, 174400, 0, ''),
+  i('part_motor', 'CONG-TAC', 'Công tắc', 'Size 650', 'Cái', 370000, 296000, 0, ''),
+  i('part_mech', 'CAN-QUAY', 'Cần quay', 'Size 650', 'Cái', 22000, 17600, 0, ''),
+  i('part_mech', 'OC-DAO', 'Ốc đảo', 'Size 650', 'Cái', 22000, 17600, 0, ''),
+  i('part_mech', 'CHOT-DAO', 'Chốt đảo', 'Size 650', 'Cái', 33000, 26400, 0, ''),
+  i('part_mech', 'CO-TREN', 'Cổ trên', 'Size 650', 'Cái', 110000, 88000, 0, ''),
+  i('part_mech', 'CO-DUOI', 'Cổ dưới', 'Size 650', 'Cái', 165000, 132000, 0, ''),
+  i('part_motor', 'KABA-6UF', 'Tụ kaba 6µF', '6µF', 'Cái', 50000, 40000, 0, ''),
+  i('part_motor', 'KABA-8UF', 'Tụ kaba 8µF', '8µF', 'Cái', 50000, 40000, 0, ''),
+  i('part_mech', 'PAD-TREO', 'Bộ treo và pad', 'Treo', 'Bộ', 146000, 116800, 0, ''),
+  i('part_mech', 'CANH-500-4LA', 'Cánh quạt 4 lá', 'Size 500', 'Cái', 267000, 213600, 0, ''),
+  i('part_mech', 'CANH-650-4LA', 'Cánh quạt 4 lá', 'Size 650', 'Cái', 330000, 264000, 0, ''),
+  i('part_mech', 'CANH-750-4LA', 'Cánh quạt 4 lá', 'Size 750', 'Cái', 390000, 312000, 0, ''),
+  i('part_motor', 'MOTOR-D-500', 'Motor đứng', 'Size 500', 'Cái', 1210000, 968000, 0, ''),
+  i('part_motor', 'MOTOR-D-650', 'Motor đứng', 'Size 650', 'Cái', 1275000, 1020000, 0, ''),
+  i('part_motor', 'MOTOR-D-750', 'Motor đứng', 'Size 750', 'Cái', 1331000, 1064800, 0, ''),
+  i('part_motor', 'MOTOR-T-500', 'Motor treo', 'Size 500', 'Cái', 1331000, 1064800, 0, ''),
+  i('part_motor', 'MOTOR-T-650', 'Motor treo', 'Size 650', 'Cái', 1400000, 1120000, 0, ''),
+  i('part_motor', 'MOTOR-T-750', 'Motor treo', 'Size 750', 'Cái', 1452000, 1161600, 0, ''),
+  i('part_motor', 'STATOR-500', 'Stator', 'Size 500', 'Cái', 292000, 233600, 0, ''),
+  i('part_motor', 'STATOR-650', 'Stator', 'Size 650', 'Cái', 363000, 290400, 0, ''),
+  i('part_motor', 'STATOR-750', 'Stator', 'Size 750', 'Cái', 425000, 340000, 0, ''),
+  i('part_motor', 'DAO-DIEN', 'Đảo điện', 'Size 650', 'Cái', 195000, 156000, 0, ''),
+  i('part_motor', 'HOP-DK-TREO', 'Hộp điều khiển treo', 'Treo', 'Cái', 135000, 108000, 0, ''),
+  i('part_mech', 'VO-MOTOR', 'Vỏ motor', 'Size 650', 'Cái', 121000, 96800, 0, ''),
+  i('part_mech', 'CANH-3LA-500', 'Cánh quạt 3 lá', 'Size 500', 'Cái', 195000, 156000, 0, ''),
+  i('part_mech', 'CANH-3LA-650', 'Cánh quạt 3 lá', 'Size 650', 'Cái', 220000, 176000, 0, ''),
+  i('part_mech', 'CANH-3LA-750', 'Cánh quạt 3 lá', 'Size 750', 'Cái', 242000, 193600, 0, ''),
+  i('part_motor', 'MOTOR-3LA-500', 'Motor 3 lá', 'Size 500', 'Cái', 847000, 677600, 0, ''),
+  i('part_motor', 'MOTOR-3LA-650', 'Motor 3 lá', 'Size 650', 'Cái', 910000, 728000, 0, ''),
+  i('part_motor', 'MOTOR-3LA-750', 'Motor 3 lá', 'Size 750', 'Cái', 968000, 774400, 0, ''),
+  i('part_motor', 'STATOR-3LA-500', 'Stator 3 lá', 'Size 500', 'Cái', 242000, 193600, 0, ''),
+  i('part_motor', 'STATOR-3LA-650', 'Stator 3 lá', 'Size 650', 'Cái', 267000, 213600, 0, ''),
+  i('part_motor', 'STATOR-3LA-750', 'Stator 3 lá', 'Size 750', 'Cái', 305000, 244000, 0, ''),
+  i('part_mech', 'NHONG', 'Nhông', 'Size 650', 'Cái', 110000, 88000, 0, ''),
+
+  // --- FILE 20: LINH KIỆN EFAN ---
+  i('part_mech', 'EF-LUOI-500', 'Lồng lưới eFan', 'Size 500', 'Bộ', 242000, 193600, 0, ''),
+  i('part_mech', 'EF-LUOI-650', 'Lồng lưới eFan', 'Size 650', 'Bộ', 291500, 233200, 0, ''),
+  i('part_mech', 'EF-LUOI-750', 'Lồng lưới eFan', 'Size 750', 'Bộ', 341000, 272800, 0, ''),
+  i('part_mech', 'EF-CANH-500', 'Cánh quạt eFan', 'Size 500', 'Cái', 159500, 127600, 0, ''),
+  i('part_mech', 'EF-CANH-650', 'Cánh quạt eFan', 'Size 650', 'Cái', 176000, 140800, 0, ''),
+  i('part_mech', 'EF-CANH-750', 'Cánh quạt eFan', 'Size 750', 'Cái', 198000, 158400, 0, ''),
+  i('part_motor', 'EF-MOTOR-500', 'Motor eFan', 'Size 500', 'Cái', 682000, 545600, 0, ''),
+  i('part_motor', 'EF-MOTOR-650', 'Motor eFan', 'Size 650', 'Cái', 726000, 580800, 0, ''),
+  i('part_motor', 'EF-MOTOR-750', 'Motor eFan', 'Size 750', 'Cái', 774400, 619520, 0, ''),
+  i('part_motor', 'EF-STATOR-500', 'Stator eFan', 'Size 500', 'Cái', 193600, 154880, 0, ''),
+  i('part_motor', 'EF-STATOR-650', 'Stator eFan', 'Size 650', 'Cái', 214500, 171600, 0, ''),
+  i('part_motor', 'EF-STATOR-750', 'Stator eFan', 'Size 750', 'Cái', 242000, 193600, 0, ''),
+  i('part_mech', 'EF-VO-STATOR', 'Vỏ stator eFan', 'Size 650', 'Cái', 148500, 118800, 0, ''),
+  i('part_mech', 'EF-ONG-TRU', 'Ống trụ đứng eFan', 'Size 650', 'Cái', 214500, 171600, 0, ''),
+  i('part_mech', 'EF-DE-NHUA', 'Đế nhựa eFan', 'Size 650', 'Cái', 176000, 140800, 0, ''),
+  i('part_motor', 'EF-CONG-TAC', 'Công tắc eFan', 'Size 650', 'Cái', 33000, 26400, 0, ''),
+  i('part_mech', 'EF-CAN-QUAY', 'Cần quay eFan', 'Size 650', 'Bộ', 55000, 44000, 0, ''),
+  i('part_motor', 'EF-TU', 'Tụ kaba eFan', 'Size 650', 'Cái', 39600, 31680, 0, ''),
+  i('part_mech', 'EF-PAD', 'Bộ treo pad eFan', 'Treo', 'Bộ', 116600, 93280, 0, ''),
+  i('part_mech', 'EF-NHONG', 'Nhông eFan', 'Size 650', 'Cái', 88000, 70400, 0, ''),
+  i('part_mech', 'EF-VO-MOTOR', 'Vỏ ngoài motor eFan', 'Size 650', 'Bộ', 88000, 70400, 0, ''),
+
+  // --- FILE 24: LINH KIỆN QUẠT VUÔNG/LOA ---
+  i('part_mech', 'L-20A', 'Lưới bảo vệ 20A', '440x440', 'Tấm', 145200, 110352, 0, ''),
+  i('part_mech', 'L-24A', 'Lưới bảo vệ 24A', '540x540', 'Tấm', 157300, 119548, 0, ''),
+  i('part_mech', 'L-28A', 'Lưới bảo vệ 28A', '640x640', 'Tấm', 181500, 137940, 0, ''),
+  i('part_mech', 'L-30A', 'Lưới bảo vệ 30A', '660x660', 'Tấm', 181500, 137940, 0, ''),
+  i('part_mech', 'L-36', 'Lưới bảo vệ 36', '820x820', 'Tấm', 217800, 165528, 0, ''),
+  i('part_mech', 'L-42', 'Lưới bảo vệ 42', '980x980', 'Tấm', 242000, 183920, 0, ''),
+  i('part_mech', 'L-48', 'Lưới bảo vệ 48', '1140x1140', 'Tấm', 266200, 202312, 0, ''),
+  i('part_mech', 'L-54', 'Lưới bảo vệ 54', '1300x1300', 'Tấm', 302500, 229900, 0, ''),
+  i('part_mech', 'C-20A', 'Cánh Inox 430 20A', 'Bộ', 'Bộ', 423500, 321860, 0, ''),
+  i('part_mech', 'C-24A', 'Cánh Inox 430 24A', 'Bộ', 'Bộ', 484000, 367840, 0, ''),
+  i('part_mech', 'C-28A', 'Cánh Inox 430 28A', 'Bộ', 'Bộ', 544500, 413820, 0, ''),
+  i('part_mech', 'C-30A', 'Cánh Inox 430 30A', 'Bộ', 'Bộ', 605000, 459800, 0, ''),
+  i('part_mech', 'C-36', 'Cánh Inox 430 36', 'Lá', 'Lá', 108900, 82764, 0, ''),
+  i('part_mech', 'C-42', 'Cánh Inox 430 42', 'Lá', 'Lá', 121000, 91960, 0, ''),
+  i('part_mech', 'C-48', 'Cánh Inox 430 48', 'Lá', 'Lá', 145200, 110352, 0, ''),
+  i('part_mech', 'C-54', 'Cánh Inox 430 54', 'Lá', 'Lá', 181500, 137940, 0, ''),
+  i('part_mech', 'LS-20A', 'Lá sách che mưa 20A', 'Lá', 'Lá', 31460, 23909, 0, ''),
+  i('part_mech', 'LS-24A', 'Lá sách che mưa 24A', 'Lá', 'Lá', 33880, 25748, 0, ''),
+  i('part_mech', 'LS-28A', 'Lá sách che mưa 28A', 'Lá', 'Lá', 36300, 27588, 0, ''),
+  i('part_mech', 'LS-30A', 'Lá sách che mưa 30A', 'Lá', 'Lá', 36300, 27588, 0, ''),
+  i('part_mech', 'LS-36', 'Lá sách che mưa 36', 'Lá', 'Lá', 42350, 32186, 0, ''),
+  i('part_mech', 'LS-42', 'Lá sách che mưa 42', 'Lá', 'Lá', 48400, 36784, 0, ''),
+  i('part_mech', 'LS-48', 'Lá sách che mưa 48', 'Lá', 'Lá', 60500, 45980, 0, ''),
+  i('part_mech', 'LS-54', 'Lá sách che mưa 54', 'Lá', 'Lá', 72600, 55176, 0, ''),
+  i('part_mech', 'PULLEY-54', 'Pulley cánh bông mai', '54C & 48C', 'Bộ', 665500, 505780, 0, ''),
+  i('part_mech', 'PULLEY-42', 'Pulley cánh bông mai', '42C & 36C', 'Bộ', 544500, 413820, 0, ''),
+  i('part_mech', 'CUROA-36', 'Dây Curoa A50', '36C/D', 'Sợi', 48400, 36784, 0, ''),
+  i('part_mech', 'CUROA-42', 'Dây Curoa A59', '42C/D', 'Sợi', 48400, 36784, 0, ''),
+  i('part_mech', 'CUROA-48', 'Dây Curoa A77', '48C/D', 'Sợi', 60500, 45980, 0, ''),
+  i('part_mech', 'CUROA-54', 'Dây Curoa A84', '54C/D', 'Sợi', 72600, 55176, 0, ''),
+  i('part_mech', 'CHONG-85', 'Cây chống loa 85', 'Composite', 'Cây', 385000, 292600, 0, ''),
+  i('part_mech', 'CHONG-106', 'Cây chống loa 106', 'Composite', 'Cây', 440000, 334400, 0, ''),
+  i('part_mech', 'CHONG-126', 'Cây chống loa 126', 'Composite', 'Cây', 495000, 376200, 0, ''),
+  i('part_mech', 'CHONG-146', 'Cây chống loa 146', 'Composite', 'Cây', 550000, 418000, 0, ''),
+  i('part_mech', 'VO-85', 'Vỏ quạt loa 85', 'Composite', 'Cái', 1265000, 961400, 0, ''),
+  i('part_mech', 'VO-106', 'Vỏ quạt loa 106', 'Composite', 'Cái', 1760000, 1337600, 0, ''),
+  i('part_mech', 'VO-126', 'Vỏ quạt loa 126', 'Composite', 'Cái', 1892000, 1437920, 0, ''),
+  i('part_mech', 'VO-146', 'Vỏ quạt loa 146', 'Composite', 'Cái', 2035000, 1546600, 0, ''),
+  i('part_mech', 'ML-85', 'Miệng loa 85', 'Composite', 'Bộ', 1100000, 836000, 0, ''),
+  i('part_mech', 'ML-106', 'Miệng loa 106', 'Composite', 'Bộ', 1265000, 961400, 0, ''),
+  i('part_mech', 'ML-126', 'Miệng loa 126', 'Composite', 'Bộ', 1485000, 1128600, 0, ''),
+  i('part_mech', 'ML-146', 'Miệng loa 146', 'Composite', 'Bộ', 1705000, 1295800, 0, ''),
+  i('part_mech', 'CANH-LOA-85', 'Cánh quạt loa 85/36A', 'Composite', 'Bộ', 715000, 543400, 0, ''),
+  i('part_mech', 'CANH-LOA-106', 'Cánh quạt loa 106/42A', 'Composite', 'Bộ', 825000, 627000, 0, ''),
+  i('part_mech', 'CANH-LOA-126', 'Cánh quạt loa 126/48A', 'Composite', 'Bộ', 935000, 710600, 0, ''),
+  i('part_mech', 'CANH-LOA-146', 'Cánh quạt loa 146/54A', 'Composite', 'Bộ', 990000, 752400, 0, ''),
+  i('part_mech', 'KHUNG-85', 'Khung lá chớp 85', 'Composite', 'Khung', 770000, 585200, 0, ''),
+  i('part_mech', 'KHUNG-106', 'Khung lá chớp 106', 'Composite', 'Khung', 880000, 668800, 0, ''),
+  i('part_mech', 'KHUNG-126', 'Khung lá chớp 126', 'Composite', 'Khung', 1100000, 836000, 0, ''),
+  i('part_mech', 'KHUNG-146', 'Khung lá chớp 146', 'Composite', 'Khung', 1320000, 1003200, 0, ''),
+  i('part_mech', 'LUOI-TRON-85', 'Lưới tròn 85', 'Kẽm', 'Tấm', 385000, 292600, 0, ''),
+  i('part_mech', 'LUOI-TRON-106', 'Lưới tròn 106', 'Kẽm', 'Tấm', 440000, 334400, 0, ''),
+  i('part_mech', 'LUOI-TRON-126', 'Lưới tròn 126', 'Kẽm', 'Tấm', 495000, 376200, 0, ''),
+  i('part_mech', 'LUOI-TRON-146', 'Lưới tròn 146', 'Kẽm', 'Tấm', 550000, 418000, 0, ''),
+
+  // --- FILE 22: LINH KIỆN MÁY LÀM MÁT (MLM) ---
+  i('part_mech', 'MLM-NAP-18', 'Nắp trên MLM', '18/23k', 'Cái', 1650000, 1237500, 990000, ''),
+  i('part_mech', 'MLM-NAP-30', 'Nắp trên MLM', '30/35k', 'Cái', 2420000, 1815000, 1452000, ''),
+  i('part_mech', 'MLM-NAP-50', 'Nắp trên MLM', '50k', 'Cái', 4400000, 3300000, 2640000, ''),
+  i('part_mech', 'MLM-DE-18', 'Đế máy MLM', '18/23k', 'Cái', 1870000, 1402500, 1122000, ''),
+  i('part_mech', 'MLM-DE-30', 'Đế máy MLM', '30/35k', 'Cái', 3740000, 2805000, 2244000, ''),
+  i('part_mech', 'MLM-DE-50', 'Đế máy MLM', '50k', 'Cái', 5500000, 4125000, 3300000, ''),
+  i('part_mech', 'MLM-HUONG-18', 'Hướng dòng', '18/23k', 'Cái', 880000, 660000, 528000, ''),
+  i('part_mech', 'MLM-HUONG-30', 'Hướng dòng', '30/35k', 'Cái', 1650000, 1237500, 990000, ''),
+  i('part_mech', 'MLM-HUONG-50', 'Hướng dòng', '50k', 'Cái', 3300000, 2475000, 1980000, ''),
+  i('part_mech', 'MLM-VACH-18', 'Vách hông (Bộ 4)', '18/23k', 'Bộ', 1760000, 1320000, 1056000, ''),
+  i('part_mech', 'MLM-VACH-30', 'Vách hông (Bộ 4)', '30/35k', 'Bộ', 3520000, 2640000, 2112000, ''),
+  i('part_mech', 'MLM-VACH-50', 'Vách hông (Bộ 4)', '50k', 'Bộ', 6160000, 4620000, 3696000, ''),
+  i('part_mech', 'MLM-TRU-18', 'Trụ (Bộ 4)', '18/23k', 'Bộ', 660000, 495000, 396000, ''),
+  i('part_mech', 'MLM-TRU-30', 'Trụ (Bộ 4)', '30/35k', 'Bộ', 1320000, 990000, 792000, ''),
+  i('part_mech', 'MLM-TRU-50', 'Trụ (Bộ 4)', '50k', 'Bộ', 1980000, 1485000, 1188000, ''),
+  i('part_mech', 'MLM-CHIA-18', 'Chia nước (Bộ 4)', '18/23k', 'Bộ', 330000, 247500, 198000, ''),
+  i('part_mech', 'MLM-CHIA-30', 'Chia nước (Bộ 4)', '30/35k', 'Bộ', 880000, 660000, 528000, ''),
+  i('part_mech', 'MLM-CHIA-50', 'Chia nước (Bộ 4)', '50k', 'Bộ', 1100000, 825000, 660000, ''),
+  i('part_mech', 'MLM-PAD-18', 'Cooling Pad (Bộ 4)', '18/23k', 'Bộ', 2640000, 1980000, 1584000, ''),
+  i('part_mech', 'MLM-PAD-30', 'Cooling Pad (Bộ 4)', '30k', 'Bộ', 5280000, 3960000, 3168000, ''),
+  i('part_mech', 'MLM-PAD-35', 'Cooling Pad (Bộ 4)', '35k', 'Bộ', 6600000, 4950000, 3960000, ''),
+  i('part_mech', 'MLM-PAD-50', 'Cooling Pad (Bộ 4)', '50k', 'Bộ', 8800000, 6600000, 5280000, ''),
+  i('part_motor', 'MLM-MT3-18', 'Động cơ 3 Phase', '18k', 'Cái', 3300000, 2475000, 1980000, ''),
+  i('part_motor', 'MLM-MT3-23', 'Động cơ 3 Phase', '23k', 'Cái', 3960000, 2970000, 2376000, ''),
+  i('part_motor', 'MLM-MT3-30', 'Động cơ 3 Phase', '30k', 'Cái', 7700000, 5775000, 4620000, ''),
+  i('part_motor', 'MLM-MT3-35', 'Động cơ 3 Phase', '35k', 'Cái', 9900000, 7425000, 5940000, ''),
+  i('part_motor', 'MLM-MT3-50', 'Động cơ 3 Phase', '50k', 'Cái', 13200000, 9900000, 7920000, ''),
+  i('part_motor', 'MLM-MT2-18', 'Động cơ 220V', '18k', 'Cái', 3850000, 2887500, 2310000, ''),
+  i('part_motor', 'MLM-MT2-23', 'Động cơ 220V', '23k', 'Cái', 4400000, 3300000, 2640000, ''),
+  i('part_mech', 'MLM-CANG-18', 'Càng nhôm (Bộ 3)', '18/23k', 'Bộ', 495000, 371250, 297000, ''),
+  i('part_mech', 'MLM-CANG-30', 'Càng nhôm (Bộ 3)', '30/35k', 'Bộ', 1540000, 1155000, 924000, ''),
+  i('part_mech', 'MLM-CANG-50', 'Càng nhôm (Bộ 3)', '50k', 'Bộ', 2200000, 1650000, 1320000, ''),
+  i('part_motor', 'MLM-BOM-18', 'Bơm nước', '18/23k', 'Cái', 715000, 536250, 429000, ''),
+  i('part_motor', 'MLM-BOM-30', 'Bơm nước', '30/35k', 'Cái', 1100000, 825000, 660000, ''),
+  i('part_motor', 'MLM-BOM-50', 'Bơm nước', '50k', 'Cái', 1650000, 1237500, 990000, ''),
+  i('part_mech', 'MLM-CANH-18', 'Cánh quạt 3 lá', '18k', 'Cái', 990000, 742500, 594000, ''),
+  i('part_mech', 'MLM-CANH-23', 'Cánh quạt 3 lá', '23k', 'Cái', 1540000, 1155000, 924000, ''),
+  i('part_mech', 'MLM-CANH-30', 'Cánh quạt 3 lá', '30k', 'Cái', 1760000, 1320000, 1056000, ''),
+  i('part_mech', 'MLM-CANH-35', 'Cánh quạt 3 lá', '35k', 'Cái', 2200000, 1650000, 1320000, ''),
+  i('part_mech', 'MLM-CANH-50', 'Cánh quạt 3 lá', '50k', 'Cái', 4400000, 3300000, 2640000, ''),
+  i('part_mech', 'MLM-LUOI-18', 'Lưới lọc bụi (Bộ 8)', '18/23k', 'Bộ', 660000, 495000, 396000, ''),
+  i('part_mech', 'MLM-LUOI-30', 'Lưới lọc bụi (Bộ 8)', '30k', 'Bộ', 1540000, 1155000, 924000, ''),
+  i('part_mech', 'MLM-LUOI-35', 'Lưới lọc bụi (Bộ 8)', '35k', 'Bộ', 1980000, 1485000, 1188000, ''),
+  i('part_mech', 'MLM-LUOI-50', 'Lưới lọc bụi (Bộ 8)', '50k', 'Bộ', 2420000, 1815000, 1452000, ''),
+  i('part_motor', 'MLM-PHAO', 'Phao', 'All', 'Cái', 132000, 99000, 79200, ''),
+  i('part_motor', 'MLM-BOMXA', 'Bơm xả nước', 'All', 'Cái', 550000, 412500, 330000, ''),
+  i('part_motor', 'MLM-HOPCO', 'Hộp ĐK Cơ 380V', 'All', 'Cái', 1100000, 825000, 660000, '50k: +20%'),
+  i('part_motor', 'MLM-LCD-18', 'Bo ĐK LCD 1 Tốc', '18/23k', 'Bộ', 2420000, 1815000, 1452000, ''),
+  i('part_motor', 'MLM-LCD-30', 'Bo ĐK LCD 1 Tốc', '30k', 'Bộ', 3300000, 2475000, 1980000, ''),
+  i('part_motor', 'MLM-LCD-35', 'Bo ĐK LCD 1 Tốc', '35k', 'Bộ', 4400000, 3300000, 2640000, ''),
+  i('part_motor', 'MLM-LCD-50', 'Bo ĐK LCD 1 Tốc', '50k', 'Bộ', 6600000, 4950000, 3960000, ''),
+  i('part_motor', 'MLM-INV-18', 'Bo Inverter 12 Tốc', '18k', 'Bộ', 5720000, 4290000, 3432000, ''),
+  i('part_motor', 'MLM-INV-23', 'Bo Inverter 12 Tốc', '23k', 'Bộ', 6600000, 4950000, 3960000, ''),
+  i('part_motor', 'MLM-INV-30', 'Bo Inverter 12 Tốc', '30k', 'Bộ', 11000000, 8250000, 6600000, ''),
+  i('part_motor', 'MLM-INV-35', 'Bo Inverter 12 Tốc', '35k', 'Bộ', 15400000, 11550000, 9240000, ''),
+  i('part_motor', 'MLM-INV-50', 'Bo Inverter 12 Tốc', '50k', 'Bộ', 22000000, 16500000, 13200000, ''),
+];
+
+const PriceListFinal = () => {
+  const [activeTab, setActiveTab] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+
+  const filteredData = useMemo(() => {
+    let data = RAW_DATA;
+    if (activeTab !== 'all') data = data.filter(item => item.cat === activeTab);
+    if (searchTerm) {
+      const lowerTerm = searchTerm.toLowerCase();
+      data = data.filter(item => 
+        item.name.toLowerCase().includes(lowerTerm) || 
+        item.model.toLowerCase().includes(lowerTerm) ||
+        item.spec.toLowerCase().includes(lowerTerm)
+      );
+    }
+    return data;
+  }, [activeTab, searchTerm]);
+
+  const sortedData = useMemo(() => {
+    let sortableItems = [...filteredData];
+    if (sortConfig.key !== null) {
+      sortableItems.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'ascending' ? -1 : 1;
+        if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'ascending' ? 1 : -1;
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [filteredData, sortConfig]);
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') direction = 'descending';
+    setSortConfig({ key, direction });
+  };
+
+  const formatCurrency = (val) => val ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val) : "-";
+
+  const exportToCSV = () => {
+    const headers = ["Danh mục", "Mã hàng", "Tên sản phẩm", "Quy cách", "ĐVT", "Giá Công Bố", "Giá Đại Lý", "Giá NPP", "Ghi chú"];
+    const csvContent = [
+      headers.join(","),
+      ...sortedData.map(item => [
+        CATEGORIES.find(c => c.id === item.cat)?.name,
+        `"${item.model}"`, `"${item.name}"`, `"${item.spec}"`, item.unit,
+        item.p_list, item.p_agent, item.p_dist, `"${item.note}"`
+      ].join(","))
+    ].join("\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }));
+    link.download = "Bang_Gia_Tong_Hop_Master_2026.csv";
+    link.click();
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-gray-50 text-slate-800 font-sans">
+      <header className="bg-slate-900 text-white p-4 shadow-lg border-b-4 border-blue-500 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <Package className="text-blue-400" size={28} />
+          <div><h1 className="text-xl font-bold uppercase">Bảng Giá Tổng Hợp Master 2026</h1><p className="text-xs text-gray-400">Full Data Entry: 16 Files</p></div>
+        </div>
+        <button onClick={exportToCSV} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold shadow-md"><Download size={16} /> Xuất Excel</button>
+      </header>
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-20 shadow-sm p-4 space-y-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <input type="text" placeholder="Tìm nhanh (VD: 36C, 650, PCCC, 18000)..." className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 shadow-sm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"><Filter size={16} className="text-gray-500" />{CATEGORIES.map((cat) => (<button key={cat.id} onClick={() => setActiveTab(cat.id)} className={`whitespace-nowrap px-4 py-2 rounded-md text-xs font-bold uppercase border ${activeTab === cat.id ? `${cat.color} text-white border-transparent shadow-md scale-105` : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-100'}`}>{cat.name}</button>))}</div>
+      </div>
+      <div className="flex-1 overflow-auto bg-gray-100 p-4">
+        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+          <table className="w-full text-sm text-left">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-b sticky top-0 z-10">
+              <tr>
+                <th className="px-6 py-4 cursor-pointer hover:bg-gray-200" onClick={() => requestSort('cat')}>Danh mục</th>
+                <th className="px-6 py-4 cursor-pointer hover:bg-gray-200" onClick={() => requestSort('model')}>Mã Hàng</th>
+                <th className="px-6 py-4 cursor-pointer hover:bg-gray-200" onClick={() => requestSort('name')}>Tên Sản Phẩm</th>
+                <th className="px-6 py-4">Quy cách</th>
+                <th className="px-6 py-4 text-right cursor-pointer hover:bg-gray-200" onClick={() => requestSort('p_list')}>Giá Công Bố</th>
+                <th className="px-6 py-4 text-right cursor-pointer bg-blue-50 hover:bg-blue-100" onClick={() => requestSort('p_agent')}>Giá Đại Lý</th>
+                <th className="px-6 py-4 text-right cursor-pointer hover:bg-gray-200" onClick={() => requestSort('p_dist')}>Giá NPP</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {sortedData.length > 0 ? sortedData.map((item, index) => (
+                <tr key={index} className="hover:bg-blue-50/50 transition-colors group">
+                  <td className="px-6 py-3"><span className={`inline-flex px-2 py-1 rounded text-[10px] font-bold text-white ${CATEGORIES.find(c => c.id === item.cat)?.color}`}>{CATEGORIES.find(c => c.id === item.cat)?.name.split(' ')[0]}</span></td>
+                  <td className="px-6 py-3 font-mono text-xs font-bold text-blue-700">{item.model}</td>
+                  <td className="px-6 py-3 font-medium text-gray-900">{item.name}{item.note && <div className="text-[10px] text-gray-500 italic mt-0.5 flex items-center gap-1"><Tag size={10}/> {item.note}</div>}</td>
+                  <td className="px-6 py-3 text-xs text-gray-600 font-mono">{item.spec}</td>
+                  <td className="px-6 py-3 text-right text-gray-400 line-through text-xs decoration-gray-300">{formatCurrency(item.p_list)}</td>
+                  <td className="px-6 py-3 text-right font-bold text-blue-700 bg-blue-50/30">{formatCurrency(item.p_agent)}</td>
+                  <td className="px-6 py-3 text-right font-bold text-green-700">{formatCurrency(item.p_dist)}</td>
+                </tr>
+              )) : <tr><td colSpan={7} className="px-6 py-12 text-center text-gray-500"><div className="flex flex-col items-center"><AlertCircle size={32} className="text-gray-300 mb-2"/><p>Không tìm thấy dữ liệu.</p></div></td></tr>}
+            </tbody>
+          </table>
+          <div className="p-3 bg-gray-50 border-t text-xs text-gray-500 flex justify-between items-center"><div className="flex items-center gap-2"><Database size={14} /><span className="font-bold">Tổng số: {sortedData.length} SKU</span></div><span>* Dữ liệu từ 16 File PDF gốc (Linh kiện & Thành phẩm).</span></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PriceListFinal;
